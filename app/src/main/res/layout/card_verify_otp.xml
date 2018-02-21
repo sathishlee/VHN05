@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="2"
+    android:padding="16dp"
+    android:id="@+id/otpview">
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:hint="Enter OTP"
+        android:layout_weight="2"
+        android:backgroundTint="@color/white"
+        android:textColor="#000000"
+        android:background="@drawable/rounded_edittext"
+        android:padding="4dp"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="verify OTP "
+        android:layout_weight="1"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:padding="4dp"/>
+
+
+</LinearLayout>

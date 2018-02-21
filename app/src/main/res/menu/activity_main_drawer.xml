@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home"
+            android:icon="@drawable/ic_home"
+            android:title="Home" />
+        <item
+            android:id="@+id/mothers"
+            android:icon="@drawable/ic_newborn"
+            android:title="Mothers" />
+        <item
+            android:id="@+id/risk"
+            android:icon="@drawable/ic_danger_sing"
+            android:title="High Risk" />
+
+        <item
+            android:id="@+id/infant"
+            android:icon="@drawable/ic_crawling_baby_silhouette"
+            android:title="Infant" />
+        <item
+            android:id="@+id/today_visit"
+            android:icon="@drawable/ic_eye"
+            android:title="Today Visit" />
+        <item
+            android:id="@+id/alert"
+            android:icon="@drawable/vector_drawable_notifications_bell_button"
+            android:title="Alert" />
+
+        <item
+            android:id="@+id/remainder"
+            android:icon="@drawable/vector_drawable_notifications_bell_button"
+            android:title="Remainder" />
+
+    </group>
+
+
+</menu>

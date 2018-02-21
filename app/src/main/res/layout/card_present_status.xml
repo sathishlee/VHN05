@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/android_card_view_example"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8.0dip"
+    android:layout_marginLeft="8.0dip"
+    android:layout_marginRight="8.0dip"
+    android:layout_marginTop="10dp"
+    android:orientation="vertical"
+    android:padding="16.0dip"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardElevation="2.0dip">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Weeks : 12AN / PN"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:textColor="@color/secondary"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LMP Date : "
+                android:layout_gravity="start"
+                android:textColor="@color/secondary"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="02/12/2017"
+                android:layout_gravity="start"
+                android:textColor="@color/secondary"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="EDD Date : "
+                android:layout_gravity="end"
+                android:textColor="@color/secondary"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="02/10/2018"
+                android:layout_gravity="start"
+                android:textColor="@color/secondary"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="AN TT1 : "
+                android:layout_gravity="start"
+                android:textColor="@color/secondary"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="02/2/2018"
+                android:layout_gravity="start"
+                android:textColor="@color/secondary"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="AN TT2 :"
+                android:layout_gravity="end"
+                android:textColor="@color/secondary"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="02/4/2018"
+                android:layout_gravity="start"
+                android:textColor="@color/secondary"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Risk Status:"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:textColor="@color/secondary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="High"
+            android:layout_gravity="start"
+            android:textColor="@color/secondary"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
+
