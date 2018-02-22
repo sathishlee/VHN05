@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
     <android.support.v7.widget.CardView
         android:id="@+id/vhn_profile"
         android:orientation="vertical"
@@ -10,16 +15,31 @@
         app:cardElevation="2.0dip"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:baselineAligned="false"
+        android:weightSum="2"
+        android:padding="3dp"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
+            android:layout_weight="1"
+            android:baselineAligned="false"
+            android:weightSum="2"
+            android:padding="3dp"
             android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="5dp"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/cardview_image"
@@ -33,30 +53,33 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_nurse" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:gravity="start"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txt_username"
-                android:layout_toEndOf="@+id/cardview_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
+                android:layout_margin="2dp"
+                android:textSize="@dimen/text_field"
                 android:drawableStart="@drawable/ic_nurse"
                 android:text="Username :"/>
-
 
 
             <TextView
                 android:id="@+id/vhn_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="VHN ID :"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:textSize="14sp"
-                android:layout_below="@+id/txt_username"
-                android:drawableStart="@drawable/ic_nurse"
-                android:layout_alignStart="@+id/txt_username" />
+                android:text="HSC :"
+                android:layout_margin="2dp"
+                android:textSize="@dimen/text_field"
+                android:drawableStart="@drawable/ic_hospital"/>
 
             <TextView
                 android:id="@+id/phcName"
@@ -64,11 +87,16 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_hospital"
                 android:text="PHC Name :"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:textSize="14sp"
-                android:layout_alignStart="@+id/vhn_id"
-                android:layout_below="@+id/vhn_id"/>
+                android:layout_margin="2dp"
+                android:textSize="@dimen/text_field"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_hospital"
+                android:text="Block :"
+                android:layout_margin="2dp"
+                android:textSize="@dimen/text_field"/>
 
             <TextView
                 android:id="@+id/address"
@@ -76,14 +104,12 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_placeholder"
                 android:text="Address"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:textSize="14sp"
-                android:layout_alignStart="@+id/phcName"
-                android:layout_below="@+id/phcName"/>
+                android:layout_margin="2dp"
+                android:textSize="14sp"/>
             
 
-        </RelativeLayout>
+        </LinearLayout>
+            </LinearLayout>
 
         <android.support.v7.widget.CardView
             android:orientation="vertical"
@@ -177,10 +203,12 @@
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
+
     </LinearLayout>
 
 
 </android.support.v7.widget.CardView>
 
 
+</LinearLayout>
 
