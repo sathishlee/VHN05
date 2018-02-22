@@ -1,6 +1,7 @@
 package com.example.priyan.vhn.fragment;
 
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,8 +9,11 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 
 import com.example.priyan.vhn.AppConstent;
+import com.example.priyan.vhn.ImmunizationActivity;
 import com.example.priyan.vhn.MothersDetailsActivity;
 import com.example.priyan.vhn.R;
 import com.example.priyan.vhn.VhnProfile;
@@ -18,7 +22,7 @@ import com.example.priyan.vhn.VhnProfile;
 public class home extends Fragment {
 
     CardView cardview, vhn_profile;
-
+Button btnShowImmunizationList;
     public static home newInstance()
     {
         home fragment = new home();
@@ -28,7 +32,6 @@ public class home extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -56,11 +59,19 @@ public class home extends Fragment {
             }
 
         });
+        btnShowImmunizationList = view.findViewById(R.id.btn_show_immunization_list);
 
-
+        btnShowImmunizationList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ImmunizationActivity.class));
+            }
+        });
         return view;
 
     }
+
+
 
 
 }

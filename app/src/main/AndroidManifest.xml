@@ -36,8 +36,9 @@
         </activity>
         <activity android:name=".MothersDetailsActivity" />
         <activity android:name=".model.ViewRecordActivity" />
-        <activity android:name=".AlertDetailsActivity"/>
-        <activity android:name=".VhnProfile"/>
+        <activity android:name=".AlertDetailsActivity" />
+        <activity android:name=".VhnProfile" />
+        <activity android:name=".ImmunizationActivity"></activity>
     </application>
 
 </manifest>
