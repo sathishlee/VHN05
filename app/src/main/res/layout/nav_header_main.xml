@@ -12,6 +12,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
+<!--new  sddf-->    <!--text new -->
     <ImageView
         android:id="@+id/cardview_image"
         android:layout_width="100dp"
