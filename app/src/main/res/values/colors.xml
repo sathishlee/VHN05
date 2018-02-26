@@ -24,4 +24,8 @@
     <color name="secondary">#2E3091</color>
     <color name="text_primary">#ff212121</color>
     <color name="list_item_color">#241E90FF</color>
+
+    <color name="cloudy_blue">#ffd8e4e6</color>
+    <color name="dark_blue">#ff1b5670</color>
+
 </resources>

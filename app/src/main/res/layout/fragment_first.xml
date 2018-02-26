@@ -1,3 +1,180 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_secondary"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:text="PicMe"
+            android:gravity="right"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_secondary"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:text="Date of Visit: "/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_secondary"
+                android:layout_weight="1"
+                android:text="15-02-2018"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_secondary"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:text="Vist Type: "/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_secondary"
+                android:layout_weight="1"
+                android:text="Scheduled"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_secondary"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:text="Facility:  " />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_secondary"
+                android:layout_weight="1"
+                android:text="PHC"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_secondary"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:text="Any Complaints:"/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_secondary"
+                android:layout_weight="1"
+                android:text="Burning"/>
+
+        </LinearLayout>
+
+
+
+        <TextView
+            android:id="@+id/but_clinical_report"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_angle_arrow_pointing_to_right"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:background="@color/cloudy_blue"
+            android:elevation="1dp"
+            android:text="Clinical Report"
+            android:textSize="@dimen/text_lable"
+            android:layout_margin="5dp"/>
+
+
+        <TextView
+            android:id="@+id/but_lab_report"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_angle_arrow_pointing_to_right"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:background="@color/cloudy_blue"
+            android:elevation="1dp"
+            android:text="Lab Report"
+            android:layout_margin="5dp"
+            android:textSize="@dimen/text_lable" />
+
+
+        <TextView
+            android:id="@+id/but_ucg_report"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_angle_arrow_pointing_to_right"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:background="@color/cloudy_blue"
+            android:elevation="1dp"
+            android:text="UCG Report"
+            android:layout_margin="5dp"
+            android:textSize="@dimen/text_lable" />
+
+
+    </LinearLayout>
+</ScrollView>
+
+
+
+
+
+
+
+
+
+<!--
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -332,4 +509,4 @@
     </LinearLayout>
 
 
-</LinearLayout>
+</LinearLayout>-->

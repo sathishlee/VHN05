@@ -1,0 +1,98 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="60dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        >
+        <TextView
+            android:id="@+id/txt_all_visit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="All"
+            android:gravity="center_horizontal"
+            android:background="@drawable/buttonstyle"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_lable"
+            android:padding="3dp"
+            android:layout_margin="3dp"/>
+        <TextView
+            android:id="@+id/txt_today_visit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Mother"
+            android:gravity="center_horizontal"
+            android:background="@drawable/buttonstyle"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_lable"
+            android:padding="3dp"
+            android:layout_margin="3dp"/>
+        <TextView
+            android:id="@+id/txt_village_wise_visit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="104"
+            android:gravity="center_horizontal"
+            android:background="@drawable/buttonstyle"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_lable"
+            android:padding="3dp"
+            android:layout_margin="3dp"
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/txt_reminder_visit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Referral"
+            android:gravity="center_horizontal"
+            android:background="@drawable/buttonstyle"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_lable"
+            android:padding="3dp"
+            android:layout_margin="3dp"/>
+ <TextView
+            android:id="@+id/txt_mother_visit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Visitor"
+            android:gravity="center_horizontal"
+            android:background="@drawable/buttonstyle"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_lable"
+            android:padding="3dp"
+            android:layout_margin="3dp"
+     android:visibility="gone"/>
+
+    </LinearLayout>
+<!--    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">-->
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/txt_title"
+            />
+
+
+<!--    </android.support.v4.widget.SwipeRefreshLayout>-->
+
+
+</LinearLayout>

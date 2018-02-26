@@ -9,7 +9,7 @@
     app:cardBackgroundColor="@android:color/white"
     app:cardElevation="3.0dip">
 
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -44,9 +44,11 @@
                 app:srcCompat="@drawable/ic_woman" />
 
         </LinearLayout>
-    </LinearLayout> <LinearLayout
+    </LinearLayout>-->
+
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:orientation="horizontal"
         android:weightSum="2">
 
@@ -57,7 +59,7 @@
             android:minHeight="100.0dip"
             android:layout_gravity="center_vertical"
             android:orientation="vertical"
-            android:layout_weight="2">
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/txt_mother_name"
@@ -67,36 +69,42 @@
                 android:paddingLeft="8.0dip"
                 android:paddingRight="8.0dip"
                 android:paddingTop="4.0dip"
+                android:padding="4dp"
                 android:drawableStart="@drawable/ic_woman"
                 android:text=" "
                 android:textColor="@color/text_secondary"
                 android:textSize="16.0sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:drawablePadding="5dp"/>
 
             <TextView
                 android:id="@+id/txt_mother_id"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:drawablePadding="4.0dip"
-                android:drawableStart="@drawable/ic_eye"
+
+                android:drawableStart="@drawable/ic_id_card"
                 android:paddingBottom="4.0dip"
                 android:paddingLeft="8.0dip"
                 android:paddingRight="8.0dip"
                 android:paddingTop="4.0dip"
+                android:drawablePadding="5dp"
                 android:text=" "
                 android:textColor="@color/text_secondary" />
+
 
             <TextView
                 android:id="@+id/txt_risk_status"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_danger_sing"
+                android:drawableStart="@drawable/exclamation_circle"
                 android:paddingBottom="4.0dip"
                 android:paddingLeft="8.0dip"
                 android:paddingRight="8.0dip"
                 android:paddingTop="4.0dip"
                 android:text=" "
-                android:textColor="#f20404" />
+                android:textColor="@color/text_secondary"
+                android:drawablePadding="5dp"
+                />
         </LinearLayout>
         <View
             android:layout_width="1.0dip"
@@ -106,19 +114,19 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
+           android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
             android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:layout_marginRight="5dp">
 
             <ImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_gravity=""
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:padding="12.0dip"
                 app:srcCompat="@drawable/ic_woman" />
 
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>

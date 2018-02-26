@@ -48,7 +48,6 @@
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="TYPE"
-                        android:textSize="@dimen/text_content_list"
                         android:textStyle="bold"
                         android:textColor="@color/white"/>
 
@@ -61,8 +60,6 @@
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="TOTAL"
-
-                        android:textSize="@dimen/text_content_list"
                         android:textStyle="bold"
                         android:textColor="@color/white" />
 
@@ -75,7 +72,6 @@
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="REGISTERED"
-                        android:textSize="@dimen/text_content_list"
                         android:textStyle="bold"
                         android:textColor="@color/white" />
 
@@ -88,8 +84,6 @@
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="VISIT"
-
-                        android:textSize="@dimen/text_content_list"
                         android:textStyle="bold"
                         android:textColor="@color/white" />
                 </TableRow>
@@ -116,11 +110,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_weight="1"
-                        android:background="@drawable/buttonstyle"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="AN"
-                        android:textSize="@dimen/text_content_list"
                         android:textStyle="bold"
                         />
 
@@ -134,7 +126,6 @@
                         android:padding="5dp"
                         android:text="50"
 
-                        android:textSize="@dimen/text_lable"
                         />
 
                     <TextView
@@ -146,7 +137,6 @@
 
                         android:padding="5dp"
                         android:text="45"
-                        android:textSize="@dimen/text_lable"
                         />
 
                     <TextView
@@ -156,11 +146,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:padding="5dp"
-                        android:text="5"
-
-                        android:textSize="@dimen/text_lable"
-
-                        />
+                        android:text="5" />
                 </TableRow>
 
 
@@ -187,11 +173,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_weight="1"
-                        android:background="@drawable/buttonstyle"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="PN"
-                        android:textSize="@dimen/text_content_list"
                         android:textStyle="bold"
                         />
 
@@ -203,10 +187,7 @@
                         android:gravity="center"
 
                         android:padding="5dp"
-                        android:text="50"
-
-                        android:textSize="@dimen/text_lable"
-                        />
+                        android:text="50" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -216,9 +197,7 @@
                         android:gravity="center"
 
                         android:padding="5dp"
-                        android:text="45"
-                        android:textSize="@dimen/text_lable"
-                        />
+                        android:text="45" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -227,11 +206,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:padding="5dp"
-                        android:text="5"
-
-                        android:textSize="@dimen/text_lable"
-
-                        />
+                        android:text="5"/>
                 </TableRow>
 
                 <TableRow
@@ -257,11 +232,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_weight="1"
-                        android:background="@drawable/buttonstyle"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="INFANTS"
-                        android:textSize="@dimen/text_content_list"
                         android:textStyle="bold"
                         />
 
@@ -273,10 +246,7 @@
                         android:gravity="center"
 
                         android:padding="5dp"
-                        android:text="50"
-
-                        android:textSize="@dimen/text_lable"
-                        />
+                        android:text="50" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -286,9 +256,7 @@
                         android:gravity="center"
 
                         android:padding="5dp"
-                        android:text="45"
-                        android:textSize="@dimen/text_lable"
-                        />
+                        android:text="45" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -297,11 +265,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:padding="5dp"
-                        android:text="5"
-
-                        android:textSize="@dimen/text_lable"
-
-                        />
+                        android:text="5" />
                 </TableRow>
 
 
@@ -329,11 +293,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_weight="1"
-                        android:background="@drawable/buttonstyle"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="HIGH AN"
-                        android:textSize="@dimen/text_content_list"
                         android:textStyle="bold"
                         />
 
@@ -343,24 +305,8 @@
                         android:layout_alignParentLeft="true"
                         android:layout_weight="1"
                         android:gravity="center"
-
                         android:padding="5dp"
-                        android:text="50"
-
-                        android:textSize="@dimen/text_lable"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_weight="1"
-                        android:gravity="center"
-
-                        android:padding="5dp"
-                        android:text="45"
-                        android:textSize="@dimen/text_lable"
-                        />
+                        android:text="50" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -369,11 +315,16 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:padding="5dp"
-                        android:text="5"
+                        android:text="45" />
 
-                        android:textSize="@dimen/text_lable"
-
-                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="5" />
                 </TableRow>
 
                 <TableRow
@@ -398,11 +349,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_weight="1"
-                        android:background="@drawable/buttonstyle"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="AN with EDD"
-                        android:textSize="@dimen/text_content_list"
                         android:textStyle="bold"
                         />
 
@@ -412,24 +361,8 @@
                         android:layout_alignParentLeft="true"
                         android:layout_weight="1"
                         android:gravity="center"
-
                         android:padding="5dp"
-                        android:text="50"
-
-                        android:textSize="@dimen/text_lable"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_weight="1"
-                        android:gravity="center"
-
-                        android:padding="5dp"
-                        android:text="45"
-                        android:textSize="@dimen/text_lable"
-                        />
+                        android:text="50" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -438,11 +371,16 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:padding="5dp"
-                        android:text="5"
+                        android:text="45" />
 
-                        android:textSize="@dimen/text_lable"
-
-                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="5" />
                 </TableRow>
 
                 <TableRow
@@ -463,16 +401,13 @@
                     android:weightSum="4">
 
                     <TextView
-
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_weight="1"
-                        android:background="@drawable/buttonstyle"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="HBNC"
-                        android:textSize="@dimen/text_content_list"
                         android:textStyle="bold"
                         />
 
@@ -482,24 +417,8 @@
                         android:layout_alignParentLeft="true"
                         android:layout_weight="1"
                         android:gravity="center"
-
                         android:padding="5dp"
-                        android:text="50"
-
-                        android:textSize="@dimen/text_lable"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_weight="1"
-                        android:gravity="center"
-
-                        android:padding="5dp"
-                        android:text="45"
-                        android:textSize="@dimen/text_lable"
-                        />
+                        android:text="50" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -508,11 +427,16 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:padding="5dp"
-                        android:text="5"
+                        android:text="45" />
 
-                        android:textSize="@dimen/text_lable"
-
-                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="5" />
                 </TableRow>
             </TableLayout>
         </LinearLayout>
@@ -534,29 +458,7 @@
             android:layout_marginTop="25dip"
             android:textColor="@color/white"
             android:text="SHOW IMMUNIZATION DUE LIST THIS WEEK"
-            android:background="@color/colorPrimary"
-
-            />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            android:background="@color/colorPrimary" />
 
         <TextView
             android:textSize="14.0sp"
@@ -579,7 +481,16 @@
             android:visibility="gone"/>
         <include layout="@layout/layout_today_visit"
             android:visibility="gone"/>
+        <FrameLayout
+            android:id="@+id/content"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:animateLayoutChanges="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:visibility="gone">
 
+        </FrameLayout>
     </LinearLayout>
 
 </ScrollView>

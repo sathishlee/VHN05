@@ -4,36 +4,50 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
+        <!--<item-->
+            <!--android:id="@+id/home"-->
+            <!--android:icon="@drawable/ic_home"-->
+            <!--android:title="Home" />-->
         <item
-            android:id="@+id/home"
-            android:icon="@drawable/ic_home"
-            android:title="Home" />
+            android:id="@+id/an_mothers"
+            android:icon="@drawable/ic_pregnant_woman"
+            android:title="AN Mothers" />
         <item
-            android:id="@+id/mothers"
+            android:id="@+id/pn_mothers"
             android:icon="@drawable/ic_newborn"
-            android:title="Mothers" />
-        <item
-            android:id="@+id/risk"
-            android:icon="@drawable/ic_danger_sing"
-            android:title="High Risk" />
+            android:title="PN Mothers" />
+
 
         <item
+            android:id="@+id/hbnc"
+            android:icon="@drawable/ic_baby"
+            android:title="HBNC" />
+        <item
+            android:id="@+id/immunization"
+            android:icon="@drawable/syringe"
+            android:title="Immunization" />
+       <!-- <item
+            android:id="@+id/risk"
+            android:icon="@drawable/ic_danger_sing"
+            android:title="High Risk" />-->
+
+       <!-- <item
             android:id="@+id/infant"
             android:icon="@drawable/ic_crawling_baby_silhouette"
-            android:title="Infant" />
+            android:title="Infant" />-->
         <item
             android:id="@+id/today_visit"
             android:icon="@drawable/ic_eye"
-            android:title="Today Visit" />
+            android:title="Visit" />
         <item
             android:id="@+id/alert"
             android:icon="@drawable/vector_drawable_notifications_bell_button"
             android:title="Alert" />
 
         <item
-            android:id="@+id/remainder"
-            android:icon="@drawable/vector_drawable_notifications_bell_button"
-            android:title="Remainder" />
+            android:id="@+id/message"
+            android:icon="@drawable/ic_close_envelope"
+            android:title="Message" />
 
     </group>
 

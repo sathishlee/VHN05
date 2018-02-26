@@ -11,13 +11,13 @@
         android:title="Mothers" />
     <item
         android:id="@+id/risk"
-        android:icon="@drawable/ic_danger_sing"
+        android:icon="@drawable/exclamation_circle_nve"
         android:title="High Risk" />
 
-    <item
+  <!--  <item
         android:id="@+id/infant"
         android:icon="@drawable/ic_crawling_baby_silhouette"
-        android:title="Infant" />
+        android:title="Infant" />-->
 
 
 </menu>
