@@ -13,15 +13,15 @@
             android:icon="@drawable/ic_pregnant_woman"
             android:title="AN Mothers" />
         <item
-            android:id="@+id/pn_mothers"
+            android:id="@+id/pn_hbnc_mothers"
             android:icon="@drawable/ic_newborn"
-            android:title="PN Mothers" />
+            android:title="PN Mothers/HBNC" />
 
 
-        <item
-            android:id="@+id/hbnc"
-            android:icon="@drawable/ic_baby"
-            android:title="HBNC" />
+        <!--<item-->
+            <!--android:id="@+id/hbnc"-->
+            <!--android:icon="@drawable/ic_baby"-->
+            <!--android:title="HBNC" />-->
         <item
             android:id="@+id/immunization"
             android:icon="@drawable/syringe"
@@ -39,15 +39,16 @@
             android:id="@+id/today_visit"
             android:icon="@drawable/ic_eye"
             android:title="Visit" />
+
         <item
             android:id="@+id/alert"
             android:icon="@drawable/vector_drawable_notifications_bell_button"
-            android:title="Alert" />
+            android:title="Alerts" />
 
-        <item
-            android:id="@+id/message"
-            android:icon="@drawable/ic_close_envelope"
-            android:title="Message" />
+        <!--<item-->
+            <!--android:id="@+id/message"-->
+            <!--android:icon="@drawable/ic_close_envelope"-->
+            <!--android:title="Message" />-->
 
     </group>
 

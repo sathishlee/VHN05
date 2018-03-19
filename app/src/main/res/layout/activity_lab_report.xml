@@ -4,8 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:padding="50dp"
-    tools:context="com.unicef.thaimai.motherapp.activity.LabReportActivity">
+    android:padding="50dp">
 
     <TextView
         android:layout_width="match_parent"

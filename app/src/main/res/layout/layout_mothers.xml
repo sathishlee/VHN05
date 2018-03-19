@@ -103,8 +103,7 @@
                 android:paddingTop="4.0dip"
                 android:text=" "
                 android:textColor="@color/text_secondary"
-                android:drawablePadding="5dp"
-                />
+                android:drawablePadding="5dp"/>
         </LinearLayout>
         <View
             android:layout_width="1.0dip"

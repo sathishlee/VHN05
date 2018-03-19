@@ -34,21 +34,36 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MothersDetailsActivity" />
-        <activity android:name=".model.ViewRecordActivity" />
-        <activity android:name=".AlertDetailsActivity" />
-        <activity android:name=".VhnProfile" />
-        <activity android:name=".ImmunizationActivity" />
-        <activity android:name=".SendMessageActivity" />
-        <activity android:name=".ClinicalReportActivity" />
-        <activity android:name=".LabReportActivity" />
-        <activity android:name=".UCGReportActivity" />
-        <activity android:name=".PNMotherDetailsActivity" />
-        <activity android:name=".PNMotherVisitListActivity" />
-        <activity android:name=".PNMotherVisitListDetailsActivity" />
-        <activity android:name=".ImmunizationDoseListActivity" />
-        <activity android:name=".ImmunizationVisit" />
-        <activity android:name=".ImmunizationMotherListActivity"></activity>
+        <activity android:name=".MothersDetailsActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".model.ViewRecordActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".AlertDetailsActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".VhnProfile"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".ImmunizationActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".SendMessageActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".ClinicalReportActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".LabReportActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".UCGReportActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".PNMotherDetailsActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".PNMotherVisitListActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".PNMotherVisitListDetailsActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".ImmunizationDoseListActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".ImmunizationVisit"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".ImmunizationMotherListActivity"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

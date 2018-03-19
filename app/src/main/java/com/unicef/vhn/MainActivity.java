@@ -98,15 +98,15 @@ public class MainActivity extends AppCompatActivity
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content,
                     mothers.newInstance()).commit();
-        } else if (id == R.id.pn_mothers) {
+        } else if (id == R.id.pn_hbnc_mothers) {
 
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content,
                     PnMotherListFragment.newInstance()).commit();
-        }else if (id == R.id.hbnc) {
-            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content,
-                    PnMotherListFragment.newInstance()).commit();
+//        }else if (id == R.id.hbnc) {
+//            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+//            fragmentManager.beginTransaction().replace(R.id.content,
+//                    PnMotherListFragment.newInstance()).commit();
         }else if (id == R.id.immunization) {
 
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -134,16 +134,16 @@ public class MainActivity extends AppCompatActivity
                     alert.newInstance()).commit();
 
         }else if (id == R.id.today_visit) {
-            AppConstent.isfromhome=1;
+            AppConstent.isfromhome = 1;
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content,
                     VisitFragment.newInstance()).commit();
-
-        }else if (id == R.id.message) {
-            AppConstent.isfromhome=1;
-           startActivity(new Intent(getApplicationContext(), SendMessageActivity.class));
-
         }
+//        else if (id == R.id.message) {
+//            AppConstent.isfromhome=1;
+//           startActivity(new Intent(getApplicationContext(), SendMessageActivity.class));
+//
+//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
