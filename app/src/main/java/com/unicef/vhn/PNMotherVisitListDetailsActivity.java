@@ -10,14 +10,14 @@ import android.view.View;
 import android.widget.TextView;
 
 
-import com.unicef.vhn.adapter.MothervistListAdapter;
+//import com.unicef.vhn.adapter.MothervistListAdapter;
 import com.unicef.vhn.model.NotificationModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PNMotherVisitListDetailsActivity extends AppCompatActivity {
-MothervistListAdapter mothervistListAdapter;
+//MothervistListAdapter mothervistListAdapter;
 ArrayList<String> mothersVisitList;
     private List<NotificationModel> visitList;
 

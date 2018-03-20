@@ -205,7 +205,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Infant Details"
-                        android:drawableStart="@drawable/ic_crawling_baby_silhouette"
+                        android:drawableStart="@mipmap/ic_hme_infants_count_new"
                         android:textSize="14sp"
                         />
                     <TextView

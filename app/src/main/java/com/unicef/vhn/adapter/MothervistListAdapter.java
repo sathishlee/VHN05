@@ -1,3 +1,4 @@
+/*
 package com.unicef.vhn.adapter;
 
 import android.app.Activity;
@@ -13,9 +14,11 @@ import com.unicef.vhn.R;
 
 import java.util.List;
 
+*/
 /**
  * Created by sathish on 2/23/2018.
- */
+ *//*
+
 
 public class MothervistListAdapter extends RecyclerView.Adapter<MothervistListAdapter.ViewHolder>  {
     private List<String> visitList;
@@ -60,3 +63,4 @@ holder.itemView.setOnClickListener(new View.OnClickListener() {
         }
     }
 }
+*/

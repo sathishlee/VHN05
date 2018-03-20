@@ -1,3 +1,4 @@
+/*
 package com.unicef.vhn.adapter;
 
 import android.support.v4.app.Fragment;
@@ -7,9 +8,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+*/
 /**
  * Created by Suthishan on 20/1/2018.
- */
+ *//*
+
 
 public class ViewPagerAdapter   extends FragmentPagerAdapter {
     private final List<Fragment> mFragmentList = new ArrayList<>();
@@ -17,7 +20,9 @@ public class ViewPagerAdapter   extends FragmentPagerAdapter {
 
     public ViewPagerAdapter(FragmentManager manager) {
         super(manager);
-    }
+    }*/
+/**//*
+
 
     @Override
     public Fragment getItem(int position) {
@@ -38,4 +43,4 @@ public class ViewPagerAdapter   extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         return mFragmentTitleList.get(position);
     }
-}
+}*/

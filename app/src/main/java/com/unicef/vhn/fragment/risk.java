@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.unicef.vhn.R;
-import com.unicef.vhn.adapter.MoviesAdapter;
+//import com.unicef.vhn.adapter.MoviesAdapter;
 import com.unicef.vhn.model.Movie;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import java.util.List;
 public class risk extends Fragment{
     private List<Movie> movieList ;
     private RecyclerView recyclerView;
-    private MoviesAdapter mAdapter;
+//    private MoviesAdapter mAdapter;
     Movie movie;
     public static risk newInstance()
     {
@@ -43,11 +43,11 @@ public class risk extends Fragment{
         movieList = new ArrayList<>();
         recyclerView = view.findViewById(R.id.recycler_view);
 
-        mAdapter = new MoviesAdapter(getActivity(),movieList,"ANMother");
+//        mAdapter = new MoviesAdapter(getActivity(),movieList,"ANMother");
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
+//        recyclerView.setAdapter(mAdapter);
 
         prepareMovieData();
 
@@ -63,7 +63,7 @@ public class risk extends Fragment{
         movie = new Movie("Suganya", "1003", "Bleeding PV");
         movieList.add(movie);
         movieList.add(movie);
-        mAdapter.notifyDataSetChanged();
+//        mAdapter.notifyDataSetChanged();
     }
 
 }

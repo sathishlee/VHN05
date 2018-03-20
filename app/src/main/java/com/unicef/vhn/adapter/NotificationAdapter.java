@@ -1,3 +1,4 @@
+/*
 package com.unicef.vhn.adapter;
 
 import android.support.v4.app.FragmentActivity;
@@ -16,9 +17,11 @@ import com.unicef.vhn.model.NotificationModel;
 import java.util.List;
 
 
+*/
 /**
  * Created by Suthishan on 20/1/2018.
- */
+ *//*
+
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder>  {
     private List<NotificationModel> moviesList;
@@ -66,3 +69,4 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         }
     }
 }
+*/

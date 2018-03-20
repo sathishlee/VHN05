@@ -9,8 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
-import com.unicef.vhn.adapter.MoviesAdapter;
-import com.unicef.vhn.model.Movie;
 
 import java.util.ArrayList;
 import java.util.List;

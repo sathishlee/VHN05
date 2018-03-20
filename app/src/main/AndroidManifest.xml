@@ -19,11 +19,7 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".LoginActivity"
@@ -44,23 +40,11 @@
             android:theme="@style/AppTheme"/>
         <activity android:name=".ImmunizationActivity"
             android:theme="@style/AppTheme"/>
-        <activity android:name=".SendMessageActivity"
-            android:theme="@style/AppTheme"/>
-        <activity android:name=".ClinicalReportActivity"
-            android:theme="@style/AppTheme"/>
-        <activity android:name=".LabReportActivity"
-            android:theme="@style/AppTheme"/>
-        <activity android:name=".UCGReportActivity"
-            android:theme="@style/AppTheme"/>
         <activity android:name=".PNMotherDetailsActivity"
             android:theme="@style/AppTheme"/>
         <activity android:name=".PNMotherVisitListActivity"
             android:theme="@style/AppTheme"/>
         <activity android:name=".PNMotherVisitListDetailsActivity"
-            android:theme="@style/AppTheme"/>
-        <activity android:name=".ImmunizationDoseListActivity"
-            android:theme="@style/AppTheme"/>
-        <activity android:name=".ImmunizationVisit"
             android:theme="@style/AppTheme"/>
         <activity android:name=".ImmunizationMotherListActivity"
             android:theme="@style/AppTheme"></activity>

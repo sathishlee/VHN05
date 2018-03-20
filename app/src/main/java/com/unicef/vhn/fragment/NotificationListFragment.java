@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.unicef.vhn.R;
-import com.unicef.vhn.adapter.NotificationAdapter;
+//import com.unicef.vhn.adapter.NotificationAdapter;
 import com.unicef.vhn.model.NotificationModel;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class NotificationListFragment extends Fragment {
 
 
-    NotificationAdapter mAdapter;
+//    NotificationAdapter mAdapter;
     ArrayList<NotificationModel> moviesList;
     NotificationModel movie;
     LinearLayoutManager mLayoutManager;
@@ -58,8 +58,8 @@ public class NotificationListFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         moviesList=new ArrayList<>();
         // specify an adapter (see also next example)
-        mAdapter = new NotificationAdapter(moviesList,getActivity());
-        mRecyclerView.setAdapter(mAdapter);
+//        mAdapter = new NotificationAdapter(moviesList,getActivity());
+//        mRecyclerView.setAdapter(mAdapter);
         prepareMovieData();
         return view;
     }
@@ -88,7 +88,7 @@ public class NotificationListFragment extends Fragment {
         movie = new NotificationModel("PNH", "Message Deatils", "02/05/2018",R.drawable.ic_hospital);
         moviesList.add(movie);
 
-        mAdapter.notifyDataSetChanged();
+//        mAdapter.notifyDataSetChanged();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

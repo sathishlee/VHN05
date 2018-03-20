@@ -1,3 +1,4 @@
+/*
 package com.unicef.vhn.adapter;
 
 import android.content.Context;
@@ -19,9 +20,11 @@ import com.unicef.vhn.model.Movie;
 
 import java.util.List;
 
+*/
 /**
  * Created by priyan on 2/6/2018.
- */
+ *//*
+
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHolder> {
     private FragmentActivity context;
@@ -105,4 +108,4 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
     public int getItemCount() {
         return moviesList.size();
     }
-}
+}*/

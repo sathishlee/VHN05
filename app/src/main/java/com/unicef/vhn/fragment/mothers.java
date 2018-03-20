@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.unicef.vhn.AppConstent;
 import com.unicef.vhn.MothersDetailsActivity;
 import com.unicef.vhn.R;
-import com.unicef.vhn.adapter.MoviesAdapter;
+//import com.unicef.vhn.adapter.MoviesAdapter;
 import com.unicef.vhn.model.Movie;
 
 import java.util.ArrayList;

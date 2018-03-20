@@ -1,7 +1,6 @@
 package com.unicef.vhn;
 
 
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,10 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.unicef.vhn.fragment.ImmunizationFragment;
-import com.unicef.vhn.fragment.alert;
-import com.unicef.vhn.fragment.fragment.PnMotherListFragment;
-import com.unicef.vhn.fragment.fragment.VisitFragment;
 import com.unicef.vhn.fragment.home;
 import com.unicef.vhn.fragment.mothers;
 import com.unicef.vhn.fragment.risk;
@@ -100,18 +95,14 @@ public class MainActivity extends AppCompatActivity
                     mothers.newInstance()).commit();
         } else if (id == R.id.pn_hbnc_mothers) {
 
-            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content,
-                    PnMotherListFragment.newInstance()).commit();
+
 //        }else if (id == R.id.hbnc) {
 //            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 //            fragmentManager.beginTransaction().replace(R.id.content,
 //                    PnMotherListFragment.newInstance()).commit();
         }else if (id == R.id.immunization) {
 
-            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content,
-                    ImmunizationFragment.newInstance()).commit();
+
         } /*else if (id == R.id.mothers) {
             AppConstent.isfromhome=0;
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -129,15 +120,11 @@ public class MainActivity extends AppCompatActivity
         }*/
         else if (id == R.id.alert) {
             AppConstent.isfromhome=2;
-            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content,
-                    alert.newInstance()).commit();
+
 
         }else if (id == R.id.today_visit) {
             AppConstent.isfromhome = 1;
-            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content,
-                    VisitFragment.newInstance()).commit();
+
         }
 //        else if (id == R.id.message) {
 //            AppConstent.isfromhome=1;

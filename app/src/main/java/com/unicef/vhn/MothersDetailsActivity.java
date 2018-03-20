@@ -37,7 +37,7 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
         vhn_profile = (CardView) findViewById(R.id.vhn_profile);
         viewReport =(Button) findViewById(R.id.btn_view_report);
         img_call= (ImageView)findViewById(R.id.img_call);
-        img_call_a= (ImageView)findViewById(R.id.img_call_a);
+//        img_call_a= (ImageView)findViewById(R.id.img_call_a);
         call_vhn= (TextView)findViewById(R.id.call_vhn);
 
         if (AppConstent.isfromhome==1){
