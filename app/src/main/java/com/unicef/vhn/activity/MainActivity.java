@@ -1,4 +1,4 @@
-package com.unicef.vhn;
+package com.unicef.vhn.activity;
 
 
 import android.support.v4.app.Fragment;
@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.unicef.vhn.AppConstent;
+import com.unicef.vhn.R;
 import com.unicef.vhn.fragment.home;
 import com.unicef.vhn.fragment.mothers;
 import com.unicef.vhn.fragment.risk;

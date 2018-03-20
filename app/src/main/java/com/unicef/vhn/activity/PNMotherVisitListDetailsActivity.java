@@ -1,4 +1,4 @@
-package com.unicef.vhn;
+package com.unicef.vhn.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,11 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 
 //import com.unicef.vhn.adapter.MothervistListAdapter;
+import com.unicef.vhn.R;
 import com.unicef.vhn.model.NotificationModel;
 
 import java.util.ArrayList;
