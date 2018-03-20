@@ -63,13 +63,13 @@
                 android:layout_width="match_parent" >
 
                 <EditText
+                    android:id="@+id/txt_vhn_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
                     android:textSize="@dimen/text_primary"
                     android:digits="0123456789"
-                    android:id="@+id/email"
                     android:hint="VHN ID"
                     android:layout_margin="5dp"/>
 
@@ -80,7 +80,7 @@
                 android:layout_width="match_parent" >
 
                 <EditText
-                    android:id="@+id/password"
+                    android:id="@+id/txt_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
