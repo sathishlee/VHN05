@@ -104,7 +104,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/mother_type">
+                        android:background="@drawable/mother_type_risk">
 
                         <TextView
                             android:layout_width="wrap_content"

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
-
-
+    
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
@@ -15,7 +13,7 @@
 
     <color name="graylight">#d3d3d3</color>
 
-
+    <color name="text_main">#333333</color>
 
     <color name="list_item_color">#241E90FF</color>
 
