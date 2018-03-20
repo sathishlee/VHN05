@@ -18,7 +18,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            android.defaultConfig.vectorDrawables.useSupportLibrary = true        }
+            android.defaultConfig.vectorDrawables.useSupportLibrary = true
+        }
     }
 }
 
