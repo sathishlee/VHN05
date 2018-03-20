@@ -130,7 +130,7 @@
                     android:layout_gravity="center"
                     android:text="Mothers"
                     android:textSize="18dp"
-                    android:textColor="#333333"/>
+                    android:textColor="@color/text_main"/>
 
 
             </LinearLayout>
