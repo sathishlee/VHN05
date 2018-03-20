@@ -1,17 +1,13 @@
-package com.unicef.vhn;
+package com.unicef.vhn.activity;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import com.unicef.vhn.R;
 
 public class ImmunizationActivity extends AppCompatActivity {
    /* private List<Movie> movieList ;

@@ -1,4 +1,4 @@
-package com.unicef.vhn;
+package com.unicef.vhn.activity;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.unicef.vhn.R;
 import com.unicef.vhn.model.Movie;
 
 import java.util.ArrayList;

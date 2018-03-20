@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.unicef.vhn.LoginActivity;
 import com.unicef.vhn.R;
 
 public class SplashScreenActivity extends AppCompatActivity {

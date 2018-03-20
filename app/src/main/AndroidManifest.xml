@@ -16,40 +16,42 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login">
 
         </activity>
         <activity
-            android:name=".MothersDetailsActivity"
+            android:name=".activity.MothersDetailsActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".model.ViewRecordActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".AlertDetailsActivity"
+            android:name=".activity.AlertDetailsActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".VhnProfile"
+            android:name=".activity.VhnProfile"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ImmunizationActivity"
+            android:name=".activity.ImmunizationActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".PNMotherDetailsActivity"
+            android:name=".activity.PNMotherDetailsActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".PNMotherVisitListActivity"
+            android:name=".activity.PNMotherVisitListActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".PNMotherVisitListDetailsActivity"
+            android:name=".activity.PNMotherVisitListDetailsActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ImmunizationMotherListActivity"
+            android:name=".activity.ImmunizationMotherListActivity"
             android:theme="@style/AppTheme" />
         <activity android:name=".activity.SplashScreenActivity">
             <intent-filter>

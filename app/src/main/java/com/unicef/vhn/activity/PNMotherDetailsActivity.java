@@ -1,4 +1,4 @@
-package com.unicef.vhn;
+package com.unicef.vhn.activity;
 
 import android.Manifest;
 import android.content.Intent;
@@ -18,7 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.unicef.vhn.model.ViewRecordActivity;
+import com.unicef.vhn.AppConstent;
+import com.unicef.vhn.R;
 
 public class PNMotherDetailsActivity extends AppCompatActivity implements View.OnClickListener {
     Button viewLocation,viewReport;

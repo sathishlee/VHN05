@@ -1,4 +1,4 @@
-package com.unicef.vhn;
+package com.unicef.vhn.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,8 @@ import android.support.v7.widget.CardView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+
+import com.unicef.vhn.R;
 
 public class PNMotherVisitListActivity extends AppCompatActivity {
     LinearLayout postnatal_mother;
