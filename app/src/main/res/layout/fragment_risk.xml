@@ -288,5 +288,7 @@
 
         </LinearLayout>
 
+        <include layout="@layout/item_mother_risk"/>
+
     </LinearLayout>
 </LinearLayout>
