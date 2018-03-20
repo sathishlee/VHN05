@@ -6,35 +6,28 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.unicef.vhn.AppConstent;
 import com.unicef.vhn.R;
 import com.unicef.vhn.model.ViewRecordActivity;
 
 
 public class MothersDetailsActivity extends AppCompatActivity implements View.OnClickListener {
-    Button viewLocation,viewReport;
+/*    Button viewLocation,viewReport;
     LinearLayout otpView;
     CardView vhn_profile;
     ImageView img_call,img_call_a;
-    TextView call_vhn;
+    TextView call_vhn;*/
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mothers_details);
-        viewLocation =(Button) findViewById(R.id.btn_view_location);
+       /* viewLocation =(Button) findViewById(R.id.btn_view_location);
         otpView = (LinearLayout)findViewById(R.id.otpview);
         vhn_profile = (CardView) findViewById(R.id.vhn_profile);
         viewReport =(Button) findViewById(R.id.btn_view_report);
@@ -42,14 +35,14 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
 //        img_call_a= (ImageView)findViewById(R.id.img_call_a);
         call_vhn= (TextView)findViewById(R.id.call_vhn);
 
-        if (AppConstent.isfromhome==1){
+        if (AppConstants.isfromhome==1){
             vhn_profile.setVisibility(View.GONE);
             otpView.setVisibility(View.VISIBLE);
-            //AppConstent.isfromhome=0;
-        } else if(AppConstent.isfromhome==2){
+            //AppConstants.isfromhome=0;
+        } else if(AppConstants.isfromhome==2){
             otpView.setVisibility(View.GONE);
             vhn_profile.setVisibility(View.VISIBLE);
-            //AppConstent.isfromhome=0;
+            //AppConstants.isfromhome=0;
         }else{
             otpView.setVisibility(View.GONE);
             vhn_profile.setVisibility(View.GONE);
@@ -78,7 +71,7 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setTitle("Mother Details");
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);*/
 
     }
 

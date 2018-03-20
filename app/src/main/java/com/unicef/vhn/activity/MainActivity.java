@@ -15,7 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.unicef.vhn.AppConstent;
+import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.R;
 import com.unicef.vhn.fragment.home;
 import com.unicef.vhn.fragment.mothers;
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.an_mothers) {
-            AppConstent.isfromhome=1;
+            AppConstants.isfromhome=1;
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content,
                     mothers.newInstance()).commit();
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity
 
 
         } /*else if (id == R.id.mothers) {
-            AppConstent.isfromhome=0;
+            AppConstants.isfromhome=0;
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content,
                     mothers.newInstance()).commit();
@@ -121,15 +121,15 @@ public class MainActivity extends AppCompatActivity
 
         }*/
         else if (id == R.id.alert) {
-            AppConstent.isfromhome=2;
+            AppConstants.isfromhome=2;
 
 
         }else if (id == R.id.today_visit) {
-            AppConstent.isfromhome = 1;
+            AppConstants.isfromhome = 1;
 
         }
 //        else if (id == R.id.message) {
-//            AppConstent.isfromhome=1;
+//            AppConstants.isfromhome=1;
 //           startActivity(new Intent(getApplicationContext(), SendMessageActivity.class));
 //
 //        }
@@ -180,12 +180,12 @@ public class MainActivity extends AppCompatActivity
                 break;*/
             case R.id.mothers:
                 // Action to perform when Bag Menu item is selected.
-                AppConstent.isfromhome=0;
+                AppConstants.isfromhome=0;
                 selectedFragment =  mothers.newInstance();
 
                 break; case R.id.risk:
                 // Action to perform when Bag Menu item is selected.
-                AppConstent.isfromhome=0;
+                AppConstants.isfromhome=0;
                 selectedFragment =  risk.newInstance();
                 break;
 

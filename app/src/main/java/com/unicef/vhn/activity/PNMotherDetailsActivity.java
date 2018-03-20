@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.unicef.vhn.AppConstent;
+import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.R;
 
 public class PNMotherDetailsActivity extends AppCompatActivity implements View.OnClickListener {
@@ -41,14 +41,14 @@ public class PNMotherDetailsActivity extends AppCompatActivity implements View.O
 //        img_call_a= (ImageView)findViewById(R.id.img_call_a);
         call_vhn= (TextView)findViewById(R.id.call_vhn);
 
-        if (AppConstent.isfromhome==1){
+        if (AppConstants.isfromhome==1){
             vhn_profile.setVisibility(View.GONE);
             otpView.setVisibility(View.VISIBLE);
-            //AppConstent.isfromhome=0;
-        } else if(AppConstent.isfromhome==2){
+            //AppConstants.isfromhome=0;
+        } else if(AppConstants.isfromhome==2){
             otpView.setVisibility(View.GONE);
             vhn_profile.setVisibility(View.VISIBLE);
-            //AppConstent.isfromhome=0;
+            //AppConstants.isfromhome=0;
         }else{
             otpView.setVisibility(View.GONE);
             vhn_profile.setVisibility(View.GONE);
@@ -102,7 +102,7 @@ public class PNMotherDetailsActivity extends AppCompatActivity implements View.O
             case R.id.btn_view_location:
                 break;
             case R.id.btn_view_report:{
-                if (AppConstent.PNMotherDetails.equalsIgnoreCase("Immunization")) {
+                if (AppConstants.PNMotherDetails.equalsIgnoreCase("Immunization")) {
 //                    startActivity(new Intent(getApplicationContext(), ImmunizationDoseListActivity.class));
 
                 } else {

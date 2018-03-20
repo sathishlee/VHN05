@@ -63,14 +63,12 @@
                 android:layout_width="match_parent" >
 
                 <EditText
-                    android:id="@+id/txt_vhn_id"
+                    android:id="@+id/edt_vhn_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    android:singleLine="true"
                     android:textSize="@dimen/text_primary"
-                    android:digits="0123456789"
-                    android:hint="VHN ID"
+                    android:text="V10001"
+                    android:hint="VhnId"
                     android:layout_margin="5dp"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -80,14 +78,14 @@
                 android:layout_width="match_parent" >
 
                 <EditText
-                    android:id="@+id/txt_password"
+                    android:id="@+id/edt_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:textSize="@dimen/text_primary"
                     android:hint="@string/password"
                     android:textColorHint="@color/white"
-                    android:singleLine="true"
+                    android:text="01-01-1971"
                     android:layout_margin="5dp"/>
 
             </android.support.design.widget.TextInputLayout>

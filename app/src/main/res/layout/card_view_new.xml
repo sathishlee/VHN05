@@ -458,7 +458,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Some name here"
+                        android:text="Medavakkam"
                         android:layout_weight="1"
                         android:textSize="18dp"
                         android:textColor="#333333"
@@ -480,7 +480,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Some name here"
+                    android:text="Ankaputhur"
                     android:layout_weight="1"
                     android:textSize="18dp"
                     android:textColor="#333333"
@@ -513,7 +513,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Some name here"
+                        android:text="Pallavaram"
                         android:layout_weight="1"
                         android:textSize="18dp"
                         android:textColor="#333333"
@@ -535,7 +535,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Some name here"
+                    android:text="No.17, south usman road, T Nagar, CH-17"
                     android:layout_weight="1"
                     android:textSize="18dp"
                     android:textColor="#333333" />
@@ -560,7 +560,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tamil Selvi"
+            android:text="Julie"
             android:textSize="21dp"
             android:textColor="#333"/>
     </LinearLayout>

@@ -75,12 +75,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
             @Override
             public void onClick(View v) {
                 if (fromActivity.equalsIgnoreCase("PNMothers")){
-                    AppConstent.PNMotherDetails="PNMothers";
+                    AppConstants.PNMotherDetails="PNMothers";
                     context.startActivity(new Intent(context.getApplicationContext(), PNMotherDetailsActivity.class));
 
                 }
                 else if(fromActivity.equalsIgnoreCase("Immunization")){
-                    AppConstent.PNMotherDetails="Immunization";
+                    AppConstants.PNMotherDetails="Immunization";
 
                     context.startActivity(new Intent(context.getApplicationContext(), PNMotherDetailsActivity.class));
 
