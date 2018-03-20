@@ -37,10 +37,28 @@ public class PNMotherListResponse {
     }
 
     public static class VhnAN_Mothers_List {
+        private String mLongitude;
+        private String mLatitude;
         private String vhnId;
         private String mid;
         private String mPicmeId;
         private String mName;
+
+        public String getMLongitude() {
+            return mLongitude;
+        }
+
+        public void setMLongitude(String mLongitude) {
+            this.mLongitude = mLongitude;
+        }
+
+        public String getMLatitude() {
+            return mLatitude;
+        }
+
+        public void setMLatitude(String mLatitude) {
+            this.mLatitude = mLatitude;
+        }
 
         public String getVhnId() {
             return vhnId;

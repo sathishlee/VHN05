@@ -1,9 +1,12 @@
 package com.unicef.vhn.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +30,7 @@ TextView txt_mother_name,txt_picme_id,txt_mobile_number,txt_mage,txt_mlmpdate,tx
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        showActionBar();
         initUI();
         onClickListner();
     }
@@ -35,6 +39,23 @@ TextView txt_mother_name,txt_picme_id,txt_mobile_number,txt_mage,txt_mlmpdate,tx
 
     }
 
+    public void showActionBar(){
+        ActionBar actionBar = getSupportActionBar();
+
+        actionBar.setTitle("Mother's Detail ");
+
+        actionBar.setHomeButtonEnabled(true);
+
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(this, MainActivity.class);
+        finish();
+        startActivity(intent);
+        return super.onOptionsItemSelected(item);
+    }
     private void initUI() {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);

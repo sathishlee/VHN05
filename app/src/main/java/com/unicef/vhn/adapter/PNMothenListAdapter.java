@@ -2,14 +2,18 @@ package com.unicef.vhn.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.unicef.vhn.R;
 import com.unicef.vhn.activity.MotherTrackActivity;
+import com.unicef.vhn.activity.MothersDetailsActivity;
+import com.unicef.vhn.activity.PNMotherDetailsActivity;
 import com.unicef.vhn.activity.PNMotherVisitListActivity;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.PNMotherListResponse;
@@ -41,11 +45,21 @@ public class PNMothenListAdapter  extends RecyclerView.Adapter<PNMothenListAdapt
         final PNMotherListResponse.VhnAN_Mothers_List  pNMotherResponseModel =mResult.get(position);
         holder.txt_username.setText(pNMotherResponseModel.getMName());
         holder.txt_picme_id.setText(pNMotherResponseModel.getMPicmeId());
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AppConstants.SELECTED_MID=pNMotherResponseModel.getMid();
-                applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(),MotherTrackActivity.class));
+//                applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(),MotherTrackActivity.class));
+//                applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(),PNMotherDetailsActivity.class));
+
+                Uri gmmIntentUri = Uri.parse("google.navigation:q="+pNMotherResponseModel.getMLatitude()+","+pNMotherResponseModel.getMLongitude());
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                if (mapIntent.resolveActivity(applicationContext.getPackageManager()) != null) {
+                    applicationContext. startActivity(mapIntent);
+                }
             }
         });
     }
@@ -57,11 +71,13 @@ public class PNMothenListAdapter  extends RecyclerView.Adapter<PNMothenListAdapt
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView txt_username, txt_picme_id;
+        LinearLayout ll_img_view_location;
 
         public ViewHolder(View itemView) {
             super(itemView);
             txt_username = itemView.findViewById(R.id.txt_username);
             txt_picme_id = itemView.findViewById(R.id.txt_picme_id);
+            ll_img_view_location = itemView.findViewById(R.id.ll_img_view_location);
         }
     }
 }

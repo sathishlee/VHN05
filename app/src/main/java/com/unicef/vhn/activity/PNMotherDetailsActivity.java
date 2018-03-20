@@ -32,7 +32,6 @@ public class PNMotherDetailsActivity extends AppCompatActivity implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pnmother_details);
-
         viewLocation =(Button) findViewById(R.id.btn_view_location);
         otpView = (LinearLayout)findViewById(R.id.otpview);
         vhn_profile = (CardView) findViewById(R.id.vhn_profile);

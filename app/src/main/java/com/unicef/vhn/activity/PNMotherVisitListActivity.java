@@ -114,6 +114,8 @@ public class PNMotherVisitListActivity extends AppCompatActivity implements PNMo
                 mresponseResult.setMName(jsonObject.getString("mName"));
                 mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
                 mresponseResult.setVhnId(jsonObject.getString("vhnId"));
+                mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
+                mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
 
 
                 mResult.add(mresponseResult);
