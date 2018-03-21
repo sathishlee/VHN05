@@ -5,7 +5,10 @@ package com.unicef.vhn.constant;
  */
 
 public class Apiconstants {
-    public static final String BASE_URL = "http://192.168.100.235/thaimaiapp/api/vhn/Vhn/";
+//    public static final String BASE_URL = "http://192.168.100.235/thaimaiapp/api/vhn/Vhn/";
+
+    public static final String BASE_URL = "http://demo.satvatinfosol.com/thaimai/api/vhn/Vhn/";
+
     public static final String LOG_IN_CHECK = "logincheck";
 //    http://192.168.100.235/thaimaiapp/api/vhn/Vhn/vVhnMothersList
     public static final String MOTHER_DETAILS_LIST = "vVhnMothersList";
