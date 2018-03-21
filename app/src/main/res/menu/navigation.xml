@@ -12,7 +12,7 @@
     <item
         android:id="@+id/risk"
         android:icon="@drawable/exclamation_circle_nve"
-        android:title="High Risk" />
+        android:title="Risk Status" />
 
   <!--  <item
         android:id="@+id/infant"

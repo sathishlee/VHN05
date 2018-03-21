@@ -1,6 +1,7 @@
 package com.unicef.vhn.activity;
 
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -91,48 +92,24 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.an_mothers) {
-            AppConstants.isfromhome=1;
-            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content,
-                    mothers.newInstance()).commit();
-        } else if (id == R.id.pn_hbnc_mothers) {
-
-
-//        }else if (id == R.id.hbnc) {
-//            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-//            fragmentManager.beginTransaction().replace(R.id.content,
-//                    PnMotherListFragment.newInstance()).commit();
-        }else if (id == R.id.immunization) {
-
-
-        } /*else if (id == R.id.mothers) {
-            AppConstants.isfromhome=0;
-            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content,
-                    mothers.newInstance()).commit();
-
-        } else if (id == R.id.risk) {
-
-            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content,
-                    mothers.newInstance()).commit();
-
-        } else if (id == R.id.infant) {
-
-        }*/
-        else if (id == R.id.alert) {
-            AppConstants.isfromhome=2;
-
-
-        }else if (id == R.id.today_visit) {
-            AppConstants.isfromhome = 1;
+            Intent i = new Intent(getApplicationContext(), AnMotherListActivity.class);
+            startActivity(i);
+        }
+        else if (id == R.id.pn_hbnc_mothers) {
+            Intent i = new Intent(getApplicationContext(), PNHBNCListActivity.class);
+            startActivity(i);
+        }
+        else if (id == R.id.immunization) {
 
         }
-//        else if (id == R.id.message) {
-//            AppConstants.isfromhome=1;
-//           startActivity(new Intent(getApplicationContext(), SendMessageActivity.class));
-//
-//        }
+
+        else if (id == R.id.alert) {
+
+        }
+
+        else if (id == R.id.today_visit) {
+
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -171,7 +148,6 @@ public class MainActivity extends AppCompatActivity
             case R.id.home:
                 // Action to perform when Home Menu item is selected.
                 selectedFragment = home.newInstance();
-
                 break;
 
             /*case R.id.mothers:
@@ -180,12 +156,13 @@ public class MainActivity extends AppCompatActivity
                 break;*/
             case R.id.mothers:
                 // Action to perform when Bag Menu item is selected.
-                AppConstants.isfromhome=0;
+//                AppConstants.isfromhome=0;
                 selectedFragment =  mothers.newInstance();
+                break;
 
-                break; case R.id.risk:
+            case R.id.risk:
                 // Action to perform when Bag Menu item is selected.
-                AppConstants.isfromhome=0;
+//                AppConstants.isfromhome=0;
                 selectedFragment =  risk.newInstance();
                 break;
 
@@ -200,7 +177,6 @@ public class MainActivity extends AppCompatActivity
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content, selectedFragment);
         transaction.commit();
-
 
     }
 }

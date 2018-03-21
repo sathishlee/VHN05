@@ -11,13 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.unicef.vhn.R;
-import com.unicef.vhn.activity.MotherTrackActivity;
-import com.unicef.vhn.activity.MothersDetailsActivity;
-import com.unicef.vhn.activity.PNMotherDetailsActivity;
-import com.unicef.vhn.activity.PNMotherVisitListActivity;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.PNMotherListResponse;
-import com.unicef.vhn.model.PNMotherResponseModel;
 
 import java.util.List;
 
@@ -36,7 +31,7 @@ public class PNMothenListAdapter  extends RecyclerView.Adapter<PNMothenListAdapt
 
     @Override
     public PNMothenListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mothers,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mothers_an,parent,false);
         return new PNMothenListAdapter.ViewHolder(view);
     }
 
@@ -77,7 +72,7 @@ public class PNMothenListAdapter  extends RecyclerView.Adapter<PNMothenListAdapt
             super(itemView);
             txt_username = itemView.findViewById(R.id.txt_username);
             txt_picme_id = itemView.findViewById(R.id.txt_picme_id);
-            ll_img_view_location = itemView.findViewById(R.id.ll_img_view_location);
+//            ll_img_view_location = itemView.findViewById(R.id.ll_img_view_location);
         }
     }
 }

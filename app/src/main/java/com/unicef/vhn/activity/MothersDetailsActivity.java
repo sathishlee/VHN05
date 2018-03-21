@@ -6,10 +6,12 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.unicef.vhn.R;
@@ -17,63 +19,42 @@ import com.unicef.vhn.model.ViewRecordActivity;
 
 
 public class MothersDetailsActivity extends AppCompatActivity implements View.OnClickListener {
-/*    Button viewLocation,viewReport;
-    LinearLayout otpView;
-    CardView vhn_profile;
-    ImageView img_call,img_call_a;
-    TextView call_vhn;*/
+
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
+
+    Button btn_view_location, btn_view_report;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mothers_details);
-       /* viewLocation =(Button) findViewById(R.id.btn_view_location);
-        otpView = (LinearLayout)findViewById(R.id.otpview);
-        vhn_profile = (CardView) findViewById(R.id.vhn_profile);
-        viewReport =(Button) findViewById(R.id.btn_view_report);
-        img_call= (ImageView)findViewById(R.id.img_call);
-//        img_call_a= (ImageView)findViewById(R.id.img_call_a);
-        call_vhn= (TextView)findViewById(R.id.call_vhn);
-
-        if (AppConstants.isfromhome==1){
-            vhn_profile.setVisibility(View.GONE);
-            otpView.setVisibility(View.VISIBLE);
-            //AppConstants.isfromhome=0;
-        } else if(AppConstants.isfromhome==2){
-            otpView.setVisibility(View.GONE);
-            vhn_profile.setVisibility(View.VISIBLE);
-            //AppConstants.isfromhome=0;
-        }else{
-            otpView.setVisibility(View.GONE);
-            vhn_profile.setVisibility(View.GONE);
-        }
-        viewLocation.setOnClickListener(this);
-        viewReport.setOnClickListener(this);
-        img_call.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                makeCall();
-            }
-        });img_call_a.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                makeCall();
-            }
-        });
-        call_vhn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                makeCall();
-            }
-        });
-
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setTitle("Mother Details");
-        actionBar.setDisplayHomeAsUpEnabled(true);*/
+        initUI();
+        showActionBar();
 
     }
+    private void showActionBar() {
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Mother Detail");
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+    }
+
+    public void initUI(){
+
+        btn_view_location = (Button) findViewById(R.id.btn_view_location);
+
+        btn_view_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MothersDetailsActivity.this, MotherTrackActivity.class);
+                finish();
+                startActivity(intent);
+            }
+        });
+
+    }
+
 
     private void makeCall() {
         if (checkPermission(Manifest.permission.CALL_PHONE)) {

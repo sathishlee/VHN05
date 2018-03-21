@@ -66,25 +66,43 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:orientation="horizontal"
             android:background="@drawable/sos_background">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:gravity="end"
+                android:textAlignment="center"
                 android:text="SOS"
+                android:paddingTop="2dp"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_title" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:background="@drawable/sos_alert_count_bg"
-                android:padding="4dp"
-                android:text="3"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_title" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:gravity="end"
+                android:baselineAligned="false"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="25dp"
+                    android:gravity="center"
+                    android:background="@drawable/sos_alert_count_bg"
+                    android:layout_height="25dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="3"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_title" />
+                </LinearLayout>
+
+        </LinearLayout>
+
+
         </RelativeLayout>
 
         <android.support.v7.widget.CardView
@@ -97,10 +115,11 @@
             app:cardElevation="2.0dip"
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_margin="10dp"
             android:orientation="horizontal"
             android:weightSum="3">
 
@@ -115,14 +134,14 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
-                    android:src="@mipmap/ic_ome_mother_count_new_round" />
+                    android:src="@drawable/mothers_list_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="125"
-                    android:textColor="#2F80ED"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/text_title"/>
 
                 <TextView
@@ -130,7 +149,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Mothers"
-                    android:textSize="18dp"
+                    android:textSize="@dimen/text_title"
                     android:textColor="@color/text_main"/>
 
 
@@ -146,8 +165,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
-
-                    android:src="@mipmap/ic_home_risk_count_new_round" />
+                    android:src="@drawable/high_risk_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -155,15 +173,15 @@
                     android:layout_gravity="center"
                     android:text="125"
                     android:textSize="@dimen/text_title"
-                    android:textColor="#ff0000"/>
+                    android:textColor="@color/colorAccent"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="High Risks"
-                    android:textColor="#333333"
-                    android:textSize="18dp"/>
+                    android:textColor="@color/text_main"
+                    android:textSize="@dimen/text_title"/>
 
 
             </LinearLayout>
@@ -178,8 +196,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
-
-                    android:src="@mipmap/ic_hme_infants_count_new" />
+                    android:src="@drawable/infant_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -187,26 +204,37 @@
                     android:layout_gravity="center"
                     android:text="125"
                     android:textSize="@dimen/text_title"
-                    android:textColor="#2F80ED" />
+                    android:textColor="@color/colorPrimary" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Infants"
-                    android:textColor="#333333"
-                    android:textSize="18dp" />
+                    android:textColor="@color/text_main"
+                    android:textSize="@dimen/text_title" />
 
             </LinearLayout>
+
         </LinearLayout>
+
     </android.support.v7.widget.CardView>
 <!--AN Mothers-->
+        <android.support.v7.widget.CardView
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="6.0dip"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardElevation="2.0dip"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="7dp"
-            >
+            android:padding="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -226,14 +254,14 @@
                         android:layout_height="wrap_content"
                         android:text="Antenatel Mothers"
                         android:textAlignment="textStart"
-                        android:textColor="#2F80ED"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_label"
                         android:textStyle="bold" />
 
                 </LinearLayout>
 
             </LinearLayout>
-        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -247,7 +275,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/primary_round"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:text="Total: 106"
                 android:textColor="@color/white"/>
 
@@ -256,22 +284,34 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/primary_round"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:text="High Risk: 12"
                 android:textColor="@color/white"/>
         </LinearLayout>
 
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
 
 
 
 
         <!--infants-->
+        <android.support.v7.widget.CardView
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="6.0dip"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardElevation="2.0dip"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="7dp"
-        >
+        android:padding="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -289,16 +329,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Infants"
+                    android:text="PN/HBNC Mothers"
                     android:textAlignment="textStart"
-                    android:textColor="#2F80ED"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/text_label"
                     android:textStyle="bold" />
 
             </LinearLayout>
 
         </LinearLayout>
-    </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -307,12 +346,13 @@
             android:weightSum="2"
             android:layout_margin="4dp"
             android:padding="4dp">
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/primary_round"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:text="Total: 106"
                 android:textColor="@color/white"/>
 
@@ -321,17 +361,36 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/primary_round"
-                android:layout_marginLeft="5dp"
-                android:text="High Risk: 12"
+                android:layout_marginStart="5dp"
+                android:text="Term/Preterm: 12"
                 android:textColor="@color/white"/>
+
         </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="6.0dip"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardElevation="2.0dip"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="7dp"
-            >
+            android:padding="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -351,7 +410,7 @@
                         android:layout_height="wrap_content"
                         android:text="Due List"
                         android:textAlignment="textStart"
-                        android:textColor="#2F80ED"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_label"
                         android:textStyle="bold" />
 
@@ -376,6 +435,7 @@
             </LinearLayout>
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -397,16 +457,15 @@
                     android:background="#2F80ED"
                     android:text="125"
                     android:textColor="@color/white"
-                    android:textSize="20dp" />
+                    android:textSize="@dimen/text_title" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="AN TT 1"
-                    android:textSize="18dp"
-                    android:textColor="#333333"/>
-
+                    android:textSize="@dimen/text_label"
+                    android:textColor="@color/text_main"/>
 
             </LinearLayout>
 
@@ -424,17 +483,15 @@
                     android:background="#2F80ED"
                     android:text="125"
                     android:textColor="@color/white"
-                    android:textSize="20dp" />
+                    android:textSize="@dimen/text_title" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="AN TT 2"
-                    android:textSize="18dp"
-                    android:textColor="#333333"/>
-
-
+                    android:textSize="@dimen/text_label"
+                    android:textColor="@color/text_main"/>
 
             </LinearLayout>
 
@@ -452,17 +509,23 @@
                     android:background="#2F80ED"
                     android:text="125"
                     android:textColor="@color/white"
-                    android:textSize="20dp" />
+                    android:textSize="@dimen/text_title" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="PN/HBNC"
-                    android:textSize="18dp"
-                    android:textColor="#333333"/>
+                    android:textSize="@dimen/text_label"
+                    android:textColor="@color/text_main"/>
+
             </LinearLayout>
+
         </LinearLayout>
+
+   </LinearLayout>
+
+</android.support.v7.widget.CardView>
 
 
 
