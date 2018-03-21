@@ -16,7 +16,6 @@ import com.unicef.vhn.R;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.view.PNMotherListsViews;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,7 +28,9 @@ TextView txt_mother_name,txt_picme_id,txt_mobile_number,txt_mage,txt_mlmpdate,tx
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.activity_mothers_details);
+
+//        setContentView(R.layout.activity_maps);
         showActionBar();
         initUI();
         onClickListner();

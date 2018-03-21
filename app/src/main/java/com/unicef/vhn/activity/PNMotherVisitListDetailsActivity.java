@@ -47,7 +47,7 @@ ArrayList<String> mothersVisitList;
        /* txt_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(PNMotherVisitListActivity.this, PNMotherVisit_editActivity.class);
+                Intent i = new Intent(MotherListActivity.this, PNMotherVisit_editActivity.class);
                 startActivity(i);
             }
         });*/
@@ -67,7 +67,7 @@ ArrayList<String> mothersVisitList;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(PNMotherVisitListDetailsActivity.this, PNMotherVisitListActivity.class);
+        Intent intent = new Intent(PNMotherVisitListDetailsActivity.this, MotherListActivity.class);
         finish();
         startActivity(intent);
         return super.onOptionsItemSelected(item);

@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.unicef.vhn.R;
+import com.unicef.vhn.activity.MothersDetailsActivity;
+import com.unicef.vhn.activity.PNMotherDetailsActivity;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.PNMotherListResponse;
 
@@ -48,13 +50,14 @@ public class PNMothenListAdapter  extends RecyclerView.Adapter<PNMothenListAdapt
                 AppConstants.SELECTED_MID=pNMotherResponseModel.getMid();
 //                applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(),MotherTrackActivity.class));
 //                applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(),PNMotherDetailsActivity.class));
+                applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(),MothersDetailsActivity.class));
 
-                Uri gmmIntentUri = Uri.parse("google.navigation:q="+pNMotherResponseModel.getMLatitude()+","+pNMotherResponseModel.getMLongitude());
+               /* Uri gmmIntentUri = Uri.parse("google.navigation:q="+pNMotherResponseModel.getMLatitude()+","+pNMotherResponseModel.getMLongitude());
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                 mapIntent.setPackage("com.google.android.apps.maps");
                 if (mapIntent.resolveActivity(applicationContext.getPackageManager()) != null) {
                     applicationContext. startActivity(mapIntent);
-                }
+                }*/
             }
         });
     }

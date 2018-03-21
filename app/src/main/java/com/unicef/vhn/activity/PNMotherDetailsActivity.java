@@ -105,7 +105,7 @@ public class PNMotherDetailsActivity extends AppCompatActivity implements View.O
 //                    startActivity(new Intent(getApplicationContext(), ImmunizationDoseListActivity.class));
 
                 } else {
-                    startActivity(new Intent(getApplicationContext(), PNMotherVisitListActivity.class));
+                    startActivity(new Intent(getApplicationContext(), MotherListActivity.class));
 
                 }
         }break;

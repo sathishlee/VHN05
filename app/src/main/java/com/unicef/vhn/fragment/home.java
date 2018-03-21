@@ -10,8 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.unicef.vhn.R;
-import com.unicef.vhn.activity.MothersDetailsActivity;
-import com.unicef.vhn.activity.PNMotherVisitListActivity;
+import com.unicef.vhn.activity.MotherListActivity;
 
 
 public class home extends Fragment {
@@ -36,7 +35,8 @@ Button btnShowImmunizationList;*/
         img_mother_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), PNMotherVisitListActivity.class));
+                startActivity(new Intent(getActivity(), MotherListActivity.class));
+
             }
         });
          /*cardview = view.findViewById(R.id.cardview);

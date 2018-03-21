@@ -133,9 +133,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Infant Details"
-                            android:drawableStart="@mipmap/ic_hme_infants_count_new"
                             android:textSize="14sp"
                             />
+                        <!--                            android:drawableStart="@mipmap/ic_hme_infants_count_new"
+-->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
