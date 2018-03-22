@@ -58,6 +58,8 @@ public class home extends Fragment implements MotherListsViews {
         initUI(view);
 
 
+
+        img_mother_count = (ImageView) view.findViewById(R.id.img_mother_count);
         img_mother_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

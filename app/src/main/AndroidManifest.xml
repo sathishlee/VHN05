@@ -72,9 +72,10 @@
             android:name=".activity.MothersDetailsActivity"
             android:theme="@style/AppTheme">
 
-        </activity>
-        <activity
-            android:name=".activity.SplashScreenActivity"
+
+
+
+        <activity android:name=".activity.SplashScreenActivity"
             android:theme="@style/AppTheme1">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
