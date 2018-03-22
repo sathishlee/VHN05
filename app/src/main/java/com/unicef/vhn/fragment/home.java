@@ -32,8 +32,8 @@ public class home extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-         View view = inflater.inflate(R.layout.fragment_home_new, container, false);
 
+        View view = inflater.inflate(R.layout.fragment_home_new, container, false);
         img_mother_count = (ImageView) view.findViewById(R.id.img_mother_count);
         img_mother_count.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,7 +44,7 @@ public class home extends Fragment {
         });
 
         high_risk_count = (ImageView) view.findViewById(R.id.high_risk_count);
-        img_mother_count.setOnClickListener(new View.OnClickListener() {
+        high_risk_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(),HighRiskListActivity.class));
