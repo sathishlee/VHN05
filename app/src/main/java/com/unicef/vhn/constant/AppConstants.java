@@ -7,6 +7,7 @@ package com.unicef.vhn.constant;
 public class AppConstants {
     public static   int isfromhome=0;
     public static String PNMotherDetails="";
+    public static String GET_MOTHER_LIST_TYPE="";
     public static final String PREF_NAME = "motherapp";
     public static final String IS_LOGIN = "is_Login";
 

@@ -92,6 +92,7 @@
                     android:layout_height="25dp">
 
                     <TextView
+                        android:id="@+id/txt_sos_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="end"
@@ -137,6 +138,7 @@
                     android:src="@drawable/mothers_list_icon" />
 
                 <TextView
+                    android:id="@+id/txt_mother_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -162,13 +164,14 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/high_risk_count"
+                    android:id="@+id/img_high_risk_count"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:src="@drawable/high_risk_icon" />
 
                 <TextView
+                    android:id="@+id/txt_high_risk_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -194,19 +197,20 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/infant_count"
+                    android:id="@+id/img_infant_count"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:src="@drawable/infant_icon" />
 
                 <TextView
+                    android:id="@+id/txt_infants_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="125"
-                    android:textSize="@dimen/text_title"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_title" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -273,6 +277,7 @@
             android:layout_margin="4dp"
             android:padding="4dp">
             <Button
+                android:id="@+id/but_an_mother_total_count"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -282,6 +287,7 @@
                 android:textColor="@color/white"/>
 
             <Button
+                android:id="@+id/but_an_mother_high_risk_count"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -350,6 +356,7 @@
             android:padding="4dp">
 
             <Button
+                android:id="@+id/but_an_mother_pn_hbnc_totlal_count"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -359,6 +366,7 @@
                 android:textColor="@color/white"/>
 
             <Button
+                android:id="@+id/but_an_mother_pn_hbnc_term_preterm_count"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -453,6 +461,7 @@
                 android:gravity="center">
 
                 <TextView
+                    android:id="@+id/but_an_tt1"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:gravity="center"
@@ -462,6 +471,8 @@
                     android:textSize="@dimen/text_title" />
 
                 <TextView
+                    android:id="@+id/but_an_tt2"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -514,6 +525,7 @@
                     android:textSize="@dimen/text_title" />
 
                 <TextView
+                    android:id="@+id/but_an_pn_hbnc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"

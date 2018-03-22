@@ -17,7 +17,11 @@ public class Apiconstants {
 
 
 //    http://192.168.100.235/thaimaiapp/api/vhn/Vhn/vDashboard      /*vhnCode:V10001 , vhnId:1*/
-public static final String DASH_BOARD= "Dashboard";
+public static final String DASH_BOARD= "vDashboard ";
+
+
+//    http://192.168.100.235/thaimaiapp/api/vhn/Vhn/vDashboardMothersPNRecord      /*vhnCode:V10001 , vhnId:1*/
+public static final String DASH_BOARD_MOTHERS_PN_RECORDS= "vDashboardMothersPNRecord ";
 
 
 }

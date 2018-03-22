@@ -90,6 +90,66 @@ public class MotherListPresenter implements MotherListInteractor {
     }
 
     @Override
+    public void getPNMotherRecordsList(final String vhnCode, final String vhnId) {
+
+        motherListsViews.showProgress();
+        String url = Apiconstants.BASE_URL + Apiconstants.DASH_BOARD_MOTHERS_PN_RECORDS;
+        Log.d("Log in check Url--->",url);
+        Log.d("vhnCode--->",vhnCode);
+        Log.d("vhnId--->",vhnId);
+        StringRequest stringRequest =new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                motherListsViews.hideProgress();
+                motherListsViews.showLoginSuccess(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                motherListsViews.hideProgress();
+                motherListsViews.showLoginSuccess(error.toString());
+            }
+        }){
+
+
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("vhnCode",vhnCode);
+                params.put("vhnId",vhnId);
+
+                Log.d("params--->",params.toString());
+
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                String credentials = "admin" + ":" + "1234";
+                String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.DEFAULT);
+                HashMap<String, String> header = new HashMap<>();
+//                header.put("Content-Type", "application/x-www-from-urlencoded; charset=utf-8");
+                header.put("Authorization", "Basic " + base64EncodedCredentials);
+                Log.d("Credentials ","Basic " +base64EncodedCredentials.toString());
+
+                return header;
+            }
+
+//            public String getBodyContentType() {
+//                return "application/x-www-from-urlencoded; charset=utf-8";
+//            }
+
+            public int getMethod() {
+                return Method.POST;
+            }
+        };
+        // Adding request to request queue
+        VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
+
+    }
+
+    @Override
     public void getSelectedMother(final String vhnCode, final String vhnId, final String mid) {
 
         motherListsViews.showProgress();
