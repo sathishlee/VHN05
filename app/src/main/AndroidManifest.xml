@@ -68,9 +68,6 @@
             android:name=".activity.AnMotherListActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.HighRiskListActivity"
-            android:theme="@style/AppTheme" />
-        <activity
             android:name=".activity.PNHBNCListActivity"
             android:theme="@style/AppTheme" />
         <activity
