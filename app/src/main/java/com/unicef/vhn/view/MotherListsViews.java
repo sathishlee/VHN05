@@ -4,7 +4,7 @@ package com.unicef.vhn.view;
  * Created by Suthishan on 20/1/2018.
  */
 
-public interface PNMotherListsViews {
+public interface MotherListsViews {
     void showProgress();
     void hideProgress();
     void showLoginSuccess(String response);

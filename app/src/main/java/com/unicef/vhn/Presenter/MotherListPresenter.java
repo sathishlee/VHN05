@@ -10,8 +10,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.unicef.vhn.constant.Apiconstants;
-import com.unicef.vhn.interactor.PNMotherListInteractor;
-import com.unicef.vhn.view.PNMotherListsViews;
+import com.unicef.vhn.interactor.MotherListInteractor;
+import com.unicef.vhn.view.MotherListsViews;
 import com.unicef.vhn.volleyservice.VolleySingleton;
 
 import java.util.HashMap;
@@ -21,19 +21,19 @@ import java.util.Map;
  * Created by sathish on 3/20/2018.
  */
 
-public class PNMotherListPresenter implements PNMotherListInteractor {
+public class MotherListPresenter implements MotherListInteractor {
 
     Activity activity;
-    PNMotherListsViews pnMotherListsViews;
+    MotherListsViews motherListsViews;
 
-    public PNMotherListPresenter(Activity activity, PNMotherListsViews pnMotherListsViews) {
+    public MotherListPresenter(Activity activity, MotherListsViews motherListsViews) {
         this.activity = activity;
-        this.pnMotherListsViews = pnMotherListsViews;
+        this.motherListsViews = motherListsViews;
     }
 
     @Override
     public void getPNMotherList(final String vhnCode, final String vhnId) {
-        pnMotherListsViews.showProgress();
+        motherListsViews.showProgress();
         String url = Apiconstants.BASE_URL + Apiconstants.MOTHER_DETAILS_LIST;
         Log.d("Log in check Url--->",url);
         Log.d("vhnCode--->",vhnCode);
@@ -41,14 +41,14 @@ public class PNMotherListPresenter implements PNMotherListInteractor {
         StringRequest stringRequest =new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                pnMotherListsViews.hideProgress();
-                pnMotherListsViews.showLoginSuccess(response);
+                motherListsViews.hideProgress();
+                motherListsViews.showLoginSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                pnMotherListsViews.hideProgress();
-                pnMotherListsViews.showLoginSuccess(error.toString());
+                motherListsViews.hideProgress();
+                motherListsViews.showLoginSuccess(error.toString());
             }
         }){
 
@@ -90,9 +90,9 @@ public class PNMotherListPresenter implements PNMotherListInteractor {
     }
 
     @Override
-    public void getSelectedPNMother(final String vhnCode, final String vhnId, final String mid) {
+    public void getSelectedMother(final String vhnCode, final String vhnId, final String mid) {
 
-        pnMotherListsViews.showProgress();
+        motherListsViews.showProgress();
         String url = Apiconstants.BASE_URL + Apiconstants.MOTHER_DETAILS_TRACKING;
         Log.d("Log in check Url--->",url);
         Log.d("vhnCode--->",vhnCode);
@@ -101,14 +101,15 @@ public class PNMotherListPresenter implements PNMotherListInteractor {
         StringRequest stringRequest =new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                pnMotherListsViews.hideProgress();
-                pnMotherListsViews.showLoginSuccess(response);
+                Log.d("SelectedMother","Success"+response);
+                motherListsViews.hideProgress();
+                motherListsViews.showLoginSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                pnMotherListsViews.hideProgress();
-                pnMotherListsViews.showLoginSuccess(error.toString());
+                motherListsViews.hideProgress();
+                motherListsViews.showLoginSuccess(error.toString());
             }
         }){
 
