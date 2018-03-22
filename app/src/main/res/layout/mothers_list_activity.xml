@@ -272,10 +272,10 @@
 
 
 
-        <LinearLayout
+       <!-- <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical">-->
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/mother_recycler_view"
@@ -283,11 +283,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-        </LinearLayout>
+      <!--  </LinearLayout>-->
 
-        <include layout="@layout/item_mothers_an"/>
+        <!--<include layout="@layout/item_mothers_an"/>
 
-        <include layout="@layout/item_mothers_pnhbnc"/>
+        <include layout="@layout/item_mothers_pnhbnc"/>-->
 
     </LinearLayout>
 

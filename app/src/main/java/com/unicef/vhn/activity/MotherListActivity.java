@@ -11,11 +11,11 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.unicef.vhn.Preference.PreferenceData;
-import com.unicef.vhn.Presenter.PNMotherListPresenter;
+import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
-import com.unicef.vhn.adapter.PNMothenListAdapter;
+import com.unicef.vhn.adapter.MothenListAdapter;
 import com.unicef.vhn.model.PNMotherListResponse;
-import com.unicef.vhn.view.PNMotherListsViews;
+import com.unicef.vhn.view.MotherListsViews;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,19 +24,20 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MotherListActivity extends AppCompatActivity implements PNMotherListsViews {
+public class MotherListActivity extends AppCompatActivity implements MotherListsViews {
     ProgressDialog pDialog;
-    PNMotherListPresenter pnMotherListPresenter;
+    MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
     private List<PNMotherListResponse.VhnAN_Mothers_List> mResult ;
     PNMotherListResponse.VhnAN_Mothers_List mresponseResult;
-    private RecyclerView recyclerView;
-    private PNMothenListAdapter mAdapter;
+//    private RecyclerView recyclerView;
+    private RecyclerView mother_recycler_view;
+    private MothenListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pnmother_visit_list);
+        setContentView(R.layout.mothers_list_activity);
 
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
@@ -50,18 +51,18 @@ public class MotherListActivity extends AppCompatActivity implements PNMotherLis
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData =new PreferenceData(this);
-        pnMotherListPresenter = new PNMotherListPresenter(MotherListActivity.this,this);
+        pnMotherListPresenter = new MotherListPresenter(MotherListActivity.this,this);
 //        pnMotherListPresenter.getPNMotherList("V10001","1");
         pnMotherListPresenter.getPNMotherList(preferenceData.getVhnCode(),preferenceData.getVhnId());
         mResult = new ArrayList<>();
-        recyclerView = (RecyclerView) findViewById(R.id.rec_immunization);
+        mother_recycler_view = (RecyclerView) findViewById(R.id.mother_recycler_view);
 
-        mAdapter = new PNMothenListAdapter(mResult, MotherListActivity.this);
+        mAdapter = new MothenListAdapter(mResult, MotherListActivity.this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MotherListActivity.this);
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
+        mother_recycler_view.setLayoutManager(mLayoutManager);
+        mother_recycler_view.setItemAnimator(new DefaultItemAnimator());
+        mother_recycler_view.setAdapter(mAdapter);
 
 //        CardView pn_visit = (CardView) findViewById(R.id.pn_visit);
 

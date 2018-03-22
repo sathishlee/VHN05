@@ -11,26 +11,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.unicef.vhn.Preference.PreferenceData;
-import com.unicef.vhn.Presenter.PNMotherListPresenter;
+import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.constant.AppConstants;
-import com.unicef.vhn.view.PNMotherListsViews;
+import com.unicef.vhn.view.MotherListsViews;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class MotherTrackActivity extends AppCompatActivity implements PNMotherListsViews {
+public class MotherTrackActivity extends AppCompatActivity implements MotherListsViews {
 TextView txt_mother_name,txt_picme_id,txt_mobile_number,txt_mage,txt_mlmpdate,txt_medddate;
     ProgressDialog pDialog;
-    PNMotherListPresenter pnMotherListPresenter;
+    MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mothers_details);
-
-//        setContentView(R.layout.activity_maps);
+//        setContentView(R.layout.activity_mothers_details);
+        setContentView(R.layout.activity_maps);
         showActionBar();
         initUI();
         onClickListner();
@@ -62,9 +61,9 @@ TextView txt_mother_name,txt_picme_id,txt_mobile_number,txt_mage,txt_mlmpdate,tx
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData =new PreferenceData(this);
-        pnMotherListPresenter = new PNMotherListPresenter(MotherTrackActivity.this,this);
-//        pnMotherListPresenter.getSelectedPNMother("V10001","1","1");
-        pnMotherListPresenter.getSelectedPNMother(preferenceData.getVhnCode(),preferenceData.getVhnId(),  AppConstants.SELECTED_MID);
+        pnMotherListPresenter = new MotherListPresenter(MotherTrackActivity.this,this);
+//        pnMotherListPresenter.getSelectedMother("V10001","1","1");
+        pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(),preferenceData.getVhnId(),  AppConstants.SELECTED_MID);
 
         txt_mother_name = (TextView) findViewById(R.id.txt_mother_name);
         txt_picme_id = (TextView) findViewById(R.id.txt_picme_id);

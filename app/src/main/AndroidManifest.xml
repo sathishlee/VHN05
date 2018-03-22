@@ -73,8 +73,11 @@
         <activity
             android:name=".activity.PNHBNCListActivity"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.MothersDetailsActivity"
+            android:theme="@style/AppTheme">
 
-
+        </activity>
 
 
         <activity android:name=".activity.SplashScreenActivity"
