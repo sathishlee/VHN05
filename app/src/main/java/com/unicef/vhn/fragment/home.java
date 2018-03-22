@@ -18,7 +18,6 @@ import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.HomePresenter;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
-import com.unicef.vhn.activity.HighRiskListActivity;
 import com.unicef.vhn.activity.InfantListActivity;
 import com.unicef.vhn.activity.MotherListActivity;
 import com.unicef.vhn.activity.MotherTrackActivity;

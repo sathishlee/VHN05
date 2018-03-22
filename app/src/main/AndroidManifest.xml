@@ -72,7 +72,7 @@
             android:name=".activity.MothersDetailsActivity"
             android:theme="@style/AppTheme">
 
-
+        </activity>
 
 
         <activity android:name=".activity.SplashScreenActivity"
