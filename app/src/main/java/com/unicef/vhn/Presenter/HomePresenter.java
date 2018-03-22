@@ -42,6 +42,7 @@ public class HomePresenter implements HomeInteractor{
         StringRequest stringRequest =new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Log.d(HomePresenter.class.getSimpleName(),response);
                 motherListsViews.hideProgress();
                 motherListsViews.showLoginSuccess(response);
             }

@@ -6,6 +6,7 @@ package com.unicef.vhn.interactor;
 
 public interface MotherListInteractor {
     void getPNMotherList(String vhnCode, String vhnId) ;
+    void getPNMotherRecordsList(String vhnCode, String vhnId) ;
     void getSelectedMother(String vhnCode, String vhnId, String mid) ;
 
 }

@@ -57,22 +57,14 @@ public class MotherListActivity extends AppCompatActivity implements MotherLists
         mResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView) findViewById(R.id.mother_recycler_view);
 
-        mAdapter = new MothenListAdapter(mResult, MotherListActivity.this);
+        mAdapter = new MothenListAdapter(mResult, MotherListActivity.this,"");
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MotherListActivity.this);
         mother_recycler_view.setLayoutManager(mLayoutManager);
         mother_recycler_view.setItemAnimator(new DefaultItemAnimator());
         mother_recycler_view.setAdapter(mAdapter);
 
-//        CardView pn_visit = (CardView) findViewById(R.id.pn_visit);
 
-        /*pn_visit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MotherListActivity.this, PNMotherVisitListDetailsActivity.class);
-                startActivity(i);
-            }
-        });*/
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -104,17 +96,13 @@ public class MotherListActivity extends AppCompatActivity implements MotherLists
             JSONArray jsonArray = mJsnobject.getJSONArray("vhnAN_Mothers_List");
             for (int i = 0; i < jsonArray.length(); i++) {
                 mresponseResult =new PNMotherListResponse.VhnAN_Mothers_List();
-
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 mresponseResult.setMid(jsonObject.getString("mid"));
-
                 mresponseResult.setMName(jsonObject.getString("mName"));
                 mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
                 mresponseResult.setVhnId(jsonObject.getString("vhnId"));
                 mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
                 mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
-
-
                 mResult.add(mresponseResult);
                 mAdapter.notifyDataSetChanged();
             }

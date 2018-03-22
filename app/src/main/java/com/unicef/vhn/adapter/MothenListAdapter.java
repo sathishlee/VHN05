@@ -23,23 +23,27 @@ import java.util.List;
 public class MothenListAdapter extends RecyclerView.Adapter<MothenListAdapter.ViewHolder> {
     private List<PNMotherListResponse.VhnAN_Mothers_List> mResult ;
     Activity applicationContext;
+    String type;
 
-    public MothenListAdapter(List<PNMotherListResponse.VhnAN_Mothers_List> mResult, Activity applicationContext) {
+    public MothenListAdapter(List<PNMotherListResponse.VhnAN_Mothers_List> mResult, Activity applicationContext,String type) {
      this.applicationContext =applicationContext;
         this.mResult =mResult;
+        this.type = type;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MothenListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mothers_an,parent,false);
-        return new ViewHolder(view);
+        return new MothenListAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(MothenListAdapter.ViewHolder holder, int position) {
         final PNMotherListResponse.VhnAN_Mothers_List  pNMotherResponseModel =mResult.get(position);
         holder.txt_username.setText(pNMotherResponseModel.getMName());
         holder.txt_picme_id.setText(pNMotherResponseModel.getMPicmeId());
+        holder.txt_list_type.setText(type);
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -64,13 +68,14 @@ public class MothenListAdapter extends RecyclerView.Adapter<MothenListAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView txt_username, txt_picme_id;
+        TextView txt_username, txt_picme_id,txt_list_type;
         LinearLayout ll_img_view_location;
 
         public ViewHolder(View itemView) {
             super(itemView);
             txt_username = itemView.findViewById(R.id.txt_username);
             txt_picme_id = itemView.findViewById(R.id.txt_picme_id);
+            txt_list_type = itemView.findViewById(R.id.txt_list_type);
 //            ll_img_view_location = itemView.findViewById(R.id.ll_img_view_location);
         }
     }

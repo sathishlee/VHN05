@@ -285,7 +285,8 @@
 
         </LinearLayout>
 
-        <include layout="@layout/item_mothers_pnhbnc"/>
+        <include layout="@layout/item_mothers_pnhbnc"
+            android:visibility="gone"/>
 
     </LinearLayout>
 
