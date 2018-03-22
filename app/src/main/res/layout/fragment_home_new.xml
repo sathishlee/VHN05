@@ -162,6 +162,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/high_risk_count"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
@@ -193,6 +194,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/infant_count"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"

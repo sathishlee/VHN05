@@ -59,8 +59,24 @@
             android:name=".activity.PNMotherVisitListDetailsActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.ImmunizationMotherListActivity"
+            android:name=".activity.ImmunizationListActivity"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.InfantListActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.AnMotherListActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.HighRiskListActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.PNHBNCListActivity"
+            android:theme="@style/AppTheme" />
+
+
+
+
         <activity android:name=".activity.SplashScreenActivity"
             android:theme="@style/AppTheme1">
             <intent-filter>

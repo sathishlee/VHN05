@@ -10,13 +10,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.unicef.vhn.R;
+import com.unicef.vhn.activity.HighRiskListActivity;
+import com.unicef.vhn.activity.InfantListActivity;
 import com.unicef.vhn.activity.MotherListActivity;
 
 
 public class home extends Fragment {
-ImageView img_mother_count;
-   /* CardView cardview, vhn_profile;
-Button btnShowImmunizationList;*/
+
+    ImageView img_mother_count, high_risk_count, infant_count;
+
     public static home newInstance()
     {
         home fragment = new home();
@@ -39,28 +41,22 @@ Button btnShowImmunizationList;*/
 
             }
         });
-         /*cardview = view.findViewById(R.id.cardview);
-         cardview.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 AppConstent.isfromhome=1;
-                 startActivity(new Intent(getActivity(), MothersDetailsActivity.class));
-             }
-         });*/
 
+        high_risk_count = (ImageView) view.findViewById(R.id.high_risk_count);
+        img_mother_count.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(),HighRiskListActivity.class));
+            }
+        });
 
-//        vhn_profile =(CardView) view.findViewById(R.id.vhn_profile);
-
-//        vhn_profile.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), VhnProfile.class);
-//                getActivity().finish();
-//                startActivity(intent);
-//            }
-//
-//        });
-//        btnShowImmunizationList = view.findViewById(R.id.btn_show_immunization_list);
+        infant_count = (ImageView) view.findViewById(R.id.infant_count);
+        infant_count.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), InfantListActivity.class));
+            }
+        });
 
 
         return view;
