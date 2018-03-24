@@ -53,7 +53,7 @@
                         android:textSize="@dimen/text_primary" />
 
                     <TextView
-                        android:id="@+id/txt_picme_id"
+                        android:id="@+id/txt_infant_id"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAlignment="textStart"

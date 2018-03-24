@@ -51,8 +51,9 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/risk_background">
 
+                    android:background="@drawable/filter_background">
+                    <!--android:background="@drawable/risk_background"-->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -120,7 +121,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/txt_gst_week"
+                    android:id="@+id/txt_date_of_delivery"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_secondary"
@@ -183,13 +184,13 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/txt_lmp_date"
+                    android:id="@+id/txt_type_of_delivery"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Term"
-                    android:textSize="@dimen/text_secondary"
                     android:textAlignment="textStart"
-                    android:textColor="@color/text_primary"/>
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/text_secondary" />
             </LinearLayout>
 
             <LinearLayout
@@ -209,7 +210,7 @@
                     android:textColor="@color/secondary"
                     android:textStyle="bold" />
                 <TextView
-                    android:id="@+id/txt_edd_date"
+                    android:id="@+id/txt_maturity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"

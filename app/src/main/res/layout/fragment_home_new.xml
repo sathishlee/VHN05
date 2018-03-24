@@ -80,6 +80,7 @@
                 android:textSize="@dimen/text_title" />
 
             <LinearLayout
+                android:id="@+id/ll_sos_view"
                 android:layout_width="match_parent"
                 android:gravity="end"
                 android:baselineAligned="false"

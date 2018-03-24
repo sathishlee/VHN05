@@ -42,12 +42,14 @@ public class LoginPresenter implements LoginInteractor{
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+
                 Log.d("Log in success",response);
                 view.showLoginSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+
                 Log.d("Log in Error",error.toString());
                 view.showLoginError(error.toString());
             }

@@ -32,9 +32,9 @@ public class MotherListPresenter implements MotherListInteractor {
     }
 
     @Override
-    public void getPNMotherList(final String vhnCode, final String vhnId) {
+    public void getPNMotherList(String callurl,final String vhnCode, final String vhnId) {
         motherListsViews.showProgress();
-        String url = Apiconstants.BASE_URL + Apiconstants.MOTHER_DETAILS_LIST;
+        String url = Apiconstants.BASE_URL +callurl;
         Log.d("Log in check Url--->",url);
         Log.d("vhnCode--->",vhnCode);
         Log.d("vhnId--->",vhnId);
@@ -182,6 +182,312 @@ public class MotherListPresenter implements MotherListInteractor {
                 params.put("vhnCode",vhnCode);
                 params.put("vhnId",vhnId);
                 params.put("mid",mid);
+
+                Log.d("params--->",params.toString());
+
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                String credentials = "admin" + ":" + "1234";
+                String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.DEFAULT);
+                HashMap<String, String> header = new HashMap<>();
+//                header.put("Content-Type", "application/x-www-from-urlencoded; charset=utf-8");
+                header.put("Authorization", "Basic " + base64EncodedCredentials);
+                Log.d("Credentials ","Basic " +base64EncodedCredentials.toString());
+
+                return header;
+            }
+
+//            public String getBodyContentType() {
+//                return "application/x-www-from-urlencoded; charset=utf-8";
+//            }
+
+            public int getMethod() {
+                return Method.POST;
+            }
+        };
+        // Adding request to request queue
+        VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
+
+    }
+
+    @Override
+    public void getSelectedPNMother(final String mid) {
+        motherListsViews.showProgress();
+        String url = Apiconstants.BASE_URL + Apiconstants.VHN_MOTHER_DELVERY_INFO;
+        Log.d("Log in check Url--->",url);
+        Log.d("mid--->",mid);
+        StringRequest stringRequest =new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("SelectedMother","Success"+response);
+                motherListsViews.hideProgress();
+                motherListsViews.showLoginSuccess(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                motherListsViews.hideProgress();
+                motherListsViews.showLoginSuccess(error.toString());
+            }
+        }){
+
+
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("mid",mid);
+
+                Log.d("params--->",params.toString());
+
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                String credentials = "admin" + ":" + "1234";
+                String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.DEFAULT);
+                HashMap<String, String> header = new HashMap<>();
+//                header.put("Content-Type", "application/x-www-from-urlencoded; charset=utf-8");
+                header.put("Authorization", "Basic " + base64EncodedCredentials);
+                Log.d("Credentials ","Basic " +base64EncodedCredentials.toString());
+
+                return header;
+            }
+
+//            public String getBodyContentType() {
+//                return "application/x-www-from-urlencoded; charset=utf-8";
+//            }
+
+            public int getMethod() {
+                return Method.POST;
+            }
+        };
+        // Adding request to request queue
+        VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
+
+    }
+
+    @Override
+    public void getSelectedSosMother(final String vhnId,final String vhnCode,final String sosId) {
+
+
+        motherListsViews.showProgress();
+        String url = Apiconstants.BASE_URL + Apiconstants.DASH_BOARD_SOS_DETAILS;
+        Log.d("Log in check Url--->",url);
+        Log.d("vhnId--->",vhnId);
+        Log.d("vhnCode--->",vhnCode);
+        Log.d("sosId--->",sosId);
+        StringRequest stringRequest =new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("SelectedMother","Success"+response);
+                motherListsViews.hideProgress();
+                motherListsViews.showLoginSuccess(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                motherListsViews.hideProgress();
+                motherListsViews.showLoginError(error.toString());
+            }
+        }){
+
+
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("vhnId",vhnId);
+                params.put("vhnCode",vhnCode);
+                params.put("sosId",sosId);
+
+                Log.d("params--->",params.toString());
+
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                String credentials = "admin" + ":" + "1234";
+                String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.DEFAULT);
+                HashMap<String, String> header = new HashMap<>();
+//                header.put("Content-Type", "application/x-www-from-urlencoded; charset=utf-8");
+                header.put("Authorization", "Basic " + base64EncodedCredentials);
+                Log.d("Credentials ","Basic " +base64EncodedCredentials.toString());
+
+                return header;
+            }
+
+//            public String getBodyContentType() {
+//                return "application/x-www-from-urlencoded; charset=utf-8";
+//            }
+
+            public int getMethod() {
+                return Method.POST;
+            }
+        };
+        // Adding request to request queue
+        VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
+
+    }@Override
+    public void closeSosAlertSelectedMother(final String vhnId,final String vhnCode,final String sosId) {
+
+
+        motherListsViews.showProgress();
+        String url = Apiconstants.BASE_URL + Apiconstants.DASH_BOARD_SOS_MOTHER__DETAILS_CLOSED;
+        Log.d("Log in check Url--->",url);
+        Log.d("vhnId--->",vhnId);
+        Log.d("vhnCode--->",vhnCode);
+        Log.d("sosId--->",sosId);
+        StringRequest stringRequest =new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("SelectedMother","Success"+response);
+                motherListsViews.hideProgress();
+                motherListsViews.showAlertClosedSuccess(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                motherListsViews.hideProgress();
+                motherListsViews.showAlertClosedError(error.toString());
+            }
+        }){
+
+
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("vhnId",vhnId);
+                params.put("vhnCode",vhnCode);
+                params.put("sosId",sosId);
+
+                Log.d("params--->",params.toString());
+
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                String credentials = "admin" + ":" + "1234";
+                String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.DEFAULT);
+                HashMap<String, String> header = new HashMap<>();
+//                header.put("Content-Type", "application/x-www-from-urlencoded; charset=utf-8");
+                header.put("Authorization", "Basic " + base64EncodedCredentials);
+                Log.d("Credentials ","Basic " +base64EncodedCredentials.toString());
+
+                return header;
+            }
+
+//            public String getBodyContentType() {
+//                return "application/x-www-from-urlencoded; charset=utf-8";
+//            }
+
+            public int getMethod() {
+                return Method.POST;
+            }
+        };
+        // Adding request to request queue
+        VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
+
+    }
+
+    @Override
+    public void getTremAndPreTremMothersList(final String vhnCode, final String vhnId) {
+
+        motherListsViews.showProgress();
+        String url = Apiconstants.BASE_URL +Apiconstants.DASH_BOARD_MOTHERS_TREM_PRE_TREM_MOTHERS_LIST;
+        Log.d("Log in check Url--->",url);
+        Log.d("vhnCode--->",vhnCode);
+        Log.d("vhnId--->",vhnId);
+        StringRequest stringRequest =new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                motherListsViews.hideProgress();
+                motherListsViews.showLoginSuccess(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                motherListsViews.hideProgress();
+                motherListsViews.showLoginSuccess(error.toString());
+            }
+        }){
+
+
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("vhnCode",vhnCode);
+                params.put("vhnId",vhnId);
+
+                Log.d("params--->",params.toString());
+
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                String credentials = "admin" + ":" + "1234";
+                String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.DEFAULT);
+                HashMap<String, String> header = new HashMap<>();
+//                header.put("Content-Type", "application/x-www-from-urlencoded; charset=utf-8");
+                header.put("Authorization", "Basic " + base64EncodedCredentials);
+                Log.d("Credentials ","Basic " +base64EncodedCredentials.toString());
+
+                return header;
+            }
+
+//            public String getBodyContentType() {
+//                return "application/x-www-from-urlencoded; charset=utf-8";
+//            }
+
+            public int getMethod() {
+                return Method.POST;
+            }
+        };
+        // Adding request to request queue
+        VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
+    }
+
+    @Override
+    public void getTremAndPreTremMothers(final String vhnId,final String VhnCode,final String mid) {
+
+        motherListsViews.showProgress();
+        String url = Apiconstants.BASE_URL + Apiconstants.DASH_BOARD_MOTHERS_TREM_PRE_TREM_MOTHERS;
+        Log.d("Log in check Url--->",url);
+        Log.d("mid--->",mid);
+        Log.d("vhnId--->",vhnId);
+        Log.d("VhnCode--->",VhnCode);
+        StringRequest stringRequest =new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("SelectedMother","Success"+response);
+                motherListsViews.hideProgress();
+                motherListsViews.showLoginSuccess(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                motherListsViews.hideProgress();
+                motherListsViews.showLoginSuccess(error.toString());
+            }
+        }){
+
+
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("mid",mid);
+                params.put("vhnCode",VhnCode);
+                params.put("vhnId",vhnId);
 
                 Log.d("params--->",params.toString());
 

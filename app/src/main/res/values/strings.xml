@@ -154,9 +154,7 @@
     <!--Immunization activity end-->
 
 
-    <!--Location Update-->
-
-
+   <!-- <string name="permission_rationale">Please grant location permission to start the service</string>-->
     <string name="permission_denied_explanation">You have not granted location permission. So the service cannot be started.</string>
     <string name="settings">settings</string>
     <string name="title_alert_no_intenet">No internet</string>
