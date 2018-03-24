@@ -13,7 +13,9 @@ import android.view.MenuItem;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
-import com.unicef.vhn.adapter.MothenListAdapter;
+import com.unicef.vhn.adapter.MotherListAdapter;
+import com.unicef.vhn.constant.Apiconstants;
+import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.PNMotherListResponse;
 import com.unicef.vhn.view.MotherListsViews;
 
@@ -32,17 +34,16 @@ public class MotherListActivity extends AppCompatActivity implements MotherLists
     PNMotherListResponse.VhnAN_Mothers_List mresponseResult;
 //    private RecyclerView recyclerView;
     private RecyclerView mother_recycler_view;
-    private MothenListAdapter mAdapter;
+    private MotherListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mothers_list_activity);
 
-
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
 
-        actionBar.setTitle("PN Mother Visits");
+        actionBar.setTitle(AppConstants.MOTHER_LIST_TITLE);
 
         actionBar.setHomeButtonEnabled(true);
 
@@ -53,12 +54,36 @@ public class MotherListActivity extends AppCompatActivity implements MotherLists
         preferenceData =new PreferenceData(this);
         pnMotherListPresenter = new MotherListPresenter(MotherListActivity.this,this);
 //        pnMotherListPresenter.getPNMotherList("V10001","1");
-        pnMotherListPresenter.getPNMotherList(preferenceData.getVhnCode(),preferenceData.getVhnId());
         mResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView) findViewById(R.id.mother_recycler_view);
+if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("mother_count")) {
+    pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_LIST,preferenceData.getVhnCode(),preferenceData.getVhnId());
+//    pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_TRACKING,preferenceData.getVhnCode(),preferenceData.getVhnId());
 
-        mAdapter = new MothenListAdapter(mResult, MotherListActivity.this,"");
+}
+else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("risk_count")) {
+    pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_MOTHERS_RISK,preferenceData.getVhnCode(),preferenceData.getVhnId());
 
+}else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("sos_count")) {
+    pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_SOS_MOTHER_LIST,preferenceData.getVhnCode(),preferenceData.getVhnId());
+
+}else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("an_mother_total_count")) {
+    pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_AN_MOTHERS_DETAILS,preferenceData.getVhnCode(),preferenceData.getVhnId());
+
+}else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("high_risk_count")) {
+    pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_AN_RISK_MOTHERS_DETAILS,preferenceData.getVhnCode(),preferenceData.getVhnId());
+
+}else{
+    Log.e(MotherListActivity.class.getSimpleName(),"no url");
+}
+        if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("an_mother_total_count")) {
+            mAdapter = new MotherListAdapter(mResult, MotherListActivity.this, "AN");
+        }if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("high_risk_count")) {
+            mAdapter = new MotherListAdapter(mResult, MotherListActivity.this, "Risk");
+        }else{
+            mAdapter = new MotherListAdapter(mResult, MotherListActivity.this, "");
+
+        }
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MotherListActivity.this);
         mother_recycler_view.setLayoutManager(mLayoutManager);
         mother_recycler_view.setItemAnimator(new DefaultItemAnimator());
@@ -89,7 +114,7 @@ public class MotherListActivity extends AppCompatActivity implements MotherLists
 
 
 
-        Log.e(ImmunizationActivity.class.getSimpleName(), "Response success" + response);
+        Log.e(MotherListActivity.class.getSimpleName(), "Response success" + response);
 
         try {
             JSONObject mJsnobject = new JSONObject(response);
@@ -101,8 +126,8 @@ public class MotherListActivity extends AppCompatActivity implements MotherLists
                 mresponseResult.setMName(jsonObject.getString("mName"));
                 mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
                 mresponseResult.setVhnId(jsonObject.getString("vhnId"));
-                mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
-                mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
+//                mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
+//                mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
                 mResult.add(mresponseResult);
                 mAdapter.notifyDataSetChanged();
             }
@@ -115,6 +140,16 @@ public class MotherListActivity extends AppCompatActivity implements MotherLists
 
     @Override
     public void showLoginError(String string) {
+
+    }
+
+    @Override
+    public void showAlertClosedSuccess(String response) {
+
+    }
+
+    @Override
+    public void showAlertClosedError(String string) {
 
     }
 }

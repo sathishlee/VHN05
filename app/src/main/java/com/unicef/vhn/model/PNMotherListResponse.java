@@ -44,6 +44,16 @@ public class PNMotherListResponse {
         private String mPicmeId;
         private String mName;
 
+        public String getPnId() {
+            return pnId;
+        }
+
+        public void setPnId(String pnId) {
+            this.pnId = pnId;
+        }
+
+        private String pnId;
+
         public String getMLongitude() {
             return mLongitude;
         }

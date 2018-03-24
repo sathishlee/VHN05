@@ -12,7 +12,7 @@ import android.util.Log;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
-import com.unicef.vhn.adapter.MothenListAdapter;
+import com.unicef.vhn.adapter.MotherListAdapter;
 import com.unicef.vhn.model.PNMotherListResponse;
 import com.unicef.vhn.view.MotherListsViews;
 
@@ -35,7 +35,7 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
     PNMotherListResponse.VhnAN_Mothers_List mresponseResult;
     //    private RecyclerView recyclerView;
     private RecyclerView mother_recycler_view;
-    private MothenListAdapter mAdapter;
+    private MotherListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
         mResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView) findViewById(R.id.mother_recycler_view);
 
-        mAdapter = new MothenListAdapter(mResult, PNHBNCListActivity.this,"PN");
+        mAdapter = new MotherListAdapter(mResult, PNHBNCListActivity.this,"PN");
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(PNHBNCListActivity.this);
         mother_recycler_view.setLayoutManager(mLayoutManager);
@@ -90,16 +90,18 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
             JSONObject mJsnobject = new JSONObject(response);
            String status =mJsnobject.getString("status");
            if (status.equalsIgnoreCase("1")) {
-               JSONArray jsonArray = mJsnobject.getJSONArray("PNMothers");
+               JSONArray jsonArray = mJsnobject.getJSONArray("pnMothersList");
                for (int i = 0; i < jsonArray.length(); i++) {
                    mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
                    JSONObject jsonObject = jsonArray.getJSONObject(i);
                    mresponseResult.setMid(jsonObject.getString("mid"));
                    mresponseResult.setMName(jsonObject.getString("mName"));
                    mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
-                   mresponseResult.setVhnId(jsonObject.getString("vhnId"));
-                   mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
-                   mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
+                   mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
+                   mresponseResult.setPnId(jsonObject.getString("pnId"));
+//                   mresponseResult.setVhnId(jsonObject.getString("vhnId"));
+//                   mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
+//                   mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
                    mResult.add(mresponseResult);
                    mAdapter.notifyDataSetChanged();
                }
@@ -112,5 +114,15 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
     @Override
     public void showLoginError(String response) {
         Log.e(PNHBNCListActivity.class.getSimpleName(), "Response Error" + response);
+    }
+
+    @Override
+    public void showAlertClosedSuccess(String response) {
+
+    }
+
+    @Override
+    public void showAlertClosedError(String string) {
+
     }
 }

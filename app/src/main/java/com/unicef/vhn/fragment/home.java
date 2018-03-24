@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,11 +19,14 @@ import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.HomePresenter;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
-import com.unicef.vhn.activity.HighRiskListActivity;
+//import com.unicef.vhn.activity.HighRiskListActivity;
+import com.unicef.vhn.activity.AnMotherListActivity;
 import com.unicef.vhn.activity.InfantListActivity;
 import com.unicef.vhn.activity.MotherListActivity;
 import com.unicef.vhn.activity.MotherTrackActivity;
 import com.unicef.vhn.activity.PNHBNCListActivity;
+import com.unicef.vhn.activity.SosAlertListActivity;
+import com.unicef.vhn.activity.TreamPreTreamListActivity;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.view.MotherListsViews;
 
@@ -40,7 +44,7 @@ public class home extends Fragment implements MotherListsViews {
     ProgressDialog pDialog;
     HomePresenter homePresenter;
     PreferenceData preferenceData;
-
+    LinearLayout ll_sos_view;
     public static home newInstance() {
         home fragment = new home();
         return fragment;
@@ -64,7 +68,19 @@ public class home extends Fragment implements MotherListsViews {
             @Override
             public void onClick(View v) {
                 AppConstants.GET_MOTHER_LIST_TYPE="mother_count";
+                AppConstants.MOTHER_LIST_TITLE="All Mother List";
+
                 startActivity(new Intent(getActivity(), MotherListActivity.class));
+
+            }
+        });
+
+        ll_sos_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppConstants.GET_MOTHER_LIST_TYPE="sos_count";
+                AppConstants.MOTHER_LIST_TITLE="SOS List";
+                startActivity(new Intent(getActivity(), SosAlertListActivity.class));
 
             }
         });
@@ -73,6 +89,7 @@ public class home extends Fragment implements MotherListsViews {
             @Override
             public void onClick(View v) {
                 AppConstants.GET_MOTHER_LIST_TYPE="risk_count";
+                AppConstants.MOTHER_LIST_TITLE="Risk Mother List";
 
                 startActivity(new Intent(getActivity(), MotherListActivity.class));
             }
@@ -82,8 +99,7 @@ public class home extends Fragment implements MotherListsViews {
             @Override
             public void onClick(View v) {
                 AppConstants.GET_MOTHER_LIST_TYPE="infant_count";
-
-                startActivity(new Intent(getActivity(), MotherListActivity.class));
+                startActivity(new Intent(getActivity(), PNHBNCListActivity.class));
             }
         });
 
@@ -99,7 +115,6 @@ public class home extends Fragment implements MotherListsViews {
             @Override
             public void onClick(View v) {
                 AppConstants.GET_MOTHER_LIST_TYPE="high_risk_count";
-
                 startActivity(new Intent(getActivity(), MotherListActivity.class));
             }
         });
@@ -107,7 +122,6 @@ public class home extends Fragment implements MotherListsViews {
             @Override
             public void onClick(View v) {
                 AppConstants.GET_MOTHER_LIST_TYPE="pn_hbnc_totlal_coun";
-
                 startActivity(new Intent(getActivity(), PNHBNCListActivity.class));
             }
         });
@@ -115,7 +129,7 @@ public class home extends Fragment implements MotherListsViews {
             @Override
             public void onClick(View v) {
                 AppConstants.GET_MOTHER_LIST_TYPE="pn_hbnc_term_preterm_count";
-                startActivity(new Intent(getActivity(), MotherListActivity.class));
+                startActivity(new Intent(getActivity(), TreamPreTreamListActivity.class));
             }
         });
 
@@ -130,7 +144,7 @@ public class home extends Fragment implements MotherListsViews {
         preferenceData = new PreferenceData(getActivity());
         homePresenter = new HomePresenter(getActivity(), this);
         homePresenter.getDashBoard(preferenceData.getVhnCode(), preferenceData.getVhnId());
-
+        ll_sos_view =view.findViewById(R.id.ll_sos_view);
         txt_vhn_name = view.findViewById(R.id.txt_vhn_name);
         txt_hsc = view.findViewById(R.id.txt_hsc);
         txt_phc = view.findViewById(R.id.txt_phc);
@@ -205,6 +219,16 @@ public class home extends Fragment implements MotherListsViews {
     @Override
     public void showLoginError(String response) {
         Log.e(home.class.getSimpleName(), "Response Error" + response);
+
+    }
+
+    @Override
+    public void showAlertClosedSuccess(String response) {
+
+    }
+
+    @Override
+    public void showAlertClosedError(String string) {
 
     }
 }

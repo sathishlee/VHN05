@@ -118,4 +118,14 @@ TextView txt_mother_name,txt_picme_id,txt_mobile_number,txt_mage,txt_mlmpdate,tx
         Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
 
     }
+
+    @Override
+    public void showAlertClosedSuccess(String response) {
+
+    }
+
+    @Override
+    public void showAlertClosedError(String string) {
+
+    }
 }

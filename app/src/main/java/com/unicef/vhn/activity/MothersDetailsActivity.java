@@ -66,6 +66,7 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
                 }
             }
         });
+        btn_view_report.setOnClickListener(this);
         img_call_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,9 +112,6 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
 
         btn_view_location = (Button) findViewById(R.id.btn_view_location);
         btn_view_report = (Button) findViewById(R.id.btn_view_report);
-
-
-
     }
 
 
@@ -136,7 +134,9 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
         switch (v.getId()){
             case R.id.btn_view_location:
                 break;
-            case  R.id.btn_view_report: startActivity(new Intent(getApplicationContext(),ViewRecordActivity.class));break;
+            case  R.id.btn_view_report:
+                startActivity(new Intent(getApplicationContext(),ANViewReportsActivity.class));
+                break;
         }
     }
 
@@ -175,7 +175,7 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
 
     @Override
     public void showLoginSuccess(String response) {
-        AppConstants.SELECTED_MID="0";
+//        AppConstants.SELECTED_MID="0";
         Log.e(MotherTrackActivity.class.getSimpleName(), "Response success" + response);
 
         try {
@@ -209,9 +209,19 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
 
     @Override
     public void showLoginError(String message) {
-        AppConstants.SELECTED_MID="0";
+//        AppConstants.SELECTED_MID="0";
 
         Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void showAlertClosedSuccess(String response) {
+
+    }
+
+    @Override
+    public void showAlertClosedError(String string) {
 
     }
 }

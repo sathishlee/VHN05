@@ -25,10 +25,10 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
         <activity
             android:name=".activity.PNMothersListActivity"
             android:theme="@style/AppTheme" />
@@ -62,20 +62,19 @@
         <activity
             android:name=".activity.AnMotherListActivity"
             android:theme="@style/AppTheme" />
-        <activity
+        <!--
+            <activity
             android:name=".activity.HighRiskListActivity"
             android:theme="@style/AppTheme" />
+        -->
         <activity
             android:name=".activity.PNHBNCListActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.MothersDetailsActivity"
-            android:theme="@style/AppTheme">
-
-
-
-
-        <activity android:name=".activity.SplashScreenActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.SplashScreenActivity"
             android:theme="@style/AppTheme1">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -83,6 +82,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.SosAlertListActivity" />
+        <activity android:name=".activity.SosMotherDetailsActivity" />
+        <activity android:name=".activity.ANViewReportsActivity" />
+        <activity android:name=".activity.PNViewReportsActivity" />
+        <activity android:name=".activity.TreamPreTreamListActivity" />
+        <activity android:name=".activity.TremAndPreTreamDetailsActivity"/>
+
+
+        <service android:name=".service.LocationMonitoringService" />
     </application>
 
 </manifest>

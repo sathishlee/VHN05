@@ -100,11 +100,13 @@ public class MainActivity extends AppCompatActivity
             startActivity(i);
         }
         else if (id == R.id.immunization) {
-
+            Intent i = new Intent(getApplicationContext(), ImmunizationListActivity.class);
+            startActivity(i);
         }
 
         else if (id == R.id.alert) {
-
+//            Intent i = new Intent(getApplicationContext(), ImmunizationListActivity.class);
+//            startActivity(i);
         }
 
         else if (id == R.id.today_visit) {
