@@ -20,8 +20,13 @@ public class Apiconstants {
 public static final String DASH_BOARD= "vDashboard ";
 
 
+
 //    http://192.168.100.235/thaimaiapp/api/vhn/Vhn/vDashboardMothersPNRecord      /*vhnCode:V10001 , vhnId:1*/
 public static final String DASH_BOARD_MOTHERS_PN_RECORDS= "vDashboardMothersPNRecord ";
+
+    public static final String GET_MOTHER_LOCATION = "vhn/vhn/locationUpdate";
+
+    public static final String DIRECTION_URL="vVhnMothersTrackingLocation";
 
 
 }

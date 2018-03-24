@@ -22,7 +22,6 @@ import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.constant.AppConstants;
-import com.unicef.vhn.model.ViewRecordActivity;
 import com.unicef.vhn.view.MotherListsViews;
 
 import org.json.JSONException;
@@ -53,17 +52,7 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
         btn_view_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-               /* Intent intent = new Intent(MothersDetailsActivity.this, MotherTrackActivity.class);
-                finish();
-                startActivity(intent);*/
-
-                Uri gmmIntentUri = Uri.parse("google.navigation:q=" + strLatitude + "," + strLongitude);
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                mapIntent.setPackage("com.google.android.apps.maps");
-                if (mapIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(mapIntent);
-                }
+                startActivity(new Intent(getApplicationContext(),MotherLocationActivity.class));
             }
         });
         img_call_1.setOnClickListener(new View.OnClickListener() {
@@ -134,9 +123,9 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btn_view_location:
+            case R.id.btn_view_location:startActivity(new Intent(getApplicationContext(),MotherLocationActivity.class));
                 break;
-            case  R.id.btn_view_report: startActivity(new Intent(getApplicationContext(),ViewRecordActivity.class));break;
+            case  R.id.btn_view_report: startActivity(new Intent(getApplicationContext(),MothersViewRecordActivity.class));break;
         }
     }
 

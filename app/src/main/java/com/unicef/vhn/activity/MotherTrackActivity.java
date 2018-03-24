@@ -67,10 +67,10 @@ TextView txt_mother_name,txt_picme_id,txt_mobile_number,txt_mage,txt_mlmpdate,tx
 
         txt_mother_name = (TextView) findViewById(R.id.txt_mother_name);
         txt_picme_id = (TextView) findViewById(R.id.txt_picme_id);
-        txt_mobile_number = (TextView) findViewById(R.id.txt_mobile_number);
-        txt_mage = (TextView) findViewById(R.id.txt_mage);
-        txt_mlmpdate = (TextView) findViewById(R.id.txt_mlmpdate);
-        txt_medddate = (TextView) findViewById(R.id.txt_medddate);
+//        txt_mobile_number = (TextView) findViewById(R.id.txt_mobile_number);
+//        txt_mage = (TextView) findViewById(R.id.txt_mage);
+//        txt_mlmpdate = (TextView) findViewById(R.id.txt_mlmpdate);
+//        txt_medddate = (TextView) findViewById(R.id.txt_medddate);
     }
 
     @Override

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:viewportWidth="306"
+    android:viewportHeight="306" android:width="18dp" android:height="18dp">
+    <group android:name="keyboard-arrow-left">
+        <path android:fillColor="#FFFFFF"
+            android:pathData="M 247.35,270.3 L 130.05,153 L 247.35,35.7 L 211.65,0 L 58.65,153 L 211.65,306 z" />
+    </group>
+    <group />
+    <group />
+    <group />
+    <group />
+    <group />
+    <group />
+    <group />
+    <group />
+    <group />
+    <group />
+    <group />
+    <group />
+    <group />
+    <group />
+    <group />
+</vector>
