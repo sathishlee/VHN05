@@ -76,9 +76,9 @@
         <activity
             android:name=".activity.InfantListActivity"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".activity.AnMotherListActivity"
-            android:theme="@style/AppTheme" />
+        <!--<activity-->
+            <!--android:name=".activity.AnMotherListActivity"-->
+            <!--android:theme="@style/AppTheme" />-->
         <!--
             <activity
             android:name=".activity.HighRiskListActivity"
@@ -91,11 +91,11 @@
         <activity
             android:name=".activity.MothersDetailsActivity"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".activity.SplashScreenActivity"
-            android:theme="@style/AppTheme">
+        <!--<activity-->
+            <!--android:name=".activity.SplashScreenActivity"-->
+            <!--android:theme="@style/AppTheme">-->
 
-        </activity>
+        <!--</activity>-->
 
         <activity android:name=".activity.MotherLocationActivity"
             android:theme="@style/AppTheme">
