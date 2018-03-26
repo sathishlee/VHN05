@@ -38,6 +38,7 @@ public class SOSListResponse {
 
     public static class VhnAN_Mothers_List {
         private String vhnId;
+        private String motherType;
         private String sosStatus;
         private String mid;
         private String mRiskStatus;
@@ -47,6 +48,13 @@ public class SOSListResponse {
 
         public String getVhnId() {
             return vhnId;
+        }
+
+        public String getMotherType(){
+            return motherType;
+        }
+        public void setMotherType(String motherType){
+            this.motherType = motherType;
         }
 
         public void setVhnId(String vhnId) {

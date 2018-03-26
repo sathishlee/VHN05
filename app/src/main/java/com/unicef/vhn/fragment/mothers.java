@@ -1,9 +1,7 @@
 package com.unicef.vhn.fragment;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +14,6 @@ import android.support.v4.app.Fragment;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
-import com.unicef.vhn.activity.MothersDetailsActivity;
 import com.unicef.vhn.adapter.MotherListAdapter;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.model.PNMotherListResponse;

@@ -14,10 +14,8 @@ import android.view.MenuItem;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
-import com.unicef.vhn.adapter.MotherListAdapter;
 import com.unicef.vhn.adapter.SOSListAdapter;
 import com.unicef.vhn.constant.Apiconstants;
-import com.unicef.vhn.model.PNMotherListResponse;
 import com.unicef.vhn.model.SOSListResponse;
 import com.unicef.vhn.view.MotherListsViews;
 
@@ -113,6 +111,8 @@ pDialog.dismiss();
                 mresponseResult.setMRiskStatus(jsonObject.getString("mRiskStatus"));
                 mresponseResult.setSosStatus(jsonObject.getString("sosStatus"));
                 mresponseResult.setVhnId(jsonObject.getString("vhnId"));
+                mresponseResult.setMotherType(jsonObject.getString("motherType"));
+
                 mResult.add(mresponseResult);
                 mAdapter.notifyDataSetChanged();
             }

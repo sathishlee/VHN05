@@ -40,6 +40,14 @@ public class PreferenceData {
 
     }
 
+    public void setDeviceId(String deviceId) {
+        sharedPreferences.edit().putString(AppConstants.DEVICE_ID, deviceId).commit();
+    }
+
+    public String getDeviceId(){
+        return sharedPreferences.getString(AppConstants.DEVICE_ID,"");
+    }
+
 
     public String getVhnId(){
         return sharedPreferences.getString(AppConstants.VHN_ID,"");

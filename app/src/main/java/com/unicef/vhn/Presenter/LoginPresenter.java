@@ -9,7 +9,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.unicef.vhn.activity.LoginActivity;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.interactor.LoginInteractor;
 import com.unicef.vhn.view.LoginViews;
@@ -32,12 +31,13 @@ public class LoginPresenter implements LoginInteractor{
     }
 
     @Override
-    public void login(final String strVhnId, final String strPassword) {
+    public void login(final String strVhnId, final String strPassword, final String strdeviceId) {
         view.showProgress();
         String url = Apiconstants.BASE_URL + Apiconstants.LOG_IN_CHECK;
         Log.d("Log in check Url--->",url);
         Log.d("strVhnId--->",strVhnId);
         Log.d("strPassword--->",strPassword);
+        Log.d("Device Id-->",strdeviceId);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -62,6 +62,7 @@ public class LoginPresenter implements LoginInteractor{
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("vhnCode",strVhnId);
                 params.put("vhnDOB",strPassword);
+                params.put("deviceId",strdeviceId);
 
                 Log.d("params--->",params.toString());
 

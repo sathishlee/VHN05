@@ -10,10 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.unicef.vhn.R;
-import com.unicef.vhn.activity.SosAlertListActivity;
 import com.unicef.vhn.activity.SosMotherDetailsActivity;
 import com.unicef.vhn.constant.AppConstants;
-import com.unicef.vhn.model.PNMotherListResponse;
 import com.unicef.vhn.model.SOSListResponse;
 
 import java.util.List;
@@ -46,7 +44,7 @@ public class SOSListAdapter extends RecyclerView.Adapter<SOSListAdapter.ViewHold
         final SOSListResponse.VhnAN_Mothers_List  SosMotherResponseModel =mResult.get(position);
         holder.txt_username.setText(SosMotherResponseModel.getMName());
         holder.txt_picme_id.setText(SosMotherResponseModel.getMPicmeId());
-        holder.txt_mother_type.setText("AN");
+        holder.txt_mother_type.setText(SosMotherResponseModel.getMotherType());
         strSosId=SosMotherResponseModel.getSosId();
         strVHNID=SosMotherResponseModel.getVhnId();
         SosStatus=SosMotherResponseModel.getSosStatus();

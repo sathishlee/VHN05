@@ -6,7 +6,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +39,7 @@ import com.google.maps.model.TravelMode;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.LocationPresenter;
 import com.unicef.vhn.R;
+import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.LocationRequestModel;
 import com.unicef.vhn.view.LocationViews;
 
@@ -95,8 +95,11 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Please Wait ...");
+
+        preferenceData = new PreferenceData(this);
+
         locationPresenter = new LocationPresenter(MotherLocationActivity.this, this);
-        locationPresenter.getMotherLocatin("V10001","1","1");
+        locationPresenter.getMotherLocatin(preferenceData.getVhnCode(),preferenceData.getVhnId(), AppConstants.SELECTED_MID);
 
         mTvFrom = (TextView) findViewById(R.id.txt_username);
         mTvTo = (TextView) findViewById(R.id.txt_picme_id);
@@ -221,12 +224,12 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         strLon = String.valueOf(vlatlng);
         Log.d("VHN Location--->",strLon);
 
-        MarkerOptions mothermarker = new MarkerOptions().position(new LatLng(mlat,mlong)).title("Lakshmi Priya");
-        MarkerOptions vhnmarker = new MarkerOptions().position(new LatLng(vlat,vlong)).title("VHN Location");
+        MarkerOptions mothermarker = new MarkerOptions().position(new LatLng(mlat,mlong)).title(AppConstants.SELECTED_MID);
+        MarkerOptions vhnmarker = new MarkerOptions().position(new LatLng(vlat,vlong)).title(preferenceData.getVhnName());
 
         strMotherloc = String.valueOf(mothermarker);
         strVHNloc = String.valueOf(vhnmarker);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(vlatlng, 12));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mlatlng, 12));
 
 //        LatLngBounds vhnmother = new LatLngBounds(new LatLng(mlat,mlong), new LatLng(vlat, vlong));
 //        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(vlatlng, 12));

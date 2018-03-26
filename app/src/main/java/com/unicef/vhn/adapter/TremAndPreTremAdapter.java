@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.unicef.vhn.R;
-import com.unicef.vhn.activity.PNMotherDetailsActivity;
 import com.unicef.vhn.activity.TremAndPreTreamDetailsActivity;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.TremAndPreTremResponseModel;

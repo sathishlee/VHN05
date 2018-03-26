@@ -16,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.R;
 import com.unicef.vhn.fragment.home;
 import com.unicef.vhn.fragment.mothers;
@@ -91,11 +90,11 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.an_mothers) {
-            Intent i = new Intent(getApplicationContext(), AnMotherListActivity.class);
-            startActivity(i);
-        }
-        else if (id == R.id.pn_hbnc_mothers) {
+//        if (id == R.id.an_mothers) {
+//            Intent i = new Intent(getApplicationContext(), AnMotherListActivity.class);
+//            startActivity(i);
+//        }
+        if (id == R.id.pn_hbnc_mothers) {
             Intent i = new Intent(getApplicationContext(), PNHBNCListActivity.class);
             startActivity(i);
         }

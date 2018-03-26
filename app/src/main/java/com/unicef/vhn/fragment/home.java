@@ -13,17 +13,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.HomePresenter;
-import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 //import com.unicef.vhn.activity.HighRiskListActivity;
-import com.unicef.vhn.activity.AnMotherListActivity;
-import com.unicef.vhn.activity.InfantListActivity;
 import com.unicef.vhn.activity.MotherListActivity;
-import com.unicef.vhn.activity.MotherTrackActivity;
 import com.unicef.vhn.activity.PNHBNCListActivity;
 import com.unicef.vhn.activity.SosAlertListActivity;
 import com.unicef.vhn.activity.TreamPreTreamListActivity;
@@ -89,7 +84,7 @@ public class home extends Fragment implements MotherListsViews {
             @Override
             public void onClick(View v) {
                 AppConstants.GET_MOTHER_LIST_TYPE="risk_count";
-                AppConstants.MOTHER_LIST_TITLE="Risk Mother List";
+                AppConstants.MOTHER_LIST_TITLE="High Risk Mother List";
 
                 startActivity(new Intent(getActivity(), MotherListActivity.class));
             }
@@ -99,6 +94,7 @@ public class home extends Fragment implements MotherListsViews {
             @Override
             public void onClick(View v) {
                 AppConstants.GET_MOTHER_LIST_TYPE="infant_count";
+                AppConstants.MOTHER_LIST_TITLE="High Risk Mother List";
                 startActivity(new Intent(getActivity(), PNHBNCListActivity.class));
             }
         });
@@ -199,7 +195,7 @@ public class home extends Fragment implements MotherListsViews {
                 but_an_mother_total_count.setText("Total: "+mJsnobject.getString("ANMothersCount"));
                 but_an_mother_high_risk_count.setText("High Risk: "+mJsnobject.getString("ANMotherRiskCount"));
                 but_an_mother_pn_hbnc_totlal_count.setText("Total: "+mJsnobject.getString("PNMotherCount"));
-                but_an_mother_pn_hbnc_term_preterm_count.setText("Term/Preterm: "+mJsnobject.getString("PNMotherRiskCount"));
+                but_an_mother_pn_hbnc_term_preterm_count.setText("Term/Preterm: "+mJsnobject.getString("termsCount"));
 
                 JSONObject mJsnobject_phcDetails = mJsnobject.getJSONObject("phcDetails");
 //                JSONObject mJsnobject_phcDetails = mJsnobject.getJSONObject("phcDetails");

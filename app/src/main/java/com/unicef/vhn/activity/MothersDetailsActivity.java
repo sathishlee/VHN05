@@ -22,7 +22,6 @@ import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.constant.AppConstants;
-import com.unicef.vhn.model.ViewRecordActivity;
 import com.unicef.vhn.view.MotherListsViews;
 
 import org.json.JSONException;

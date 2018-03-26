@@ -39,44 +39,43 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.MainActivity"
+            android:name="com.unicef.vhn.activity.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <activity
-            android:name=".activity.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:name="com.unicef.vhn.activity.LoginActivity"
+            android:label="@string/title_activity_login">
+
+        </activity>
         <activity
-            android:name=".activity.PNMothersListActivity"
+            android:name="com.unicef.vhn.activity.PNMothersListActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name="com.unicef.vhn.activity.MotherTrackActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".model.ViewRecordActivity"
+            android:name="com.unicef.vhn.activity.VhnProfile"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.MotherTrackActivity"
+            android:name="com.unicef.vhn.activity.ImmunizationActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.VhnProfile"
+            android:name="com.unicef.vhn.activity.PNMotherDetailsActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.ImmunizationActivity"
+            android:name="com.unicef.vhn.activity.MotherListActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.PNMotherDetailsActivity"
+            android:name="com.unicef.vhn.activity.PNMotherVisitListDetailsActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.MotherListActivity"
+            android:name="com.unicef.vhn.activity.ImmunizationListActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.PNMotherVisitListDetailsActivity"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".activity.ImmunizationListActivity"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".activity.InfantListActivity"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".activity.AnMotherListActivity"
+            android:name="com.unicef.vhn.activity.InfantListActivity"
             android:theme="@style/AppTheme" />
         <!--
             <activity
@@ -85,24 +84,19 @@
         -->
 
         <activity
-            android:name=".activity.PNHBNCListActivity"
+            android:name="com.unicef.vhn.activity.PNHBNCListActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.MothersDetailsActivity"
+            android:name="com.unicef.vhn.activity.MothersDetailsActivity"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".activity.SplashScreenActivity"
-            android:theme="@style/AppTheme">
 
-        </activity>
-
-        <activity android:name=".activity.MotherLocationActivity"
+        <activity android:name="com.unicef.vhn.activity.MotherLocationActivity"
             android:theme="@style/AppTheme">
 
         </activity>
 
 
-        <activity android:name=".activity.SplashScreenActivity"
+        <activity android:name="com.unicef.vhn.activity.SplashScreenActivity"
             android:theme="@style/AppTheme1">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -110,15 +104,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SosAlertListActivity" />
-        <activity android:name=".activity.SosMotherDetailsActivity" />
-        <activity android:name=".activity.ANViewReportsActivity" />
-        <activity android:name=".activity.PNViewReportsActivity" />
-        <activity android:name=".activity.TreamPreTreamListActivity" />
-        <activity android:name=".activity.TremAndPreTreamDetailsActivity"/>
+
+        <activity android:name="com.unicef.vhn.activity.SosAlertListActivity" />
+        <activity android:name="com.unicef.vhn.activity.SosMotherDetailsActivity" />
+        <activity android:name="com.unicef.vhn.activity.ANViewReportsActivity" />
+        <activity android:name="com.unicef.vhn.activity.PNViewReportsActivity" />
+        <activity android:name="com.unicef.vhn.activity.TreamPreTreamListActivity" />
+        <activity android:name="com.unicef.vhn.activity.TremAndPreTreamDetailsActivity"/>
 
 
-        <service android:name=".service.LocationMonitoringService" />
+        <service android:name="com.unicef.vhn.service.LocationMonitoringService" />
+
+        <service android:name="com.unicef.vhn.utiltiy.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.unicef.vhn.utiltiy.MyFirebaseMessagingService"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
