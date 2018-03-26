@@ -30,7 +30,7 @@ public class Apiconstants {
 
 
 //    http://192.168.100.235/thaimaiapp/api/vhn/Vhn/vDashboardMothersPNRecord      /*vhnCode:V10001 , vhnId:1*/
-public static final String DASH_BOARD_MOTHERS_PN_RECORDS= "vDashboardMothersPNRecord ";
+//public static final String DASH_BOARD_MOTHERS_PN_RECORDS= "vDashboardMothersPNRecord ";
     //    http://192.168.100.235/thaimaiapp/api/vhn/Vhn/VHN_PN_All_Mothers           /*vhnId:1, vhnCode:V10001*/
     public static final String DASH_BOARD_MOTHERS_PN_RECORDS = "VHN_PN_All_Mothers";
 

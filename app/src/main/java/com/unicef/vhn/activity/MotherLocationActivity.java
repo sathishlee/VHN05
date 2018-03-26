@@ -157,6 +157,7 @@ public class MotherLocationActivity extends FragmentActivity implements Location
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.get_directions:
+
 //                if (mTvFrom.length() <= 0) {
 //                    showMessage("Please pick from address");
 //                    return;

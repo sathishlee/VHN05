@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.unicef.vhn.R;
+import com.unicef.vhn.activity.PNMotherDetailsActivity;
 import com.unicef.vhn.activity.TremAndPreTreamDetailsActivity;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.TremAndPreTremResponseModel;
@@ -72,6 +73,8 @@ public class TremAndPreTremAdapter extends RecyclerView.Adapter<TremAndPreTremAd
             txt_delivery_date = itemView.findViewById(R.id.txt_delivery_date);
             txt_delivery_time = itemView.findViewById(R.id.txt_delivery_time);
             txt_username = itemView.findViewById(R.id.txt_username);
+
+            /*aa*/
         }
     }
 }
