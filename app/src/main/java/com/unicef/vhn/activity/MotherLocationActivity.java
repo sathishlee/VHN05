@@ -1,8 +1,10 @@
 package com.unicef.vhn.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -54,10 +56,14 @@ import java.util.concurrent.TimeUnit;
 
 public class MotherLocationActivity extends FragmentActivity implements LocationViews, OnMapReadyCallback, View.OnClickListener {
 
+    List<LocationRequestModel.Tracking> trackings;
+
     ProgressDialog progressDialog;
 
     LocationPresenter locationPresenter;
     LocationRequestModel locationRequestModel;
+
+    Activity applicationContext;
 
     private static final int MY_PERMISSION_ACCESS_COARSE_LOCATION = 11;
     private static final int MY_PERMISSION_ACCESS_FINE_LOCATION = 12;
@@ -74,11 +80,11 @@ public class MotherLocationActivity extends FragmentActivity implements Location
     private GoogleMap mMap;
     private TextView mTvFrom;
     private TextView mTvTo;
-    private String GOOGLE_PLACES_API_KEY = "AIzaSyBi5nKMElz87gchaopZiSx59kwDSf2FDu4";
+    private String GOOGLE_PLACES_API_KEY = "AIzaSyADTIJlxnp44YvWIB0qgwCG_IOQhQzTvf8";
 
     private List<Marker> markers;
 
-    String strLat,strLon;
+    String strLat,strLon, motherLatitude, motherLongitude, vhnLatitude, vhnLongitude;
 
     String strMotherloc, strVHNloc;
 
@@ -92,11 +98,14 @@ public class MotherLocationActivity extends FragmentActivity implements Location
 
     private void bindActivity() {
 
+        applicationContext = this;
+
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Please Wait ...");
 
         preferenceData = new PreferenceData(this);
+//        this.trackings = trackings;
 
         locationPresenter = new LocationPresenter(MotherLocationActivity.this, this);
         locationPresenter.getMotherLocatin(preferenceData.getVhnCode(),preferenceData.getVhnId(), AppConstants.SELECTED_MID);
@@ -166,11 +175,23 @@ public class MotherLocationActivity extends FragmentActivity implements Location
 //                    showMessage("Please pick to address");
 //                    return;
 //                }
-                getResultLocation();
+//                getResultLocation();
+                getDirections();
                 break;
         }
     }
+    public void getDirections(){
+        Log.e("Mlatitude--", motherLatitude);
+        Log.e("Mlong--", motherLongitude);
+        Uri gmmIntentUri = Uri.parse("google.navigation:q="+motherLatitude+","+motherLongitude);
 
+
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                if (mapIntent.resolveActivity(applicationContext.getPackageManager()) != null) {
+                    applicationContext. startActivity(mapIntent);
+                }
+    }
 
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {
@@ -422,10 +443,10 @@ public class MotherLocationActivity extends FragmentActivity implements Location
                 mTvFrom.setText(mJsnobject_tracking.getString("mName"));
                 mTvTo.setText(mJsnobject_tracking.getString("mPicmeId"));
 
-                String motherLatitude = mJsnobject_tracking.getString("mLatitude");
-                String motherLongitude = mJsnobject_tracking.getString("mLongitude");
-                String vhnLatitude = mJsnobject_tracking.getString("vLatitude");
-                String vhnLongitude = mJsnobject_tracking.getString("vLongitude");
+                motherLatitude = mJsnobject_tracking.getString("mLatitude");
+                motherLongitude = mJsnobject_tracking.getString("mLongitude");
+                vhnLatitude = mJsnobject_tracking.getString("vLatitude");
+                vhnLongitude = mJsnobject_tracking.getString("vLongitude");
 
                 addMarkersToMaplatlng(motherLatitude, motherLongitude, vhnLatitude, vhnLongitude);
 

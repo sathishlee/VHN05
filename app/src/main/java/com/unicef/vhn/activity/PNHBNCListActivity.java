@@ -99,6 +99,8 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
                    mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
                    mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
                    mresponseResult.setPnId(jsonObject.getString("pnId"));
+//                   mresponseResult.setMotherType(jsonObject.getString("motherType"));
+
 //                   mresponseResult.setVhnId(jsonObject.getString("vhnId"));
 //                   mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
 //                   mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));

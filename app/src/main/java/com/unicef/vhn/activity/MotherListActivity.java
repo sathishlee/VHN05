@@ -135,7 +135,7 @@ else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("risk_count")) {
                     mresponseResult.setMName(jsonObject.getString("mName"));
                     mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
                     mresponseResult.setVhnId(jsonObject.getString("vhnId"));
-                    mresponseResult.setMotherType(jsonObject.getString("motherType"));
+//                    mresponseResult.setMotherType(jsonObject.getString("motherType"));
 //                mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
 //                mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
                     mResult.add(mresponseResult);
