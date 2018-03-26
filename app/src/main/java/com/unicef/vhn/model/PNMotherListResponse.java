@@ -35,7 +35,7 @@ public class PNMotherListResponse {
     public void setStatus(String status) {
         this.status = status;
     }
-
+/*new*/
     public static class VhnAN_Mothers_List {
         private String mLongitude;
         private String mLatitude;

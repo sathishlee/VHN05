@@ -73,6 +73,8 @@ public class TremAndPreTremAdapter extends RecyclerView.Adapter<TremAndPreTremAd
             txt_delivery_date = itemView.findViewById(R.id.txt_delivery_date);
             txt_delivery_time = itemView.findViewById(R.id.txt_delivery_time);
             txt_username = itemView.findViewById(R.id.txt_username);
+
+            /*aa*/
         }
     }
 }
