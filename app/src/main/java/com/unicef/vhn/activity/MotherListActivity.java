@@ -9,6 +9,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
@@ -35,6 +37,7 @@ public class MotherListActivity extends AppCompatActivity implements MotherLists
 //    private RecyclerView recyclerView;
     private RecyclerView mother_recycler_view;
     private MotherListAdapter mAdapter;
+    private TextView txt_no_records_found;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,9 @@ public class MotherListActivity extends AppCompatActivity implements MotherLists
 //        pnMotherListPresenter.getPNMotherList("V10001","1");
         mResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView) findViewById(R.id.mother_recycler_view);
+        txt_no_records_found = (TextView) findViewById(R.id.txt_no_records_found);
+        mother_recycler_view.setVisibility(View.GONE);
+        txt_no_records_found.setVisibility(View.GONE);
 if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("mother_count")) {
     pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_LIST,preferenceData.getVhnCode(),preferenceData.getVhnId());
 //    pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_TRACKING,preferenceData.getVhnCode(),preferenceData.getVhnId());
@@ -119,17 +125,25 @@ else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("risk_count")) {
         try {
             JSONObject mJsnobject = new JSONObject(response);
             JSONArray jsonArray = mJsnobject.getJSONArray("vhnAN_Mothers_List");
-            for (int i = 0; i < jsonArray.length(); i++) {
-                mresponseResult =new PNMotherListResponse.VhnAN_Mothers_List();
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                mresponseResult.setMid(jsonObject.getString("mid"));
-                mresponseResult.setMName(jsonObject.getString("mName"));
-                mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
-                mresponseResult.setVhnId(jsonObject.getString("vhnId"));
+            if (jsonArray.length()!=0) {
+                mother_recycler_view.setVisibility(View.VISIBLE);
+                txt_no_records_found.setVisibility(View.GONE);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    mresponseResult.setMid(jsonObject.getString("mid"));
+                    mresponseResult.setMName(jsonObject.getString("mName"));
+                    mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
+                    mresponseResult.setVhnId(jsonObject.getString("vhnId"));
+                    mresponseResult.setMotherType(jsonObject.getString("motherType"));
 //                mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
 //                mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
-                mResult.add(mresponseResult);
-                mAdapter.notifyDataSetChanged();
+                    mResult.add(mresponseResult);
+                    mAdapter.notifyDataSetChanged();
+                }
+            }else{
+                mother_recycler_view.setVisibility(View.GONE);
+                txt_no_records_found.setVisibility(View.VISIBLE);
             }
         }catch (JSONException e) {
             e.printStackTrace();
@@ -153,3 +167,5 @@ else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("risk_count")) {
 
     }
 }
+
+

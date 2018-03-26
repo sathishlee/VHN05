@@ -52,6 +52,7 @@ public class SOSListAdapter extends RecyclerView.Adapter<SOSListAdapter.ViewHold
         @Override
         public void onClick(View v) {
             AppConstants.SOS_ID=strSosId;
+            AppConstants.SELECTED_MID=SosMotherResponseModel.getMid();
         applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), SosMotherDetailsActivity.class));
         }
     });

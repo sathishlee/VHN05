@@ -1,7 +1,12 @@
 package com.unicef.vhn.activity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,7 +29,7 @@ import org.json.JSONObject;
 
 public class SosMotherDetailsActivity extends AppCompatActivity implements MotherListsViews, View.OnClickListener {
     TextView txt_username,txt_picme_id,txt_age,txt_risk,txt_message;
-    String strMotherName,strPicmeId,strAge,strRisk,strMessage,strMobileNo,strAltMobileNo,strLatitude,strLongitude;
+    String strMotherName,strPicmeId,strAge,strRisk,strMessage,strMobileNo,strAltMobileNo,strLatitude,strLongitude,strMotherType;
     ImageView img_call_1,img_call_2;
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
     ProgressDialog pDialog;
@@ -51,10 +56,11 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
     }
 
     private void onClickListner() {
-
         btn_view_location .setOnClickListener(this);
         btn_view_report .setOnClickListener(this);
         btn_alert_close .setOnClickListener(this);
+        img_call_1 .setOnClickListener(this);
+        img_call_2 .setOnClickListener(this);
     }
 
     private void showActionBar() {
@@ -127,6 +133,7 @@ pDialog.dismiss();
                 strMessage = mJsnobject_vhnSOSDetails.getString("message");
                 strLatitude = mJsnobject_vhnSOSDetails.getString("mLatitude");
                 strLongitude =mJsnobject_vhnSOSDetails.getString("mLongitude");
+                strMotherType =mJsnobject_vhnSOSDetails.getString("motherType");
                 Log.d(SosMotherDetailsActivity.class.getSimpleName(),"strLatitude"+strLatitude);
                 Log.d(SosMotherDetailsActivity.class.getSimpleName(),"strLongitude"+strLongitude);
             }else{
@@ -170,10 +177,81 @@ pDialog.dismiss();
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case  R.id.btn_view_location: break;
-            case  R.id.btn_view_report: break;
+            case  R.id.btn_view_location: startActivity(new Intent(getApplicationContext(),MotherLocationActivity.class));
+                break;
+            case  R.id.btn_view_report:
+                if (strMotherType.equalsIgnoreCase("AN")) {
+                    startActivity(new Intent(getApplicationContext(), ANViewReportsActivity.class));
+                }else if(strMotherType.equalsIgnoreCase("PN")){
+                    startActivity(new Intent(getApplicationContext(), PNViewReportsActivity.class));
+                }else{
+
+                }
+                break;
             case  R.id.btn_alert_close:
                 pnMotherListPresenter.closeSosAlertSelectedMother(preferenceData.getVhnId(), preferenceData.getVhnCode(), AppConstants.SOS_ID); break;
+
+            case  R.id.img_call_1: makeCall(strMobileNo); break;
+            case  R.id.img_call_2: makeCall(strAltMobileNo); break;
+        }
+    }
+
+    private void makeCall(String str_mobile_number) {
+
+        Toast.makeText(getApplicationContext(),str_mobile_number,Toast.LENGTH_SHORT).show();
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Camera permission has not been granted.
+
+            requestCallPermission();
+
+        } else {
+
+            // Camera permissions is already available, show the camera preview.
+            Log.i(MothersDetailsActivity.class.getSimpleName(),"CALL permission has already been granted. Displaying camera preview.");
+//            showCameraPreview();
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+"+str_mobile_number)));
+
+        }
+
+    }
+    private void requestCallPermission() {
+
+
+
+        Log.i(MothersDetailsActivity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
+
+        // BEGIN_INCLUDE(camera_permission_request)
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.CALL_PHONE)) {
+            // Provide an additional rationale to the user if the permission was not granted
+            // and the user would benefit from additional context for the use of the permission.
+            // For example if the user has previously denied the permission.
+            Log.i(MothersDetailsActivity.class.getSimpleName(),            "Displaying camera permission rationale to provide additional context.");
+            Toast.makeText(this,"Displaying camera permission rationale to provide additional context.",Toast.LENGTH_SHORT).show();
+
+        } else {
+
+            // Camera permission has not been granted yet. Request it directly.
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
+                    MAKE_CALL_PERMISSION_REQUEST_CODE);
+        }
+// END_INCLUDE(camera_permission_request)
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case MAKE_CALL_PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+//                    dial.setEnabled(true);
+                    Toast.makeText(this, "You can call the number by clicking on the button", Toast.LENGTH_SHORT).show();
+                }
+                return;
         }
     }
 }

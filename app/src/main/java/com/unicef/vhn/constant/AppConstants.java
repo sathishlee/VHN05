@@ -9,8 +9,8 @@ public class AppConstants {
     public static String PNMotherDetails="";
     public static String GET_MOTHER_LIST_TYPE="";
     public static String MOTHER_LIST_TITLE="";
-    public static final String PREF_NAME = "motherapp";
-//    public static final String PREF_NAME = "vhnapp";
+
+    public static final String PREF_NAME = "vhnapp";
     public static final String IS_LOGIN = "is_Login";
 
     public static final String VHN_ID = "vhnId";

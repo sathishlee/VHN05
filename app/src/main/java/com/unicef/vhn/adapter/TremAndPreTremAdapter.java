@@ -44,6 +44,7 @@ public class TremAndPreTremAdapter extends RecyclerView.Adapter<TremAndPreTremAd
         holder.txt_birth_type.setText(tremAndPreTremModel.getDBirthDetails());
         holder.txt_delivery_date.setText(tremAndPreTremModel.getDdatetime());
         holder.txt_delivery_time.setText(tremAndPreTremModel.getDtime());
+        holder.txt_username.setText("Mother Name:"+tremAndPreTremModel.getmName());
         strMid= tremAndPreTremModel.getMid();
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -63,13 +64,14 @@ public class TremAndPreTremAdapter extends RecyclerView.Adapter<TremAndPreTremAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_infant_id,txt_birth_type,txt_delivery_date,txt_delivery_time;
+        TextView txt_infant_id,txt_birth_type,txt_delivery_date,txt_delivery_time,txt_username;
         public ViewHolder(View itemView) {
             super(itemView);
             txt_infant_id = itemView.findViewById(R.id.txt_infant_id);
             txt_birth_type = itemView.findViewById(R.id.txt_birth_type);
             txt_delivery_date = itemView.findViewById(R.id.txt_delivery_date);
             txt_delivery_time = itemView.findViewById(R.id.txt_delivery_time);
+            txt_username = itemView.findViewById(R.id.txt_username);
         }
     }
 }

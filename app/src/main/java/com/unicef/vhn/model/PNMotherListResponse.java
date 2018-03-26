@@ -43,6 +43,16 @@ public class PNMotherListResponse {
         private String mid;
         private String mPicmeId;
         private String mName;
+        private String motherType;
+
+        public String getMotherType() {
+            return motherType;
+        }
+
+        public void setMotherType(String motherType) {
+            this.motherType = motherType;
+        }
+
 
         public String getPnId() {
             return pnId;
