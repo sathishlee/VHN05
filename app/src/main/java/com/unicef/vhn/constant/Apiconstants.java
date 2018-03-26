@@ -6,7 +6,8 @@ package com.unicef.vhn.constant;
 
 public class Apiconstants {
 
-    public static final String BASE_URL = "http://192.168.100.235/thaimaiapp/api/vhn/Vhn/";
+//    public static final String BASE_URL = "http://192.168.100.235/thaimaiapp/api/vhn/Vhn/";
+    public static final String BASE_URL = "http://192.168.100.27/thaimaiapp/api/vhn/Vhn/";
 
 //    public static final String BASE_URL = "http://demo.satvatinfosol.com/thaimai/api/vhn/Vhn/";
 
@@ -30,7 +31,7 @@ public class Apiconstants {
 
 
 //    http://192.168.100.235/thaimaiapp/api/vhn/Vhn/vDashboardMothersPNRecord      /*vhnCode:V10001 , vhnId:1*/
-public static final String DASH_BOARD_MOTHERS_PN_RECORDS= "vDashboardMothersPNRecord ";
+//public static final String DASH_BOARD_MOTHERS_PN_RECORDS= "vDashboardMothersPNRecord ";
     //    http://192.168.100.235/thaimaiapp/api/vhn/Vhn/VHN_PN_All_Mothers           /*vhnId:1, vhnCode:V10001*/
     public static final String DASH_BOARD_MOTHERS_PN_RECORDS = "VHN_PN_All_Mothers";
 

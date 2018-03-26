@@ -44,6 +44,8 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
         final PNMotherListResponse.VhnAN_Mothers_List  pNMotherResponseModel =mResult.get(position);
         holder.txt_username.setText(pNMotherResponseModel.getMName());
         holder.txt_picme_id.setText(pNMotherResponseModel.getMPicmeId());
+        holder.txt_list_type.setText(pNMotherResponseModel.getMotherType());
+        /*
         if (type.equalsIgnoreCase("PN")) {
             holder.txt_list_type.setText(type);
         }else if (type.equalsIgnoreCase("AN")) {
@@ -52,20 +54,20 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
             holder.txt_list_type.setText(type);
         }else{
             holder.ll_ll_mother_type.setVisibility(View.GONE);
-        }
+        }*/
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AppConstants.SELECTED_MID=pNMotherResponseModel.getMid();
-                if (type.equalsIgnoreCase("PN")){
+                if (pNMotherResponseModel.getMotherType().equalsIgnoreCase("PN")){
                     applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherDetailsActivity.class));
 
-                }else if (type.equalsIgnoreCase("AN")){
+                }else if (pNMotherResponseModel.getMotherType().equalsIgnoreCase("AN")){
                     applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MothersDetailsActivity.class));
 
-                }else if (type.equalsIgnoreCase("Risk")){
+                }else if (pNMotherResponseModel.getMotherType().equalsIgnoreCase("Risk")){
                     applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MothersDetailsActivity.class));
 
                 }else{

@@ -85,6 +85,16 @@ public class TremAndPreTremResponseModel {
         private String picmeId;
         private String masterId;
 
+        public String getmName() {
+            return mName;
+        }
+
+        public void setmName(String mName) {
+            this.mName = mName;
+        }
+
+        private String mName;
+
         public String getVLongitude() {
             return vLongitude;
         }

@@ -5,28 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/thaimai_splash_screen"
-    tools:context="com.unicef.vhn.activity.SplashScreenActivity">
+    tools:context="com.unicef.vhn.activity.SplashScreenActivity"
+    android:id="@+id/rel_splash_screen"
+    >
 
     <TextView
         android:id="@+id/Create"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:text="Setting up things... Please Wait...!"
         android:textColor="#ffffff"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:textSize="18sp" />
 
     <ProgressBar
         android:id="@+id/signin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="35dp"
+        android:gravity="center"
+        android:padding="16dp"
         android:textColor="#ffffff"
         android:textSize="24sp"
-        android:padding="16dp"
-        android:gravity="center"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="35dp"
-        android:layout_centerHorizontal="true"
-        android:visibility="visible"/>
+        android:visibility="visible" />
+
+    <include
+        layout="@layout/view_no_internet_connection"
+        android:visibility="gone" />
+
 </RelativeLayout>

@@ -99,7 +99,7 @@ public class home extends Fragment implements MotherListsViews {
             @Override
             public void onClick(View v) {
                 AppConstants.GET_MOTHER_LIST_TYPE="infant_count";
-                startActivity(new Intent(getActivity(), PNHBNCListActivity.class));
+                startActivity(new Intent(getActivity(), TreamPreTreamListActivity.class));
             }
         });
 
@@ -199,7 +199,7 @@ public class home extends Fragment implements MotherListsViews {
                 but_an_mother_total_count.setText("Total: "+mJsnobject.getString("ANMothersCount"));
                 but_an_mother_high_risk_count.setText("High Risk: "+mJsnobject.getString("ANMotherRiskCount"));
                 but_an_mother_pn_hbnc_totlal_count.setText("Total: "+mJsnobject.getString("PNMotherCount"));
-                but_an_mother_pn_hbnc_term_preterm_count.setText("Term/Preterm: "+mJsnobject.getString("PNMotherRiskCount"));
+                but_an_mother_pn_hbnc_term_preterm_count.setText("Term/Preterm: "+mJsnobject.getString("termsCount"));
 
                 JSONObject mJsnobject_phcDetails = mJsnobject.getJSONObject("phcDetails");
 //                JSONObject mJsnobject_phcDetails = mJsnobject.getJSONObject("phcDetails");

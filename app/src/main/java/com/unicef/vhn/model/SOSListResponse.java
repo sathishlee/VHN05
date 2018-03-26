@@ -44,6 +44,17 @@ public class SOSListResponse {
         private String sosId;
         private String mPicmeId;
         private String mName;
+        private String motherType;
+
+        public String getMotherType() {
+            return motherType;
+        }
+
+        public void setMotherType(String motherType) {
+            this.motherType = motherType;
+        }
+
+
 
         public String getVhnId() {
             return vhnId;

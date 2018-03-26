@@ -10,6 +10,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
@@ -35,6 +37,7 @@ public class TreamPreTreamListActivity extends AppCompatActivity implements Moth
     TremAndPreTremResponseModel.DelveryInfo mresponseResult;
     //    private RecyclerView recyclerView;
     private RecyclerView mother_recycler_view;
+    private TextView txt_no_records_found;
     private TremAndPreTremAdapter mAdapter;
 
     @Override
@@ -56,7 +59,7 @@ public class TreamPreTreamListActivity extends AppCompatActivity implements Moth
         pnMotherListPresenter.getTremAndPreTremMothersList(preferenceData.getVhnCode(), preferenceData.getVhnId());
         mResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView) findViewById(R.id.mother_recycler_view);
-
+        txt_no_records_found =(TextView) findViewById(R.id.txt_no_records_found);
         mAdapter = new TremAndPreTremAdapter(mResult, TreamPreTreamListActivity.this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(TreamPreTreamListActivity.this);
@@ -98,17 +101,26 @@ public class TreamPreTreamListActivity extends AppCompatActivity implements Moth
             String status =mJsnobject.getString("status");
             if (status.equalsIgnoreCase("1")) {
                 JSONArray jsonArray = mJsnobject.getJSONArray("delveryInfo");
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    mresponseResult = new TremAndPreTremResponseModel.DelveryInfo();
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    mresponseResult.setMid(jsonObject.getString("mid"));
-                    mresponseResult.setDInfantId(jsonObject.getString("dInfantId"));
-                    mresponseResult.setDdatetime(jsonObject.getString("ddatetime"));
-                    mresponseResult.setDtime(jsonObject.getString("dtime"));
-                    mresponseResult.setDBirthDetails(jsonObject.getString("dBirthDetails"));
+                if (jsonArray.length()!=0) {
+                    mother_recycler_view.setVisibility(View.VISIBLE);
+                    txt_no_records_found.setVisibility(View.GONE);
 
-                    mResult.add(mresponseResult);
-                    mAdapter.notifyDataSetChanged();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        mresponseResult = new TremAndPreTremResponseModel.DelveryInfo();
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        mresponseResult.setMid(jsonObject.getString("mid"));
+                        mresponseResult.setDInfantId(jsonObject.getString("dInfantId"));
+                        mresponseResult.setDdatetime(jsonObject.getString("ddatetime"));
+                        mresponseResult.setDtime(jsonObject.getString("dtime"));
+                        mresponseResult.setmName(jsonObject.getString("mName"));
+                        mresponseResult.setDBirthDetails(jsonObject.getString("dBirthDetails"));
+
+                        mResult.add(mresponseResult);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }else{
+                    mother_recycler_view.setVisibility(View.GONE);
+                    txt_no_records_found.setVisibility(View.VISIBLE);
                 }
             }
         } catch (JSONException e) {

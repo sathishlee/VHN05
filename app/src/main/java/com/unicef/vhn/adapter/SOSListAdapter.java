@@ -46,7 +46,7 @@ public class SOSListAdapter extends RecyclerView.Adapter<SOSListAdapter.ViewHold
         final SOSListResponse.VhnAN_Mothers_List  SosMotherResponseModel =mResult.get(position);
         holder.txt_username.setText(SosMotherResponseModel.getMName());
         holder.txt_picme_id.setText(SosMotherResponseModel.getMPicmeId());
-        holder.txt_mother_type.setText("AN");
+        holder.txt_mother_type.setText(SosMotherResponseModel.getMotherType());
         strSosId=SosMotherResponseModel.getSosId();
         strVHNID=SosMotherResponseModel.getVhnId();
         SosStatus=SosMotherResponseModel.getSosStatus();
@@ -54,6 +54,7 @@ public class SOSListAdapter extends RecyclerView.Adapter<SOSListAdapter.ViewHold
         @Override
         public void onClick(View v) {
             AppConstants.SOS_ID=strSosId;
+            AppConstants.SELECTED_MID=SosMotherResponseModel.getMid();
         applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), SosMotherDetailsActivity.class));
         }
     });

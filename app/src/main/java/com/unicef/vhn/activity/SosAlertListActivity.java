@@ -10,6 +10,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
@@ -36,6 +38,7 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
     SOSListResponse.VhnAN_Mothers_List mresponseResult;
     //    private RecyclerView recyclerView;
     private RecyclerView mother_recycler_view;
+    private TextView txt_no_records_found;
     private SOSListAdapter mAdapter;
 
     @Override
@@ -77,6 +80,7 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
 
         mResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView) findViewById(R.id.mother_recycler_view);
+        txt_no_records_found = (TextView) findViewById(R.id.txt_no_records_found);
         mAdapter = new SOSListAdapter(mResult, SosAlertListActivity.this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(SosAlertListActivity.this);
@@ -102,19 +106,28 @@ pDialog.dismiss();
         try {
             JSONObject mJsnobject = new JSONObject(response);
             JSONArray jsonArray = mJsnobject.getJSONArray("vhnAN_Mothers_List");
-            for (int i = 0; i < jsonArray.length(); i++) {
+            if (jsonArray.length()!=0) {
+                mother_recycler_view .setVisibility(View.VISIBLE);
+                txt_no_records_found  .setVisibility(View.GONE);
+                for (int i = 0; i < jsonArray.length(); i++) {
 
-                mresponseResult =new SOSListResponse.VhnAN_Mothers_List();
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                mresponseResult.setMid(jsonObject.getString("mid"));
-                mresponseResult.setMName(jsonObject.getString("mName"));
-                mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
-                mresponseResult.setSosId(jsonObject.getString("sosId"));
-                mresponseResult.setMRiskStatus(jsonObject.getString("mRiskStatus"));
-                mresponseResult.setSosStatus(jsonObject.getString("sosStatus"));
-                mresponseResult.setVhnId(jsonObject.getString("vhnId"));
-                mResult.add(mresponseResult);
-                mAdapter.notifyDataSetChanged();
+                    mresponseResult = new SOSListResponse.VhnAN_Mothers_List();
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    mresponseResult.setMid(jsonObject.getString("mid"));
+                    mresponseResult.setMName(jsonObject.getString("mName"));
+                    mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
+                    mresponseResult.setSosId(jsonObject.getString("sosId"));
+                    mresponseResult.setMRiskStatus(jsonObject.getString("mRiskStatus"));
+                    mresponseResult.setSosStatus(jsonObject.getString("sosStatus"));
+                    mresponseResult.setVhnId(jsonObject.getString("vhnId"));
+                    mresponseResult.setMotherType(jsonObject.getString("motherType"));
+                    mResult.add(mresponseResult);
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+            else{
+                mother_recycler_view .setVisibility(View.GONE);
+                txt_no_records_found  .setVisibility(View.VISIBLE);
             }
         }catch (JSONException e) {
             e.printStackTrace();

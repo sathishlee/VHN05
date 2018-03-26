@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -43,11 +44,15 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
 
     LocationUpdatePresenter locationUpdatePresenter;
     PreferenceData preferenceData;
-
+RelativeLayout rel_no_internet_connection;
+    RelativeLayout rel_splash_screen;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        rel_splash_screen = (RelativeLayout) findViewById(R.id.rel_splash_screen);
+        rel_splash_screen.setVisibility(View.GONE);
+        rel_no_internet_connection = (RelativeLayout) findViewById(R.id.rel_no_internet_connection);
         locationUpdatePresenter =new LocationUpdatePresenter(this,this);
         preferenceData = new PreferenceData(this);
         startStep1();
@@ -74,7 +79,6 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
 //                                strAddress = getCompleteAddressString(latitude, longitude);
 //if (preferenceData.getPicmeId().equalsIgnoreCase("") && preferenceData.getVhnId().equalsIgnoreCase("")&& preferenceData.getMId().equalsIgnoreCase(""))
 
-
                                 locationUpdatePresenter.uploadLocationToServer( preferenceData.getVhnId(), latitude, longitude);
 
                             }
@@ -84,33 +88,7 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
 
 
         }
-        new Handler().postDelayed(new Runnable() {
 
-            /*
-             * Showing splash screen with a timer. This will be useful when you
-             * want to show case your app logo / company
-             */
-
-            @Override
-            public void run() {
-                // This method will be executed once the timer is over
-                // Start your app main activity
-                if (preferenceData.getLogin()) {
-                    Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
-                    startActivity(i);
-
-                    // close this activity
-                    finish();
-                }
-                else{
-                    Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
-                    startActivity(i);
-
-                    // close this activity
-                    finish();
-                }
-            }
-        }, SPLASH_TIME_OUT);
     }
     @Override
     public void onResume() {
@@ -203,7 +181,7 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
      * Step 3: Start the Location Monitor Service
      */
     private void startStep3() {
-
+        rel_splash_screen.setVisibility(View.VISIBLE);
         //And it will be keep running until you close the entire application from task manager.
         //This method will executed only once.
 
@@ -217,6 +195,34 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
             mAlreadyStartedService = true;
             //Ends................................................
         }
+
+        new Handler().postDelayed(new Runnable() {
+
+            /*
+             * Showing splash screen with a timer. This will be useful when you
+             * want to show case your app logo / company
+             */
+
+            @Override
+            public void run() {
+                // This method will be executed once the timer is over
+                // Start your app main activity
+                if (preferenceData.getLogin()) {
+                    Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
+                    startActivity(i);
+
+                    // close this activity
+                    finish();
+                }
+                else{
+                    Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
+                    startActivity(i);
+
+                    // close this activity
+                    finish();
+                }
+            }
+        }, SPLASH_TIME_OUT);
     }
 
     /**
@@ -377,6 +383,7 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
 
     @Override
     public void locationUpdateSuccess(String loginResponseModel) {
+        rel_no_internet_connection.setVisibility(View.GONE);
         Log.d(TAG,"success--->"+loginResponseModel);
     }
 
@@ -384,7 +391,8 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
     public void locationUpdateFailiure(String string) {
         Log.d(TAG,"Error--->"+string);
 
-    }
+
+            }
 
     @Override
     public void getNearbyHospitalSuccess(String loginResponseModel) {
