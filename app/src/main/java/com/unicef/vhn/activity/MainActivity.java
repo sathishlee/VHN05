@@ -124,12 +124,20 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.an_mothers) {
-            Intent i = new Intent(getApplicationContext(), AnMotherListActivity.class);
-            startActivity(i);
+            AppConstants.GET_MOTHER_LIST_TYPE="an_mother_total_count";
+            AppConstants.MOTHER_LIST_TITLE="AN Mother List";
+
+            startActivity(new Intent(getApplicationContext(), MotherListActivity.class));
+//            Intent i = new Intent(getApplicationContext(), AnMotherListActivity.class);
+//            startActivity(i);
         }
-        else if (id == R.id.pn_hbnc_mothers) {
-            Intent i = new Intent(getApplicationContext(), PNHBNCListActivity.class);
-            startActivity(i);
+        if (id == R.id.pn_hbnc_mothers) {
+            AppConstants.GET_MOTHER_LIST_TYPE="pn_hbnc_totlal_coun";
+            AppConstants.MOTHER_LIST_TITLE="PN/HBNC Mother List";
+
+            startActivity(new Intent(getApplicationContext(), PNHBNCListActivity.class));
+//            Intent i = new Intent(getApplicationContext(), PNHBNCListActivity.class);
+//            startActivity(i);
         }
         else if (id == R.id.immunization) {
             Intent i = new Intent(getApplicationContext(), ImmunizationListActivity.class);

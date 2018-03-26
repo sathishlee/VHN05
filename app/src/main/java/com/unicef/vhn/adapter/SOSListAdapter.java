@@ -36,13 +36,13 @@ public class SOSListAdapter extends RecyclerView.Adapter<SOSListAdapter.ViewHold
 
 
     @Override
-    public SOSListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mother_sos,parent,false);
-        return new SOSListAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(SOSListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         final SOSListResponse.VhnAN_Mothers_List  SosMotherResponseModel =mResult.get(position);
         holder.txt_username.setText(SosMotherResponseModel.getMName());
         holder.txt_picme_id.setText(SosMotherResponseModel.getMPicmeId());

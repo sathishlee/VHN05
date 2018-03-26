@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.LoginPresenter;
 import com.unicef.vhn.R;
-import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.view.LoginViews;
 
 import org.json.JSONException;
@@ -38,12 +37,7 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
     };
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-//    private UserLoginTask mAuthTask = null;
 
-    // UI references.
     private EditText edtVhnId,edtPassword;
     String strVhnId, strPassword;
     FloatingActionButton fabLogin;
@@ -73,10 +67,6 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
         initUI();
         onClickListner();
 
-
-
-
-
     }
 
     private void onClickListner() {
@@ -91,12 +81,13 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
     private void attemptLogin() {
          strVhnId = edtVhnId.getText().toString();
          strPassword = edtPassword.getText().toString();
+        preferenceData.getDeviceId();
         if (strVhnId.equalsIgnoreCase("")) {
             edtVhnId.setError("VHN ID is Empty");
         }else if (strPassword.equalsIgnoreCase("")) {
             edtPassword.setError("Password is Empty");
         }else{
-            loginPresenter.login(strVhnId, strPassword);
+            loginPresenter.login(strVhnId, strPassword, preferenceData.getDeviceId());
 
         }
 

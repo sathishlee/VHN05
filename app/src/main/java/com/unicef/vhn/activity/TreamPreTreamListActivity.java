@@ -16,9 +16,7 @@ import android.widget.TextView;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
-import com.unicef.vhn.adapter.MotherListAdapter;
 import com.unicef.vhn.adapter.TremAndPreTremAdapter;
-import com.unicef.vhn.model.PNMotherListResponse;
 import com.unicef.vhn.model.TremAndPreTremResponseModel;
 import com.unicef.vhn.view.MotherListsViews;
 

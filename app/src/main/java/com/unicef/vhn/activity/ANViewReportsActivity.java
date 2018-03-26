@@ -11,7 +11,6 @@ import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.GetVisitANMotherPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.adapter.ANVisitAdapter;
-import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.ANMotherVisitResponseModel;
 import com.unicef.vhn.view.VisitANMotherViews;

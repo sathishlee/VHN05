@@ -33,18 +33,28 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
     }
 
     @Override
-    public MotherListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mothers_an,parent,false);
-        return new MotherListAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 /*new*/
     @Override
-    public void onBindViewHolder(MotherListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         final PNMotherListResponse.VhnAN_Mothers_List  pNMotherResponseModel =mResult.get(position);
         holder.txt_username.setText(pNMotherResponseModel.getMName());
         holder.txt_picme_id.setText(pNMotherResponseModel.getMPicmeId());
-        holder.txt_list_type.setText(pNMotherResponseModel.getMotherType());
+//        if (pNMotherResponseModel.getMotherType().equalsIgnoreCase("")){
+            if (type.equalsIgnoreCase("PN")) {
+                holder.txt_list_type.setText(type);
+            }else if (type.equalsIgnoreCase("AN")) {
+                holder.txt_list_type.setText(type);
+            }else if (type.equalsIgnoreCase("Risk")) {
+                holder.txt_list_type.setText(type);
+            }
+//        }else {
+//            holder.txt_list_type.setText(pNMotherResponseModel.getMotherType());
+//        }
         /*
         if (type.equalsIgnoreCase("PN")) {
             holder.txt_list_type.setText(type);
@@ -61,13 +71,13 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
             @Override
             public void onClick(View v) {
                 AppConstants.SELECTED_MID=pNMotherResponseModel.getMid();
-                if (pNMotherResponseModel.getMotherType().equalsIgnoreCase("PN")){
+                if (type.equalsIgnoreCase("PN")){
                     applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherDetailsActivity.class));
 
-                }else if (pNMotherResponseModel.getMotherType().equalsIgnoreCase("AN")){
+                }else if (type.equalsIgnoreCase("AN")){
                     applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MothersDetailsActivity.class));
 
-                }else if (pNMotherResponseModel.getMotherType().equalsIgnoreCase("Risk")){
+                }else if (type.equalsIgnoreCase("Risk")){
                     applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MothersDetailsActivity.class));
 
                 }else{

@@ -6,10 +6,9 @@ package com.unicef.vhn.constant;
 
 public class Apiconstants {
 
-//    public static final String BASE_URL = "http://192.168.100.235/thaimaiapp/api/vhn/Vhn/";
-    public static final String BASE_URL = "http://192.168.100.27/thaimaiapp/api/vhn/Vhn/";
+//    public static final String BASE_URL = "http://192.168.100.27/thaimaiapp/api/vhn/Vhn/";
 
-//    public static final String BASE_URL = "http://demo.satvatinfosol.com/thaimai/api/vhn/Vhn/";
+    public static final String BASE_URL = "http://demo.satvatinfosol.com/thaimai/api/vhn/Vhn/";
 
 
 //    http://192.168.100.235/thaimaiapp/api/vhn/Vhn/vhnLocationUpdate

@@ -1,4 +1,4 @@
-/*
+package com.unicef.vhn.adapter;/*
 package com.unicef.vhn.adapter;
 
 import android.support.v4.app.Fragment;

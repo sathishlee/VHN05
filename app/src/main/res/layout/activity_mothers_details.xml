@@ -100,7 +100,7 @@ tools:context="com.unicef.vhn.activity.MothersDetailsActivity">
             android:id="@+id/btn_view_report"
             android:background="@color/colorPrimary"
             android:textColor="#ffffff"
-            android:text="View Report"
+            android:text="Mother Report"
             android:layout_weight="1"
             android:drawableStart="@drawable/ic_view_report"/>
 

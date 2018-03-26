@@ -20,7 +20,6 @@ import com.unicef.vhn.Presenter.HomePresenter;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 //import com.unicef.vhn.activity.HighRiskListActivity;
-import com.unicef.vhn.activity.AnMotherListActivity;
 import com.unicef.vhn.activity.InfantListActivity;
 import com.unicef.vhn.activity.MotherListActivity;
 import com.unicef.vhn.activity.MotherTrackActivity;
@@ -89,7 +88,7 @@ public class home extends Fragment implements MotherListsViews {
             @Override
             public void onClick(View v) {
                 AppConstants.GET_MOTHER_LIST_TYPE="risk_count";
-                AppConstants.MOTHER_LIST_TITLE="Risk Mother List";
+                AppConstants.MOTHER_LIST_TITLE="High Risk Mother List";
 
                 startActivity(new Intent(getActivity(), MotherListActivity.class));
             }
@@ -99,6 +98,8 @@ public class home extends Fragment implements MotherListsViews {
             @Override
             public void onClick(View v) {
                 AppConstants.GET_MOTHER_LIST_TYPE="infant_count";
+                AppConstants.MOTHER_LIST_TITLE="Infant List";
+
                 startActivity(new Intent(getActivity(), TreamPreTreamListActivity.class));
             }
         });
@@ -107,6 +108,8 @@ public class home extends Fragment implements MotherListsViews {
             @Override
             public void onClick(View v) {
                 AppConstants.GET_MOTHER_LIST_TYPE="an_mother_total_count";
+                AppConstants.MOTHER_LIST_TITLE="AN Mother List";
+
                 startActivity(new Intent(getActivity(), MotherListActivity.class));
             }
         });
@@ -115,6 +118,8 @@ public class home extends Fragment implements MotherListsViews {
             @Override
             public void onClick(View v) {
                 AppConstants.GET_MOTHER_LIST_TYPE="high_risk_count";
+                AppConstants.MOTHER_LIST_TITLE="AN High Risk Mother List";
+
                 startActivity(new Intent(getActivity(), MotherListActivity.class));
             }
         });
@@ -122,6 +127,8 @@ public class home extends Fragment implements MotherListsViews {
             @Override
             public void onClick(View v) {
                 AppConstants.GET_MOTHER_LIST_TYPE="pn_hbnc_totlal_coun";
+                AppConstants.MOTHER_LIST_TITLE="PN/HBNC Mother List";
+
                 startActivity(new Intent(getActivity(), PNHBNCListActivity.class));
             }
         });
@@ -129,6 +136,8 @@ public class home extends Fragment implements MotherListsViews {
             @Override
             public void onClick(View v) {
                 AppConstants.GET_MOTHER_LIST_TYPE="pn_hbnc_term_preterm_count";
+                AppConstants.MOTHER_LIST_TITLE="TERM/PRE TERM List";
+
                 startActivity(new Intent(getActivity(), TreamPreTreamListActivity.class));
             }
         });
