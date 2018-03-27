@@ -228,6 +228,8 @@ public class MainActivity extends AppCompatActivity
 
         // register connection status listener
         MyApplication.getInstance().setConnectivityListener(this);
+
+
     }
 
     /**
@@ -235,7 +237,8 @@ public class MainActivity extends AppCompatActivity
      * network connection
      */
     @Override
-    public void onNetworkConnectionChanged(boolean isConnected) {
+    public void onNetworkConnectionChanged(boolean isConnected)
+    {
         showSnack(isConnected);
     }
 
@@ -243,6 +246,7 @@ public class MainActivity extends AppCompatActivity
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
 
 
 }
