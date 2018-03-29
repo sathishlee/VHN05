@@ -17,7 +17,7 @@ public class ImmunizationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_immunization);
+        setContentView(R.layout.activity_immunization_list);
 
         ActionBar actionBar = getSupportActionBar();
 
@@ -26,35 +26,8 @@ public class ImmunizationActivity extends AppCompatActivity {
         actionBar.setHomeButtonEnabled(true);
 
         actionBar.setDisplayHomeAsUpEnabled(true);
-        /*movieList = new ArrayList<>();
-        recyclerView = findViewById(R.id.recycler_view);
-
-        mAdapter = new MoviesAdapter(this,movieList,"Immunization");
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
-
-        prepareMovieData();*/
     }
 
-    /*private void prepareMovieData() {
-
-        movie = new Movie("Tamil selvi", "1001", "Breathlessness");
-        movieList.add(movie);
-        movie = new Movie("Amutha", "1002", "Mictutrion");
-        movieList.add(movie);
-        movie = new Movie("Suganya", "1003", "Bleeding PV");
-
-        movie = new Movie("Tamil selvi", "1001", "Breathlessness");
-        movieList.add(movie);
-        movie = new Movie("Amutha", "1002", "Mictutrion");
-        movieList.add(movie);
-        movie = new Movie("Suganya", "1003", "Bleeding PV");
-        movieList.add(movie);
-        movieList.add(movie);
-        mAdapter.notifyDataSetChanged();
-    }*/
 
 
     @Override

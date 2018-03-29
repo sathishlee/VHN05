@@ -17,6 +17,10 @@ public interface MotherListInteractor {
 
     void getTremAndPreTremMothers(String vhnId,String VhnCode, String mid) ;
 
+    void getANTTMotherList(String vhnCode, String vhnId);
+
+    void getANTT2MotherList(String vhnCode, String vhnId);
+
 
 
 }

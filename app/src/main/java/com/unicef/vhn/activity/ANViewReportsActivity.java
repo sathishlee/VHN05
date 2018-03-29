@@ -1,11 +1,14 @@
 package com.unicef.vhn.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.GetVisitANMotherPresenter;
@@ -21,7 +24,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ANViewReportsActivity extends AppCompatActivity implements VisitANMotherViews {
+public class ANViewReportsActivity extends AppCompatActivity implements VisitANMotherViews, View.OnClickListener {
     private  ProgressDialog pDialog;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -31,12 +34,14 @@ public class ANViewReportsActivity extends AppCompatActivity implements VisitANM
     ANMotherVisitResponseModel.VhnAN_Mothers_List mhealthRecordResponseModel;
     ANVisitAdapter hAdapter;
 
+    Button btn_primary_report, btn_view_report;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anview_reports);
         initUI();
-//        onClickListner();
+        onClickListner();
 
     }
 
@@ -54,6 +59,9 @@ public class ANViewReportsActivity extends AppCompatActivity implements VisitANM
         viewPager =(ViewPager) findViewById(R.id.hre_viewpager);
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
+
+        btn_primary_report = (Button) findViewById(R.id.btn_primary_report);
+        btn_view_report = (Button) findViewById(R.id.btn_view_report);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -61,6 +69,28 @@ public class ANViewReportsActivity extends AppCompatActivity implements VisitANM
         hAdapter =new ANVisitAdapter(this,mhealthRecordList);
         viewPager.setOffscreenPageLimit(mhealthRecordList.size());
         viewPager.setAdapter(hAdapter);
+    }
+
+    private void onClickListner() {
+        btn_primary_report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),MothersPrimaryRecordsActivity.class));
+            }
+        });
+        btn_view_report.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_primary_report:startActivity(new Intent(getApplicationContext(),MothersPrimaryRecordsActivity.class));
+                break;
+            case  R.id.btn_view_report:
+                startActivity(new Intent(getApplicationContext(),ANViewReportsActivity.class));
+                break;
+        }
     }
 
 
