@@ -9,8 +9,13 @@ import android.net.NetworkInfo;
  */
 
 public class CheckNetwork {
+    Context context;
+    public CheckNetwork(Context context) {
+        this.context=context;
+    }
+
     //If you only want to check your Internet connection available or not
-    public  boolean isNetworkAvailable(Context context) {
+    public  boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);

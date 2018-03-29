@@ -44,7 +44,7 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
 
     LocationUpdatePresenter locationUpdatePresenter;
     PreferenceData preferenceData;
-RelativeLayout rel_no_internet_connection;
+//RelativeLayout rel_no_internet_connection;
     RelativeLayout rel_splash_screen;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ RelativeLayout rel_no_internet_connection;
         setContentView(R.layout.activity_splash_screen);
         rel_splash_screen = (RelativeLayout) findViewById(R.id.rel_splash_screen);
         rel_splash_screen.setVisibility(View.GONE);
-        rel_no_internet_connection = (RelativeLayout) findViewById(R.id.rel_no_internet_connection);
+//        rel_no_internet_connection = (RelativeLayout) findViewById(R.id.rel_no_internet_connection);
         locationUpdatePresenter =new LocationUpdatePresenter(this,this);
         preferenceData = new PreferenceData(this);
         startStep1();
@@ -383,7 +383,7 @@ RelativeLayout rel_no_internet_connection;
 
     @Override
     public void locationUpdateSuccess(String loginResponseModel) {
-        rel_no_internet_connection.setVisibility(View.GONE);
+//        rel_no_internet_connection.setVisibility(View.GONE);
         Log.d(TAG,"success--->"+loginResponseModel);
     }
 

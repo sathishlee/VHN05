@@ -24,7 +24,7 @@ android {
 }
 
 dependencies {
-        compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     //noinspection GradleCompatible
 
     //direction api
@@ -43,6 +43,7 @@ dependencies {
     compile 'com.google.maps.android:android-maps-utils:0.5'
     compile 'com.google.firebase:firebase-messaging:11.0.4'
 }
+
 
 
 

@@ -21,12 +21,15 @@ import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 //import com.unicef.vhn.activity.HighRiskListActivity;
 import com.unicef.vhn.activity.InfantListActivity;
+import com.unicef.vhn.activity.MainActivity;
 import com.unicef.vhn.activity.MotherListActivity;
 import com.unicef.vhn.activity.MotherTrackActivity;
+import com.unicef.vhn.activity.NoInternetConnectionActivity;
 import com.unicef.vhn.activity.PNHBNCListActivity;
 import com.unicef.vhn.activity.SosAlertListActivity;
 import com.unicef.vhn.activity.TreamPreTreamListActivity;
 import com.unicef.vhn.constant.AppConstants;
+import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.view.MotherListsViews;
 
 import org.json.JSONException;
@@ -44,6 +47,8 @@ public class home extends Fragment implements MotherListsViews {
     HomePresenter homePresenter;
     PreferenceData preferenceData;
     LinearLayout ll_sos_view;
+    CheckNetwork checkNetwork;
+
     public static home newInstance() {
         home fragment = new home();
         return fragment;
@@ -57,17 +62,16 @@ public class home extends Fragment implements MotherListsViews {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_new, container, false);
-
+        checkInterNetConnection();
         initUI(view);
-
 
 
         img_mother_count = (ImageView) view.findViewById(R.id.img_mother_count);
         img_mother_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppConstants.GET_MOTHER_LIST_TYPE="mother_count";
-                AppConstants.MOTHER_LIST_TITLE="All Mother List";
+                AppConstants.GET_MOTHER_LIST_TYPE = "mother_count";
+                AppConstants.MOTHER_LIST_TITLE = "All Mother List";
 
                 startActivity(new Intent(getActivity(), MotherListActivity.class));
 
@@ -77,8 +81,8 @@ public class home extends Fragment implements MotherListsViews {
         ll_sos_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppConstants.GET_MOTHER_LIST_TYPE="sos_count";
-                AppConstants.MOTHER_LIST_TITLE="SOS List";
+                AppConstants.GET_MOTHER_LIST_TYPE = "sos_count";
+                AppConstants.MOTHER_LIST_TITLE = "SOS List";
                 startActivity(new Intent(getActivity(), SosAlertListActivity.class));
 
             }
@@ -87,8 +91,8 @@ public class home extends Fragment implements MotherListsViews {
         img_high_risk_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppConstants.GET_MOTHER_LIST_TYPE="risk_count";
-                AppConstants.MOTHER_LIST_TITLE="High Risk Mother List";
+                AppConstants.GET_MOTHER_LIST_TYPE = "risk_count";
+                AppConstants.MOTHER_LIST_TITLE = "High Risk Mother List";
 
                 startActivity(new Intent(getActivity(), MotherListActivity.class));
             }
@@ -97,8 +101,8 @@ public class home extends Fragment implements MotherListsViews {
         img_infant_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppConstants.GET_MOTHER_LIST_TYPE="infant_count";
-                AppConstants.MOTHER_LIST_TITLE="Infant List";
+                AppConstants.GET_MOTHER_LIST_TYPE = "infant_count";
+                AppConstants.MOTHER_LIST_TITLE = "Infant List";
 
                 startActivity(new Intent(getActivity(), TreamPreTreamListActivity.class));
             }
@@ -107,8 +111,8 @@ public class home extends Fragment implements MotherListsViews {
         but_an_mother_total_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppConstants.GET_MOTHER_LIST_TYPE="an_mother_total_count";
-                AppConstants.MOTHER_LIST_TITLE="AN Mother List";
+                AppConstants.GET_MOTHER_LIST_TYPE = "an_mother_total_count";
+                AppConstants.MOTHER_LIST_TITLE = "AN Mother List";
 
                 startActivity(new Intent(getActivity(), MotherListActivity.class));
             }
@@ -117,8 +121,8 @@ public class home extends Fragment implements MotherListsViews {
         but_an_mother_high_risk_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppConstants.GET_MOTHER_LIST_TYPE="high_risk_count";
-                AppConstants.MOTHER_LIST_TITLE="AN High Risk Mother List";
+                AppConstants.GET_MOTHER_LIST_TYPE = "high_risk_count";
+                AppConstants.MOTHER_LIST_TITLE = "AN High Risk Mother List";
 
                 startActivity(new Intent(getActivity(), MotherListActivity.class));
             }
@@ -126,8 +130,8 @@ public class home extends Fragment implements MotherListsViews {
         but_an_mother_pn_hbnc_totlal_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppConstants.GET_MOTHER_LIST_TYPE="pn_hbnc_totlal_coun";
-                AppConstants.MOTHER_LIST_TITLE="PN/HBNC Mother List";
+                AppConstants.GET_MOTHER_LIST_TYPE = "pn_hbnc_totlal_coun";
+                AppConstants.MOTHER_LIST_TITLE = "PN/HBNC Mother List";
 
                 startActivity(new Intent(getActivity(), PNHBNCListActivity.class));
             }
@@ -135,8 +139,8 @@ public class home extends Fragment implements MotherListsViews {
         but_an_mother_pn_hbnc_term_preterm_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppConstants.GET_MOTHER_LIST_TYPE="pn_hbnc_term_preterm_count";
-                AppConstants.MOTHER_LIST_TITLE="TERM/PRE TERM List";
+                AppConstants.GET_MOTHER_LIST_TYPE = "pn_hbnc_term_preterm_count";
+                AppConstants.MOTHER_LIST_TITLE = "TERM/PRE TERM List";
 
                 startActivity(new Intent(getActivity(), TreamPreTreamListActivity.class));
             }
@@ -146,14 +150,29 @@ public class home extends Fragment implements MotherListsViews {
 
     }
 
+    private void checkInterNetConnection() {
+        checkNetwork = new CheckNetwork(getActivity());
+        if (checkNetwork.isNetworkAvailable()) {
+            Log.w(home.class.getSimpleName(), "Is" + checkNetwork.isNetworkAvailable());
+        } else {
+            Log.w(home.class.getSimpleName(), "Is" + checkNetwork.isNetworkAvailable());
+            startActivity(new Intent(getActivity(), NoInternetConnectionActivity.class));
+        }
+    }
+
     private void initUI(View view) {
         pDialog = new ProgressDialog(getActivity());
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(getActivity());
         homePresenter = new HomePresenter(getActivity(), this);
-        homePresenter.getDashBoard(preferenceData.getVhnCode(), preferenceData.getVhnId());
-        ll_sos_view =view.findViewById(R.id.ll_sos_view);
+        if (checkNetwork.isNetworkAvailable()) {
+            homePresenter.getDashBoard(preferenceData.getVhnCode(), preferenceData.getVhnId());
+        } else {
+            Log.w(home.class.getSimpleName(), "Is" + checkNetwork.isNetworkAvailable());
+            startActivity(new Intent(getActivity(), NoInternetConnectionActivity.class));
+        }
+        ll_sos_view = view.findViewById(R.id.ll_sos_view);
         txt_vhn_name = view.findViewById(R.id.txt_vhn_name);
         txt_hsc = view.findViewById(R.id.txt_hsc);
         txt_phc = view.findViewById(R.id.txt_phc);
@@ -205,10 +224,10 @@ public class home extends Fragment implements MotherListsViews {
                 txt_infants_count.setText(mJsnobject.getString("infantCount"));
                 txt_sos_count.setText(mJsnobject.getString("sosCount"));
 
-                but_an_mother_total_count.setText("Total: "+mJsnobject.getString("ANMothersCount"));
-                but_an_mother_high_risk_count.setText("High Risk: "+mJsnobject.getString("ANMotherRiskCount"));
-                but_an_mother_pn_hbnc_totlal_count.setText("Total: "+mJsnobject.getString("PNMotherCount"));
-                but_an_mother_pn_hbnc_term_preterm_count.setText("Term/Preterm: "+mJsnobject.getString("termsCount"));
+                but_an_mother_total_count.setText("Total: " + mJsnobject.getString("ANMothersCount"));
+                but_an_mother_high_risk_count.setText("High Risk: " + mJsnobject.getString("ANMotherRiskCount"));
+                but_an_mother_pn_hbnc_totlal_count.setText("Total: " + mJsnobject.getString("PNMotherCount"));
+                but_an_mother_pn_hbnc_term_preterm_count.setText("Term/Preterm: " + mJsnobject.getString("termsCount"));
 
                 JSONObject mJsnobject_phcDetails = mJsnobject.getJSONObject("phcDetails");
 //                JSONObject mJsnobject_phcDetails = mJsnobject.getJSONObject("phcDetails");

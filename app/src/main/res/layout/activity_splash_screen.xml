@@ -32,8 +32,6 @@
         android:textSize="24sp"
         android:visibility="visible" />
 
-    <include
-        layout="@layout/view_no_internet_connection"
-        android:visibility="gone" />
+
 
 </RelativeLayout>
