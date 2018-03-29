@@ -462,7 +462,7 @@
                 android:gravity="center">
 
                 <TextView
-                    android:id="@+id/but_an_tt1"
+                    android:id="@+id/txt_antt_1_due"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:gravity="center"
@@ -473,7 +473,6 @@
 
                 <TextView
                     android:id="@+id/but_an_tt2"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -491,6 +490,7 @@
                 android:gravity="center">
 
                 <TextView
+                    android:id="@+id/txt_antt_2_due"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:gravity="center"
@@ -517,6 +517,7 @@
                 android:gravity="center">
 
                 <TextView
+                    android:id="@+id/txt_pnhbnc_due"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:gravity="center"

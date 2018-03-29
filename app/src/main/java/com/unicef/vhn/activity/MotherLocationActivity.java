@@ -3,6 +3,8 @@ package com.unicef.vhn.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -52,6 +54,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class MotherLocationActivity extends FragmentActivity implements LocationViews, OnMapReadyCallback, View.OnClickListener {
@@ -78,15 +81,16 @@ public class MotherLocationActivity extends FragmentActivity implements Location
     private final int PLACE_AUTOCOMPLETE_REQUEST_CODE_TO = 202;
     private String TAG = getClass().getSimpleName();
     private GoogleMap mMap;
-    private TextView mTvFrom;
-    private TextView mTvTo;
-    private String GOOGLE_PLACES_API_KEY = "AIzaSyADTIJlxnp44YvWIB0qgwCG_IOQhQzTvf8";
+
+    private String GOOGLE_PLACES_API_KEY = "AIzaSyCnzEjpN8svPol7UhuEf-3XBQt4kC-dkOA";
 
     private List<Marker> markers;
 
+    TextView txt_username, txt_picme_id;
+
     String strLat,strLon, motherLatitude, motherLongitude, vhnLatitude, vhnLongitude;
 
-    String strMotherloc, strVHNloc;
+    String strMotherloc, strVHNloc, strmAdd, strvAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,14 +108,16 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Please Wait ...");
 
+        txt_username = (TextView)findViewById(R.id.txt_username);
+        txt_picme_id = (TextView)findViewById(R.id.txt_picme_id);
+
         preferenceData = new PreferenceData(this);
 //        this.trackings = trackings;
 
         locationPresenter = new LocationPresenter(MotherLocationActivity.this, this);
         locationPresenter.getMotherLocatin(preferenceData.getVhnCode(),preferenceData.getVhnId(), AppConstants.SELECTED_MID);
 
-        mTvFrom = (TextView) findViewById(R.id.txt_username);
-        mTvTo = (TextView) findViewById(R.id.txt_picme_id);
+
 
         findViewById(R.id.get_directions).setOnClickListener(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -121,11 +127,6 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Mother Location");
         toolbar.setNavigationIcon(R.drawable.left_arrow_key);
-
-        mTvFrom.setOnClickListener(this);
-        mTvTo.setOnClickListener(this);
-        mTvTo.setOnClickListener(this);
-
     }
 
     private void setupGoogleMapScreenSettings(GoogleMap mMap) {
@@ -165,18 +166,20 @@ public class MotherLocationActivity extends FragmentActivity implements Location
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.get_directions:
 
-//                if (mTvFrom.length() <= 0) {
+
+
+            case R.id.get_directions:
+//                if (strmAdd.length() <= 0) {
 //                    showMessage("Please pick from address");
 //                    return;
 //                }
-//                if (mTvTo.length() <= 0) {
+//                if (strvAdd.length() <= 0) {
 //                    showMessage("Please pick to address");
 //                    return;
 //                }
-//                getResultLocation();
-                getDirections();
+                getResultLocation();
+//                getDirections();
                 break;
         }
     }
@@ -200,21 +203,24 @@ public class MotherLocationActivity extends FragmentActivity implements Location
 //        startActivity(intent);
 //        return super.onOptionsItemSelected(item);
 //    }
-    private void getResult() {
-        DirectionsResult results = getDirectionsDetails(mTvFrom.getText().toString(), mTvTo.getText().toString(), TravelMode.DRIVING);
-        if (results != null) {
-            addPolyline(results, mMap);
-            addMarkersToMap(results, mMap);
-            positionCamera(results.routes[overview], mMap);
-        }
-    }
+//    private void getResult() {
+//        DirectionsResult results = getDirectionsDetails(mTvFrom.getText().toString(), mTvTo.getText().toString(), TravelMode.DRIVING);
+//        if (results != null) {
+//            addPolyline(results, mMap);
+//            addMarkersToMap(results, mMap);
+//            positionCamera(results.routes[overview], mMap);
+//        }
+//    }
 
     private void getResultLocation() {
-            DirectionsResult directionsResult = getDirectionsDetails(strLat, strLon, TravelMode.DRIVING);
+        DirectionsResult directionsResult = getDirectionsDetails(strmAdd, strvAdd, TravelMode.DRIVING);
+
+        Log.d("Mother---",strmAdd);
+        Log.d("VHN--",strvAdd);
         if (directionsResult != null) {
             addPolyline(directionsResult, mMap);
 //            addMarkersToMap(directionsResult, mMap);
-            addMarkerMap(directionsResult,mMap);
+            addMarkersToMap(directionsResult,mMap);
             positionCamera(directionsResult.routes[overview], mMap);
         }
     }
@@ -223,9 +229,9 @@ public class MotherLocationActivity extends FragmentActivity implements Location
 //        Marker markerSrc = mMap.addMarker(new MarkerOptions().position(new LatLng(directionsResult.routes[overview])))
     }
 
-    private void addMarkersToMap(DirectionsResult results, GoogleMap mMap) {
-        Marker markerSrc = mMap.addMarker(new MarkerOptions().position(new LatLng(results.routes[overview].legs[overview].startLocation.lat, results.routes[overview].legs[overview].startLocation.lng)).title(results.routes[overview].legs[overview].startAddress));
-        Marker markerDes = mMap.addMarker(new MarkerOptions().position(new LatLng(results.routes[overview].legs[overview].endLocation.lat, results.routes[overview].legs[overview].endLocation.lng)).title(results.routes[overview].legs[overview].endAddress).snippet(getEndLocationTitle(results)));
+    private void addMarkersToMap(DirectionsResult directionsResult, GoogleMap mMap) {
+        Marker markerSrc = mMap.addMarker(new MarkerOptions().position(new LatLng(directionsResult.routes[overview].legs[overview].startLocation.lat, directionsResult.routes[overview].legs[overview].startLocation.lng)).title(directionsResult.routes[overview].legs[overview].startAddress));
+        Marker markerDes = mMap.addMarker(new MarkerOptions().position(new LatLng(directionsResult.routes[overview].legs[overview].endLocation.lat, directionsResult.routes[overview].legs[overview].endLocation.lng)).title(directionsResult.routes[overview].legs[overview].endAddress).snippet(getEndLocationTitle(directionsResult)));
         markers = new ArrayList<>();
         markers.add(markerSrc);
         markers.add(markerDes);
@@ -254,7 +260,7 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mlatlng, 12));
 
 //        LatLngBounds vhnmother = new LatLngBounds(new LatLng(mlat,mlong), new LatLng(vlat, vlong));
-//        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(vlatlng, 12));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(vlatlng, 12));
 
         mothermarker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         vhnmarker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
@@ -263,52 +269,63 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         mMap.addMarker(mothermarker);
         mMap.addMarker(vhnmarker);
 
+        Geocoder geocoder = new Geocoder(this, Locale.ENGLISH);
+
+        try {
+
+            List<Address> addresses = geocoder.getFromLocation(mlat,mlong,1);
+
+            List<Address> addresses1 = geocoder.getFromLocation(vlat,vlong,1);
+
+            if(addresses !=null){
+                String maddress = addresses.get(0).getAddressLine(0);
+                String mcity =  addresses.get(0).getLocality();
+                String mstate = addresses.get(0).getAdminArea();
+                String mcountry = addresses.get(0).getCountryName();
+                String mpostalcode = addresses.get(0).getPostalCode();
+                String mknownname = addresses.get(0).getFeatureName();
+
+                strmAdd = String.valueOf(maddress+mcity+mstate);
+            }
+
+            if(addresses !=null){
+                String vaddress = addresses1.get(0).getAddressLine(0);
+                String vcity =  addresses1.get(0).getLocality();
+                String vstate = addresses1.get(0).getAdminArea();
+                String vcountry = addresses1.get(0).getCountryName();
+                String vpostalcode = addresses1.get(0).getPostalCode();
+                String vknownname = addresses1.get(0).getFeatureName();
+
+                strvAdd = String.valueOf(vaddress+vcity+vstate);
+            }
+
+//            if (addresses != null) {
+//                Address returnedAddress = addresses.get(0);
+//                StringBuilder strReturnedAddress = new StringBuilder("Mother Address:\n");
+//
+//                for(int i=0; i<returnedAddress.getMaxAddressLineIndex(); i++) {
+//                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+//                }
+//                strmAdd = String.valueOf(strReturnedAddress);
+//
+//            }
+//            if (addresses1 != null) {
+//                Address address = addresses1.get(0);
+//                StringBuilder stringBuilder = new StringBuilder("VHN Address:\n");
+//                for(int i=0; i<address.getMaxAddressLineIndex(); i++) {
+//                    stringBuilder.append(address.getAddressLine(i)).append("\n");
+//                }
+//                strvAdd = String.valueOf(stringBuilder);
+//            }
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+        return;
+
 
 
     }
-
-//    private String getDirectionsUrl(LatLng mlatlng,LatLng vlatlng){
-//        // Origin of route
-//        String str_origin = "origin="+mlatlng.latitude+","+mlatlng.longitude;
-//        // Destination of route
-//        String str_dest = "destination="+vlatlng.latitude+","+vlatlng.longitude;
-//        // Sensor enabled
-//        String sensor = "sensor=true";
-//        // Building the parameters to the web service
-//        String parameters = str_origin+"&"+str_dest+"&"+sensor;
-//        // Output format
-//        String output = "json";
-//        // Building the url to the web service
-//        String url = "https://maps.googleapis.com/maps/api/directions/"+output+"?"+parameters;
-//        return url;
-//    }
-
-
-//    private class DownloadTask extends AsyncTask<String, Void, String> {
-//        // Downloading data in non-ui thread
-//        @Override
-//        protected String doInBackground(String... url) {
-//            // For storing data from web service
-//            String data = "";
-//            try{
-//                // Fetching the data from web service
-//
-//            }catch(Exception e){
-//                Log.d("Background Task",e.toString());
-//            }
-//            return data;
-//        }
-//        // Executes in UI thread, after the execution of
-//        // doInBackground()
-//        @Override
-//        protected void onPostExecute(String result) {
-//            super.onPostExecute(result);
-//
-//
-//
-//        }
-//    }
-
 
     private void positionCamera(DirectionsRoute route, GoogleMap mMap) {
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
@@ -322,14 +339,14 @@ public class MotherLocationActivity extends FragmentActivity implements Location
     }
 
 
-    private void addPolyline(DirectionsResult results, GoogleMap mMap) {
+    private void addPolyline(DirectionsResult directionsResult, GoogleMap mMap) {
         mMap.clear();
-        List<LatLng> decodedPath = PolyUtil.decode(results.routes[overview].overviewPolyline.getEncodedPath());
+        List<LatLng> decodedPath = PolyUtil.decode(directionsResult.routes[overview].overviewPolyline.getEncodedPath());
         mMap.addPolyline(new PolylineOptions().addAll(decodedPath));
     }
 
-    private String getEndLocationTitle(DirectionsResult results) {
-        return "Time :" + results.routes[overview].legs[overview].duration.humanReadable + " Distance :" + results.routes[overview].legs[overview].distance.humanReadable;
+    private String getEndLocationTitle(DirectionsResult directionsResult) {
+        return "Time :" + directionsResult.routes[overview].legs[overview].duration.humanReadable + " Distance :" + directionsResult.routes[overview].legs[overview].distance.humanReadable;
     }
 
     public GeoApiContext getGeoContext() {
@@ -344,6 +361,10 @@ public class MotherLocationActivity extends FragmentActivity implements Location
 
 
     private DirectionsResult getDirectionsDetails(String origin, String destination, TravelMode mode) {
+
+        Log.d("Origin",origin);
+        Log.d("Destination", destination);
+
         DateTime now = new DateTime();
         try {
             return DirectionsApi.newRequest(getGeoContext())
@@ -353,14 +374,19 @@ public class MotherLocationActivity extends FragmentActivity implements Location
                     .departureTime(now)
                     .await();
         } catch (ApiException e) {
+            Log.e("DirectionsResult1",e.toString());
             e.printStackTrace();
             showMessage(e.getMessage());
             return null;
         } catch (InterruptedException e) {
+            Log.e("DirectionsResult2",e.toString());
+
             e.printStackTrace();
             showMessage(e.getMessage());
             return null;
         } catch (IOException e) {
+            Log.e("DirectionsResult",e.toString());
+
             e.printStackTrace();
             showMessage(e.getMessage());
             return null;
@@ -382,7 +408,7 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         } catch (GooglePlayServicesRepairableException e) {
             showMessage(e.getMessage());
             // TODO: Handle the error.
-        } catch (GooglePlayServicesNotAvailableException e) {
+            } catch (GooglePlayServicesNotAvailableException e) {
             // TODO: Handle the error.
             showMessage(e.getMessage());
         }
@@ -390,28 +416,31 @@ public class MotherLocationActivity extends FragmentActivity implements Location
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (resultCode == RESULT_OK) {
             Place place = PlaceAutocomplete.getPlace(this, data);
             Log.i(TAG, "Place: " + place.getName());
-            setResultText(place, requestCode);
+//            setResultText(place, requestCode);
         } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
             Status status = PlaceAutocomplete.getStatus(this, data);
             showMessage(status.getStatusMessage());
         }
+
+
     }
 
-    private void setResultText(Place place, int requestCode) {
-        switch (requestCode) {
-            case PLACE_AUTOCOMPLETE_REQUEST_CODE_FROM:
-
-                mTvFrom.setText(place.getAddress());
-                break;
-            case PLACE_AUTOCOMPLETE_REQUEST_CODE_TO:
-
-                mTvTo.setText(place.getAddress());
-                break;
-        }
-    }
+//    private void setResultText(Place place, int requestCode) {
+//        switch (requestCode) {
+//            case PLACE_AUTOCOMPLETE_REQUEST_CODE_FROM:
+//
+////                mTvFrom.setText(place.getAddress());
+//                break;
+//            case PLACE_AUTOCOMPLETE_REQUEST_CODE_TO:
+//
+//                mTvTo.setText(place.getAddress());
+//                break;
+//        }
+//    }
 
     private void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -440,8 +469,8 @@ public class MotherLocationActivity extends FragmentActivity implements Location
             if (status.equalsIgnoreCase("1")) {
                 Toast.makeText(getApplicationContext(),message, Toast.LENGTH_SHORT).show();
                 JSONObject mJsnobject_tracking = mJsnobject.getJSONObject("tracking");
-                mTvFrom.setText(mJsnobject_tracking.getString("mName"));
-                mTvTo.setText(mJsnobject_tracking.getString("mPicmeId"));
+                txt_username.setText(mJsnobject_tracking.getString("mName"));
+                txt_picme_id.setText(mJsnobject_tracking.getString("mPicmeId"));
 
                 motherLatitude = mJsnobject_tracking.getString("mLatitude");
                 motherLongitude = mJsnobject_tracking.getString("mLongitude");

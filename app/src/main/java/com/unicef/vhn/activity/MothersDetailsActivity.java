@@ -111,42 +111,26 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
 
         if (ActivityCompat.checkSelfPermission(this,Manifest.permission.CALL_PHONE)
                 != PackageManager.PERMISSION_GRANTED) {
-            // Camera permission has not been granted.
-
             requestCallPermission();
-
         } else {
-
-            // Camera permissions is already available, show the camera preview.
             Log.i(MothersDetailsActivity.class.getSimpleName(),"CALL permission has already been granted. Displaying camera preview.");
-//            showCameraPreview();
             startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+"+str_mobile_number)));
 
         }
     }
 
     private void requestCallPermission() {
-
-
-
         Log.i(MothersDetailsActivity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
 
-        // BEGIN_INCLUDE(camera_permission_request)
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CALL_PHONE)) {
-            // Provide an additional rationale to the user if the permission was not granted
-            // and the user would benefit from additional context for the use of the permission.
-            // For example if the user has previously denied the permission.
             Log.i(MothersDetailsActivity.class.getSimpleName(),            "Displaying camera permission rationale to provide additional context.");
             Toast.makeText(this,"Displaying camera permission rationale to provide additional context.",Toast.LENGTH_SHORT).show();
 
         } else {
-
-            // Camera permission has not been granted yet. Request it directly.
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
                     MAKE_CALL_PERMISSION_REQUEST_CODE);
         }
-// END_INCLUDE(camera_permission_request)
 
     }
 

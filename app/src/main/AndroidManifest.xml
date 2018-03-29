@@ -102,6 +102,8 @@
 
         </activity>
 
+        <!--<activity android:name=".activity.ActivityNotification"></activity>-->
+        <!--<activity android:name=".activity.ActivityNotiLayout"></activity>-->
 
         <activity android:name=".activity.SplashScreenActivity"
             android:theme="@style/AppTheme1">
@@ -117,6 +119,8 @@
         <activity android:name=".activity.PNViewReportsActivity" />
         <activity android:name=".activity.TreamPreTreamListActivity" />
         <activity android:name=".activity.TremAndPreTreamDetailsActivity"/>
+        <activity android:name=".activity.ANTT1MothersList"/>
+        <activity android:name=".activity.ANTT2MothersList"/>
 
         <service android:name="com.unicef.vhn.service.LocationMonitoringService" />
 
@@ -147,6 +151,13 @@
             <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
         </intent-filter>
     </receiver>
+
+        <meta-data android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_launcher" />
+        <meta-data android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorPrimary" />
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

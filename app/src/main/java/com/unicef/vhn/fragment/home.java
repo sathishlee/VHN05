@@ -20,6 +20,8 @@ import com.unicef.vhn.Presenter.HomePresenter;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 //import com.unicef.vhn.activity.HighRiskListActivity;
+import com.unicef.vhn.activity.ANTT1MothersList;
+import com.unicef.vhn.activity.ANTT2MothersList;
 import com.unicef.vhn.activity.InfantListActivity;
 import com.unicef.vhn.activity.MotherListActivity;
 import com.unicef.vhn.activity.MotherTrackActivity;
@@ -37,7 +39,7 @@ public class home extends Fragment implements MotherListsViews {
     ImageView img_mother_count, img_high_risk_count, img_infant_count;
     TextView txt_mother_count, txt_high_risk_count, txt_infants_count, txt_sos_count;
     Button but_an_mother_total_count, but_an_mother_high_risk_count, but_an_mother_pn_hbnc_totlal_count, but_an_mother_pn_hbnc_term_preterm_count;
-    TextView but_an_tt1, but_an_tt2, but_an_pn_hbnc;
+    TextView txt_antt_1_due, txt_antt_2_due, txt_pnhbnc_due;
 
     TextView txt_vhn_name, txt_hsc, txt_phc, txt_block, txt_address;
     ProgressDialog pDialog;
@@ -141,6 +143,26 @@ public class home extends Fragment implements MotherListsViews {
                 startActivity(new Intent(getActivity(), TreamPreTreamListActivity.class));
             }
         });
+        txt_antt_1_due.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppConstants.ANTT_1_LIST="TT1_List";
+                AppConstants.ANTT_1_TITLE="AN TT 1 Due List";
+
+                startActivity(new Intent(getActivity(), ANTT1MothersList.class));
+            }
+        });
+
+        txt_antt_2_due.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppConstants.ANTT_2_LIST="TT2_List";
+                AppConstants.ANTT_2_TITLE="AN TT 2 Due List";
+
+                startActivity(new Intent(getActivity(), ANTT2MothersList.class));
+            }
+        });
+
 
         return view;
 
@@ -174,9 +196,9 @@ public class home extends Fragment implements MotherListsViews {
 //        but_an_mother_pn_hbnc_totlal_count = view.findViewById(R.id.but_an_mother_pn_hbnc_totlal_count);
         but_an_mother_pn_hbnc_term_preterm_count = view.findViewById(R.id.but_an_mother_pn_hbnc_term_preterm_count);
 
-        but_an_tt1 = view.findViewById(R.id.but_an_tt1);
-        but_an_tt2 = view.findViewById(R.id.but_an_tt2);
-        but_an_pn_hbnc = view.findViewById(R.id.but_an_pn_hbnc);
+        txt_antt_1_due = view.findViewById(R.id.txt_antt_1_due);
+        txt_antt_2_due = view.findViewById(R.id.txt_antt_2_due);
+        txt_pnhbnc_due = view.findViewById(R.id.txt_pnhbnc_due);
 
     }
 
@@ -204,11 +226,17 @@ public class home extends Fragment implements MotherListsViews {
                 txt_high_risk_count.setText(mJsnobject.getString("riskMothersCount"));
                 txt_infants_count.setText(mJsnobject.getString("infantCount"));
                 txt_sos_count.setText(mJsnobject.getString("sosCount"));
+                txt_antt_1_due.setText(mJsnobject.getString("ANTT1"));
+                txt_antt_2_due.setText(mJsnobject.getString("ANTT2"));
+                txt_pnhbnc_due.setText(mJsnobject.getString("pnhbncCount"));
+
 
                 but_an_mother_total_count.setText("Total: "+mJsnobject.getString("ANMothersCount"));
                 but_an_mother_high_risk_count.setText("High Risk: "+mJsnobject.getString("ANMotherRiskCount"));
                 but_an_mother_pn_hbnc_totlal_count.setText("Total: "+mJsnobject.getString("PNMotherCount"));
                 but_an_mother_pn_hbnc_term_preterm_count.setText("Term/Preterm: "+mJsnobject.getString("termsCount"));
+
+
 
                 JSONObject mJsnobject_phcDetails = mJsnobject.getJSONObject("phcDetails");
 //                JSONObject mJsnobject_phcDetails = mJsnobject.getJSONObject("phcDetails");
