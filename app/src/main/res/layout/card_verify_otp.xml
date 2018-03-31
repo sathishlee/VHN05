@@ -11,6 +11,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:textSize="@dimen/text_label"
         android:hint="Enter OTP"
         android:layout_weight="2"
         android:backgroundTint="@color/white"
@@ -21,11 +22,10 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="verify OTP "
+        android:text="Verify OTP"
         android:layout_weight="1"
         android:background="@color/colorPrimary"
         android:textColor="@color/white"
         android:padding="4dp"/>
-
 
 </LinearLayout>

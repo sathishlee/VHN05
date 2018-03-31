@@ -109,9 +109,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SosAlertListActivity" />
-        <activity android:name=".activity.SosMotherDetailsActivity" />
-        <activity android:name=".activity.ANViewReportsActivity" />
+        <activity android:name=".activity.SosAlertListActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".activity.SosMotherDetailsActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".activity.ANViewReportsActivity"
+            android:theme="@style/AppTheme"/>
         <activity android:name=".activity.PNViewReportsActivity" />
         <activity android:name=".activity.TreamPreTreamListActivity" />
         <activity android:name=".activity.TremAndPreTreamDetailsActivity"/>

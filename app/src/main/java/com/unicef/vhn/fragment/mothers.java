@@ -1,7 +1,13 @@
 package com.unicef.vhn.fragment;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,10 +16,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
+import android.widget.Toast;
 
+import com.unicef.vhn.Interface.MakeCallInterface;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
+import com.unicef.vhn.activity.ANTT1MothersList;
 import com.unicef.vhn.adapter.MotherListAdapter;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.model.PNMotherListResponse;
@@ -32,7 +41,7 @@ import java.util.List;
  * Created by priyan on 2/3/2018.
  */
 
-public class mothers extends Fragment implements MotherListsViews {
+public class mothers extends Fragment implements MotherListsViews, MakeCallInterface {
 
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
@@ -42,6 +51,9 @@ public class mothers extends Fragment implements MotherListsViews {
     //    private RecyclerView recyclerView;
     private RecyclerView mother_recycler_view;
     private MotherListAdapter mAdapter;
+
+    private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
+    boolean isDataUpdate=true;
 
 //    CardView mother_card;
     public static mothers newInstance() {
@@ -67,16 +79,6 @@ public class mothers extends Fragment implements MotherListsViews {
 
         getActivity().setTitle("Mothers List");
         initUI(view);
-       /* mother_card = (CardView) view.findViewById(R.id.mother_card);
-        mother_card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MothersDetailsActivity.class);
-                getActivity().finish();
-                startActivity(intent);
-            }
-        });
-*/
         return view;
 
 
@@ -93,7 +95,7 @@ public class mothers extends Fragment implements MotherListsViews {
 
         mResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView)view. findViewById(R.id.mother_recycler_view);
-        mAdapter = new MotherListAdapter(mResult, getActivity(), "");
+        mAdapter = new MotherListAdapter(mResult, getActivity(), "",this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mother_recycler_view.setLayoutManager(mLayoutManager);
         mother_recycler_view.setItemAnimator(new DefaultItemAnimator());
@@ -127,8 +129,8 @@ pDialog.dismiss();
                 mresponseResult.setMName(jsonObject.getString("mName"));
                 mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
                 mresponseResult.setVhnId(jsonObject.getString("vhnId"));
-//                mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
-//                mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
+                mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
+                mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
                 mResult.add(mresponseResult);
                 mAdapter.notifyDataSetChanged();
             }
@@ -156,4 +158,36 @@ pDialog.dismiss();
     }
 
 
+    @Override
+    public void makeCall(String mMotherMobile) {
+        isDataUpdate=false;
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestCallPermission();
+        } else {
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+"+mMotherMobile)));
+        }
+    }
+
+    private void requestCallPermission() {
+        Log.i(ANTT1MothersList.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),Manifest.permission.CALL_PHONE)) {
+            Toast.makeText(getActivity(),"Displaying Call permission rationale to provide additional context.",Toast.LENGTH_SHORT).show();
+        } else {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE},
+                    MAKE_CALL_PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case MAKE_CALL_PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    Toast.makeText(getActivity(), "You can call the number by clicking on the button", Toast.LENGTH_SHORT).show();
+                }
+                return;
+        }
+    }
 }

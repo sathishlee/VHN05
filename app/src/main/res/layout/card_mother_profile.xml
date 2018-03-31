@@ -315,7 +315,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/filter_background">
+                    android:background="@drawable/risk_background">
 
                     <TextView
                         android:id="@+id/txt_risk_status"

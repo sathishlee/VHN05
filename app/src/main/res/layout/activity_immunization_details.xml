@@ -244,9 +244,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
+            <TextView
+                android:id="@+id/txt_no_records_found"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NO RECORDES FOUND"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:visibility="gone"/>
+
         </LinearLayout>
 
-        <include layout="@layout/item_immunization"/>
+        <include layout="@layout/item_immunization"
+            />
 
     </LinearLayout>
 
