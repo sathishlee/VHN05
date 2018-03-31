@@ -45,6 +45,11 @@
             android:icon="@drawable/vector_drawable_notifications_bell_button"
             android:title="Alerts" />
 
+        <item
+            android:id="@+id/migration_mother"
+            android:icon="@drawable/migration"
+            android:title="Mother Migration" />
+
         <!--<item-->
             <!--android:id="@+id/message"-->
             <!--android:icon="@drawable/ic_close_envelope"-->

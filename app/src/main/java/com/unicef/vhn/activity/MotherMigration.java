@@ -12,13 +12,13 @@ import com.unicef.vhn.R;
  * Created by Suthishan on 20/1/2018.
  */
 
-public class VisitActivity  extends AppCompatActivity {
+public class MotherMigration  extends AppCompatActivity {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_layout_visit);
+        setContentView(R.layout.activity_mother_migration);
         showActionBar();
         initUI();
         onClickListner();
@@ -34,7 +34,7 @@ public class VisitActivity  extends AppCompatActivity {
 
     public void showActionBar(){
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Today Visits List");
+        actionBar.setTitle("Mother Migration List");
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
