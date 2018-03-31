@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.unicef.vhn.BuildConfig;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.LocationUpdatePresenter;
@@ -46,6 +47,9 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
     PreferenceData preferenceData;
 //RelativeLayout rel_no_internet_connection;
     RelativeLayout rel_splash_screen;
+
+    GoogleApiClient googleApiClient=null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +59,9 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
 //        rel_no_internet_connection = (RelativeLayout) findViewById(R.id.rel_no_internet_connection);
         locationUpdatePresenter =new LocationUpdatePresenter(this,this);
         preferenceData = new PreferenceData(this);
+
+
+
         startStep1();
         if (mAlreadyStartedService ) {
             if(!preferenceData.getLogin()) {

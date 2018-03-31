@@ -27,6 +27,7 @@ import com.unicef.vhn.activity.MainActivity;
 import com.unicef.vhn.activity.MotherListActivity;
 import com.unicef.vhn.activity.MotherTrackActivity;
 import com.unicef.vhn.activity.NoInternetConnectionActivity;
+import com.unicef.vhn.activity.PNHBNCDueListActivity;
 import com.unicef.vhn.activity.PNHBNCListActivity;
 import com.unicef.vhn.activity.SosAlertListActivity;
 import com.unicef.vhn.activity.TreamPreTreamListActivity;
@@ -164,6 +165,16 @@ public class home extends Fragment implements MotherListsViews {
                 AppConstants.ANTT_2_TITLE="AN TT 2 Due List";
 
                 startActivity(new Intent(getActivity(), ANTT2MothersList.class));
+            }
+        });
+
+        txt_pnhbnc_due.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                AppConstants.ANTT_2_LIST="TT2_List";
+//                AppConstants.ANTT_2_TITLE="AN TT 2 Due List";
+
+                startActivity(new Intent(getActivity(), PNHBNCDueListActivity.class));
             }
         });
 

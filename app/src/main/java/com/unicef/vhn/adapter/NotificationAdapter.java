@@ -1,4 +1,3 @@
-package com.unicef.vhn.adapter;/*
 package com.unicef.vhn.adapter;
 
 import android.support.v4.app.FragmentActivity;
@@ -12,21 +11,22 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.unicef.vhn.R;
+import com.unicef.vhn.interactor.NotificationListResponseModel;
 import com.unicef.vhn.model.NotificationModel;
 
 import java.util.List;
 
 
-*/
+
 /**
  * Created by Suthishan on 20/1/2018.
- *//*
+ */
 
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder>  {
-    private List<NotificationModel> moviesList;
+    private List<NotificationListResponseModel.NotificationList> moviesList;
     FragmentActivity activity;
-    public NotificationAdapter(List<NotificationModel> moviesList, FragmentActivity activity) {
+    public NotificationAdapter(List<NotificationListResponseModel.NotificationList> moviesList, FragmentActivity activity) {
         this.moviesList = moviesList;
         this.activity = activity;
     }
@@ -43,12 +43,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        NotificationModel movie = moviesList.get(position);
-        holder.title.setText(movie.getTitle());
-        holder.genre.setText(movie.getGenre());
-        holder.year.setText(movie.getYear());
+        NotificationListResponseModel.NotificationList movie = moviesList.get(position);
+        holder.title.setText(movie.getMPicmeId());
+        holder.genre.setText(movie.getMessage());
+        holder.year.setText(movie.getDateTime());
 //        Picasso.with(activity).load(movie.getImg_id()).into(holder.imageView);
-        holder.imageView.setImageDrawable(activity.getResources().getDrawable(movie.getImg_id()));
+//        holder.imageView.setImageDrawable(activity.getResources().getDrawable(movie.getImg_id()));
     }
 
     @Override
@@ -69,4 +69,4 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         }
     }
 }
-*/
+

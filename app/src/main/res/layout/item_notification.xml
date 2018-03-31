@@ -31,7 +31,7 @@
         android:layout_alignParentTop="true"
         android:textSize="16dp"
         android:textStyle="bold"
-        android:text=" "
+        android:text="Title"
         android:padding="5dp" />
 
     <TextView
@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
-        android:text=" "
+        android:text="Subject"
         android:padding="5dp"/>
 
         <TextView
@@ -49,6 +49,6 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:padding="5dp"
-            android:text=" " />
+            android:text="1h ago" />
     </RelativeLayout>
 </RelativeLayout>

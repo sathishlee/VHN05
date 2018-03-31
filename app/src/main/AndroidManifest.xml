@@ -118,6 +118,7 @@
         <activity android:name=".activity.ANTT1MothersList"/>
         <activity android:name=".activity.ANTT2MothersList"/>
         <activity android:name=".activity.TremAndPreTreamDetailsActivity" />
+        <activity android:name=".activity.PNHBNCDueListActivity" />
 
         <service android:name=".service.LocationMonitoringService" />
         <service android:name=".utiltiy.MyFirebaseInstanceIDService">
