@@ -66,14 +66,54 @@
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_title"
                 android:text="Tamil Selvi"/>
-
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:textColor="@color/notification_second"
-                android:textSize="@dimen/text_label"
-                android:text="Needs your Help"/>
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:textColor="@color/notification_second"
+                        android:textSize="@dimen/text_label"
+                        android:text="Needs your Help"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:background="@drawable/background_icon"
+                        android:layout_marginStart="5dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_call"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:padding="1dp"
+                            android:drawableStart="@drawable/phone_call"
+                            android:textColor="@color/secondary"
+                            android:textSize="@dimen/text_primary" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
