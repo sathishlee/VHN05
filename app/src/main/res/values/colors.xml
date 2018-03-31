@@ -50,6 +50,9 @@
 
     <color name="white">#ffffff</color>
 
+    <color name="notification_time">#80333333</color>
+
+    <color name="notification_second">#CC333333</color>
 
     <color name="header">#2F80ED</color>
 

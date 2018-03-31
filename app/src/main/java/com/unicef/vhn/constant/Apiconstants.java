@@ -6,9 +6,9 @@ package com.unicef.vhn.constant;
 
 public class Apiconstants {
 
-//    public static final String BASE_URL = "http://192.168.100.27/thaimaiapp/api/vhn/Vhn/";
+    public static final String BASE_URL = "http://192.168.100.27/thaimaiapp/api/vhn/Vhn/";
 
-    public static final String BASE_URL = "http://demo.satvatinfosol.com/thaimai/api/vhn/Vhn/";
+//    public static final String BASE_URL = "http://demo.satvatinfosol.com/thaimai/api/vhn/Vhn/";
 
 
 //    http://192.168.100.235/thaimaiapp/api/vhn/Vhn/vhnLocationUpdate
@@ -79,6 +79,7 @@ public class Apiconstants {
 
     public static final String DASH_BOARD_MOTHERS_AN_TT1_DUELIST = "vDDT1";
     public static final String DASH_BOARD_MOTHERS_AN_TT2_DUELIST = "vDDT2";
+    public static final String IMMUNIZATION_LIST = "mImmunizationFilter";
 
     public static final String NOTIFICATION_IMAGE = "assets/images/mother.png";
 

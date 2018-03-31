@@ -458,6 +458,7 @@ public class MotherLocationActivity extends FragmentActivity implements Location
 
     @Override
     public void showLocationSuccess(String response) {
+        AppConstants.SELECTED_MID="0";
 
         Log.e(MotherLocationActivity.class.getSimpleName(), "Response success" + response);
 
@@ -471,6 +472,8 @@ public class MotherLocationActivity extends FragmentActivity implements Location
                 JSONObject mJsnobject_tracking = mJsnobject.getJSONObject("tracking");
                 txt_username.setText(mJsnobject_tracking.getString("mName"));
                 txt_picme_id.setText(mJsnobject_tracking.getString("mPicmeId"));
+
+
 
                 motherLatitude = mJsnobject_tracking.getString("mLatitude");
                 motherLongitude = mJsnobject_tracking.getString("mLongitude");
@@ -510,6 +513,7 @@ public class MotherLocationActivity extends FragmentActivity implements Location
 
     @Override
     public void showLocationError(String string) {
+        AppConstants.SELECTED_MID="0";
 
         Log.e(MotherLocationActivity.class.getSimpleName(), "Response success" + string);
 

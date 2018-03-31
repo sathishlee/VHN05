@@ -21,6 +21,10 @@ public interface MotherListInteractor {
 
     void getANTT2MotherList(String vhnCode, String vhnId);
 
+    void getImmunizationList(String vhnCode, String vhnId, String id);
+
+    void getSelectedImmuMother(String vhnCode, String vhnId, String mid);
+
 
 
 }

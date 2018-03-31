@@ -1,7 +1,12 @@
 package com.unicef.vhn.activity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -11,7 +16,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.unicef.vhn.Interface.MakeCallInterface;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
@@ -28,7 +35,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MotherListActivity extends AppCompatActivity implements MotherListsViews {
+public class MotherListActivity extends AppCompatActivity implements MotherListsViews, MakeCallInterface {
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
@@ -38,6 +45,8 @@ public class MotherListActivity extends AppCompatActivity implements MotherLists
     private RecyclerView mother_recycler_view;
     private MotherListAdapter mAdapter;
     private TextView txt_no_records_found;
+    private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
+    boolean isDataUpdate=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,11 +92,11 @@ else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("risk_count")) {
     Log.e(MotherListActivity.class.getSimpleName(),"no url");
 }
         if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("an_mother_total_count")) {
-            mAdapter = new MotherListAdapter(mResult, MotherListActivity.this, "AN");
+            mAdapter = new MotherListAdapter(mResult, MotherListActivity.this, "AN",this);
         }if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("high_risk_count")) {
-            mAdapter = new MotherListAdapter(mResult, MotherListActivity.this, "Risk");
+            mAdapter = new MotherListAdapter(mResult, MotherListActivity.this, "Risk",this);
         }else{
-            mAdapter = new MotherListAdapter(mResult, MotherListActivity.this, "");
+            mAdapter = new MotherListAdapter(mResult, MotherListActivity.this, "",this);
 
         }
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MotherListActivity.this);
@@ -165,6 +174,39 @@ else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("risk_count")) {
     @Override
     public void showAlertClosedError(String string) {
 
+    }
+
+    @Override
+    public void makeCall(String mMotherMobile) {
+        isDataUpdate=false;
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestCallPermission();
+        } else {
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+"+mMotherMobile)));
+        }
+    }
+    private void requestCallPermission() {
+        Log.i(ANTT1MothersList.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.CALL_PHONE)) {
+            Toast.makeText(getApplicationContext(),"Displaying Call permission rationale to provide additional context.",Toast.LENGTH_SHORT).show();
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
+                    MAKE_CALL_PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case MAKE_CALL_PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    Toast.makeText(this, "You can call the number by clicking on the button", Toast.LENGTH_SHORT).show();
+                }
+                return;
+        }
     }
 }
 

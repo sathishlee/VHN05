@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.unicef.vhn.Interface.MakeCallInterface;
 import com.unicef.vhn.R;
+import com.unicef.vhn.activity.MotherLocationActivity;
 import com.unicef.vhn.activity.MothersDetailsActivity;
 import com.unicef.vhn.activity.PNMotherDetailsActivity;
 import com.unicef.vhn.constant.AppConstants;
@@ -26,10 +28,16 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
     Activity applicationContext;
     String type;
 
-    public MotherListAdapter(List<PNMotherListResponse.VhnAN_Mothers_List> mResult, Activity applicationContext, String type) {
+    MakeCallInterface makeCallInterface;
+
+    String strMid;
+
+    public MotherListAdapter(List<PNMotherListResponse.VhnAN_Mothers_List> mResult, Activity applicationContext, String type, MakeCallInterface makeCallInterface) {
      this.applicationContext =applicationContext;
         this.mResult =mResult;
         this.type = type;
+        this.makeCallInterface = makeCallInterface;
+
     }
 
     @Override
@@ -44,30 +52,33 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
         final PNMotherListResponse.VhnAN_Mothers_List  pNMotherResponseModel =mResult.get(position);
         holder.txt_username.setText(pNMotherResponseModel.getMName());
         holder.txt_picme_id.setText(pNMotherResponseModel.getMPicmeId());
-//        if (pNMotherResponseModel.getMotherType().equalsIgnoreCase("")){
-            if (type.equalsIgnoreCase("PN")) {
+        strMid=pNMotherResponseModel.getMid();
+
+        if (type.equalsIgnoreCase("PN")) {
                 holder.txt_list_type.setText(type);
             }else if (type.equalsIgnoreCase("AN")) {
                 holder.txt_list_type.setText(type);
             }else if (type.equalsIgnoreCase("Risk")) {
                 holder.txt_list_type.setText(type);
             }
-//        }else {
-//            holder.txt_list_type.setText(pNMotherResponseModel.getMotherType());
-//        }
-        /*
-        if (type.equalsIgnoreCase("PN")) {
-            holder.txt_list_type.setText(type);
-        }else if (type.equalsIgnoreCase("AN")) {
-            holder.txt_list_type.setText(type);
-        }else if (type.equalsIgnoreCase("Risk")) {
-            holder.txt_list_type.setText(type);
-        }else{
-            holder.ll_ll_mother_type.setVisibility(View.GONE);
-        }*/
+
+            holder.ll_call.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    makeCallInterface.makeCall(pNMotherResponseModel.getmMotherMobile());
+                }
+            });
+
+        holder.ll_track_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppConstants.SELECTED_MID = pNMotherResponseModel.getMid() ;
+                applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MotherLocationActivity.class));
+            }
+        });
 
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.ll_ll_mother_type.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AppConstants.SELECTED_MID=pNMotherResponseModel.getMid();
@@ -102,7 +113,8 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView txt_username, txt_picme_id,txt_list_type;
-        LinearLayout ll_ll_mother_type;
+        LinearLayout ll_ll_mother_type, ll_track_location, ll_call;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -110,6 +122,8 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
             txt_picme_id = itemView.findViewById(R.id.txt_picme_id);
             txt_list_type = itemView.findViewById(R.id.txt_list_type);
             ll_ll_mother_type = itemView.findViewById(R.id.ll_ll_mother_type);
+            ll_track_location = itemView.findViewById(R.id.ll_track_location);
+            ll_call = itemView.findViewById(R.id.ll_call);
         }
     }
 }
