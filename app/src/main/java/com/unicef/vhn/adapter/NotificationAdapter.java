@@ -42,11 +42,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {/*
         NotificationListResponseModel.NotificationList movie = moviesList.get(position);
         holder.title.setText(movie.getMPicmeId());
         holder.genre.setText(movie.getMessage());
-        holder.year.setText(movie.getDateTime());
+        holder.year.setText(movie.getDateTime());*/
 //        Picasso.with(activity).load(movie.getImg_id()).into(holder.imageView);
 //        holder.imageView.setImageDrawable(activity.getResources().getDrawable(movie.getImg_id()));
     }
@@ -58,14 +58,14 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView title, year, genre;
-        public ImageView imageView;
+//        public TextView title, year, genre;
+//        public ImageView imageView;
         public ViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.title);
+          /*  title = (TextView) view.findViewById(R.id.title);
             genre = (TextView) view.findViewById(R.id.genre);
             year = (TextView) view.findViewById(R.id.year);
-            imageView = (ImageView) view.findViewById(R.id.cardview_image);
+            imageView = (ImageView) view.findViewById(R.id.cardview_image);*/
         }
     }
 }

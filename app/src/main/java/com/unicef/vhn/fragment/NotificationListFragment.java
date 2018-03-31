@@ -15,10 +15,8 @@ import android.view.ViewGroup;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.NotificationPresenter;
 import com.unicef.vhn.R;
-//import com.unicef.vhn.adapter.NotificationAdapter;
 import com.unicef.vhn.adapter.NotificationAdapter;
 import com.unicef.vhn.interactor.NotificationListResponseModel;
-import com.unicef.vhn.model.NotificationModel;
 import com.unicef.vhn.view.NotificationViews;
 
 import org.json.JSONArray;
@@ -70,12 +68,12 @@ public class NotificationListFragment extends Fragment implements NotificationVi
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mRecyclerView.setHasFixedSize(true);
+//        mRecyclerView.setHasFixedSize(true);
         preferenceData = new PreferenceData(getActivity());
         notificationPresenter = new NotificationPresenter(getActivity(), this);
         notificationPresenter.getNotificationList(preferenceData.getVhnId());
 
-        mRecyclerView = view. findViewById(R.id.recycler_view);
+        mRecyclerView = view. findViewById(R.id.notification_recycler_view);
         mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
@@ -83,8 +81,8 @@ public class NotificationListFragment extends Fragment implements NotificationVi
         mRecyclerView.setLayoutManager(mLayoutManager);
         moviesList=new ArrayList<>();
         // specify an adapter (see also next example)
-        mAdapter = new NotificationAdapter(moviesList,getActivity());
-        mRecyclerView.setAdapter(mAdapter);
+//        mAdapter = new NotificationAdapter(moviesList,getActivity());
+//        mRecyclerView.setAdapter(mAdapter);
 //        prepareMovieData();
         return view;
     }
@@ -168,7 +166,7 @@ public class NotificationListFragment extends Fragment implements NotificationVi
                     moviesList.add(movie);
 
                 }
-                mAdapter.notifyDataSetChanged();
+//                mAdapter.notifyDataSetChanged();
             } else {
                 Log.d(NotificationListFragment.class.getSimpleName(), "Notification messsage-->" + msg);
             }
