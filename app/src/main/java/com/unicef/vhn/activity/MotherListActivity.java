@@ -86,9 +86,12 @@ else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("risk_count")) {
     pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_AN_MOTHERS_DETAILS,preferenceData.getVhnCode(),preferenceData.getVhnId());
 
 }else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("high_risk_count")) {
-    pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_AN_RISK_MOTHERS_DETAILS,preferenceData.getVhnCode(),preferenceData.getVhnId());
+    pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_AN_RISK_MOTHERS_DETAILS, preferenceData.getVhnCode(), preferenceData.getVhnId());
+}
+/*else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("today_visit")) {
+    pnMotherListPresenter.getPNMotherList(Apiconstants.CURRENT_VISIT_LIST,preferenceData.getVhnCode(),preferenceData.getVhnId());
 
-}else{
+}*/else{
     Log.e(MotherListActivity.class.getSimpleName(),"no url");
 }
         if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("an_mother_total_count")) {
@@ -144,6 +147,7 @@ else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("risk_count")) {
                     mresponseResult.setMName(jsonObject.getString("mName"));
                     mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
                     mresponseResult.setVhnId(jsonObject.getString("vhnId"));
+                    mresponseResult.setmMotherMobile(jsonObject.getString("mMotherMobile"));
 //                    mresponseResult.setMotherType(jsonObject.getString("motherType"));
 //                mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
 //                mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));

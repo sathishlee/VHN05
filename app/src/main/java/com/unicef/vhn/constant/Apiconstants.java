@@ -100,4 +100,10 @@ public class Apiconstants {
     public static final String POST_NOTIFICATION_DETAILS= "vNotificationview";
 
 //    public static final String IMMUNIZATION_LIST = "mImmunizationFilter";
+
+
+//    http://192.168.100.27/thaimaiapp/api/vhn/Vhn/vVHN_Current_Visits
+    public static final String CURRENT_VISIT_LIST = "vVHN_Current_Visits";
+
+
 }
