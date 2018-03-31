@@ -40,7 +40,7 @@
                     android:elevation="10dp">
 
                     <TextView
-                        android:id="@+id/iv_camera"
+                        android:id="@+id/txt_today_visit_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="top|end"
@@ -62,6 +62,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txt_count_today_visit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
@@ -70,6 +71,7 @@
                 android:textSize="@dimen/text_title" />
 
             <LinearLayout
+                android:id="@+id/ll_go_visit_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"

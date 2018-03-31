@@ -129,7 +129,7 @@ pDialog.dismiss();
 
         try {
             JSONObject mJsnobject = new JSONObject(response);
-            JSONArray jsonArray = mJsnobject.getJSONArray("vhn_current_visits");
+            JSONArray jsonArray = mJsnobject.getJSONArray("vhn_today_visit_count");
             if (jsonArray.length()!=0) {
                 mother_recycler_view.setVisibility(View.VISIBLE);
                 txt_no_records_found.setVisibility(View.GONE);

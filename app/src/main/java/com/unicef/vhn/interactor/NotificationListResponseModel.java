@@ -8,16 +8,16 @@ import java.util.List;
 
 public class NotificationListResponseModel {
 
-    private List<NotificationList> notificationList;
+    private List<Vhn_migrated_mothers> vhn_migrated_mothers;
     private String message;
-    private int status;
+    private String status;
 
-    public List<NotificationList> getNotificationList() {
-        return notificationList;
+    public List<Vhn_migrated_mothers> getVhn_migrated_mothers() {
+        return vhn_migrated_mothers;
     }
 
-    public void setNotificationList(List<NotificationList> notificationList) {
-        this.notificationList = notificationList;
+    public void setVhn_migrated_mothers(List<Vhn_migrated_mothers> vhn_migrated_mothers) {
+        this.vhn_migrated_mothers = vhn_migrated_mothers;
     }
 
     public String getMessage() {
@@ -28,63 +28,38 @@ public class NotificationListResponseModel {
         this.message = message;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public static class NotificationList {
-        private String dateTime;
-        private String mid;
-        private String subject;
-        private String message;
-        private String noteStatus;
+    public static class Vhn_migrated_mothers {
+        private String mtype;
         private String noteStartDateTime;
         private String noteId;
+        private String migratedmId;
+        private String clickHeremId;
+        private String deleveryDate;
+        private String mMotherMobile;
+        private String subject;
+        private String vLongitude;
+        private String vLatitude;
+        private String mLongitude;
+        private String mLatitude;
+        private String vhnId;
+        private String mid;
         private String mPicmeId;
         private String mName;
 
-        public String getDateTime() {
-            return dateTime;
+        public String getMtype() {
+            return mtype;
         }
 
-        public void setDateTime(String dateTime) {
-            this.dateTime = dateTime;
-        }
-
-        public String getMid() {
-            return mid;
-        }
-
-        public void setMid(String mid) {
-            this.mid = mid;
-        }
-
-        public String getSubject() {
-            return subject;
-        }
-
-        public void setSubject(String subject) {
-            this.subject = subject;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
-
-        public String getNoteStatus() {
-            return noteStatus;
-        }
-
-        public void setNoteStatus(String noteStatus) {
-            this.noteStatus = noteStatus;
+        public void setMtype(String mtype) {
+            this.mtype = mtype;
         }
 
         public String getNoteStartDateTime() {
@@ -101,6 +76,94 @@ public class NotificationListResponseModel {
 
         public void setNoteId(String noteId) {
             this.noteId = noteId;
+        }
+
+        public String getMigratedmId() {
+            return migratedmId;
+        }
+
+        public void setMigratedmId(String migratedmId) {
+            this.migratedmId = migratedmId;
+        }
+
+        public String getClickHeremId() {
+            return clickHeremId;
+        }
+
+        public void setClickHeremId(String clickHeremId) {
+            this.clickHeremId = clickHeremId;
+        }
+
+        public String getDeleveryDate() {
+            return deleveryDate;
+        }
+
+        public void setDeleveryDate(String deleveryDate) {
+            this.deleveryDate = deleveryDate;
+        }
+
+        public String getMMotherMobile() {
+            return mMotherMobile;
+        }
+
+        public void setMMotherMobile(String mMotherMobile) {
+            this.mMotherMobile = mMotherMobile;
+        }
+
+        public String getSubject() {
+            return subject;
+        }
+
+        public void setSubject(String subject) {
+            this.subject = subject;
+        }
+
+        public String getVLongitude() {
+            return vLongitude;
+        }
+
+        public void setVLongitude(String vLongitude) {
+            this.vLongitude = vLongitude;
+        }
+
+        public String getVLatitude() {
+            return vLatitude;
+        }
+
+        public void setVLatitude(String vLatitude) {
+            this.vLatitude = vLatitude;
+        }
+
+        public String getMLongitude() {
+            return mLongitude;
+        }
+
+        public void setMLongitude(String mLongitude) {
+            this.mLongitude = mLongitude;
+        }
+
+        public String getMLatitude() {
+            return mLatitude;
+        }
+
+        public void setMLatitude(String mLatitude) {
+            this.mLatitude = mLatitude;
+        }
+
+        public String getVhnId() {
+            return vhnId;
+        }
+
+        public void setVhnId(String vhnId) {
+            this.vhnId = vhnId;
+        }
+
+        public String getMid() {
+            return mid;
+        }
+
+        public void setMid(String mid) {
+            this.mid = mid;
         }
 
         public String getMPicmeId() {

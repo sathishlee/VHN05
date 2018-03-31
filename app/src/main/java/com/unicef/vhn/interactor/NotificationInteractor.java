@@ -6,6 +6,7 @@ package com.unicef.vhn.interactor;
 
 public interface NotificationInteractor {
     void getNotificationCount(String mid);
-    void getNotificationList(String mid);
+    void getTodayVisitCount(String vhnCode, String vhnId);
+    void getNotificationList(String vhnCode, String vhnId);
     void getNotificationDetails(String mid);
 }

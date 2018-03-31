@@ -94,8 +94,8 @@ public class Apiconstants {
     public static final String POST_NOTIFICATION_COUNT= "vNotificationCount";
 
     //    http://192.168.100.27/thaimaiapp/api/mother/mNotificationDetails
-
-    public static final String POST_NOTIFICATION_LIST= "vNotificationDetails";
+//    http://192.168.100.27/thaimaiapp/api/vhn/Vhn/vVHN_mother_notification        //new link for api
+    public static final String POST_NOTIFICATION_LIST= "vVHN_mother_notification";
 //    http://192.168.100.27/thaimaiapp/api/vhn/Vhn/mNotificationview
     public static final String POST_NOTIFICATION_DETAILS= "vNotificationview";
 
@@ -104,6 +104,9 @@ public class Apiconstants {
 
 //    http://192.168.100.27/thaimaiapp/api/vhn/Vhn/vVHN_Current_Visits
     public static final String CURRENT_VISIT_LIST = "vVHN_Current_Visits";
+
+//    http://192.168.100.27/thaimaiapp/api/vhn/Vhn/vVHN_Current_Visits_count
+public static final String CURRENT_VISIT_Count = "vVHN_Current_Visits_count";
 
 
 }
