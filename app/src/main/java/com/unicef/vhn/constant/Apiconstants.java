@@ -79,9 +79,25 @@ public class Apiconstants {
 
     public static final String DASH_BOARD_MOTHERS_AN_TT1_DUELIST = "vDDT1";
     public static final String DASH_BOARD_MOTHERS_AN_TT2_DUELIST = "vDDT2";
+//    http://192.168.100.27/thaimaiapp/api/vhn/Vhn/vPNHBNC
+
+    public static final String DASH_BOARD_MOTHERS_PN_HBNC_DUELIST = "vPNHBNC";
 
     public static final String IMMUNIZATION_LIST = "mImmunizationFilter";
 
     public static final String NOTIFICATION_IMAGE = "assets/images/mother.png";
 
+
+//NOTIFICATION API's
+//   http://192.168.100.27/thaimaiapp/api/vhn/Vhn/mNotificationCount
+
+    public static final String POST_NOTIFICATION_COUNT= "vNotificationCount";
+
+    //    http://192.168.100.27/thaimaiapp/api/mother/mNotificationDetails
+
+    public static final String POST_NOTIFICATION_LIST= "vNotificationDetails";
+//    http://192.168.100.27/thaimaiapp/api/vhn/Vhn/mNotificationview
+    public static final String POST_NOTIFICATION_DETAILS= "vNotificationview";
+
+//    public static final String IMMUNIZATION_LIST = "mImmunizationFilter";
 }

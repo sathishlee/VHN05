@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.unicef.vhn.BuildConfig;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.LocationUpdatePresenter;
@@ -44,17 +45,23 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
 
     LocationUpdatePresenter locationUpdatePresenter;
     PreferenceData preferenceData;
-RelativeLayout rel_no_internet_connection;
+//RelativeLayout rel_no_internet_connection;
     RelativeLayout rel_splash_screen;
+
+    GoogleApiClient googleApiClient=null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         rel_splash_screen = (RelativeLayout) findViewById(R.id.rel_splash_screen);
         rel_splash_screen.setVisibility(View.GONE);
-        rel_no_internet_connection = (RelativeLayout) findViewById(R.id.rel_no_internet_connection);
+//        rel_no_internet_connection = (RelativeLayout) findViewById(R.id.rel_no_internet_connection);
         locationUpdatePresenter =new LocationUpdatePresenter(this,this);
         preferenceData = new PreferenceData(this);
+
+
+
         startStep1();
         if (mAlreadyStartedService ) {
             if(!preferenceData.getLogin()) {
@@ -383,7 +390,7 @@ RelativeLayout rel_no_internet_connection;
 
     @Override
     public void locationUpdateSuccess(String loginResponseModel) {
-        rel_no_internet_connection.setVisibility(View.GONE);
+//        rel_no_internet_connection.setVisibility(View.GONE);
         Log.d(TAG,"success--->"+loginResponseModel);
     }
 

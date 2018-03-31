@@ -26,5 +26,8 @@ public interface MotherListInteractor {
     void getSelectedImmuMother(String vhnCode, String vhnId, String mid);
 
 
+    void getPNHBNCDUEMotherList(String vhnCode, String vhnId,String tempCount);
+
+
 
 }

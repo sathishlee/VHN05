@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,17 +29,24 @@ import com.unicef.vhn.fragment.home;
 import com.unicef.vhn.fragment.mothers;
 import com.unicef.vhn.fragment.risk;
 import com.unicef.vhn.fragment.NotificationListFragment;
+import com.unicef.vhn.utiltiy.CheckNetwork;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ConnectivityReceiver.ConnectivityReceiverListener {
-
+    CheckNetwork checkNetwork;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        checkNetwork =new CheckNetwork(this);
+/*if (checkNetwork.isNetworkAvailable()){
+    Log.w(MainActivity.class.getSimpleName(),"Is"+checkNetwork.isNetworkAvailable());
+}else{
+    Log.w(MainActivity.class.getSimpleName(),"Is"+checkNetwork.isNetworkAvailable());
+    startActivity(new Intent( getApplicationContext(),NoInternetConnectionActivity.class));
+}*/
         // Manually checking internet connection
         checkConnection();
 
@@ -65,9 +73,13 @@ public class MainActivity extends AppCompatActivity
         int color;
         if (isConnected) {
             message = "Good! Connected to Internet";
+            Log.v("MAIN IS INTERNET",message);
+
             color = Color.WHITE;
         } else {
             message = "Sorry! Not connected to internet";
+            Log.v("MAIN IS INTERNET",message);
+
             color = Color.RED;
         }
 
@@ -226,8 +238,16 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
+        if (checkNetwork.isNetworkAvailable()){
+            Log.w(MainActivity.class.getSimpleName(),"Is"+checkNetwork.isNetworkAvailable());
+        }else{
+            Log.w(MainActivity.class.getSimpleName(),"Is"+checkNetwork.isNetworkAvailable());
+            startActivity(new Intent( getApplicationContext(),NoInternetConnectionActivity.class));
+        }
         // register connection status listener
         MyApplication.getInstance().setConnectivityListener(this);
+
+
     }
 
     /**
@@ -235,7 +255,8 @@ public class MainActivity extends AppCompatActivity
      * network connection
      */
     @Override
-    public void onNetworkConnectionChanged(boolean isConnected) {
+    public void onNetworkConnectionChanged(boolean isConnected)
+    {
         showSnack(isConnected);
     }
 
@@ -243,6 +264,7 @@ public class MainActivity extends AppCompatActivity
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
 
 
 }

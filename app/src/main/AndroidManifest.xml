@@ -16,21 +16,18 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
-    <!--<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
-    <!--<uses-permission android:name="android.permission.INTERNET" />-->
-    <!--<uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />-->
-    <!--<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
-    <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
+    <!-- <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> -->
+    <!-- <uses-permission android:name="android.permission.INTERNET" /> -->
+    <!-- <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" /> -->
+    <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> -->
+    <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
 
     <meta-data
         android:name="com.google.android.gms.version"
         android:value="@integer/google_play_services_version" />
-
     <meta-data
         android:name="com.google.android.geo.API_KEY"
         android:value="@string/google_maps_key" />
-
-
 
     <application
         android:name=".application.MyApplication"
@@ -49,9 +46,11 @@
         <activity
             android:name=".activity.PNMothersListActivity"
             android:theme="@style/AppTheme" />
-       <!-- <activity
+        <!--
+            <activity
             android:name=".model.ViewRecordActivity"
-            android:theme="@style/AppTheme" />-->
+            android:theme="@style/AppTheme" />
+        -->
         <activity
             android:name=".activity.MotherTrackActivity"
             android:theme="@style/AppTheme" />
@@ -76,9 +75,9 @@
         <activity
             android:name=".activity.InfantListActivity"
             android:theme="@style/AppTheme" />
-        <!--<activity-->
-            <!--android:name=".activity.AnMotherListActivity"-->
-            <!--android:theme="@style/AppTheme" />-->
+        <!-- <activity -->
+        <!-- android:name=".activity.AnMotherListActivity" -->
+        <!-- android:theme="@style/AppTheme" /> -->
         <!--
             <activity
             android:name=".activity.HighRiskListActivity"
@@ -91,21 +90,18 @@
         <activity
             android:name=".activity.MothersDetailsActivity"
             android:theme="@style/AppTheme" />
-        <!--<activity-->
-            <!--android:name=".activity.SplashScreenActivity"-->
-            <!--android:theme="@style/AppTheme">-->
+        <!-- <activity -->
+        <!-- android:name=".activity.SplashScreenActivity" -->
+        <!-- android:theme="@style/AppTheme"> -->
 
-        <!--</activity>-->
 
-        <activity android:name=".activity.MotherLocationActivity"
-            android:theme="@style/AppTheme">
+        <!-- </activity> -->
 
-        </activity>
-
-        <!--<activity android:name=".activity.ActivityNotification"></activity>-->
-        <!--<activity android:name=".activity.ActivityNotiLayout"></activity>-->
-
-        <activity android:name=".activity.SplashScreenActivity"
+        <activity
+            android:name=".activity.MotherLocationActivity"
+            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".activity.SplashScreenActivity"
             android:theme="@style/AppTheme1">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -124,10 +120,11 @@
         <activity android:name=".activity.TremAndPreTreamDetailsActivity"/>
         <activity android:name=".activity.ANTT1MothersList"/>
         <activity android:name=".activity.ANTT2MothersList"/>
+        <activity android:name=".activity.TremAndPreTreamDetailsActivity" />
+        <activity android:name=".activity.PNHBNCDueListActivity" />
 
-        <service android:name="com.unicef.vhn.service.LocationMonitoringService" />
-
-        <service android:name="com.unicef.vhn.utiltiy.MyFirebaseInstanceIDService">
+        <service android:name=".service.LocationMonitoringService" />
+        <service android:name=".utiltiy.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
