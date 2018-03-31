@@ -157,11 +157,18 @@ public class MainActivity extends AppCompatActivity
         }
 
         else if (id == R.id.alert) {
-//            Intent i = new Intent(getApplicationContext(), ImmunizationListActivity.class);
-//            startActivity(i);
+            Intent i = new Intent(getApplicationContext(), AlertActivity.class);
+            startActivity(i);
         }
 
         else if (id == R.id.today_visit) {
+            Intent i = new Intent(getApplicationContext(),VisitActivity.class);
+            startActivity(i);
+
+        }
+        else if (id == R.id.migration_mother) {
+            Intent i = new Intent(getApplicationContext(),MotherMigration.class);
+            startActivity(i);
 
         }
 

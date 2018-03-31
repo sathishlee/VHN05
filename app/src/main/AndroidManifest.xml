@@ -122,6 +122,9 @@
         <activity android:name=".activity.ANTT2MothersList"/>
         <activity android:name=".activity.TremAndPreTreamDetailsActivity" />
         <activity android:name=".activity.PNHBNCDueListActivity" />
+        <activity android:name=".activity.AlertActivity" />
+        <activity android:name=".activity.VisitActivity" />
+        <activity android:name=".activity.MotherMigration" />
 
         <service android:name=".service.LocationMonitoringService" />
         <service android:name=".utiltiy.MyFirebaseInstanceIDService">
