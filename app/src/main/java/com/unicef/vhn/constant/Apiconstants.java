@@ -106,7 +106,7 @@ public class Apiconstants {
     public static final String CURRENT_VISIT_LIST = "vVHN_Current_Visits";
 
 //    http://192.168.100.27/thaimaiapp/api/vhn/Vhn/vVHN_Current_Visits_count
-public static final String CURRENT_VISIT_Count = "vVHN_Current_Visits_count";
+public static final String CURRENT_VISIT_COUNT = "vVHN_Current_Visits_count";
 
 
 }

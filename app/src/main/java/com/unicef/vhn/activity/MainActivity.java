@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.action_notification:
 //                Toast.makeText(getApplicationContext(),"Notification Clicked", Toast.LENGTH_LONG).show();
-notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(),preferenceData.getVhnId());
+//notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(),preferenceData.getVhnId());
                 android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content,
                         NotificationListFragment.newInstance()).commit();
@@ -310,11 +310,11 @@ pDialog.dismiss();
             String msg = jsonObject.getString("message");
             String strTodayVisitCount = jsonObject.getString("vhn_today_visit_list");
             if (status.equalsIgnoreCase("1")) {
-                preferenceData.setTodayVisitCount(strTodayVisitCount);
-                Log.d(MainActivity.class.getSimpleName(), "Notification Count-->" + strTodayVisitCount);
+//                preferenceData.setTodayVisitCount(strTodayVisitCount);
+                Log.d(MainActivity.class.getSimpleName(), "Today Visit Count-->" + strTodayVisitCount);
 
             } else {
-                Log.d(MainActivity.class.getSimpleName(), "Notification messsage-->" + msg);
+                Log.d(MainActivity.class.getSimpleName(), "Today Visit messsage-->" + msg);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -323,6 +323,16 @@ pDialog.dismiss();
 
     @Override
     public void NotificationResponseError(String response) {
+
+    }
+
+    @Override
+    public void TodayVisitResponseSuccess(String response) {
+
+    }
+
+    @Override
+    public void TodayVisitResponseError(String response) {
 
     }
 }

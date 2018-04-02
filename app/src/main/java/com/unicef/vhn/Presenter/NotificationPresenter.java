@@ -90,7 +90,7 @@ public class NotificationPresenter implements NotificationInteractor {
     public void getTodayVisitCount(final String vhnCode, final String vhnId) {
 
 
-        String url = Apiconstants.BASE_URL + Apiconstants.POST_NOTIFICATION_COUNT;
+        String url = Apiconstants.BASE_URL + Apiconstants.CURRENT_VISIT_COUNT;
         Log.d("Url--->", url);
         Log.d("vhnCode--->", vhnCode);
         Log.d("vhnId--->", vhnId);
@@ -100,13 +100,13 @@ public class NotificationPresenter implements NotificationInteractor {
             @Override
             public void onResponse(String response) {
                 notificationViews.hideProgress();
-                notificationViews.NotificationResponseSuccess(String.valueOf(response));
+                notificationViews.TodayVisitResponseSuccess(String.valueOf(response));
             }
         },new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 notificationViews.hideProgress();
-                notificationViews.NotificationResponseError(error.toString());
+                notificationViews.TodayVisitResponseError(error.toString());
             }
         }){
             @Override
