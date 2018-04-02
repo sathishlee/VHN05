@@ -56,4 +56,11 @@ public class PreferenceData {
     }  public String getVhnCode(){
         return sharedPreferences.getString(AppConstants.VHN_CODE,"");
     }
+
+    public void setTodayVisitCount(String strTodayVisitCount) {
+        sharedPreferences.edit().putString(AppConstants.TODAY_VISIT_COUNT, strTodayVisitCount).commit();
+    }
+    public String getTodayVisitCount(){
+        return sharedPreferences.getString(AppConstants.TODAY_VISIT_COUNT,"");
+    }
 }

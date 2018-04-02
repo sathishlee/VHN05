@@ -9,11 +9,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.HomePresenter;
@@ -44,6 +46,8 @@ public class home extends Fragment implements MotherListsViews {
     TextView txt_mother_count, txt_high_risk_count, txt_infants_count, txt_sos_count;
     Button but_an_mother_total_count, but_an_mother_high_risk_count, but_an_mother_pn_hbnc_totlal_count, but_an_mother_pn_hbnc_term_preterm_count;
     TextView txt_antt_1_due, txt_antt_2_due, txt_pnhbnc_due;
+
+    private ViewFlipper mFlipper;
 
     TextView txt_vhn_name, txt_hsc, txt_phc, txt_block, txt_address;
     ProgressDialog pDialog;
@@ -230,6 +234,15 @@ public class home extends Fragment implements MotherListsViews {
         txt_antt_2_due = view.findViewById(R.id.txt_antt_2_due);
         txt_pnhbnc_due = view.findViewById(R.id.txt_pnhbnc_due);
 
+
+        mFlipper = ((ViewFlipper)view.findViewById(R.id.flipper));
+      /*  if (txt_sos_count.getText().toString().equalsIgnoreCase("")){
+
+        }else {
+            mFlipper.startFlipping();
+            mFlipper.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+            mFlipper.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
+        }*/
     }
 
 
@@ -256,6 +269,13 @@ public class home extends Fragment implements MotherListsViews {
                 txt_high_risk_count.setText(mJsnobject.getString("riskMothersCount"));
                 txt_infants_count.setText(mJsnobject.getString("infantCount"));
                 txt_sos_count.setText(mJsnobject.getString("sosCount"));
+  if (mJsnobject.getString("sosCount").equalsIgnoreCase("0")){
+
+        }else {
+            mFlipper.startFlipping();
+            mFlipper.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+            mFlipper.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
+        }
                 txt_antt_1_due.setText(mJsnobject.getString("ANTT1"));
                 txt_antt_2_due.setText(mJsnobject.getString("ANTT2"));
                 txt_pnhbnc_due.setText(mJsnobject.getString("pnhbncCount"));

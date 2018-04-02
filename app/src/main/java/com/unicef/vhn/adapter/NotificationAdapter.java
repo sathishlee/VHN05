@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.squareup.picasso.Picasso;
@@ -24,9 +25,9 @@ import java.util.List;
 
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder>  {
-    private List<NotificationListResponseModel.NotificationList> moviesList;
+    private List<NotificationListResponseModel.Vhn_migrated_mothers> moviesList;
     FragmentActivity activity;
-    public NotificationAdapter(List<NotificationListResponseModel.NotificationList> moviesList, FragmentActivity activity) {
+    public NotificationAdapter(List<NotificationListResponseModel.Vhn_migrated_mothers> moviesList, FragmentActivity activity) {
         this.moviesList = moviesList;
         this.activity = activity;
     }
@@ -43,12 +44,23 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        NotificationListResponseModel.NotificationList movie = moviesList.get(position);
-        holder.title.setText(movie.getMPicmeId());
-        holder.genre.setText(movie.getMessage());
-        holder.year.setText(movie.getDateTime());
-//        Picasso.with(activity).load(movie.getImg_id()).into(holder.imageView);
-//        holder.imageView.setImageDrawable(activity.getResources().getDrawable(movie.getImg_id()));
+        final NotificationListResponseModel.Vhn_migrated_mothers movie = moviesList.get(position);
+
+holder.txt_flash_name.setText(movie.getMName());
+holder.txt_mig_name.setText(movie.getMName());
+
+holder.txt_flash_message.setText(movie.getSubject());
+holder.txt_mig_message.setText(movie.getSubject());
+
+holder.txt_flash_notify_time.setText(movie.getNoteStartDateTime());
+holder.txt_mig_notify_time.setText(movie.getNoteStartDateTime());
+
+holder.txt_flash_call.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Toast.makeText(activity.getApplicationContext(),"make call"+movie.getMMotherMobile(),Toast.LENGTH_SHORT).show();
+    }
+});
     }
 
     @Override
@@ -58,14 +70,18 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView title, year, genre;
-        public ImageView imageView;
+        public TextView txt_flash_notify_time, txt_flash_message,txt_flash_name,txt_mig_notify_time, txt_mig_message,txt_mig_name,txt_flash_call;
+//        public ImageView imageView;
         public ViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.title);
-            genre = (TextView) view.findViewById(R.id.genre);
-            year = (TextView) view.findViewById(R.id.year);
-            imageView = (ImageView) view.findViewById(R.id.cardview_image);
+            txt_flash_name = view.findViewById(R.id.txt_flash_name);
+            txt_flash_message=view.findViewById(R.id.txt_flash_message);
+            txt_flash_notify_time = view.findViewById(R.id.txt_flash_notify_time);
+            txt_flash_call=view.findViewById(R.id.txt_flash_call);
+
+            txt_mig_name=view.findViewById(R.id.txt_mig_name);
+            txt_mig_message=view.findViewById(R.id.txt_mig_message);
+            txt_mig_notify_time=view.findViewById(R.id.txt_mig_name);
         }
     }
 }

@@ -220,7 +220,7 @@ public class PNMotherDetailsActivity extends AppCompatActivity implements View.O
                 txt_type_of_delivery.setText(mJsnobject_tracking.getString("dtime"));
                 txt_weight.setText(mJsnobject_tracking.getString("mWeight"));
                 txt_maturity.setText(mJsnobject_tracking.getString("meaturityDate"));
-                txt_next_visit.setText(mJsnobject_tracking.getString(""));
+                txt_next_visit.setText(mJsnobject_tracking.getString("NextVisit"));
 
                 strLatitude = mJsnobject_tracking.getString("mLatitude");
                 strLongitude =mJsnobject_tracking.getString("mLongitude");

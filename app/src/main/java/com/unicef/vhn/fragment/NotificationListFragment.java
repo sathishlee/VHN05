@@ -2,6 +2,7 @@ package com.unicef.vhn.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,14 +12,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.NotificationPresenter;
 import com.unicef.vhn.R;
-//import com.unicef.vhn.adapter.NotificationAdapter;
+import com.unicef.vhn.activity.VisitActivity;
 import com.unicef.vhn.adapter.NotificationAdapter;
 import com.unicef.vhn.interactor.NotificationListResponseModel;
-import com.unicef.vhn.model.NotificationModel;
 import com.unicef.vhn.view.NotificationViews;
 
 import org.json.JSONArray;
@@ -29,11 +31,11 @@ import java.util.ArrayList;
 
 
 public class NotificationListFragment extends Fragment implements NotificationViews {
-
-
+    TextView txt_today_visit_count,txt_count_today_visit;
+    LinearLayout ll_go_visit_list;
     NotificationAdapter mAdapter;
-    ArrayList<NotificationListResponseModel.NotificationList> moviesList;
-    NotificationListResponseModel.NotificationList movie;
+    ArrayList<NotificationListResponseModel.Vhn_migrated_mothers> moviesList;
+    NotificationListResponseModel.Vhn_migrated_mothers movie;
     LinearLayoutManager mLayoutManager;
     RecyclerView mRecyclerView;
     private OnFragmentInteractionListener mListener;
@@ -69,13 +71,27 @@ public class NotificationListFragment extends Fragment implements NotificationVi
         pDialog = new ProgressDialog(getActivity());
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
+        txt_today_visit_count=view.findViewById(R.id.txt_today_visit_count);
+        txt_count_today_visit=view.findViewById(R.id.txt_count_today_visit);
+        ll_go_visit_list = view.findViewById(R.id.ll_go_visit_list);
+//        if (preferenceData.getTodayVisitCount().equalsIgnoreCase("0")) {
+//
+//            txt_today_visit_count.setText(preferenceData.getTodayVisitCount());
+//            txt_count_today_visit.setText(preferenceData.getTodayVisitCount()+" Mothers Visiting Today");
+//        }
+      /*  ll_go_visit_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), VisitActivity.class));
+            }
+        });*/
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mRecyclerView.setHasFixedSize(true);
+//        mRecyclerView.setHasFixedSize(true);
         preferenceData = new PreferenceData(getActivity());
         notificationPresenter = new NotificationPresenter(getActivity(), this);
-        notificationPresenter.getNotificationList(preferenceData.getVhnId());
+        notificationPresenter.getNotificationList(preferenceData.getVhnCode(),preferenceData.getVhnId());
 
-        mRecyclerView = view. findViewById(R.id.recycler_view);
+        mRecyclerView = view. findViewById(R.id.notification_recycler_view);
         mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
@@ -157,18 +173,26 @@ public class NotificationListFragment extends Fragment implements NotificationVi
             JSONObject jsonObject = new JSONObject(response);
             String status = jsonObject.getString("status");
             String msg = jsonObject.getString("message");
-            movie = new NotificationListResponseModel.NotificationList();
+            movie = new NotificationListResponseModel.Vhn_migrated_mothers();
             if (status.equalsIgnoreCase("1")) {
-                JSONArray jsonArray = jsonObject.getJSONArray("notificationList");
+                JSONArray jsonArray = jsonObject.getJSONArray("vhn_migrated_mothers");
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                    movie.setMPicmeId(jsonObject1.getString("mName"));
-                    movie.setMessage(jsonObject1.getString("subject"));
-                    movie.setDateTime(jsonObject1.getString("dateTime"));
+                    movie.setMPicmeId(jsonObject1.getString("mPicmeId"));
+                    movie.setMName(jsonObject1.getString("mName"));
+                    movie.setMid(jsonObject1.getString("mid"));
+                    movie.setVhnId(jsonObject1.getString("vhnId"));
+                    movie.setSubject(jsonObject1.getString("subject"));
+                    movie.setMMotherMobile(jsonObject1.getString("mMotherMobile"));
+                    movie.setMigratedmId(jsonObject1.getString("migratedmId"));
+                    movie.setNoteId(jsonObject1.getString("noteId"));
+                    movie.setNoteStartDateTime(jsonObject1.getString("noteStartDateTime"));
+                    movie.setMtype(jsonObject1.getString("mtype"));
+
                     moviesList.add(movie);
 
                 }
-                mAdapter.notifyDataSetChanged();
+//                mAdapter.notifyDataSetChanged();
             } else {
                 Log.d(NotificationListFragment.class.getSimpleName(), "Notification messsage-->" + msg);
             }

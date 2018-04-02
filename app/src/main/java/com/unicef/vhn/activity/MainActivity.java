@@ -1,6 +1,7 @@
 package com.unicef.vhn.activity;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
@@ -21,6 +22,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.unicef.vhn.Preference.PreferenceData;
+import com.unicef.vhn.Presenter.NotificationPresenter;
 import com.unicef.vhn.application.MyApplication;
 import com.unicef.vhn.broadcastReceiver.ConnectivityReceiver;
 import com.unicef.vhn.constant.AppConstants;
@@ -30,10 +33,17 @@ import com.unicef.vhn.fragment.mothers;
 import com.unicef.vhn.fragment.risk;
 import com.unicef.vhn.fragment.NotificationListFragment;
 import com.unicef.vhn.utiltiy.CheckNetwork;
+import com.unicef.vhn.view.NotificationViews;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ConnectivityReceiver.ConnectivityReceiverListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ConnectivityReceiver.ConnectivityReceiverListener, NotificationViews {
     CheckNetwork checkNetwork;
+    ProgressDialog pDialog;
+    PreferenceData preferenceData;
+    NotificationPresenter notificationPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +51,12 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         checkNetwork =new CheckNetwork(this);
+
+        pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
+        pDialog.setMessage("Please Wait ...");
+        preferenceData =new PreferenceData(this);
+        notificationPresenter =new NotificationPresenter(this,this);
 /*if (checkNetwork.isNetworkAvailable()){
     Log.w(MainActivity.class.getSimpleName(),"Is"+checkNetwork.isNetworkAvailable());
 }else{
@@ -115,6 +131,7 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.action_notification:
 //                Toast.makeText(getApplicationContext(),"Notification Clicked", Toast.LENGTH_LONG).show();
+notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(),preferenceData.getVhnId());
                 android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content,
                         NotificationListFragment.newInstance()).commit();
@@ -273,5 +290,39 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    @Override
+    public void showProgress() {
+pDialog.show();
+    }
 
+    @Override
+    public void hideProgress() {
+pDialog.dismiss();
+    }
+
+    @Override
+    public void NotificationResponseSuccess(String response) {
+
+        Log.d(MainActivity.class.getSimpleName(), "Notification count response success" + response);
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            String status = jsonObject.getString("status");
+            String msg = jsonObject.getString("message");
+            String strTodayVisitCount = jsonObject.getString("vhn_today_visit_list");
+            if (status.equalsIgnoreCase("1")) {
+                preferenceData.setTodayVisitCount(strTodayVisitCount);
+                Log.d(MainActivity.class.getSimpleName(), "Notification Count-->" + strTodayVisitCount);
+
+            } else {
+                Log.d(MainActivity.class.getSimpleName(), "Notification messsage-->" + msg);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void NotificationResponseError(String response) {
+
+    }
 }

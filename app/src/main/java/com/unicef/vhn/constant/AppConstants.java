@@ -31,6 +31,9 @@ public class AppConstants {
     public static final String EXTRA_LATITUDE = "13.0011794";
     public static final String EXTRA_LONGITUDE = "80.2824802";
 
+    public static final String TODAY_VISIT_COUNT = "0";
+
+
 
 
 
