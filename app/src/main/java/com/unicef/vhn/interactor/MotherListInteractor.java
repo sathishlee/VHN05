@@ -28,6 +28,6 @@ public interface MotherListInteractor {
 
     void getPNHBNCDUEMotherList(String vhnCode, String vhnId,String tempCount);
 
-
+    void getMigratedMothersList(String vhnCode, String vhnId);
 
 }

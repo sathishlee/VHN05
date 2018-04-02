@@ -45,6 +45,13 @@
         <item>EDD Mothers</item>
     </string-array>
 
+    <string-array name="array_trimester">
+        <item>--Select--</item>
+        <item>Trimester 1</item>
+        <item>Trimester 2</item>
+        <item>Trimester 3</item>
+    </string-array>
+
     <string-array name="array_village_list">
         <item>--Select Village--</item>
         <item>Village 1</item>
@@ -53,17 +60,17 @@
         <item>Village 4</item>
         <item>Village 5</item>
     </string-array>
-    <string-array name="array_day_list">
-        <item>--Select Day--</item>
-        <item>Day 1</item>
-        <item>Day 2</item>
-        <item>Day 3</item>
-        <item>Day 4</item>
-        <item>Day 5</item>
-        <item>Day 6</item>
-        <item>Day 8</item>
-        <item>Day 9</item>
-        <item>Day 10</item>
+    <string-array name="array_pn_hbnc_visit">
+
+        <item>--Select--</item>
+        <item>Visit 1 (Day 0)</item>
+        <item>Visit 2 (Day 3)</item>
+        <item>Visit 3 (Day 7)</item>
+        <item>Visit 4 (Day 14)</item>
+        <item>Visit 5 (Day 21)</item>
+        <item>Visit 6 (Day 28)</item>
+        <item>Visit 7 (Day 42)</item>
+
     </string-array>
 
     <string-array name="array_picme_list">

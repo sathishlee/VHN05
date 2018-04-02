@@ -84,6 +84,7 @@ public class Apiconstants {
     public static final String DASH_BOARD_MOTHERS_PN_HBNC_DUELIST = "vPNHBNC";
 
     public static final String IMMUNIZATION_LIST = "mImmunizationFilter";
+    public static final String MIGRATED_MOTHERS_LIST = "vVHN_Migrated_Mothers_List";
 
     public static final String NOTIFICATION_IMAGE = "assets/images/mother.png";
 
