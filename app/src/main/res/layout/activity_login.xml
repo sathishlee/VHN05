@@ -82,9 +82,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_primary"
-                    android:hint="DOB"
+                    android:hint="Password"
                     android:textColorHint="@color/white"
-                    android:text="01-01-1971"
+                    android:text="V10001"
                     android:layout_margin="5dp"/>
 
             </android.support.design.widget.TextInputLayout>

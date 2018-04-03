@@ -7,7 +7,6 @@ package com.unicef.vhn.constant;
 public class Apiconstants {
 
     public static final String BASE_URL = "http://192.168.100.27/thaimaiapp/api/vhn/Vhn/";
-
 //    public static final String BASE_URL = "http://demo.satvatinfosol.com/thaimai/api/vhn/Vhn/";
 
 
@@ -84,6 +83,7 @@ public class Apiconstants {
     public static final String DASH_BOARD_MOTHERS_PN_HBNC_DUELIST = "vPNHBNC";
 
     public static final String IMMUNIZATION_LIST = "mImmunizationFilter";
+    public static final String MIGRATED_MOTHERS_LIST = "vVHN_Migrated_Mothers_List";
 
     public static final String NOTIFICATION_IMAGE = "assets/images/mother.png";
 

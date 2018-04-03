@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="fill_parent"
     android:layout_height="match_parent">
+    
+  <LinearLayout
+      android:layout_width="fill_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,8 +61,8 @@
 
         <LinearLayout
             android:orientation="horizontal"
-            android:padding="4dp"
-            android:weightSum="3"
+            android:padding="7dp"
+            android:weightSum="2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -75,13 +80,227 @@
                     android:layout_weight="1"
                     android:text="Descending" />
 
-                <RadioButton
-                    android:id="@+id/rd_asec"
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="7dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_margin="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mothers"
+                    android:textSize="@dimen/text_label"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/startblue"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:padding="4dp"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+                <CheckBox
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Ascending" />
+                    android:text="AN Mothers"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="PN Mothers"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="7dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_margin="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Village Wise"
+                android:textSize="@dimen/text_label"
+                android:textAlignment="textStart"
+                android:textColor="@color/startblue"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:padding="4dp"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/sp_village_wise"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_secondary"
+                android:layout_weight="1"
+                android:drawSelectorOnTop="true"
+                android:entries="@array/array_village_list"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="7dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_margin="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trimester"
+                android:textSize="@dimen/text_label"
+                android:textAlignment="textStart"
+                android:textColor="@color/startblue"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:padding="4dp"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/sp_trimester"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_secondary"
+                android:layout_weight="1"
+                android:drawSelectorOnTop="true"
+                android:entries="@array/array_trimester"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="7dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_margin="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PN Mother Day Wise"
+                android:textSize="@dimen/text_label"
+                android:textAlignment="textStart"
+                android:textColor="@color/startblue"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:padding="4dp"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/sp_pn_mother_day_wise"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_secondary"
+                android:layout_weight="1"
+                android:drawSelectorOnTop="true"
+                android:entries="@array/array_pn_hbnc_visit"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="7dp"
+        android:weightSum="2"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:background="@drawable/button_cancel"
+            android:text="Cancel"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/btn_cancel"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:background="@drawable/button_backgroumd"
+            android:text="@string/submit"
+            android:textColor="#ffffff"
+            android:id="@+id/btn_submit"/>
+
+    </LinearLayout>
+
 </LinearLayout>
+
+</ScrollView>

@@ -146,6 +146,7 @@ public class MotherLocationActivity extends FragmentActivity implements Location
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         setupGoogleMapScreenSettings(googleMap);
+
 //        mMap.setMyLocationEnabled(true);
 //        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 //            // TODO: Consider calling
@@ -156,11 +157,13 @@ public class MotherLocationActivity extends FragmentActivity implements Location
 
 
         // Add a marker in Sydney and move the camera
-        LatLng latLng = new LatLng(13.00095, 80.2575);
-        mMap.addMarker(new MarkerOptions().position(latLng).title("Adyar, Chennai, Tamil Nadu"));
+//        LatLng latLng = new LatLng(13.00095, 80.2575);
+//        mMap.addMarker(new MarkerOptions().position(latLng).title("Adyar, Chennai, Tamil Nadu"));
+//
+//
+//        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
 
 
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
     }
 
     @Override

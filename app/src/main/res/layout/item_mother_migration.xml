@@ -94,7 +94,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/ll_ll_mother_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
@@ -102,6 +101,7 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
+                        android:id="@+id/ll_ll_mother_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
@@ -122,6 +122,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_track_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
@@ -143,6 +144,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_call"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
@@ -172,27 +174,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:baselineAligned="false"
-                android:weightSum="16"
                 android:layout_margin="3dp">
 
                 <TextView
+                    android:id="@+id/txt_migrated_from"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="10"
                     android:textAlignment="textStart"
                     android:padding="1dp"
-                    android:text="Current Visit : "
-                    android:textColor="@color/secondary"
-                    android:textSize="@dimen/text_primary" />
-
-                <TextView
-                    android:id="@+id/txt_current_visit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="6"
-                    android:textAlignment="textStart"
-                    android:padding="2dp"
-                    android:text="Current Visit"
+                    android:text="Migrated From Place"
                     android:textColor="#333333"
                     android:textSize="@dimen/text_secondary" />
 

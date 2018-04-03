@@ -1,7 +1,9 @@
 package com.unicef.vhn.activity;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -16,6 +18,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +58,9 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
     private ANTT2Adapter antt2Adapter;
 
     PreferenceData preferenceData;
+
+    final Context context = this;
+    TextView txt_filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +102,27 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(antt2Adapter);
+
+        txt_filter = (TextView) findViewById(R.id.txt_filter);
+
+        txt_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.dialog_fragment);
+//                dialog.setTitle("Title...");
+
+
+                Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
+                btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
     }
 
     @Override
