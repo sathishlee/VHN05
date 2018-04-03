@@ -61,7 +61,7 @@ public class LoginPresenter implements LoginInteractor{
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("vhnCode",strVhnId);
-                params.put("vhnDOB",strPassword);
+                params.put("vhnPassword",strPassword);
                 params.put("deviceId",strdeviceId);
 
                 Log.d("params--->",params.toString());

@@ -61,8 +61,8 @@
 
         <LinearLayout
             android:orientation="horizontal"
-            android:padding="4dp"
-            android:weightSum="3"
+            android:padding="7dp"
+            android:weightSum="2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -79,13 +79,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Descending" />
-
-                <RadioButton
-                    android:id="@+id/rd_asec"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Ascending" />
 
         </LinearLayout>
 
@@ -220,7 +213,7 @@
             android:layout_height="wrap_content">
 
             <Spinner
-                android:id="@+id/sp_village_wise"
+                android:id="@+id/sp_trimester"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_primary"
@@ -265,7 +258,7 @@
             android:layout_height="wrap_content">
 
             <Spinner
-                android:id="@+id/sp_village_wise"
+                android:id="@+id/sp_pn_mother_day_wise"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_primary"
@@ -279,7 +272,6 @@
 
     </LinearLayout>
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -291,23 +283,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_margin="15dp"
+            android:layout_margin="5dp"
             android:background="@drawable/button_cancel"
             android:text="Cancel"
             android:textColor="@color/colorPrimary"
-            android:id="@+id/btn_submit"
-            android:padding="10dp"/>
+            android:id="@+id/btn_cancel"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_margin="15dp"
+            android:layout_margin="5dp"
             android:background="@drawable/button_backgroumd"
             android:text="@string/submit"
             android:textColor="#ffffff"
-            android:id="@+id/btn_cancel"
-            android:padding="10dp"/>
+            android:id="@+id/btn_submit"/>
 
     </LinearLayout>
 

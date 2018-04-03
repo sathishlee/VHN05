@@ -40,45 +40,6 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/filter_background">
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_margin="4dp"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginEnd="5dp"
-                                android:drawableStart="@drawable/filter"
-                                android:layout_gravity="end"
-                                android:textSize="@dimen/text_secondary"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/txt_risk"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginEnd="5dp"
-                                android:text="Filter"
-                                android:textSize="@dimen/text_secondary"
-                                android:layout_gravity="end"
-                                android:textColor="@color/startblue"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                </LinearLayout>
-
             </LinearLayout>
 
             <LinearLayout

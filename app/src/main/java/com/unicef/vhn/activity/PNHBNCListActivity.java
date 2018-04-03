@@ -14,6 +14,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.unicef.vhn.Interface.MakeCallInterface;
@@ -45,6 +47,7 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
     private RecyclerView mother_recycler_view;
     private MotherListAdapter mAdapter;
 
+    private TextView textView;
 
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
     boolean isDataUpdate=true;
@@ -77,6 +80,8 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
         mResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView) findViewById(R.id.mother_recycler_view);
 
+        textView = (TextView) findViewById(R.id.txt_no_records_found);
+
         mAdapter = new MotherListAdapter(mResult, PNHBNCListActivity.this,"PN",this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(PNHBNCListActivity.this);
@@ -103,21 +108,29 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
            String status =mJsnobject.getString("status");
            if (status.equalsIgnoreCase("1")) {
                JSONArray jsonArray = mJsnobject.getJSONArray("pnMothersList");
-               for (int i = 0; i < jsonArray.length(); i++) {
-                   mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
-                   JSONObject jsonObject = jsonArray.getJSONObject(i);
-                   mresponseResult.setMid(jsonObject.getString("mid"));
-                   mresponseResult.setMName(jsonObject.getString("mName"));
-                   mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
-                   mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
-                   mresponseResult.setPnId(jsonObject.getString("pnId"));
+               if (jsonArray.length() != 0){
+                   mother_recycler_view.setVisibility(View.VISIBLE);
+                   textView.setVisibility(View.GONE);
+
+                   for (int i = 0; i < jsonArray.length(); i++) {
+                       mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
+                       JSONObject jsonObject = jsonArray.getJSONObject(i);
+                       mresponseResult.setMid(jsonObject.getString("mid"));
+                       mresponseResult.setMName(jsonObject.getString("mName"));
+                       mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
+                       mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
+                       mresponseResult.setPnId(jsonObject.getString("pnId"));
 //                   mresponseResult.setMotherType(jsonObject.getString("motherType"));
 
 //                   mresponseResult.setVhnId(jsonObject.getString("vhnId"));
 //                   mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
 //                   mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
-                   mResult.add(mresponseResult);
-                   mAdapter.notifyDataSetChanged();
+                       mResult.add(mresponseResult);
+                       mAdapter.notifyDataSetChanged();
+                   }
+           }else{
+                   mother_recycler_view.setVisibility(View.GONE);
+                   textView.setVisibility(View.VISIBLE);
                }
            }
         } catch (JSONException e) {

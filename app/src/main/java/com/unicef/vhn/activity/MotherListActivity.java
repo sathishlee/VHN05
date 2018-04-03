@@ -1,7 +1,9 @@
 package com.unicef.vhn.activity;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -15,6 +17,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +53,10 @@ public class MotherListActivity extends AppCompatActivity implements MotherLists
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
     boolean isDataUpdate=true;
 
+    LinearLayout ll_filter;
+    final Context context = this;
+    TextView txt_filter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +67,27 @@ public class MotherListActivity extends AppCompatActivity implements MotherLists
         actionBar.setTitle(AppConstants.MOTHER_LIST_TITLE);
 
         actionBar.setHomeButtonEnabled(true);
+
+        txt_filter = (TextView) findViewById(R.id.txt_filter);
+
+        txt_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.dialog_fragment);
+//                dialog.setTitle("Title...");
+
+
+                Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
+                btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
 
         actionBar.setDisplayHomeAsUpEnabled(true);
         pDialog = new ProgressDialog(this);
@@ -129,8 +159,6 @@ else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("risk_count")) {
 
     @Override
     public void showLoginSuccess(String response) {
-
-
 
         Log.e(MotherListActivity.class.getSimpleName(), "Response success" + response);
 

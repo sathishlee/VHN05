@@ -69,7 +69,6 @@ public class VisitActivity  extends AppCompatActivity implements MotherListsView
 
     public void initUI(){
 
-
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
@@ -122,9 +121,6 @@ pDialog.dismiss();
     @Override
     public void showLoginSuccess(String response) {
 
-
-
-
         Log.e(MotherListActivity.class.getSimpleName(), "Response success" + response);
 
         try {
@@ -142,6 +138,7 @@ pDialog.dismiss();
                     mresponseResult.setVhnId(jsonObject.getString("vhnId"));
                     mresponseResult.setMMotherMobile(jsonObject.getString("mMotherMobile"));
                     mresponseResult.setMtype(jsonObject.getString("mtype"));
+                    mresponseResult.setNextVisit(jsonObject.getString("nextVisit"));
 //                    mresponseResult.setMotherType(jsonObject.getString("motherType"));
 //                mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
 //                mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));

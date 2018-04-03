@@ -48,6 +48,8 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.View
         holder.txt_username.setText(current_visits.getMName());
         holder.txt_picme_id.setText(current_visits.getPicmeId());
         holder.txt_list_type.setText(current_visits.getMtype());
+        holder.txt_current_visit.setText(current_visits.getNextVisit());
+
         holder.txt_call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +86,7 @@ holder.txt_list_type.setOnClickListener(new View.OnClickListener() {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_username,txt_picme_id,txt_list_type,txt_track,txt_call;
+        TextView txt_username,txt_picme_id,txt_list_type,txt_track,txt_call, txt_current_visit;
         public ViewHolder(View itemView) {
             super(itemView);
             txt_username =itemView.findViewById(R.id.txt_username);
@@ -92,6 +94,7 @@ holder.txt_list_type.setOnClickListener(new View.OnClickListener() {
             txt_list_type =itemView.findViewById(R.id.txt_list_type);
             txt_track =itemView.findViewById(R.id.txt_track);
             txt_call =itemView.findViewById(R.id.txt_call);
+            txt_current_visit =itemView.findViewById(R.id.txt_current_visit);
         }
     }
 }
