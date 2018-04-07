@@ -130,8 +130,8 @@ else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("risk_count")) {
             mAdapter = new MotherListAdapter(mResult, MotherListActivity.this, "Risk",this);
         }else{
             mAdapter = new MotherListAdapter(mResult, MotherListActivity.this, "",this);
-
         }
+
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MotherListActivity.this);
         mother_recycler_view.setLayoutManager(mLayoutManager);
         mother_recycler_view.setItemAnimator(new DefaultItemAnimator());
