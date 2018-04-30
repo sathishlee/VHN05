@@ -74,7 +74,7 @@
                         android:gravity="end"
                         android:orientation="horizontal">
 
-                        <LinearLayout
+                        <!--<LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/edit_background">
@@ -95,7 +95,7 @@
                                 android:drawableStart="@drawable/edit_small"
                                 android:layout_gravity="end"/>
 
-                        </LinearLayout>
+                        </LinearLayout>-->
 
                     </LinearLayout>
 
@@ -591,18 +591,16 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
+                    <!--<LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="end"
                         android:orientation="horizontal">
-
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/edit_background">
-
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
@@ -610,7 +608,6 @@
                                 android:text="Edit"
                                 android:layout_gravity="end"
                                 android:textColor="#fff"/>
-
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
@@ -618,10 +615,8 @@
                                 android:layout_marginStart="5dp"
                                 android:drawableStart="@drawable/edit_small"
                                 android:layout_gravity="end"/>
-
                         </LinearLayout>
-
-                    </LinearLayout>
+                    </LinearLayout>-->
 
                 </LinearLayout>
 

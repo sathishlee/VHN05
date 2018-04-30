@@ -159,7 +159,7 @@ pDialog.dismiss();
             String message = mJsnobject.getString("message");
             if (status.equalsIgnoreCase("1")) {
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(),SosAlertListActivity.class));
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
                 finish();
             } else {
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();

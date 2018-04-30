@@ -105,26 +105,6 @@ public class ANTT1MothersList extends AppCompatActivity implements MotherListsVi
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(antt1Adapter);
 
-        txt_filter = (TextView) findViewById(R.id.txt_filter);
-
-        txt_filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.dialog_fragment);
-//                dialog.setTitle("Title...");
-
-
-                Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
-                btn_cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show();
-            }
-        });
 
     }
 

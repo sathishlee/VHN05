@@ -89,7 +89,6 @@ public class NotificationPresenter implements NotificationInteractor {
     @Override
     public void getTodayVisitCount(final String vhnCode, final String vhnId) {
 
-
         String url = Apiconstants.BASE_URL + Apiconstants.POST_NOTIFICATION_COUNT;
         Log.d("Url--->", url);
         Log.d("vhnCode--->", vhnCode);

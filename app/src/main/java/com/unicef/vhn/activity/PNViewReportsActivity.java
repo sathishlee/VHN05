@@ -1,13 +1,17 @@
 package com.unicef.vhn.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.unicef.vhn.Preference.PreferenceData;
@@ -24,13 +28,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class PNViewReportsActivity extends AppCompatActivity implements VisitANMotherViews {
+public class PNViewReportsActivity extends AppCompatActivity implements VisitANMotherViews, View.OnClickListener {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     PreferenceData preferenceData;
     SharedPreferences.Editor editor;
     ProgressDialog pDialog;
     GetVisitANMotherPresenter getVisitANMotherPresenter;
+    Button btn_delivery_reports, btn_visit_reports;
 
     //    HealthRecordResponseModel.Visit_Records mhealthRecordResponseModel;
     PnHbncVisitRecordsModel.PnMothersVisit mPnHbncVisitRecordsModel;
@@ -38,14 +43,14 @@ public class PNViewReportsActivity extends AppCompatActivity implements VisitANM
 
 
     PNHBNCVisitRecordsAdapter pnhbncVisitRecordsAdapter;
-TextView txt_no_records_found;
+    TextView txt_no_records_found;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pnview_reports);
         initUI();
-
-
+        showActionBar();
+        onClickListner();
     }
     private void initUI() {
         pDialog = new ProgressDialog(this);
@@ -53,7 +58,7 @@ TextView txt_no_records_found;
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
         getVisitANMotherPresenter = new GetVisitANMotherPresenter(PNViewReportsActivity.this, this);
-getVisitANMotherPresenter.getVisitPNMotherRecords(preferenceData.getVhnCode(),preferenceData.getVhnId(), AppConstants.SELECTED_MID);
+        getVisitANMotherPresenter.getVisitPNMotherRecords(preferenceData.getVhnCode(),preferenceData.getVhnId(), AppConstants.SELECTED_MID);
 //        gVHRecordsPresenteer = new GetVisitHealthRecordsPresenter(getActivity(), this);
 //        gVHRecordsPresenteer.getPN_HBNC_VisitRecord(Apiconstants.POST_PN_HBNC_VIST_RECORD,preferenceData.getPicmeId(), preferenceData.getMId());
 
@@ -67,16 +72,39 @@ getVisitANMotherPresenter.getVisitPNMotherRecords(preferenceData.getVhnCode(),pr
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
 
-
-
+        btn_delivery_reports = (Button) findViewById(R.id.btn_delivery_reports);
+        btn_visit_reports = (Button) findViewById(R.id.btn_visit_reports);
 
     }
 
+    private void showActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("PN Mother Records");
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void onClickListner() {
+        btn_delivery_reports.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),PNMotherDeliveryReportActivity.class));
+            }
+        });
+        btn_visit_reports.setOnClickListener(this);
+    }
     private void setupViewPager(ViewPager viewPager) {
         pnhbncVisitRecordsAdapter =new PNHBNCVisitRecordsAdapter(this,mPnHbncVisitRecordsList);
         viewPager.setOffscreenPageLimit(mPnHbncVisitRecordsList.size());
         viewPager.setAdapter(pnhbncVisitRecordsAdapter);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+//        Intent intent = new Intent(MothersDetailsActivity.this, MainActivity.class);
+        finish();
+//        startActivity(intent);
 
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -152,5 +180,18 @@ pDialog.dismiss();
     public void showVisitRecordsFailiur(String response) {
         Log.e(PNViewReportsActivity.class.getSimpleName(),"Response Error"+response);
 
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+            case R.id.btn_delivery_reports:
+                 startActivity(new Intent(getApplicationContext(),PNMotherDeliveryReportActivity.class));
+                 break;
+            case  R.id.btn_view_report:
+                  startActivity(new Intent(getApplicationContext(),ANViewReportsActivity.class));
+                  break;
+        }
     }
 }

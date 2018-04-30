@@ -5,7 +5,7 @@ android {
     buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "com.unicef.vhn"
-        minSdkVersion 22
+        minSdkVersion 17
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -21,6 +21,9 @@ android {
             android.defaultConfig.vectorDrawables.useSupportLibrary = true
         }
     }
+
+    dexOptions { javaMaxHeapSize "4g" }
+
 }
 
 dependencies {

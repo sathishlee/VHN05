@@ -128,6 +128,7 @@ pDialog.dismiss();
                 mresponseResult.setMid(jsonObject.getString("mid"));
                 mresponseResult.setMName(jsonObject.getString("mName"));
                 mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
+                mresponseResult.setMotherType(jsonObject.getString("motherType"));
                 mresponseResult.setVhnId(jsonObject.getString("vhnId"));
                 mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
                 mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));

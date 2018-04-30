@@ -14,6 +14,11 @@ public class AppConstants {
     public static String ANTT_2_LIST="";
     public static String ANTT_2_TITLE="";
 
+
+    public static final String PICME_ID = "mPicmeId";
+    public static final String M_ID = "mid";
+    public static final String DELIVERY_ID = "did";
+
     public static final String PREF_NAME = "vhnapp";
     public static final String IS_LOGIN = "is_Login";
 

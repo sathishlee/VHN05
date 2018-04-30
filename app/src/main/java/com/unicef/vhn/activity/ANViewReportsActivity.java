@@ -4,9 +4,11 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -42,7 +44,7 @@ public class ANViewReportsActivity extends AppCompatActivity implements VisitANM
         setContentView(R.layout.activity_anview_reports);
         initUI();
         onClickListner();
-
+        showActionBar();
     }
 
     private void initUI() {
@@ -79,7 +81,21 @@ public class ANViewReportsActivity extends AppCompatActivity implements VisitANM
             }
         });
         btn_view_report.setOnClickListener(this);
+    }
 
+    private void showActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("AN Mother Records");
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+//        Intent intent = new Intent(MothersDetailsActivity.this, MainActivity.class);
+        finish();
+//        startActivity(intent);
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -87,9 +103,9 @@ public class ANViewReportsActivity extends AppCompatActivity implements VisitANM
         switch (v.getId()){
             case R.id.btn_primary_report:startActivity(new Intent(getApplicationContext(),MothersPrimaryRecordsActivity.class));
                 break;
-            case  R.id.btn_view_report:
-                startActivity(new Intent(getApplicationContext(),ANViewReportsActivity.class));
-                break;
+//            case  R.id.btn_view_report:
+//                  startActivity(new Intent(getApplicationContext(),ANViewReportsActivity.class));
+//                  break;
         }
     }
 

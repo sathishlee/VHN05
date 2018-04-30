@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemIconTintList(null);
 
         setupNavigationView();
 
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.action_notification:
 //                Toast.makeText(getApplicationContext(),"Notification Clicked", Toast.LENGTH_LONG).show();
-notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(),preferenceData.getVhnId());
+                notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(),preferenceData.getVhnId());
                 android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content,
                         NotificationListFragment.newInstance()).commit();
@@ -181,12 +182,18 @@ notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(),preferenceD
         else if (id == R.id.today_visit) {
             Intent i = new Intent(getApplicationContext(),VisitActivity.class);
             startActivity(i);
-
         }
         else if (id == R.id.migration_mother) {
             Intent i = new Intent(getApplicationContext(),MotherMigration.class);
             startActivity(i);
-
+        }
+        else if (id == R.id.change_language) {
+            Intent i = new Intent(getApplicationContext(),ChangeLanguageActivity.class);
+            startActivity(i);
+        }
+        else if (id == R.id.change_password) {
+            Intent i = new Intent(getApplicationContext(),ChangePasswordActivity.class);
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/thaimai_splash_screen"
     tools:context="com.unicef.vhn.activity.SplashScreenActivity"
-    android:id="@+id/rel_splash_screen"
-    >
+    android:id="@+id/rel_splash_screen">
 
     <TextView
         android:id="@+id/Create"

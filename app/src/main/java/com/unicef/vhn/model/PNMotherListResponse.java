@@ -47,6 +47,12 @@ public class PNMotherListResponse {
         private String vLatitude;
         private String vLongitude;
         private String mMotherMobile;
+        private String mPhoto;
+
+
+        public String getmPhoto(){return mPhoto;}
+        public void setmPhoto(String mPhoto){this.mPhoto = mPhoto;}
+
 
         public String getvLatitude(){return vLatitude;}
         public void setvLatitude(String vLatitude){this.vLatitude = vLatitude;}

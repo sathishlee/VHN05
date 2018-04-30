@@ -42,7 +42,7 @@
 
         <item
             android:id="@+id/alert"
-            android:icon="@drawable/vector_drawable_notifications_bell_button"
+            android:icon="@drawable/alert_side"
             android:title="Alerts" />
 
         <item
@@ -50,6 +50,16 @@
             android:icon="@drawable/migration"
             android:title="Mother Migration" />
 
+
+        <item
+            android:id="@+id/change_language"
+            android:icon="@drawable/translate"
+            android:title="Change Language" />
+
+        <item
+            android:id="@+id/change_password"
+            android:icon="@drawable/key"
+            android:title="Change Password" />
         <!--<item-->
             <!--android:id="@+id/message"-->
             <!--android:icon="@drawable/ic_close_envelope"-->

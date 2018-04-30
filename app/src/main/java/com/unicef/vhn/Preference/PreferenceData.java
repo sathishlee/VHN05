@@ -40,6 +40,20 @@ public class PreferenceData {
 
     }
 
+    public void setPicmeId(String mPicmeId){
+        sharedPreferences.edit().putString(AppConstants.PICME_ID, mPicmeId).commit();
+    }
+    public String getPicmeId(){
+        return sharedPreferences.getString(AppConstants.PICME_ID,"");
+    }
+
+    public void setMId(String mid){
+        sharedPreferences.edit().putString(AppConstants.M_ID, mid).commit();
+    }
+    public String getMId(){
+        return sharedPreferences.getString(AppConstants.M_ID,"");
+    }
+
     public void setDeviceId(String deviceId) {
         sharedPreferences.edit().putString(AppConstants.DEVICE_ID, deviceId).commit();
     }
@@ -51,9 +65,11 @@ public class PreferenceData {
 
     public String getVhnId(){
         return sharedPreferences.getString(AppConstants.VHN_ID,"");
-    }  public String getVhnName(){
+    }
+    public String getVhnName(){
         return sharedPreferences.getString(AppConstants.VHN_NAME,"");
-    }  public String getVhnCode(){
+    }
+    public String getVhnCode(){
         return sharedPreferences.getString(AppConstants.VHN_CODE,"");
     }
 
@@ -63,4 +79,9 @@ public class PreferenceData {
     public String getTodayVisitCount(){
         return sharedPreferences.getString(AppConstants.TODAY_VISIT_COUNT,"");
     }
+
+    public void storeDid(String strDid) {
+        sharedPreferences.edit().putString(AppConstants.DELIVERY_ID,strDid).commit();
+    }
+
 }

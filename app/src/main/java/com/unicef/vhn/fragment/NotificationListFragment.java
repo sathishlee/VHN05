@@ -2,7 +2,6 @@ package com.unicef.vhn.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,9 +17,8 @@ import android.widget.TextView;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.NotificationPresenter;
 import com.unicef.vhn.R;
-import com.unicef.vhn.activity.VisitActivity;
 import com.unicef.vhn.adapter.NotificationAdapter;
-import com.unicef.vhn.interactor.NotificationListResponseModel;
+import com.unicef.vhn.model.NotificationListResponseModel;
 import com.unicef.vhn.view.NotificationViews;
 
 import org.json.JSONArray;

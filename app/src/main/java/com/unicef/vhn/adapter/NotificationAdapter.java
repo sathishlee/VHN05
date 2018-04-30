@@ -5,15 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.squareup.picasso.Picasso;
 import com.unicef.vhn.R;
-import com.unicef.vhn.interactor.NotificationListResponseModel;
-import com.unicef.vhn.model.NotificationModel;
+import com.unicef.vhn.model.NotificationListResponseModel;
 
 import java.util.List;
 
@@ -46,21 +43,21 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         final NotificationListResponseModel.Vhn_migrated_mothers movie = moviesList.get(position);
 
-holder.txt_flash_name.setText(movie.getMName());
-holder.txt_mig_name.setText(movie.getMName());
+        holder.txt_flash_name.setText(movie.getMName());
+        holder.txt_mig_name.setText(movie.getMName());
 
-holder.txt_flash_message.setText(movie.getSubject());
-holder.txt_mig_message.setText(movie.getSubject());
+        holder.txt_flash_message.setText(movie.getSubject());
+        holder.txt_mig_message.setText(movie.getSubject());
 
-holder.txt_flash_notify_time.setText(movie.getNoteStartDateTime());
-holder.txt_mig_notify_time.setText(movie.getNoteStartDateTime());
+        holder.txt_flash_notify_time.setText(movie.getNoteStartDateTime());
+        holder.txt_mig_notify_time.setText(movie.getNoteStartDateTime());
 
-holder.txt_flash_call.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        Toast.makeText(activity.getApplicationContext(),"make call"+movie.getMMotherMobile(),Toast.LENGTH_SHORT).show();
-    }
-});
+        holder.txt_flash_call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(activity.getApplicationContext(),"make call"+movie.getMMotherMobile(),Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -70,7 +67,8 @@ holder.txt_flash_call.setOnClickListener(new View.OnClickListener() {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView txt_flash_notify_time, txt_flash_message,txt_flash_name,txt_mig_notify_time, txt_mig_message,txt_mig_name,txt_flash_call;
+        public TextView txt_flash_notify_time, txt_flash_message,txt_flash_name,txt_mig_notify_time,
+                txt_mig_message,txt_mig_name,txt_flash_call;
 //        public ImageView imageView;
         public ViewHolder(View view) {
             super(view);

@@ -43,9 +43,6 @@
         <activity
             android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity
-            android:name=".activity.PNMothersListActivity"
-            android:theme="@style/AppTheme" />
         <!--
             <activity
             android:name=".model.ViewRecordActivity"
@@ -56,7 +53,7 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.VhnProfile"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme1" />
         <activity
             android:name=".activity.ImmunizationActivity"
             android:theme="@style/AppTheme" />
@@ -65,9 +62,6 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.MotherListActivity"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".activity.PNMotherVisitListDetailsActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.ImmunizationListActivity"
@@ -125,6 +119,10 @@
         <activity android:name=".activity.AlertActivity" />
         <activity android:name=".activity.VisitActivity" />
         <activity android:name=".activity.MotherMigration" />
+        <activity android:name=".activity.MothersPrimaryRecordsActivity"/>
+        <activity android:name=".activity.PNMotherDeliveryReportActivity"/>
+        <activity android:name=".activity.ChangePasswordActivity"/>
+        <activity android:name=".activity.ChangeLanguageActivity"/>
 
         <service android:name=".service.LocationMonitoringService" />
         <service android:name=".utiltiy.MyFirebaseInstanceIDService">
@@ -148,8 +146,8 @@
             android:value="@string/google_maps_key" />
 
         <receiver
-        android:name=".broadcastReceiver.ConnectivityReceiver"
-        android:enabled="true">
+            android:name=".broadcastReceiver.ConnectivityReceiver"
+            android:enabled="true">
         <intent-filter>
             <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
         </intent-filter>

@@ -65,12 +65,8 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
         startStep1();
         if (mAlreadyStartedService ) {
             if(!preferenceData.getLogin()) {
-
                 stopService(new Intent(this, LocationMonitoringService.class));
-
-
                 mAlreadyStartedService = false;
-                //Ends................................................
             }
         }
         if (preferenceData.getLogin()) {
@@ -107,10 +103,8 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
      * Step 1: Check Google Play services
      */
     private void startStep1() {
-
         //Check whether this user has installed Google play service which is being used by Location updates.
         if (isGooglePlayServicesAvailable()) {
-
             //Passing null to indicate that it is executing for the first time.
             startStep2(null);
 

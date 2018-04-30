@@ -1,4 +1,4 @@
-package com.unicef.vhn.interactor;
+package com.unicef.vhn.model;
 
 import java.util.List;
 

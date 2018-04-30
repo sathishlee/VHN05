@@ -112,7 +112,6 @@ TextView txt_mother_name,txt_picme_id,txt_mobile_number,txt_mage,txt_mlmpdate,tx
     @Override
     public void showLoginError(String message) {
         AppConstants.SELECTED_MID="0";
-
         Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
 
     }

@@ -1,10 +1,12 @@
 package com.unicef.vhn.activity;
 
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -57,6 +59,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import static android.R.attr.fraction;
+
 public class MotherLocationActivity extends FragmentActivity implements LocationViews, OnMapReadyCallback, View.OnClickListener {
 
     List<LocationRequestModel.Tracking> trackings;
@@ -73,23 +77,16 @@ public class MotherLocationActivity extends FragmentActivity implements Location
 
     LocationManager locationManager;
     android.location.LocationListener listener;
-
     PreferenceData preferenceData;
-
     private static final int overview = 0;
     private final int PLACE_AUTOCOMPLETE_REQUEST_CODE_FROM = 201;
     private final int PLACE_AUTOCOMPLETE_REQUEST_CODE_TO = 202;
     private String TAG = getClass().getSimpleName();
     private GoogleMap mMap;
-
-    private String GOOGLE_PLACES_API_KEY = "AIzaSyCnzEjpN8svPol7UhuEf-3XBQt4kC-dkOA";
-
+    private String GOOGLE_PLACES_API_KEY = "AIzaSyD789ejb86QhaIBRPovLCtjW_XrrDAKdto";
     private List<Marker> markers;
-
     TextView txt_username, txt_picme_id;
-
     String strLat,strLon, motherLatitude, motherLongitude, vhnLatitude, vhnLongitude;
-
     String strMotherloc, strVHNloc, strmAdd, strvAdd;
 
     @Override
@@ -117,8 +114,6 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         locationPresenter = new LocationPresenter(MotherLocationActivity.this, this);
         locationPresenter.getMotherLocatin(preferenceData.getVhnCode(),preferenceData.getVhnId(), AppConstants.SELECTED_MID);
 
-
-
         findViewById(R.id.get_directions).setOnClickListener(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -139,6 +134,7 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         mUiSettings.setZoomGesturesEnabled(true);
         mUiSettings.setTiltGesturesEnabled(true);
         mUiSettings.setRotateGesturesEnabled(true);
+        mUiSettings.setAllGesturesEnabled(true);
     }
 
 
@@ -169,8 +165,6 @@ public class MotherLocationActivity extends FragmentActivity implements Location
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-
-
 
             case R.id.get_directions:
 //                if (strmAdd.length() <= 0) {
@@ -224,6 +218,7 @@ public class MotherLocationActivity extends FragmentActivity implements Location
             addPolyline(directionsResult, mMap);
 //            addMarkersToMap(directionsResult, mMap);
             addMarkersToMap(directionsResult,mMap);
+
             positionCamera(directionsResult.routes[overview], mMap);
         }
     }
@@ -233,12 +228,14 @@ public class MotherLocationActivity extends FragmentActivity implements Location
     }
 
     private void addMarkersToMap(DirectionsResult directionsResult, GoogleMap mMap) {
-        Marker markerSrc = mMap.addMarker(new MarkerOptions().position(new LatLng(directionsResult.routes[overview].legs[overview].startLocation.lat, directionsResult.routes[overview].legs[overview].startLocation.lng)).title(directionsResult.routes[overview].legs[overview].startAddress));
-        Marker markerDes = mMap.addMarker(new MarkerOptions().position(new LatLng(directionsResult.routes[overview].legs[overview].endLocation.lat, directionsResult.routes[overview].legs[overview].endLocation.lng)).title(directionsResult.routes[overview].legs[overview].endAddress).snippet(getEndLocationTitle(directionsResult)));
+        final Marker markerSrc = mMap.addMarker(new MarkerOptions().position(new LatLng(directionsResult.routes[overview].legs[overview].startLocation.lat, directionsResult.routes[overview].legs[overview].startLocation.lng)).title(directionsResult.routes[overview].legs[overview].startAddress));
+        final Marker markerDes = mMap.addMarker(new MarkerOptions().position(new LatLng(directionsResult.routes[overview].legs[overview].endLocation.lat, directionsResult.routes[overview].legs[overview].endLocation.lng)).title(directionsResult.routes[overview].legs[overview].endAddress).snippet(getEndLocationTitle(directionsResult)));
         markers = new ArrayList<>();
         markers.add(markerSrc);
         markers.add(markerDes);
+
     }
+
 
     private void addMarkersToMaplatlng(String motherLatitude, String motherLongitude, String vhnLatitude, String vhnLongitude) {
         double mlat = Double.parseDouble(motherLatitude);
@@ -246,12 +243,11 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         double vlat = Double.parseDouble(vhnLatitude);
         double vlong = Double.parseDouble(vhnLongitude);
 
-        LatLng mlatlng = new LatLng(mlat,mlong);
+        final LatLng mlatlng = new LatLng(mlat,mlong);
         strLat = String.valueOf(mlatlng);
-
         Log.d("Mother Location--->",strLat);
-        LatLng vlatlng = new LatLng(vlat,vlong);
 
+        final LatLng vlatlng = new LatLng(vlat,vlong);
         strLon = String.valueOf(vlatlng);
         Log.d("VHN Location--->",strLon);
 
@@ -267,7 +263,6 @@ public class MotherLocationActivity extends FragmentActivity implements Location
 
         mothermarker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         vhnmarker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-
         // Add marker to map
         mMap.addMarker(mothermarker);
         mMap.addMarker(vhnmarker);
@@ -275,9 +270,7 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         Geocoder geocoder = new Geocoder(this, Locale.ENGLISH);
 
         try {
-
             List<Address> addresses = geocoder.getFromLocation(mlat,mlong,1);
-
             List<Address> addresses1 = geocoder.getFromLocation(vlat,vlong,1);
 
             if(addresses !=null){
@@ -301,7 +294,6 @@ public class MotherLocationActivity extends FragmentActivity implements Location
 
                 strvAdd = String.valueOf(vaddress+vcity+vstate);
             }
-
 //            if (addresses != null) {
 //                Address returnedAddress = addresses.get(0);
 //                StringBuilder strReturnedAddress = new StringBuilder("Mother Address:\n");
@@ -340,7 +332,6 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         mMap.animateCamera(cu);
 
     }
-
 
     private void addPolyline(DirectionsResult directionsResult, GoogleMap mMap) {
         mMap.clear();
@@ -475,9 +466,6 @@ public class MotherLocationActivity extends FragmentActivity implements Location
                 JSONObject mJsnobject_tracking = mJsnobject.getJSONObject("tracking");
                 txt_username.setText(mJsnobject_tracking.getString("mName"));
                 txt_picme_id.setText(mJsnobject_tracking.getString("mPicmeId"));
-
-
-
                 motherLatitude = mJsnobject_tracking.getString("mLatitude");
                 motherLongitude = mJsnobject_tracking.getString("mLongitude");
                 vhnLatitude = mJsnobject_tracking.getString("vLatitude");

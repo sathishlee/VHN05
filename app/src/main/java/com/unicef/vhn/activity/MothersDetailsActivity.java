@@ -2,6 +2,7 @@ package com.unicef.vhn.activity;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -19,11 +20,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
+import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
 
+import com.unicef.vhn.utiltiy.RoundedTransformation;
 import com.unicef.vhn.view.MotherListsViews;
 
 import org.json.JSONException;
@@ -33,8 +39,9 @@ import org.json.JSONObject;
 public class MothersDetailsActivity extends AppCompatActivity implements View.OnClickListener, MotherListsViews {
     TextView txt_mother_name,txt_picme_id,txt_mage,txt_risk_status,txt_gest_week,txt_weight,txt_lmp_date,txt_edd_date,txt_next_visit;
     String strMobileNo,strAltMobileNo;
-    String strLatitude,strLongitude;
-    ImageView img_call_1,img_call_2;
+    Context context;
+    String strLatitude,strLongitude, str_mPhoto;
+    ImageView img_call_1,img_call_2, cardview_image;
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
@@ -163,9 +170,9 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(MothersDetailsActivity.this, MainActivity.class);
+//        Intent intent = new Intent(MothersDetailsActivity.this, MainActivity.class);
         finish();
-        startActivity(intent);
+//        startActivity(intent);
 
         return super.onOptionsItemSelected(item);
     }
@@ -205,6 +212,20 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
                 txt_edd_date.setText(mJsnobject_tracking.getString("mEDD"));
                 strLatitude = mJsnobject_tracking.getString("mLatitude");
                strLongitude =mJsnobject_tracking.getString("mLongitude");
+
+                str_mPhoto = mJsnobject_tracking.getString("mPhoto");
+                Log.d("mphoto-->", Apiconstants.MOTHER_PHOTO_URL+str_mPhoto);
+
+                Picasso.with(context)
+                        .load(Apiconstants.MOTHER_PHOTO_URL+str_mPhoto)
+                        .placeholder(R.drawable.girl)
+                        .fit()
+                        .centerCrop()
+                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+                        .networkPolicy(NetworkPolicy.NO_CACHE)
+                        .transform(new RoundedTransformation(90,4))
+                        .error(R.drawable.girl)
+                        .into(cardview_image);
             }else{
                 Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
 

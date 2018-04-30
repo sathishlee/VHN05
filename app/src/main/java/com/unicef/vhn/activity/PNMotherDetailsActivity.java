@@ -2,6 +2,7 @@ package com.unicef.vhn.activity;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -21,10 +22,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
+import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.R;
+import com.unicef.vhn.utiltiy.RoundedTransformation;
 import com.unicef.vhn.view.MotherListsViews;
 
 import org.json.JSONException;
@@ -34,11 +40,11 @@ public class PNMotherDetailsActivity extends AppCompatActivity implements View.O
     LinearLayout ll_pn_mother_details;
     TextView txt_username, txt_picme_id, txt_mage, txt_risk,
             txt_date_of_delivery, txt_weight, txt_type_of_delivery, txt_maturity, txt_next_visit, txt_husb_name, txt_aww_name, txt_relationship, txt_aww_relationship;
-    ImageView img_call_1, img_call_2;
+    ImageView img_call_1, img_call_2, cardview_image;
     Button btn_view_location, btn_view_report;
-
+    Context context;
     String strMobileNo,strAltMobileNo;
-    String strLatitude,strLongitude;
+    String strLatitude,strLongitude, str_mPhoto;
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
@@ -86,7 +92,6 @@ public class PNMotherDetailsActivity extends AppCompatActivity implements View.O
         pnMotherListPresenter = new MotherListPresenter(PNMotherDetailsActivity.this,this);
         pnMotherListPresenter.getSelectedPNMother(AppConstants.SELECTED_MID);
 
-
         txt_username = (TextView) findViewById(R.id.txt_username);
         txt_picme_id = (TextView) findViewById(R.id.txt_picme_id);
         txt_mage = (TextView) findViewById(R.id.txt_age);
@@ -105,17 +110,15 @@ public class PNMotherDetailsActivity extends AppCompatActivity implements View.O
         img_call_2 = (ImageView) findViewById(R.id.img_call_2);
         btn_view_location = (Button) findViewById(R.id.btn_view_location);
         btn_view_report = (Button) findViewById(R.id.btn_view_report);
+        cardview_image = (ImageView) findViewById(R.id.cardview_image);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_view_location:
-
                 startActivity(new Intent(getApplicationContext(),MotherLocationActivity.class));
-
                 break;
-
             case R.id.btn_view_report: startActivity(new Intent(getApplicationContext(),PNViewReportsActivity.class));
                 break;
             case R.id.img_call_1:
@@ -221,9 +224,22 @@ public class PNMotherDetailsActivity extends AppCompatActivity implements View.O
                 txt_weight.setText(mJsnobject_tracking.getString("mWeight"));
                 txt_maturity.setText(mJsnobject_tracking.getString("meaturityDate"));
                 txt_next_visit.setText(mJsnobject_tracking.getString("NextVisit"));
-
                 strLatitude = mJsnobject_tracking.getString("mLatitude");
                 strLongitude =mJsnobject_tracking.getString("mLongitude");
+
+                str_mPhoto = mJsnobject_tracking.getString("mPhoto");
+                Log.d("mphoto-->", Apiconstants.MOTHER_PHOTO_URL+str_mPhoto);
+
+                Picasso.with(context)
+                        .load(Apiconstants.MOTHER_PHOTO_URL+str_mPhoto)
+                        .placeholder(R.drawable.girl)
+                        .fit()
+                        .centerCrop()
+                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+                        .networkPolicy(NetworkPolicy.NO_CACHE)
+                        .transform(new RoundedTransformation(90,4))
+                        .error(R.drawable.girl)
+                        .into(cardview_image);
             }
             else{
                 ll_pn_mother_details.setVisibility(View.GONE);

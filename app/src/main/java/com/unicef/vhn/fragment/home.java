@@ -2,9 +2,11 @@ package com.unicef.vhn.fragment;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.HomePresenter;
 import com.unicef.vhn.Presenter.MotherListPresenter;
@@ -33,8 +38,11 @@ import com.unicef.vhn.activity.PNHBNCDueListActivity;
 import com.unicef.vhn.activity.PNHBNCListActivity;
 import com.unicef.vhn.activity.SosAlertListActivity;
 import com.unicef.vhn.activity.TreamPreTreamListActivity;
+import com.unicef.vhn.activity.VhnProfile;
+import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.utiltiy.CheckNetwork;
+import com.unicef.vhn.utiltiy.RoundedTransformation;
 import com.unicef.vhn.view.MotherListsViews;
 
 import org.json.JSONException;
@@ -42,7 +50,7 @@ import org.json.JSONObject;
 
 
 public class home extends Fragment implements MotherListsViews {
-    ImageView img_mother_count, img_high_risk_count, img_infant_count;
+    ImageView img_mother_count, img_high_risk_count, img_infant_count, userImageProfile;
     TextView txt_mother_count, txt_high_risk_count, txt_infants_count, txt_sos_count;
     Button but_an_mother_total_count, but_an_mother_high_risk_count, but_an_mother_pn_hbnc_totlal_count, but_an_mother_pn_hbnc_term_preterm_count;
     TextView txt_antt_1_due, txt_antt_2_due, txt_pnhbnc_due;
@@ -55,6 +63,11 @@ public class home extends Fragment implements MotherListsViews {
     PreferenceData preferenceData;
     LinearLayout ll_sos_view;
     CheckNetwork checkNetwork;
+    CardView profile;
+    String str_mPhoto;
+
+    Context context;
+
 
     public static home newInstance() {
         home fragment = new home();
@@ -72,6 +85,18 @@ public class home extends Fragment implements MotherListsViews {
         checkInterNetConnection();
         initUI(view);
 
+        profile = (CardView) view.findViewById(R.id.user_profile_photo);
+
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), VhnProfile.class);
+                getActivity().finish();
+                startActivity(intent);
+            }
+        });
+
+        userImageProfile = (ImageView) view.findViewById(R.id.userImageProfile);
 
         img_mother_count = (ImageView) view.findViewById(R.id.img_mother_count);
         img_mother_count.setOnClickListener(new View.OnClickListener() {
@@ -203,6 +228,8 @@ public class home extends Fragment implements MotherListsViews {
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(getActivity());
         homePresenter = new HomePresenter(getActivity(), this);
+        context = getActivity();
+
         if (checkNetwork.isNetworkAvailable()) {
             homePresenter.getDashBoard(preferenceData.getVhnCode(), preferenceData.getVhnId());
         } else {
@@ -269,13 +296,13 @@ public class home extends Fragment implements MotherListsViews {
                 txt_high_risk_count.setText(mJsnobject.getString("riskMothersCount"));
                 txt_infants_count.setText(mJsnobject.getString("infantCount"));
                 txt_sos_count.setText(mJsnobject.getString("sosCount"));
-  if (mJsnobject.getString("sosCount").equalsIgnoreCase("0")){
+                if (mJsnobject.getString("sosCount").equalsIgnoreCase("0")){
 
-        }else {
-            mFlipper.startFlipping();
-            mFlipper.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
-            mFlipper.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
-        }
+                }else {
+                    mFlipper.startFlipping();
+                    mFlipper.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+                    mFlipper.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
+                }
                 txt_antt_1_due.setText(mJsnobject.getString("ANTT1"));
                 txt_antt_2_due.setText(mJsnobject.getString("ANTT2"));
                 txt_pnhbnc_due.setText(mJsnobject.getString("pnhbncCount"));
@@ -295,6 +322,21 @@ public class home extends Fragment implements MotherListsViews {
                 txt_hsc.setText(mJsnobject_phcDetails.getString("facilityName"));
                 txt_block.setText(mJsnobject_phcDetails.getString("block"));
                 txt_address.setText(mJsnobject_phcDetails.getString("District"));
+
+                str_mPhoto = mJsnobject_phcDetails.getString("vphoto");
+                Log.d("vphoto-->",Apiconstants.PHOTO_URL+str_mPhoto);
+
+                Picasso.with(context)
+                        .load(Apiconstants.PHOTO_URL+str_mPhoto)
+                        .placeholder(R.drawable.ic_nurse)
+                        .fit()
+                        .centerCrop()
+                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+                        .networkPolicy(NetworkPolicy.NO_CACHE)
+                        .transform(new RoundedTransformation(90,4))
+                        .error(R.drawable.ic_nurse)
+                        .into(userImageProfile);
+
             }
         } catch (JSONException e) {
             e.printStackTrace();

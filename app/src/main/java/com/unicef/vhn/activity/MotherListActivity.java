@@ -19,10 +19,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 import com.unicef.vhn.Interface.MakeCallInterface;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
@@ -31,6 +35,7 @@ import com.unicef.vhn.adapter.MotherListAdapter;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.PNMotherListResponse;
+import com.unicef.vhn.utiltiy.RoundedTransformation;
 import com.unicef.vhn.view.MotherListsViews;
 
 import org.json.JSONArray;
@@ -56,28 +61,68 @@ public class MotherListActivity extends AppCompatActivity implements MotherLists
     LinearLayout ll_filter;
     final Context context = this;
     TextView txt_filter;
+    String str_mPhoto;
+    ImageView cardview_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mothers_list_activity);
+        showActionBar();
+        initUI();
+    }
 
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-
-        actionBar.setTitle(AppConstants.MOTHER_LIST_TITLE);
-
-        actionBar.setHomeButtonEnabled(true);
-
+    private void initUI() {
         txt_filter = (TextView) findViewById(R.id.txt_filter);
+        cardview_image = (ImageView) findViewById(R.id.cardview_image);
+        mother_recycler_view = (RecyclerView) findViewById(R.id.mother_recycler_view);
+        txt_no_records_found = (TextView) findViewById(R.id.txt_no_records_found);
+        pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
+        pDialog.setMessage("Please Wait ...");
+        preferenceData =new PreferenceData(this);
+        pnMotherListPresenter = new MotherListPresenter(MotherListActivity.this,this);
+        mResult = new ArrayList<>();
+        mother_recycler_view.setVisibility(View.GONE);
+        txt_no_records_found.setVisibility(View.GONE);
 
+        if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("mother_count")) {
+            pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_LIST,preferenceData.getVhnCode(),preferenceData.getVhnId());
+        }
+        else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("risk_count")) {
+            pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_MOTHERS_RISK,preferenceData.getVhnCode(),preferenceData.getVhnId());
+
+        }else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("sos_count")) {
+            pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_SOS_MOTHER_LIST,preferenceData.getVhnCode(),preferenceData.getVhnId());
+
+        }else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("an_mother_total_count")) {
+            pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_AN_MOTHERS_DETAILS,preferenceData.getVhnCode(),preferenceData.getVhnId());
+
+        }else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("high_risk_count")) {
+            pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_AN_RISK_MOTHERS_DETAILS, preferenceData.getVhnCode(), preferenceData.getVhnId());
+        }
+        /*else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("today_visit")) {
+            pnMotherListPresenter.getPNMotherList(Apiconstants.CURRENT_VISIT_LIST,preferenceData.getVhnCode(),preferenceData.getVhnId());
+
+        }*/else{
+            Log.e(MotherListActivity.class.getSimpleName(),"no url");
+        }
+        if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("an_mother_total_count")) {
+            mAdapter = new MotherListAdapter(mResult, MotherListActivity.this, "AN",this);
+        }if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("high_risk_count")) {
+            mAdapter = new MotherListAdapter(mResult, MotherListActivity.this, "Risk",this);
+        }else{
+            mAdapter = new MotherListAdapter(mResult, MotherListActivity.this, "",this);
+        }
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MotherListActivity.this);
+        mother_recycler_view.setLayoutManager(mLayoutManager);
+        mother_recycler_view.setItemAnimator(new DefaultItemAnimator());
+        mother_recycler_view.setAdapter(mAdapter);
         txt_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.dialog_fragment);
-//                dialog.setTitle("Title...");
-
-
                 Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
                 btn_cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -88,57 +133,15 @@ public class MotherListActivity extends AppCompatActivity implements MotherLists
                 dialog.show();
             }
         });
-
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        pDialog = new ProgressDialog(this);
-        pDialog.setCancelable(false);
-        pDialog.setMessage("Please Wait ...");
-        preferenceData =new PreferenceData(this);
-        pnMotherListPresenter = new MotherListPresenter(MotherListActivity.this,this);
-//        pnMotherListPresenter.getPNMotherList("V10001","1");
-        mResult = new ArrayList<>();
-        mother_recycler_view = (RecyclerView) findViewById(R.id.mother_recycler_view);
-        txt_no_records_found = (TextView) findViewById(R.id.txt_no_records_found);
-        mother_recycler_view.setVisibility(View.GONE);
-        txt_no_records_found.setVisibility(View.GONE);
-if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("mother_count")) {
-    pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_LIST,preferenceData.getVhnCode(),preferenceData.getVhnId());
-//    pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_TRACKING,preferenceData.getVhnCode(),preferenceData.getVhnId());
-
-}
-else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("risk_count")) {
-    pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_MOTHERS_RISK,preferenceData.getVhnCode(),preferenceData.getVhnId());
-
-}else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("sos_count")) {
-    pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_SOS_MOTHER_LIST,preferenceData.getVhnCode(),preferenceData.getVhnId());
-
-}else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("an_mother_total_count")) {
-    pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_AN_MOTHERS_DETAILS,preferenceData.getVhnCode(),preferenceData.getVhnId());
-
-}else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("high_risk_count")) {
-    pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_AN_RISK_MOTHERS_DETAILS, preferenceData.getVhnCode(), preferenceData.getVhnId());
-}
-/*else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("today_visit")) {
-    pnMotherListPresenter.getPNMotherList(Apiconstants.CURRENT_VISIT_LIST,preferenceData.getVhnCode(),preferenceData.getVhnId());
-
-}*/else{
-    Log.e(MotherListActivity.class.getSimpleName(),"no url");
-}
-        if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("an_mother_total_count")) {
-            mAdapter = new MotherListAdapter(mResult, MotherListActivity.this, "AN",this);
-        }if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("high_risk_count")) {
-            mAdapter = new MotherListAdapter(mResult, MotherListActivity.this, "Risk",this);
-        }else{
-            mAdapter = new MotherListAdapter(mResult, MotherListActivity.this, "",this);
-
-        }
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MotherListActivity.this);
-        mother_recycler_view.setLayoutManager(mLayoutManager);
-        mother_recycler_view.setItemAnimator(new DefaultItemAnimator());
-        mother_recycler_view.setAdapter(mAdapter);
-
-
     }
+
+    private void showActionBar() {
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(AppConstants.MOTHER_LIST_TITLE);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = new Intent(MotherListActivity.this, MainActivity.class);
@@ -159,9 +162,7 @@ else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("risk_count")) {
 
     @Override
     public void showLoginSuccess(String response) {
-
         Log.e(MotherListActivity.class.getSimpleName(), "Response success" + response);
-
         try {
             JSONObject mJsnobject = new JSONObject(response);
             JSONArray jsonArray = mJsnobject.getJSONArray("vhnAN_Mothers_List");
@@ -176,9 +177,25 @@ else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("risk_count")) {
                     mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
                     mresponseResult.setVhnId(jsonObject.getString("vhnId"));
                     mresponseResult.setmMotherMobile(jsonObject.getString("mMotherMobile"));
-//                    mresponseResult.setMotherType(jsonObject.getString("motherType"));
-//                mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
-//                mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
+                    mresponseResult.setMotherType(jsonObject.getString("motherType"));
+                    mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
+                    mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
+                    mresponseResult.setmPhoto(jsonObject.getString("mPhoto"));
+
+                    //Photo Display
+                    /*str_mPhoto = jsonObject.getString("mPhoto");
+                    Log.d("mphoto-->",Apiconstants.PHOTO_URL+str_mPhoto);
+                    Picasso.with(context)
+                            .load(Apiconstants.PHOTO_URL+str_mPhoto)
+                            .placeholder(R.drawable.girl)
+                            .fit()
+                            .centerCrop()
+                            .memoryPolicy(MemoryPolicy.NO_CACHE)
+                            .networkPolicy(NetworkPolicy.NO_CACHE)
+                            .transform(new RoundedTransformation(90,4))
+                            .error(R.drawable.girl)
+                            .into(cardview_image);*/
+
                     mResult.add(mresponseResult);
                     mAdapter.notifyDataSetChanged();
                 }

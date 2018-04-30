@@ -40,7 +40,7 @@ public class MothersViewRecordActivity extends AppCompatActivity {
         btn_primary_report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),MotherLocationActivity.class));
+                startActivity(new Intent(getApplicationContext(),MothersPrimaryRecordsActivity.class));
             }
         });
         btn_view_report.setOnClickListener(new View.OnClickListener() {
