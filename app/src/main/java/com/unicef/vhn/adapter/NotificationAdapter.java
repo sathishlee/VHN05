@@ -26,7 +26,6 @@ import com.unicef.vhn.activity.MotherLocationActivity;
 import com.unicef.vhn.activity.MothersDetailsActivity;
 import com.unicef.vhn.activity.PNMotherDetailsActivity;
 import com.unicef.vhn.constant.AppConstants;
-import com.unicef.vhn.interactor.NotificationListResponseModel;
 import com.unicef.vhn.model.NotificationListResponseModel;
 
 import java.text.ParseException;
