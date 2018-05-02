@@ -114,6 +114,7 @@ public class MotherListActivity extends AppCompatActivity implements MotherLists
         }else{
             mAdapter = new MotherListAdapter(mResult, MotherListActivity.this, "",this);
         }
+
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MotherListActivity.this);
         mother_recycler_view.setLayoutManager(mLayoutManager);
         mother_recycler_view.setItemAnimator(new DefaultItemAnimator());

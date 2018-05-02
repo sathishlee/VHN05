@@ -8,6 +8,7 @@ import java.util.List;
 
 public class NotificationListResponseModel {
 
+
     private List<Vhn_migrated_mothers> vhn_migrated_mothers;
     private String message;
     private String status;

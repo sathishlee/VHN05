@@ -17,8 +17,12 @@ import android.widget.TextView;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.NotificationPresenter;
 import com.unicef.vhn.R;
+import com.unicef.vhn.activity.MainActivity;
+import com.unicef.vhn.activity.VisitActivity;
 import com.unicef.vhn.adapter.NotificationAdapter;
 import com.unicef.vhn.model.NotificationListResponseModel;
+import com.unicef.vhn.constant.AppConstants;
+import com.unicef.vhn.interactor.NotificationListResponseModel;
 import com.unicef.vhn.view.NotificationViews;
 
 import org.json.JSONArray;
@@ -69,25 +73,27 @@ public class NotificationListFragment extends Fragment implements NotificationVi
         pDialog = new ProgressDialog(getActivity());
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
+        preferenceData = new PreferenceData(getActivity());
+        notificationPresenter = new NotificationPresenter(getActivity(), this);
+        notificationPresenter.getNotificationList(preferenceData.getVhnCode(),preferenceData.getVhnId());
+        notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(),preferenceData.getVhnId());
+
         txt_today_visit_count=view.findViewById(R.id.txt_today_visit_count);
         txt_count_today_visit=view.findViewById(R.id.txt_count_today_visit);
         ll_go_visit_list = view.findViewById(R.id.ll_go_visit_list);
 //        if (preferenceData.getTodayVisitCount().equalsIgnoreCase("0")) {
-//
 //            txt_today_visit_count.setText(preferenceData.getTodayVisitCount());
 //            txt_count_today_visit.setText(preferenceData.getTodayVisitCount()+" Mothers Visiting Today");
 //        }
-      /*  ll_go_visit_list.setOnClickListener(new View.OnClickListener() {
+        ll_go_visit_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), VisitActivity.class));
             }
-        });*/
+        });
         mRecyclerView = view.findViewById(R.id.recycler_view);
 //        mRecyclerView.setHasFixedSize(true);
-        preferenceData = new PreferenceData(getActivity());
-        notificationPresenter = new NotificationPresenter(getActivity(), this);
-        notificationPresenter.getNotificationList(preferenceData.getVhnCode(),preferenceData.getVhnId());
+
 
         mRecyclerView = view. findViewById(R.id.notification_recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -140,10 +146,14 @@ public class NotificationListFragment extends Fragment implements NotificationVi
             JSONObject jsonObject = new JSONObject(response);
             String status = jsonObject.getString("status");
             String msg = jsonObject.getString("message");
-            movie = new NotificationListResponseModel.Vhn_migrated_mothers();
             if (status.equalsIgnoreCase("1")) {
+
                 JSONArray jsonArray = jsonObject.getJSONArray("vhn_Mother_notification");
+                Log.d(NotificationListFragment.class.getSimpleName(), "Notification count" + jsonArray.length());
+
                 for (int i = 0; i < jsonArray.length(); i++) {
+                    movie = new NotificationListResponseModel.Vhn_migrated_mothers();
+
                     JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                     movie.setMPicmeId(jsonObject1.getString("mPicmeId"));
                     movie.setMName(jsonObject1.getString("mName"));
@@ -151,15 +161,17 @@ public class NotificationListFragment extends Fragment implements NotificationVi
                     movie.setVhnId(jsonObject1.getString("vhnId"));
                     movie.setSubject(jsonObject1.getString("subject"));
                     movie.setMMotherMobile(jsonObject1.getString("mMotherMobile"));
+                    movie.setClickHeremId(jsonObject1.getString("clickHeremId"));
                     movie.setMigratedmId(jsonObject1.getString("migratedmId"));
                     movie.setNoteId(jsonObject1.getString("noteId"));
                     movie.setNoteStartDateTime(jsonObject1.getString("noteStartDateTime"));
                     movie.setMtype(jsonObject1.getString("mtype"));
+                    Log.d(NotificationListFragment.class.getSimpleName(), "Notification details" +i+movie);
 
                     moviesList.add(movie);
 
+                    mAdapter.notifyDataSetChanged();
                 }
-//                mAdapter.notifyDataSetChanged();
             } else {
                 Log.d(NotificationListFragment.class.getSimpleName(), "Notification messsage-->" + msg);
             }
@@ -173,6 +185,36 @@ public class NotificationListFragment extends Fragment implements NotificationVi
     @Override
     public void NotificationResponseError(String response) {
         Log.d(NotificationListFragment.class.getSimpleName(), "Notification List Error response" + response);
+
+    }
+
+    @Override
+    public void TodayVisitResponseSuccess(String response) {
+
+
+        Log.d(MainActivity.class.getSimpleName(), "Notification count response success" + response);
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            String status = jsonObject.getString("status");
+            String msg = jsonObject.getString("message");
+            String strTodayVisitCount = jsonObject.getString("vhn_today_visit_list");
+            if (status.equalsIgnoreCase("1")) {
+//                preferenceData.setTodayVisitCount(strTodayVisitCount);
+            txt_today_visit_count.setText(strTodayVisitCount);
+            txt_count_today_visit.setText(strTodayVisitCount+" Mothers Visiting Today");
+
+                Log.d(MainActivity.class.getSimpleName(), "Today Visit Count-->" + strTodayVisitCount);
+
+            } else {
+                Log.d(MainActivity.class.getSimpleName(), "Today Visit messsage-->" + msg);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void TodayVisitResponseError(String response) {
 
     }
 

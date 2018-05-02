@@ -215,6 +215,7 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.today_visit) {
             Intent i = new Intent(getApplicationContext(),VisitActivity.class);
             startActivity(i);
+
         }
         else if (id == R.id.migration_mother) {
             Intent i = new Intent(getApplicationContext(),MotherMigration.class);
@@ -364,6 +365,16 @@ pDialog.dismiss();
 
     @Override
     public void NotificationResponseError(String response) {
+
+    }
+
+    @Override
+    public void TodayVisitResponseSuccess(String response) {
+
+    }
+
+    @Override
+    public void TodayVisitResponseError(String response) {
 
     }
 }

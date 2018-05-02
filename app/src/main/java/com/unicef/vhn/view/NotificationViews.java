@@ -9,4 +9,7 @@ public interface NotificationViews {
     void hideProgress();
     void NotificationResponseSuccess(String response);
     void NotificationResponseError(String response);
+
+    void TodayVisitResponseSuccess(String response);
+    void TodayVisitResponseError(String response);
 }
