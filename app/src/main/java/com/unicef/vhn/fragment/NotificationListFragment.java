@@ -103,32 +103,6 @@ public class NotificationListFragment extends Fragment implements NotificationVi
         return view;
     }
 
-    private void prepareMovieData() {/*
-        movie = new NotificationModel("PicMe Id:1001", "Message Deatils", "02/05/2018",R.drawable.ic_mother);
-        moviesList.add(movie);
-
-        movie = new NotificationModel("PNH", "Message Deatils", "02/05/2018",R.drawable.ic_hospital);
-        moviesList.add(movie);
-
-        movie = new NotificationModel("PicMe Id:1003", "Message Deatils", "02/05/2018",R.drawable.ic_mother);
-        moviesList.add(movie);
-
-        movie = new NotificationModel("HSC", "Message Deatils", "02/05/2018",R.drawable.ic_hospital);
-
-        movie = new NotificationModel("PicMe Id:1005", "Message Deatils", "02/05/2018",R.drawable.ic_mother);
-        moviesList.add(movie);
-
-        movie = new NotificationModel("HSC", "Message Deatils", "02/05/2018",R.drawable.ic_hospital);
-        moviesList.add(movie);
-
-        movie = new NotificationModel("PicMe Id:1007", "Message Deatils", "02/05/2018",R.drawable.ic_mother);
-        moviesList.add(movie);
-
-        movie = new NotificationModel("PNH", "Message Deatils", "02/05/2018",R.drawable.ic_hospital);
-        moviesList.add(movie);
-
-        mAdapter.notifyDataSetChanged();*/
-    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -140,9 +114,6 @@ public class NotificationListFragment extends Fragment implements NotificationVi
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
-
-
     }
 
     @Override
@@ -164,8 +135,6 @@ public class NotificationListFragment extends Fragment implements NotificationVi
     @Override
     public void NotificationResponseSuccess(String response) {
 
-        Log.d(NotificationListFragment.class.getSimpleName(), "Notification List Success response" + response);
-
         Log.d(NotificationListFragment.class.getSimpleName(), "Notification count response success" + response);
         try {
             JSONObject jsonObject = new JSONObject(response);
@@ -173,7 +142,7 @@ public class NotificationListFragment extends Fragment implements NotificationVi
             String msg = jsonObject.getString("message");
             movie = new NotificationListResponseModel.Vhn_migrated_mothers();
             if (status.equalsIgnoreCase("1")) {
-                JSONArray jsonArray = jsonObject.getJSONArray("vhn_migrated_mothers");
+                JSONArray jsonArray = jsonObject.getJSONArray("vhn_Mother_notification");
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                     movie.setMPicmeId(jsonObject1.getString("mPicmeId"));

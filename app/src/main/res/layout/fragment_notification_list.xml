@@ -7,7 +7,7 @@
 
     <include layout="@layout/item_notification_visit"/>
 
- <!--   <include layout="@layout/item_notification_migration"/>
+    <!--<include layout="@layout/item_notification_migration"/>
 
     <include layout="@layout/item_notification_mother_prblm"/>-->
 

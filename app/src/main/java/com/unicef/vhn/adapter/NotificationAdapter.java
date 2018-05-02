@@ -55,7 +55,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.txt_flash_call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(activity.getApplicationContext(),"make call"+movie.getMMotherMobile(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity.getApplicationContext(),"make call"+ movie.getMMotherMobile(),Toast.LENGTH_SHORT).show();
             }
         });
     }

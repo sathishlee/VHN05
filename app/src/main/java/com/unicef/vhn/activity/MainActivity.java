@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -44,6 +45,9 @@ public class MainActivity extends AppCompatActivity
     ProgressDialog pDialog;
     PreferenceData preferenceData;
     NotificationPresenter notificationPresenter;
+    TextView notification_count;
+    String strTodayVisitCount;
+    int mCartItemCount = 10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +75,6 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
@@ -122,8 +125,38 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(),preferenceData.getVhnId());
         getMenuInflater().inflate(R.menu.main, menu);
+        final MenuItem menuItem = menu.findItem(R.id.action_notification);
+        MenuItemCompat.setActionView(menuItem, R.layout.notification_count);
+        View view = MenuItemCompat.getActionView(menuItem);
+        notification_count = (TextView) view.findViewById(R.id.notification_count);
+        notification_count.setText(String.valueOf(strTodayVisitCount));
+        setupNotiCount();
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(menuItem);
+            }
+        });
+
         return true;
+    }
+
+    private void setupNotiCount() {
+        if(notification_count != null){
+            if(mCartItemCount == 0){
+                if (notification_count.getVisibility() != View.GONE){
+                    notification_count.setVisibility(View.GONE);
+                }
+            }else{
+                notification_count.setText(String.valueOf(strTodayVisitCount));
+                if (notification_count.getVisibility() != View.VISIBLE){
+                    notification_count.setVisibility(View.VISIBLE);
+                }
+            }
+        }
     }
 
     @Override
@@ -132,7 +165,7 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.action_notification:
 //                Toast.makeText(getApplicationContext(),"Notification Clicked", Toast.LENGTH_LONG).show();
-                notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(),preferenceData.getVhnId());
+                notificationPresenter.getNotificationList(preferenceData.getVhnCode(),preferenceData.getVhnId());
                 android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content,
                         NotificationListFragment.newInstance()).commit();
@@ -217,7 +250,6 @@ public class MainActivity extends AppCompatActivity
                         @Override
                         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                             selectFragment(item);
-
                             return false;
                         }
                     });
@@ -315,9 +347,11 @@ pDialog.dismiss();
             JSONObject jsonObject = new JSONObject(response);
             String status = jsonObject.getString("status");
             String msg = jsonObject.getString("message");
-            String strTodayVisitCount = jsonObject.getString("vhn_today_visit_list");
+            strTodayVisitCount = jsonObject.getString("notificationCount");
+
             if (status.equalsIgnoreCase("1")) {
                 preferenceData.setTodayVisitCount(strTodayVisitCount);
+                notification_count.setText(jsonObject.getString("notificationCount"));
                 Log.d(MainActivity.class.getSimpleName(), "Notification Count-->" + strTodayVisitCount);
 
             } else {

@@ -4,7 +4,8 @@
 
     <item android:id="@+id/action_notification"
         android:icon="@drawable/notifications_bell"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
+        android:actionLayout="@layout/notification_count"
         android:title="Notification"/>
 
     <item android:id="@+id/action_help"
