@@ -56,7 +56,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
 
     }
-
+//ll
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
