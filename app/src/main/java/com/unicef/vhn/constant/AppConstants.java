@@ -37,6 +37,7 @@ public class AppConstants {
     public static final String EXTRA_LONGITUDE = "80.2824802";
 
     public static final String TODAY_VISIT_COUNT = "0";
+    public static final String NOTIFICATION_COUNT = "0";
 
 
 

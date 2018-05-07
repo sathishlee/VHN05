@@ -32,24 +32,24 @@ public class NotificationPresenter implements NotificationInteractor {
     }
 
     @Override
-    public void getNotificationCount(final String mid) {
+    public void getNotificationCount(final String vhnId) {
 
         String url = Apiconstants.BASE_URL + Apiconstants.POST_NOTIFICATION_COUNT;
         Log.d("Url--->", url);
-        Log.d("mid--->", mid);
+        Log.d("mid--->", vhnId);
         notificationViews.showProgress();
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 notificationViews.hideProgress();
-                notificationViews.NotificationResponseSuccess(String.valueOf(response));
+                notificationViews.NotificationCountSuccess(String.valueOf(response));
             }
         },new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 notificationViews.hideProgress();
-                notificationViews.NotificationResponseError(error.toString());
+                notificationViews.NotificationCountError(error.toString());
             }
         }){
             @Override
@@ -68,7 +68,7 @@ public class NotificationPresenter implements NotificationInteractor {
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("mid",mid);
+                params.put("vhnId",vhnId);
 
                 Log.d("params--->",params.toString());
 
@@ -126,7 +126,7 @@ public class NotificationPresenter implements NotificationInteractor {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("vhnId",vhnId);
-                params.put("vhnCode",vhnCode);
+//                params.put("vhnCode",vhnCode);
 
                 Log.d("params--->",params.toString());
 

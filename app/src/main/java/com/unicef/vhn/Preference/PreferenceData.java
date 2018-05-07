@@ -75,9 +75,13 @@ public class PreferenceData {
 
     public void setTodayVisitCount(String strTodayVisitCount) {
         sharedPreferences.edit().putString(AppConstants.TODAY_VISIT_COUNT, strTodayVisitCount).commit();
+    }   public void setNotificationCount(String strTodayVisitCount) {
+        sharedPreferences.edit().putString(AppConstants.NOTIFICATION_COUNT, strTodayVisitCount).commit();
     }
     public String getTodayVisitCount(){
         return sharedPreferences.getString(AppConstants.TODAY_VISIT_COUNT,"");
+    }public String getNotificationCount(){
+        return sharedPreferences.getString(AppConstants.NOTIFICATION_COUNT,"");
     }
 
     public void storeDid(String strDid) {

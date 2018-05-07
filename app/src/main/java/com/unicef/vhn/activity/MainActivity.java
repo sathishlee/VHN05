@@ -39,6 +39,9 @@ import com.unicef.vhn.view.NotificationViews;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ConnectivityReceiver.ConnectivityReceiverListener, NotificationViews {
     CheckNetwork checkNetwork;
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity
     PreferenceData preferenceData;
     NotificationPresenter notificationPresenter;
     TextView notification_count;
-    String strTodayVisitCount;
+    String strTodayVisitCount="0";
     int mCartItemCount = 10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,14 +64,25 @@ public class MainActivity extends AppCompatActivity
         pDialog.setMessage("Please Wait ...");
         preferenceData =new PreferenceData(this);
         notificationPresenter =new NotificationPresenter(this,this);
-/*if (checkNetwork.isNetworkAvailable()){
-    Log.w(MainActivity.class.getSimpleName(),"Is"+checkNetwork.isNetworkAvailable());
-}else{
-    Log.w(MainActivity.class.getSimpleName(),"Is"+checkNetwork.isNetworkAvailable());
-    startActivity(new Intent( getApplicationContext(),NoInternetConnectionActivity.class));
-}*/
-        // Manually checking internet connection
-        checkConnection();
+        notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(),preferenceData.getVhnId());
+
+        // every 10 minut notification count api call
+        Timer timer = new Timer ();
+        TimerTask hourlyTask = new TimerTask () {
+            @Override
+            public void run () {
+                // your code here...
+                if (checkNetwork.isNetworkAvailable()){
+                    notificationPresenter.getNotificationCount(preferenceData.getVhnId());
+                }else{
+                    notification_count.setText(preferenceData.getNotificationCount());
+
+                }
+            }
+        };
+
+// schedule the task to run starting now and then every hour...
+        timer.schedule (hourlyTask, 0l, 500*60*60);   // 1000*10*60 every 10 minut
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -83,34 +97,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void checkConnection() {
-        boolean isConnected = ConnectivityReceiver.isConnected();
-        showSnack(isConnected);
-    }
 
-    private void showSnack(boolean isConnected) {
-        String message;
-        int color;
-        if (isConnected) {
-            message = "Good! Connected to Internet";
-            Log.v("MAIN IS INTERNET",message);
-
-            color = Color.WHITE;
-        } else {
-            message = "Sorry! Not connected to internet";
-            Log.v("MAIN IS INTERNET",message);
-
-            color = Color.RED;
-        }
-
-        Snackbar snackbar = Snackbar
-                .make(findViewById(R.id.fab), message, Snackbar.LENGTH_LONG);
-
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(color);
-        snackbar.show();
-    }
 
     @Override
     public void onBackPressed() {
@@ -125,13 +112,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(),preferenceData.getVhnId());
+//        notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(),preferenceData.getVhnId());
         getMenuInflater().inflate(R.menu.main, menu);
         final MenuItem menuItem = menu.findItem(R.id.action_notification);
         MenuItemCompat.setActionView(menuItem, R.layout.notification_count);
         View view = MenuItemCompat.getActionView(menuItem);
         notification_count = (TextView) view.findViewById(R.id.notification_count);
-        notification_count.setText(String.valueOf(strTodayVisitCount));
+//        notification_count.setText(String.valueOf(strTodayVisitCount));
         setupNotiCount();
 
         view.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +138,7 @@ public class MainActivity extends AppCompatActivity
                     notification_count.setVisibility(View.GONE);
                 }
             }else{
-                notification_count.setText(String.valueOf(strTodayVisitCount));
+//                notification_count.setText(String.valueOf(strTodayVisitCount));
                 if (notification_count.getVisibility() != View.VISIBLE){
                     notification_count.setVisibility(View.VISIBLE);
                 }
@@ -321,7 +308,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onNetworkConnectionChanged(boolean isConnected)
     {
-        showSnack(isConnected);
+
     }
 
     @Override
@@ -341,17 +328,57 @@ pDialog.dismiss();
     }
 
     @Override
-    public void NotificationResponseSuccess(String response) {
+    public void NotificationResponseSuccess(String response) {/*
 
         Log.d(MainActivity.class.getSimpleName(), "Notification count response success" + response);
         try {
             JSONObject jsonObject = new JSONObject(response);
             String status = jsonObject.getString("status");
             String msg = jsonObject.getString("message");
-            strTodayVisitCount = jsonObject.getString("notificationCount");
+//            strTodayVisitCount = jsonObject.getString("notificationCount");
 
             if (status.equalsIgnoreCase("1")) {
-                preferenceData.setTodayVisitCount(strTodayVisitCount);
+//                preferenceData.setTodayVisitCount(strTodayVisitCount);
+//                notification_count.setText(jsonObject.getString("notificationCount"));
+//                Log.d(MainActivity.class.getSimpleName(), "Notification Count-->" + strTodayVisitCount);
+
+            } else {
+                Log.d(MainActivity.class.getSimpleName(), "Notification messsage-->" + msg);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    */}
+
+    @Override
+    public void NotificationResponseError(String response) {
+
+    }
+
+    @Override
+    public void TodayVisitResponseSuccess(String response) {
+    }
+
+    @Override
+    public void TodayVisitResponseError(String response) {
+
+    }
+
+    @Override
+    public void NotificationCountSuccess(String response) {
+
+        Log.d(MainActivity.class.getSimpleName(), "Notification count response success" + response);
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            String status = jsonObject.getString("status");
+            String msg = jsonObject.getString("message");
+//            strTodayVisitCount = jsonObject.getString("notificationCount");
+
+            if (status.equalsIgnoreCase("1")) {
+                strTodayVisitCount = jsonObject.getString("notificationCount");
+
+                preferenceData.setNotificationCount(strTodayVisitCount);
+
                 notification_count.setText(jsonObject.getString("notificationCount"));
                 Log.d(MainActivity.class.getSimpleName(), "Notification Count-->" + strTodayVisitCount);
 
@@ -364,17 +391,7 @@ pDialog.dismiss();
     }
 
     @Override
-    public void NotificationResponseError(String response) {
-
-    }
-
-    @Override
-    public void TodayVisitResponseSuccess(String response) {
-
-    }
-
-    @Override
-    public void TodayVisitResponseError(String response) {
+    public void NotificationCountError(String respons) {
 
     }
 }

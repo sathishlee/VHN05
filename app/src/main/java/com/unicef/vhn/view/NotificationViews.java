@@ -12,4 +12,7 @@ public interface NotificationViews {
 
     void TodayVisitResponseSuccess(String response);
     void TodayVisitResponseError(String response);
+
+    void NotificationCountSuccess(String respons);
+    void NotificationCountError(String respons);
 }

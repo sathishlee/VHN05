@@ -218,6 +218,16 @@ public class NotificationListFragment extends Fragment implements NotificationVi
 
     }
 
+    @Override
+    public void NotificationCountSuccess(String respons) {
+
+    }
+
+    @Override
+    public void NotificationCountError(String respons) {
+
+    }
+
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
