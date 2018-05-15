@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.GetVisitANMotherPresenter;
@@ -37,6 +38,7 @@ public class ANViewReportsActivity extends AppCompatActivity implements VisitANM
     ANVisitAdapter hAdapter;
 
     Button btn_primary_report, btn_view_report;
+    TextView txt_no_records_found;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +54,16 @@ public class ANViewReportsActivity extends AppCompatActivity implements VisitANM
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData =new PreferenceData(this);
-
         getVisitANMotherPresenter = new GetVisitANMotherPresenter(ANViewReportsActivity.this, this);
 //        gVHRecordsPresenteer.getAllVistHeathRecord(Apiconstants.POST_VIST_HEALTH_RECORD_PICME,preferenceData.getPicmeId(), preferenceData.getMId());
         getVisitANMotherPresenter.getVisitANMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
         mhealthRecordList =new ArrayList<>();
         tabLayout =(TabLayout) findViewById(R.id.hre_tabs);
         viewPager =(ViewPager) findViewById(R.id.hre_viewpager);
+        txt_no_records_found = (TextView) findViewById(R.id.txt_no_records_found);
+        txt_no_records_found.setVisibility(View.GONE);
+        viewPager.setVisibility(View.GONE);
+        tabLayout.setVisibility(View.GONE);
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -101,7 +106,8 @@ public class ANViewReportsActivity extends AppCompatActivity implements VisitANM
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btn_primary_report:startActivity(new Intent(getApplicationContext(),MothersPrimaryRecordsActivity.class));
+            case R.id.btn_primary_report:
+                startActivity(new Intent(getApplicationContext(),MothersPrimaryRecordsActivity.class));
                 break;
 //            case  R.id.btn_view_report:
 //                  startActivity(new Intent(getApplicationContext(),ANViewReportsActivity.class));
@@ -127,8 +133,17 @@ pDialog.dismiss();
 
         try {
             JSONObject mJsnobject = new JSONObject(response);
-            JSONArray jsonArray = mJsnobject.getJSONArray("vhnAN_Mothers_List");
+            String status = mJsnobject.getString("status");
+            String message = mJsnobject.getString("message");
+            if (status.equalsIgnoreCase("1")) {
+                JSONArray jsonArray = mJsnobject.getJSONArray("vhnAN_Mothers_List");
+                if (jsonArray.length() != 0) {
+                    viewPager.setVisibility(View.VISIBLE);
+                    tabLayout.setVisibility(View.VISIBLE);
+                    txt_no_records_found.setVisibility(View.GONE);
+        if(jsonArray.length()!=0) {
             for (int i = 0; i < jsonArray.length(); i++) {
+
                 mhealthRecordResponseModel = new ANMotherVisitResponseModel.VhnAN_Mothers_List();
 
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -176,6 +191,20 @@ pDialog.dismiss();
                 mhealthRecordResponseModel.setVid(jsonObject.getString("vid"));
                 mhealthRecordList.add(mhealthRecordResponseModel);
                 hAdapter.notifyDataSetChanged();
+
+                AppConstants.MOTHER_PICME_ID = mhealthRecordResponseModel.getPicmeId();
+                AppConstants.SELECTED_MID = mhealthRecordResponseModel.getMid();
+            }
+        }else{
+            txt_no_records_found.setVisibility(View.VISIBLE);
+            viewPager.setVisibility(View.GONE);
+            tabLayout.setVisibility(View.GONE);
+        }
+                }
+            }else{
+                txt_no_records_found.setVisibility(View.VISIBLE);
+                viewPager.setVisibility(View.GONE);
+                tabLayout.setVisibility(View.GONE);
             }
         } catch (JSONException e) {
             e.printStackTrace();

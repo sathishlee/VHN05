@@ -10,8 +10,11 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -86,16 +89,19 @@ public class MotherLocationActivity extends FragmentActivity implements Location
     private String GOOGLE_PLACES_API_KEY = "AIzaSyD789ejb86QhaIBRPovLCtjW_XrrDAKdto";
     private List<Marker> markers;
     TextView txt_username, txt_picme_id;
-    String strLat,strLon, motherLatitude, motherLongitude, vhnLatitude, vhnLongitude;
+    String strLat,strLon, motherLatitude, motherLongitude, vhnLatitude, vhnLongitude, motherLocation, VhnLocation;
     String strMotherloc, strVHNloc, strmAdd, strvAdd;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         bindActivity();
-
     }
+    FloatingActionButton get_directions;
+
+
 
     private void bindActivity() {
 
@@ -122,6 +128,15 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Mother Location");
         toolbar.setNavigationIcon(R.drawable.left_arrow_key);
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MotherLocationActivity.this, MainActivity.class);
+                finish();
+                startActivity(intent);
+            }
+        });
     }
 
     private void setupGoogleMapScreenSettings(GoogleMap mMap) {
@@ -153,11 +168,13 @@ public class MotherLocationActivity extends FragmentActivity implements Location
 
 
         // Add a marker in Sydney and move the camera
-//        LatLng latLng = new LatLng(13.00095, 80.2575);
-//        mMap.addMarker(new MarkerOptions().position(latLng).title("Adyar, Chennai, Tamil Nadu"));
-//
-//
-//        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
+
+/*        double mlat = Double.parseDouble(motherLatitude);
+        double mlong = Double.parseDouble(motherLongitude);
+        LatLng latLng = new LatLng(mlat,mlong);
+        mMap.addMarker(new MarkerOptions().position(latLng).title(strmAdd));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));*/
+        get_directions = (FloatingActionButton)findViewById(R.id.get_directions);
 
 
     }
@@ -175,11 +192,23 @@ public class MotherLocationActivity extends FragmentActivity implements Location
 //                    showMessage("Please pick to address");
 //                    return;
 //                }
-                getResultLocation();
+                if (view.equals(get_directions)){
+                    addMarkersToMaplatlng(motherLatitude, motherLongitude, vhnLatitude, vhnLongitude);
+                    getResultLocation();
+                }else{
+                    addMotherLocation(motherLatitude, motherLongitude);
+                }
 //                getDirections();
                 break;
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return super.onOptionsItemSelected(item);
+    }
+
     public void getDirections(){
         Log.e("Mlatitude--", motherLatitude);
         Log.e("Mlong--", motherLongitude);
@@ -233,9 +262,19 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         markers = new ArrayList<>();
         markers.add(markerSrc);
         markers.add(markerDes);
-
     }
+    private void addMotherLocation(String motherLatitude, String motherLongitude) {
+        double mlat = Double.parseDouble(motherLatitude);
+        double mlong = Double.parseDouble(motherLongitude);
 
+        final LatLng mlatlng = new LatLng(mlat,mlong);
+        MarkerOptions mothermarker = new MarkerOptions().position(new LatLng(mlat,mlong)).title(strmAdd);
+
+        strMotherloc = String.valueOf(mothermarker);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mlatlng, 12));
+        mothermarker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+        mMap.addMarker(mothermarker);
+    }
 
     private void addMarkersToMaplatlng(String motherLatitude, String motherLongitude, String vhnLatitude, String vhnLongitude) {
         double mlat = Double.parseDouble(motherLatitude);
@@ -251,7 +290,7 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         strLon = String.valueOf(vlatlng);
         Log.d("VHN Location--->",strLon);
 
-        MarkerOptions mothermarker = new MarkerOptions().position(new LatLng(mlat,mlong)).title(AppConstants.SELECTED_MID);
+        MarkerOptions mothermarker = new MarkerOptions().position(new LatLng(mlat,mlong)).title(strmAdd);
         MarkerOptions vhnmarker = new MarkerOptions().position(new LatLng(vlat,vlong)).title(preferenceData.getVhnName());
 
         strMotherloc = String.valueOf(mothermarker);
@@ -293,6 +332,10 @@ public class MotherLocationActivity extends FragmentActivity implements Location
                 String vknownname = addresses1.get(0).getFeatureName();
 
                 strvAdd = String.valueOf(vaddress+vcity+vstate);
+            }
+
+            if (strmAdd.equals(strvAdd)){
+                Toast.makeText(getApplicationContext(),"You are Nearer to Mother...", Toast.LENGTH_SHORT).show();
             }
 //            if (addresses != null) {
 //                Address returnedAddress = addresses.get(0);
@@ -466,31 +509,53 @@ public class MotherLocationActivity extends FragmentActivity implements Location
                 JSONObject mJsnobject_tracking = mJsnobject.getJSONObject("tracking");
                 txt_username.setText(mJsnobject_tracking.getString("mName"));
                 txt_picme_id.setText(mJsnobject_tracking.getString("mPicmeId"));
-                motherLatitude = mJsnobject_tracking.getString("mLatitude");
-                motherLongitude = mJsnobject_tracking.getString("mLongitude");
-                vhnLatitude = mJsnobject_tracking.getString("vLatitude");
-                vhnLongitude = mJsnobject_tracking.getString("vLongitude");
 
-                addMarkersToMaplatlng(motherLatitude, motherLongitude, vhnLatitude, vhnLongitude);
+                motherLocation = mJsnobject_tracking.getString("mLocation");
+                VhnLocation = mJsnobject_tracking.getString("vLocation");
 
-//                JSONArray routeArray = mJsnobject.getJSONArray("mother_location");
-//                for (int i = 0; i < routeArray.length(); i++) {
-//
-//                    LatLng latLng1=new LatLng(Double.parseDouble(routeArray.getJSONObject(i).getString("mLatitude")),Double.parseDouble(routeArray.getJSONObject(i).getString("mLongitude")));
-//                    mMap.addMarker(new MarkerOptions().position(latLng1).title("Mother Location"));
-//                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng1, 12));
-////                    addMarkersToMap(Double.parseDouble(routeArray.getJSONObject(i).getString("mLatitude")),
-////                            Double.parseDouble(routeArray.getJSONObject(i).getString("mLongitude")));
-//                }
-//
-//                JSONArray routeArray1 = mJsnobject.getJSONArray("vhn_location");
-//                for (int i = 0; i < routeArray1.length(); i++) {
-//                    LatLng latLng2=new LatLng(Double.parseDouble(routeArray1.getJSONObject(i).getString("vLatitude")),Double.parseDouble(routeArray.getJSONObject(i).getString("vLongitude")));
-//                    mMap.addMarker(new MarkerOptions().position(latLng2).title("VHN Location"));
-//                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng2, 12));
-////                    addMarkersToMap(Double.parseDouble(routeArray.getJSONObject(i).getString("mLatitude")),
-////                            Double.parseDouble(routeArray.getJSONObject(i).getString("mLongitude")));
-//                }
+                if(motherLocation.equalsIgnoreCase("0")){
+                    Toast.makeText(getApplicationContext(),"Mother Location Not Found...!",Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                if(motherLocation.equalsIgnoreCase("1")) {
+                    motherLatitude = mJsnobject_tracking.getString("mLatitude");
+                    motherLongitude = mJsnobject_tracking.getString("mLongitude");
+                    addMotherLocation(motherLatitude,motherLongitude);
+                }
+                if(VhnLocation.equalsIgnoreCase("1")) {
+                    vhnLatitude = mJsnobject_tracking.getString("vLatitude");
+                    vhnLongitude = mJsnobject_tracking.getString("vLongitude");
+                }else{
+                    Toast.makeText(getApplicationContext(),VhnLocation,Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+
+                /*JSONObject mJsonObject = mJsnobject.getJSONObject("mother_location");
+                motherLatitude = mJsonObject.getString("mLatitude");
+                motherLongitude = mJsonObject.getString("mLongitude");
+                JSONObject vJsonObject = mJsnobject.getJSONObject("vhn_location");
+                vhnLatitude = vJsonObject.getString("vLatitude");
+                vhnLongitude = vJsonObject.getString("vLongitude");*/
+
+
+                /*JSONArray routeArray = mJsnobject.getJSONArray("mother_location");
+                for (int i = 0; i < routeArray.length(); i++) {
+
+                    LatLng latLng1=new LatLng(Double.parseDouble(routeArray.getJSONObject(i).getString("mLatitude")),Double.parseDouble(routeArray.getJSONObject(i).getString("mLongitude")));
+                    mMap.addMarker(new MarkerOptions().position(latLng1).title("Mother Location"));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng1, 12));
+                    addMarkersToMap(Double.parseDouble(routeArray.getJSONObject(i).getString("mLatitude")),
+                            Double.parseDouble(routeArray.getJSONObject(i).getString("mLongitude")));
+                }
+
+                JSONArray routeArray1 = mJsnobject.getJSONArray("vhn_location");
+                for (int i = 0; i < routeArray1.length(); i++) {
+                    LatLng latLng2=new LatLng(Double.parseDouble(routeArray1.getJSONObject(i).getString("vLatitude")),Double.parseDouble(routeArray.getJSONObject(i).getString("vLongitude")));
+                    mMap.addMarker(new MarkerOptions().position(latLng2).title("VHN Location"));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng2, 12));
+                    addMarkersToMap(Double.parseDouble(routeArray.getJSONObject(i).getString("mLatitude")),
+                            Double.parseDouble(routeArray.getJSONObject(i).getString("mLongitude")));
+                }*/
 
 
             }else{

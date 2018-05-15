@@ -132,6 +132,7 @@ pDialog.dismiss();
                 mresponseResult.setVhnId(jsonObject.getString("vhnId"));
                 mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
                 mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
+                mresponseResult.setmPhoto(jsonObject.getString("mPhoto"));
                 mResult.add(mresponseResult);
                 mAdapter.notifyDataSetChanged();
             }

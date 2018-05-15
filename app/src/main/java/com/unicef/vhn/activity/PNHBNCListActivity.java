@@ -14,6 +14,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -91,6 +92,12 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void showProgress() {
         pDialog.show();
     }
@@ -123,6 +130,9 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
                        mresponseResult.setVhnId(jsonObject.getString("vhnId"));
                        mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
                        mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
+                       mresponseResult.setmPhoto(jsonObject.getString("mPhoto"));
+                       mresponseResult.setMlmp(jsonObject.getString("mLMP"));
+
                        mResult.add(mresponseResult);
                        mAdapter.notifyDataSetChanged();
                    }

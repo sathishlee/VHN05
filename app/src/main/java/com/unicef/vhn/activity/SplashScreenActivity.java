@@ -250,7 +250,24 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
         int permissionState2 = ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION);
 
-        return permissionState1 == PackageManager.PERMISSION_GRANTED && permissionState2 == PackageManager.PERMISSION_GRANTED;
+        int permissionState3 = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.INTERNET);
+        int permissionState4 = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA);
+        int permissionState5 = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.SEND_SMS);
+        int permissionState6 = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE);
+        int permissionState7 = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int permissionState8 = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.CALL_PHONE);
+
+
+        return permissionState1 == PackageManager.PERMISSION_GRANTED && permissionState2 == PackageManager.PERMISSION_GRANTED &&
+                permissionState3 == PackageManager.PERMISSION_GRANTED && permissionState4 == PackageManager.PERMISSION_GRANTED
+                && permissionState5 == PackageManager.PERMISSION_GRANTED && permissionState6 == PackageManager.PERMISSION_GRANTED
+                && permissionState7 == PackageManager.PERMISSION_GRANTED && permissionState8 == PackageManager.PERMISSION_GRANTED;
 
     }
 
@@ -262,15 +279,33 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
         boolean shouldProvideRationale =
                 ActivityCompat.shouldShowRequestPermissionRationale(this,
                         android.Manifest.permission.ACCESS_FINE_LOCATION);
-
         boolean shouldProvideRationale2 =
                 ActivityCompat.shouldShowRequestPermissionRationale(this,
                         Manifest.permission.ACCESS_COARSE_LOCATION);
+        boolean shouldProvideRationale3 =
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.INTERNET);
+        boolean shouldProvideRationale4 =
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.CAMERA);
+        boolean shouldProvideRationale5 =
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.SEND_SMS);
+        boolean shouldProvideRationale6 =
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.READ_EXTERNAL_STORAGE);
+        boolean shouldProvideRationale7 =
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        boolean shouldProvideRationale8 =
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.CALL_PHONE);
 
 
         // Provide an additional rationale to the img_user. This would happen if the img_user denied the
         // request previously, but didn't check the "Don't ask again" checkbox.
-        if (shouldProvideRationale || shouldProvideRationale2) {
+        if (shouldProvideRationale || shouldProvideRationale2 || shouldProvideRationale3 || shouldProvideRationale4
+                || shouldProvideRationale5 || shouldProvideRationale6 || shouldProvideRationale7 || shouldProvideRationale8) {
             Log.i(TAG, "Displaying permission rationale to provide additional context.");
             showSnackbar(R.string.permission_rationale,
                     android.R.string.ok, new View.OnClickListener() {
@@ -278,7 +313,17 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
                         public void onClick(View view) {
                             // Request permission
                             ActivityCompat.requestPermissions(SplashScreenActivity.this,
-                                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                                    new String[]
+                                            {
+                                                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+                                                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                                                    Manifest.permission.INTERNET,
+                                                    Manifest.permission.CAMERA,
+                                                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                                                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                                    Manifest.permission.CALL_PHONE,
+                                                    Manifest.permission.SEND_SMS
+                                            },
                                     REQUEST_PERMISSIONS_REQUEST_CODE);
                         }
                     });
@@ -288,7 +333,17 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
             // sets the permission in a given state or the img_user denied the permission
             // previously and checked "Never ask again".
             ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    new String[]
+                            {
+                                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+                                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                                    Manifest.permission.INTERNET,
+                                    Manifest.permission.CAMERA,
+                                    Manifest.permission.SEND_SMS,
+                                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                    Manifest.permission.CALL_PHONE
+                            },
                     REQUEST_PERMISSIONS_REQUEST_CODE);
         }
     }

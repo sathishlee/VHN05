@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -326,16 +327,20 @@ public class home extends Fragment implements MotherListsViews {
                 str_mPhoto = mJsnobject_phcDetails.getString("vphoto");
                 Log.d("vphoto-->",Apiconstants.PHOTO_URL+str_mPhoto);
 
-                Picasso.with(context)
-                        .load(Apiconstants.PHOTO_URL+str_mPhoto)
-                        .placeholder(R.drawable.ic_nurse)
-                        .fit()
-                        .centerCrop()
-                        .memoryPolicy(MemoryPolicy.NO_CACHE)
-                        .networkPolicy(NetworkPolicy.NO_CACHE)
-                        .transform(new RoundedTransformation(90,4))
-                        .error(R.drawable.ic_nurse)
-                        .into(userImageProfile);
+                if(!TextUtils.isEmpty(str_mPhoto)){
+                    Picasso.with(context)
+                            .load(Apiconstants.PHOTO_URL+str_mPhoto)
+                            .placeholder(R.drawable.ic_nurse)
+                            .fit()
+                            .centerCrop()
+                            .memoryPolicy(MemoryPolicy.NO_CACHE)
+                            .networkPolicy(NetworkPolicy.NO_CACHE)
+                            .transform(new RoundedTransformation(90,4))
+                            .error(R.drawable.ic_nurse)
+                            .into(userImageProfile);
+                }else{
+                    userImageProfile.setImageResource(R.drawable.ic_nurse);
+                }
 
             }
         } catch (JSONException e) {

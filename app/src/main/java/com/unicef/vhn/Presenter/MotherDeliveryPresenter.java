@@ -35,6 +35,8 @@ public class MotherDeliveryPresenter implements MotherDeliveryInteractor {
     public void deliveryDetails(final String strPicmeid, final String strMid) {
         String url = Apiconstants.MOTHER_BASE_URL + Apiconstants.DELIVERY_DETAILS;
         Log.d("Log in check Url--->", url);
+        Log.d("strMid--->", strMid);
+        Log.d("strPicmeid--->", strPicmeid);
         views.showProgress();
 
         StringRequest strReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {

@@ -39,7 +39,8 @@ import org.json.JSONObject;
 public class PNMotherDetailsActivity extends AppCompatActivity implements View.OnClickListener, MotherListsViews {
     LinearLayout ll_pn_mother_details;
     TextView txt_username, txt_picme_id, txt_mage, txt_risk,
-            txt_date_of_delivery, txt_weight, txt_type_of_delivery, txt_maturity, txt_next_visit, txt_husb_name, txt_aww_name, txt_relationship, txt_aww_relationship;
+            txt_date_of_delivery, txt_weight, txt_type_of_delivery, txt_maturity, txt_next_visit,
+            txt_husb_name, txt_aww_name, txt_relationship, txt_aww_relationship, txt_mother_name_call;
     ImageView img_call_1, img_call_2, cardview_image;
     Button btn_view_location, btn_view_report;
     Context context;
@@ -69,9 +70,7 @@ public class PNMotherDetailsActivity extends AppCompatActivity implements View.O
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        Intent intent = new Intent(this, MainActivity.class);
         finish();
-//        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
     private void onClickListner() {
@@ -102,7 +101,6 @@ public class PNMotherDetailsActivity extends AppCompatActivity implements View.O
         txt_maturity = (TextView) findViewById(R.id.txt_maturity);
         txt_next_visit = (TextView) findViewById(R.id.txt_next_visit);
         txt_husb_name = (TextView) findViewById(R.id.txt_husb_name);
-        txt_aww_name = (TextView) findViewById(R.id.txt_aww_name);
         txt_husb_name = (TextView) findViewById(R.id.txt_husb_name);
         txt_relationship = (TextView) findViewById(R.id.txt_relationship);
         txt_aww_relationship = (TextView) findViewById(R.id.txt_aww_relationship);
@@ -111,6 +109,7 @@ public class PNMotherDetailsActivity extends AppCompatActivity implements View.O
         btn_view_location = (Button) findViewById(R.id.btn_view_location);
         btn_view_report = (Button) findViewById(R.id.btn_view_report);
         cardview_image = (ImageView) findViewById(R.id.cardview_image);
+        txt_mother_name_call = (TextView) findViewById(R.id.txt_mother_name_call);
     }
 
     @Override
@@ -226,6 +225,7 @@ public class PNMotherDetailsActivity extends AppCompatActivity implements View.O
                 txt_next_visit.setText(mJsnobject_tracking.getString("NextVisit"));
                 strLatitude = mJsnobject_tracking.getString("mLatitude");
                 strLongitude =mJsnobject_tracking.getString("mLongitude");
+                txt_mother_name_call.setText(mJsnobject_tracking.getString("mName"));
 
                 str_mPhoto = mJsnobject_tracking.getString("mPhoto");
                 Log.d("mphoto-->", Apiconstants.MOTHER_PHOTO_URL+str_mPhoto);

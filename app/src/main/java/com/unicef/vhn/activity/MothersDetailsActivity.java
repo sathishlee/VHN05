@@ -37,7 +37,8 @@ import org.json.JSONObject;
 
 
 public class MothersDetailsActivity extends AppCompatActivity implements View.OnClickListener, MotherListsViews {
-    TextView txt_mother_name,txt_picme_id,txt_mage,txt_risk_status,txt_gest_week,txt_weight,txt_lmp_date,txt_edd_date,txt_next_visit;
+    TextView txt_mother_name,txt_picme_id,txt_mage,txt_risk_status,txt_gest_week,txt_weight,
+            txt_lmp_date,txt_edd_date,txt_next_visit, txt_husb_name, txt_mother_name_call;
     String strMobileNo,strAltMobileNo;
     Context context;
     String strLatitude,strLongitude, str_mPhoto;
@@ -93,8 +94,9 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
         pDialog.setMessage("Please Wait ...");
         preferenceData =new PreferenceData(this);
         pnMotherListPresenter = new MotherListPresenter(MothersDetailsActivity.this,this);
-        pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(),preferenceData.getVhnId(),  AppConstants.SELECTED_MID);
+        pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(),preferenceData.getVhnId(), AppConstants.SELECTED_MID);
 
+        cardview_image = (ImageView) findViewById(R.id.cardview_image);
         txt_mother_name = (TextView) findViewById(R.id.txt_username);
         txt_picme_id = (TextView) findViewById(R.id.txt_picme_id);
         txt_mage = (TextView) findViewById(R.id.txt_age);
@@ -106,7 +108,8 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
         txt_next_visit = (TextView) findViewById(R.id.txt_next_visit);
         img_call_1 =(ImageView)findViewById(R.id.img_call_1);
         img_call_2 =(ImageView)findViewById(R.id.img_call_2);
-
+        txt_husb_name = (TextView) findViewById(R.id.txt_husb_name);
+        txt_mother_name_call = (TextView) findViewById(R.id.txt_mother_name_call);
 
         btn_view_location = (Button) findViewById(R.id.btn_view_location);
         btn_view_report = (Button) findViewById(R.id.btn_view_report);
@@ -146,7 +149,8 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btn_view_location:startActivity(new Intent(getApplicationContext(),MotherLocationActivity.class));
+            case R.id.btn_view_location:
+                startActivity(new Intent(getApplicationContext(),MotherLocationActivity.class));
                 break;
             case  R.id.btn_view_report:
                 startActivity(new Intent(getApplicationContext(),ANViewReportsActivity.class));
@@ -170,10 +174,7 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        Intent intent = new Intent(MothersDetailsActivity.this, MainActivity.class);
         finish();
-//        startActivity(intent);
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -210,12 +211,14 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
                 txt_next_visit.setText(mJsnobject_tracking.getString("nextVisit"));
                 txt_lmp_date.setText(mJsnobject_tracking.getString("mLMP"));
                 txt_edd_date.setText(mJsnobject_tracking.getString("mEDD"));
+                txt_husb_name.setText(mJsnobject_tracking.getString("mHusbandName"));
+                txt_mother_name_call.setText(mJsnobject_tracking.getString("mName"));
                 strLatitude = mJsnobject_tracking.getString("mLatitude");
-               strLongitude =mJsnobject_tracking.getString("mLongitude");
+                strLongitude =mJsnobject_tracking.getString("mLongitude");
+
+                AppConstants.MOTHER_PICME_ID = mJsnobject_tracking.getString("mPicmeId");
 
                 str_mPhoto = mJsnobject_tracking.getString("mPhoto");
-                Log.d("mphoto-->", Apiconstants.MOTHER_PHOTO_URL+str_mPhoto);
-
                 Picasso.with(context)
                         .load(Apiconstants.MOTHER_PHOTO_URL+str_mPhoto)
                         .placeholder(R.drawable.girl)

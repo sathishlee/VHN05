@@ -119,6 +119,8 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
                 mresponseResult.setVhnId(jsonObject.getString("vhnId"));
                 mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
                 mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
+                mresponseResult.setmPhoto(jsonObject.getString("mPhoto"));
+                mresponseResult.setMotherType(jsonObject.getString("motherType"));
                 mResult.add(mresponseResult);
                 mAdapter.notifyDataSetChanged();
             }

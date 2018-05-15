@@ -197,15 +197,19 @@ public class NotificationListFragment extends Fragment implements NotificationVi
             JSONObject jsonObject = new JSONObject(response);
             String status = jsonObject.getString("status");
             String msg = jsonObject.getString("message");
-            String strTodayVisitCount = jsonObject.getString("vhn_today_visit_list");
+            String strTodayVisitCount ="0";
             if (status.equalsIgnoreCase("1")) {
 //                preferenceData.setTodayVisitCount(strTodayVisitCount);
-            txt_today_visit_count.setText(strTodayVisitCount);
+                strTodayVisitCount = jsonObject.getString("visitCount");
+
+                txt_today_visit_count.setText(strTodayVisitCount);
             txt_count_today_visit.setText(strTodayVisitCount+" Mothers Visiting Today");
 
                 Log.d(MainActivity.class.getSimpleName(), "Today Visit Count-->" + strTodayVisitCount);
 
             } else {
+                txt_today_visit_count.setText(strTodayVisitCount);
+                txt_count_today_visit.setText(strTodayVisitCount+" Mothers Visiting Today");
                 Log.d(MainActivity.class.getSimpleName(), "Today Visit messsage-->" + msg);
             }
         } catch (JSONException e) {
@@ -215,6 +219,16 @@ public class NotificationListFragment extends Fragment implements NotificationVi
 
     @Override
     public void TodayVisitResponseError(String response) {
+
+    }
+
+    @Override
+    public void NotificationCountSuccess(String respons) {
+
+    }
+
+    @Override
+    public void NotificationCountError(String respons) {
 
     }
 

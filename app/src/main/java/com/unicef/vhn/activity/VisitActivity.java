@@ -102,9 +102,7 @@ public class VisitActivity  extends AppCompatActivity implements MotherListsView
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(this, MainActivity.class);
         finish();
-        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 
@@ -125,25 +123,28 @@ pDialog.dismiss();
 
         try {
             JSONObject mJsnobject = new JSONObject(response);
-            JSONArray jsonArray = mJsnobject.getJSONArray("vhn_today_visit_count");
-            if (jsonArray.length()!=0) {
-                mother_recycler_view.setVisibility(View.VISIBLE);
-                txt_no_records_found.setVisibility(View.GONE);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    mresponseResult = new VisitListResponseModel.Vhn_current_visits();
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    mresponseResult.setMid(jsonObject.getString("mid"));
-                    mresponseResult.setMName(jsonObject.getString("mName"));
-                    mresponseResult.setPicmeId(jsonObject.getString("picmeId"));
-                    mresponseResult.setVhnId(jsonObject.getString("vhnId"));
-                    mresponseResult.setMMotherMobile(jsonObject.getString("mMotherMobile"));
-                    mresponseResult.setMtype(jsonObject.getString("mtype"));
-                    mresponseResult.setNextVisit(jsonObject.getString("nextVisit"));
-//                    mresponseResult.setMotherType(jsonObject.getString("motherType"));
-//                mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
-//                mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
-                    mResult.add(mresponseResult);
-                    mAdapter.notifyDataSetChanged();
+            String status = mJsnobject.getString("status");
+            if (status.equalsIgnoreCase("1")) {
+                JSONArray jsonArray = mJsnobject.getJSONArray("vhn_today_visit_count");
+                if (jsonArray.length() != 0) {
+                    mother_recycler_view.setVisibility(View.VISIBLE);
+                    txt_no_records_found.setVisibility(View.GONE);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        mresponseResult = new VisitListResponseModel.Vhn_current_visits();
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        mresponseResult.setMid(jsonObject.getString("mid"));
+                        mresponseResult.setMName(jsonObject.getString("mName"));
+                        mresponseResult.setPicmeId(jsonObject.getString("picmeId"));
+                        mresponseResult.setVhnId(jsonObject.getString("vhnId"));
+                        mresponseResult.setMMotherMobile(jsonObject.getString("mMotherMobile"));
+                        mresponseResult.setMtype(jsonObject.getString("mtype"));
+                        mresponseResult.setNextVisit(jsonObject.getString("nextVisit"));
+                        mresponseResult.setMotherType(jsonObject.getString("motherType"));
+                        mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
+                        mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
+                        mResult.add(mresponseResult);
+                        mAdapter.notifyDataSetChanged();
+                    }
                 }
             }else{
                 mother_recycler_view.setVisibility(View.GONE);

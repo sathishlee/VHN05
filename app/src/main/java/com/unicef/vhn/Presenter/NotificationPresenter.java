@@ -32,24 +32,24 @@ public class NotificationPresenter implements NotificationInteractor {
     }
 
     @Override
-    public void getNotificationCount(final String mid) {
+    public void getNotificationCount(final String vhnId) {
 
         String url = Apiconstants.BASE_URL + Apiconstants.POST_NOTIFICATION_COUNT;
         Log.d("Url--->", url);
-        Log.d("mid--->", mid);
+        Log.d("mid--->", vhnId);
         notificationViews.showProgress();
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 notificationViews.hideProgress();
-                notificationViews.NotificationResponseSuccess(String.valueOf(response));
+                notificationViews.NotificationCountSuccess(String.valueOf(response));
             }
         },new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 notificationViews.hideProgress();
-                notificationViews.NotificationResponseError(error.toString());
+                notificationViews.NotificationCountError(error.toString());
             }
         }){
             @Override
@@ -68,7 +68,7 @@ public class NotificationPresenter implements NotificationInteractor {
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("mid",mid);
+                params.put("vhnId",vhnId);
 
                 Log.d("params--->",params.toString());
 
@@ -86,14 +86,14 @@ public class NotificationPresenter implements NotificationInteractor {
         VolleySingleton.getInstance(context).addToRequestQueue(request);
     }
 
+
     @Override
     public void getTodayVisitCount(final String vhnCode, final String vhnId) {
 
 
-        String url = Apiconstants.BASE_URL + Apiconstants.CURRENT_VISIT_COUNT;
+        String url = Apiconstants.BASE_URL + Apiconstants.MOTHER_VISIT_COUNT;
         Log.d("Url--->", url);
-        Log.d("vhnCode--->", vhnCode);
-        Log.d("vhnId--->", vhnId);
+
         notificationViews.showProgress();
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -117,7 +117,6 @@ public class NotificationPresenter implements NotificationInteractor {
                 //                header.put("Content-Type", "application/x-www-from-urlencoded; charset=utf-8");
                 header.put("Authorization", "Basic " + base64EncodedCredentials);
 //                header.put("Content-Type", "application/json; charset=utf-8");
-                Log.d("Credentials ", "Basic " + base64EncodedCredentials.toString());
 
                 return header;
             }

@@ -32,6 +32,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -231,10 +232,9 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
     }
 
     @Override
-    public void onBackPressed() {
-        intent = new Intent(VhnProfile.this, MainActivity.class);
+    public boolean onOptionsItemSelected(MenuItem item) {
         finish();
-        startActivity(intent);
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
