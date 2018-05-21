@@ -145,9 +145,7 @@ public class MotherListActivity extends AppCompatActivity implements MotherLists
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(MotherListActivity.this, MainActivity.class);
         finish();
-        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 

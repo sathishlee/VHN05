@@ -49,6 +49,7 @@ public class VisitListResponseModel {
         private String picmeId;
         private String vhnId;
         private String nextVisit;
+        private String motherType;
 
         public String getMtype() {
             return mtype;
@@ -154,6 +155,14 @@ public class VisitListResponseModel {
 
         public void setNextVisit(String nextVisit) {
             this.nextVisit = nextVisit;
+        }
+
+        public String getMotherType() {
+            return motherType;
+        }
+
+        public void setMotherType(String motherType) {
+            this.motherType = motherType;
         }
     }
 }

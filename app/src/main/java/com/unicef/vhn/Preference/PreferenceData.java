@@ -83,6 +83,12 @@ public class PreferenceData {
     }public String getNotificationCount(){
         return sharedPreferences.getString(AppConstants.NOTIFICATION_COUNT,"");
     }
+    public String getNotificationCount(){
+        return sharedPreferences.getString(AppConstants.NOTIFICATION_COUNT,"");
+    }
+    public void setNotificationCount(String strTodayVisitCount) {
+        sharedPreferences.edit().putString(AppConstants.NOTIFICATION_COUNT, strTodayVisitCount).commit();
+    }
 
     public void storeDid(String strDid) {
         sharedPreferences.edit().putString(AppConstants.DELIVERY_ID,strDid).commit();

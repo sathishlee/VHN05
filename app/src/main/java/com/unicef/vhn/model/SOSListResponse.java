@@ -38,7 +38,6 @@ public class SOSListResponse {
 
     public static class VhnAN_Mothers_List {
         private String vhnId;
-
         private String sosStatus;
         private String mid;
         private String mRiskStatus;
@@ -46,6 +45,13 @@ public class SOSListResponse {
         private String mPicmeId;
         private String mName;
         private String motherType;
+
+        private String mLongitude;
+        private String mLatitude;
+        private String vLatitude;
+        private String vLongitude;
+        private String mMotherMobile;
+        private String mPhoto;
 
 
         public String getVhnId() {
@@ -109,6 +115,35 @@ public class SOSListResponse {
 
         public void setMName(String mName) {
             this.mName = mName;
+        }
+
+        public String getmPhoto(){return mPhoto;}
+        public void setmPhoto(String mPhoto){this.mPhoto = mPhoto;}
+
+
+        public String getvLatitude(){return vLatitude;}
+        public void setvLatitude(String vLatitude){this.vLatitude = vLatitude;}
+
+        public String getmMotherMobile(){return mMotherMobile;}
+        public void setmMotherMobile(String mMotherMobile){this.mMotherMobile = mMotherMobile;}
+
+        public String getvLongitude(){return vLongitude;}
+        public void setvLongitude(String vLongitude){this.vLongitude = vLongitude;}
+
+        public String getMLongitude() {
+            return mLongitude;
+        }
+
+        public void setMLongitude(String mLongitude) {
+            this.mLongitude = mLongitude;
+        }
+
+        public String getMLatitude() {
+            return mLatitude;
+        }
+
+        public void setMLatitude(String mLatitude) {
+            this.mLatitude = mLatitude;
         }
     }
 }

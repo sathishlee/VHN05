@@ -6,21 +6,21 @@ package com.unicef.vhn.constant;
 
 public class Apiconstants {
 
-//        public static final String BASE_URL = "http://218.248.44.77/thaimaiapp/api/vhn/Vhn/";
-        public static final String BASE_URL = "http://192.168.100.222/thaimaiapp/api/vhn/Vhn/";
+        public static final String BASE_URL = "http://218.248.44.77/thaimaiapp/api/vhn/Vhn/";
+//        public static final String BASE_URL = "http://192.168.100.222/thaimaiapp/api/vhn/Vhn/";
 //        public static final String BASE_URL = "http://demo.satvatinfosol.com/thaimai/api/vhn/Vhn/";
 
-        public static final String MOTHER_BASE_URL = "http://192.168.100.222/thaimaiapp/api/";
-//        public static final String MOTHER_BASE_URL = "http://218.248.44.77/thaimaiapp/api/";
+//        public static final String MOTHER_BASE_URL = "http://192.168.100.222/thaimaiapp/api/";
+        public static final String MOTHER_BASE_URL = "http://218.248.44.77/thaimaiapp/api/";
 //        public static final String MOTHER_BASE_URL = "http://demo.satvatinfosol.com/thaimai/api/";
 
-//            public static final String PHOTO_URL = "http://218.248.44.77/thaimaiapp/assets/vhn_photos/";
-        public static final String PHOTO_URL = "http://192.168.100.222/thaimaiapp/assets/vhn_photos/";
+            public static final String PHOTO_URL = "http://218.248.44.77/thaimaiapp/assets/vhn_photos/";
+//        public static final String PHOTO_URL = "http://192.168.100.222/thaimaiapp/assets/vhn_photos/";
 //        public static final String PHOTO_URL = "http://demo.satvatinfosol.com/thaimai/assets/vhn_photos/";
 
-            public static final String MOTHER_PHOTO_URL = "http://192.168.100.222/thaimaiapp/assets/mother_photos/";
+        public static final String MOTHER_PHOTO_URL = "http://218.248.44.77/thaimaiapp/assets/mother_photos/";
+//            public static final String MOTHER_PHOTO_URL = "http://192.168.100.222/thaimaiapp/assets/mother_photos/";
 //        public static final String MOTHER_PHOTO_URL = "http://demo.satvatinfosol.com/thaimai/assets/mother_photos/";
-//        public static final String MOTHER_PHOTO_URL = "http://218.248.44.77/thaimaiapp/assets/mother_photos/";
 
 //    http://192.168.100.235/thaimaiapp/api/vhn/Vhn/vhnLocationUpdate
 
@@ -76,7 +76,7 @@ public class Apiconstants {
 
 
     //    http://192.168.100.235/thaimaiapp/api/vhn/Vhn/vDashboardMothersANRecord
-    public static final String DASH_BOARD_MOTHERS_AN_RECORDS = "vDashboardMothersANRecord";
+    public static final String DASH_BOARD_MOTHERS_AN_RECORDS = "vDashboardANVisitRecords";
 
     //    http://192.168.100.235/thaimaiapp/api/vhn/Vhn/VHNMothersPNRecord
     public static final String DASH_BOARD_MOTHERS_PN_VISIT_RECORDS = "VHNMothersPNRecord";
@@ -113,6 +113,8 @@ public class Apiconstants {
 
 //    http://192.168.100.27/thaimaiapp/api/vhn/Vhn/vVHN_Current_Visits_count
 public static final String CURRENT_VISIT_COUNT = "vVHN_Current_Visits_count";
+
+    public static final String MOTHER_VISIT_COUNT = "vMother_Visit_count";
 
     public static final String VHN_PROFILE = "vVHN_edit_Profile";
 

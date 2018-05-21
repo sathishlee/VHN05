@@ -86,14 +86,14 @@ public class NotificationPresenter implements NotificationInteractor {
         VolleySingleton.getInstance(context).addToRequestQueue(request);
     }
 
+
     @Override
     public void getTodayVisitCount(final String vhnCode, final String vhnId) {
 
 
-        String url = Apiconstants.BASE_URL + Apiconstants.CURRENT_VISIT_COUNT;
+        String url = Apiconstants.BASE_URL + Apiconstants.MOTHER_VISIT_COUNT;
         Log.d("Url--->", url);
-        Log.d("vhnCode--->", vhnCode);
-        Log.d("vhnId--->", vhnId);
+
         notificationViews.showProgress();
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -117,7 +117,6 @@ public class NotificationPresenter implements NotificationInteractor {
                 //                header.put("Content-Type", "application/x-www-from-urlencoded; charset=utf-8");
                 header.put("Authorization", "Basic " + base64EncodedCredentials);
 //                header.put("Content-Type", "application/json; charset=utf-8");
-                Log.d("Credentials ", "Basic " + base64EncodedCredentials.toString());
 
                 return header;
             }

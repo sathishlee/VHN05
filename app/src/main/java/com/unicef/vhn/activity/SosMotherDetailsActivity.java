@@ -72,9 +72,7 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(SosMotherDetailsActivity.this, MainActivity.class);
         finish();
-        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 

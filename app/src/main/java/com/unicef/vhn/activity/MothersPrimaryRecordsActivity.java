@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherPrimaryRegisterPresenter;
 import com.unicef.vhn.R;
+import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.view.PrimaryRegisterViews;
 
 import org.json.JSONException;
@@ -64,7 +65,7 @@ public class MothersPrimaryRecordsActivity extends AppCompatActivity implements 
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
         motherPrimaryRegisterPresenter = new MotherPrimaryRegisterPresenter(MothersPrimaryRecordsActivity.this,this);
-        motherPrimaryRegisterPresenter.getAllMotherPrimaryRegistration(preferenceData.getPicmeId());
+        motherPrimaryRegisterPresenter.getAllMotherPrimaryRegistration(AppConstants.MOTHER_PICME_ID);
         txt_name = (TextView) findViewById(R.id.txt_name);
         txt_mother_age = (TextView) findViewById(R.id.txt_mother_age);
         txt_lmp_date = (TextView) findViewById(R.id.txt_lmp_date);

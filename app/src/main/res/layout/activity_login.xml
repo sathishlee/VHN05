@@ -67,7 +67,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_primary"
-                    android:text="PHC0252603"
                     android:hint="VhnId"
                     android:layout_margin="5dp"/>
 
@@ -85,11 +84,10 @@
                     android:hint="Password"
                     android:textColorHint="@color/white"
                     android:inputType="textPassword"
-                    android:text="PHC0252603"
                     android:layout_margin="5dp"/>
 
             </android.support.design.widget.TextInputLayout>
-<!--android:text="PHC0316004"-->
+
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/btnLogin"

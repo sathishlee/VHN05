@@ -22,9 +22,6 @@ public class MothersViewRecordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_health_records);
         initUI();
         onClickListner();
-
-
-
     }
 
     public void initUI(){

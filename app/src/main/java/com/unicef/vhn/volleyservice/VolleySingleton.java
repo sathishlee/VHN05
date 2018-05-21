@@ -3,6 +3,7 @@ package com.unicef.vhn.volleyservice;
 import android.content.Context;
 
 import com.android.volley.Cache;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,6 +21,8 @@ public class VolleySingleton {
     private static VolleySingleton mInstance;
     private RequestQueue mRequestQueue;
     private static Context mCtx;
+    int MY_SOCKET_TIMEOUT_MS = 30000;
+
 
     private VolleySingleton(Context context) {
         mCtx = context;
@@ -49,6 +52,12 @@ public class VolleySingleton {
     }
 
     public <T> void addToRequestQueue(Request<T> req) {
+
+        req.setRetryPolicy(new DefaultRetryPolicy(
+                MY_SOCKET_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         getRequestQueue().add(req);
     }
 }

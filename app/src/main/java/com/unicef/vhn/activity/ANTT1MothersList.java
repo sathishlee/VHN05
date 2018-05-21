@@ -80,9 +80,7 @@ public class ANTT1MothersList extends AppCompatActivity implements MotherListsVi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(ANTT1MothersList.this, MainActivity.class);
         finish();
-        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 
@@ -126,6 +124,7 @@ public class ANTT1MothersList extends AppCompatActivity implements MotherListsVi
         try {
             JSONObject mJsnobject = new JSONObject(response);
             String status =mJsnobject.getString("status");
+            String message =mJsnobject.getString("message");
             if (status.equalsIgnoreCase("1")) {
                 JSONArray jsonArray = mJsnobject.getJSONArray("TT1_List");
                 if (jsonArray.length()!=0) {

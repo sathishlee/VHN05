@@ -39,7 +39,7 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
 
 
     public MotherListAdapter(List<PNMotherListResponse.VhnAN_Mothers_List> mResult, Activity applicationContext, String type, MakeCallInterface makeCallInterface) {
-     this.applicationContext =applicationContext;
+        this.applicationContext =applicationContext;
         this.mResult =mResult;
         this.type = type;
         this.makeCallInterface = makeCallInterface;
@@ -106,7 +106,7 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
         });
 
 
-        holder.txt_list_type.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                AppConstants.SELECTED_MID=pNMotherResponseModel.getMid();

@@ -49,11 +49,10 @@ TextView txt_mother_name,txt_picme_id,txt_mobile_number,txt_mage,txt_mlmpdate,tx
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(this, MainActivity.class);
         finish();
-        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
+
     private void initUI() {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);

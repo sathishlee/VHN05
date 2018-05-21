@@ -72,15 +72,12 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(ChangePasswordActivity.this, MainActivity.class);
         finish();
-        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
-
-
 
     @Override
     public void showProgress() {
@@ -159,4 +156,5 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         strNewPassword = edt_new_password.getText().toString();
         strConformPassword = edt_conform_password.getText().toString();
     }
+
 }

@@ -61,9 +61,7 @@ public class ImmunizationListActivity extends AppCompatActivity implements Mothe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(ImmunizationListActivity.this, MainActivity.class);
         finish();
-        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 
@@ -108,7 +106,7 @@ public class ImmunizationListActivity extends AppCompatActivity implements Mothe
             String status =mJsnobject.getString("status");
             if (status.equalsIgnoreCase("1")) {
                 JSONArray jsonArray = mJsnobject.getJSONArray("immunization_list");
-                if (jsonArray.length()!=0) {
+                if (jsonArray.length() != 0) {
                     recyclerView.setVisibility(View.VISIBLE);
                     textView.setVisibility(View.GONE);
 
@@ -124,11 +122,12 @@ public class ImmunizationListActivity extends AppCompatActivity implements Mothe
                         immunization_lists.add(immunizationList);
                         immunizationListAdapter.notifyDataSetChanged();
                     }
-                }else{
+                }
+            }else{
                     recyclerView.setVisibility(View.GONE);
                     textView.setVisibility(View.VISIBLE);
                 }
-            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

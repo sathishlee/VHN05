@@ -72,11 +72,10 @@ public class TreamPreTreamListActivity extends AppCompatActivity implements Moth
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(this, MainActivity.class);
         finish();
-        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 

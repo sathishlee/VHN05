@@ -48,6 +48,9 @@ public class PNMotherListResponse {
         private String vLongitude;
         private String mMotherMobile;
         private String mPhoto;
+        private String mLMP;
+
+
 
 
         public String getmPhoto(){return mPhoto;}
@@ -128,6 +131,13 @@ public class PNMotherListResponse {
 
         public void setMName(String mName) {
             this.mName = mName;
+        }
+
+        public String getMlmp(){
+            return mLMP;
+        }
+        public void setMlmp(String mLMP){
+            this.mLMP = mLMP;
         }
     }
 }

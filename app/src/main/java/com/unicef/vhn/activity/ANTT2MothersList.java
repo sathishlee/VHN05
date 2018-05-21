@@ -79,9 +79,7 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(ANTT2MothersList.this, MainActivity.class);
         finish();
-        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 
@@ -142,20 +140,19 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
         try {
             JSONObject mJsnobject = new JSONObject(response);
             String status =mJsnobject.getString("status");
+            String message =mJsnobject.getString("message");
+
             if (status.equalsIgnoreCase("1")) {
                 JSONArray jsonArray = mJsnobject.getJSONArray("TT2_List");
                 if (jsonArray.length()!=0) {
                     recyclerView.setVisibility(View.VISIBLE);
                     textView.setVisibility(View.GONE);
-
                     for (int i = 0; i < jsonArray.length(); i++) {
-
                         tt2list = new ANTT2ResponseModel.TT2_List();
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         tt2list.setMName(jsonObject.getString("mName"));
                         tt2list.setMPicmeId(jsonObject.getString("mPicmeId"));
                         tt2list.setMMotherMobile(jsonObject.getString("mMotherMobile"));
-
                         tt2_lists.add(tt2list);
                         antt2Adapter.notifyDataSetChanged();
                     }

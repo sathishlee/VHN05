@@ -39,15 +39,15 @@ public class PNHBNCDueAdapter extends RecyclerView.Adapter<PNHBNCDueAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final PNHBNCDueListModel.VPNHBNC_List tt1_list = tt1_lists.get(position);
-holder.txt_username.setText(tt1_list.getMotherName());
-holder.txt_picme_id.setText(tt1_list.getPicmeId());
-String strunvisit1 = null;
-String strunvisit2 = null;
-String strunvisit3 = null;
-String strunvisit4 = null;
-String strunvisit5 = null;
-String strunvisit6 = null;
-String strunvisit7 = null;
+        holder.txt_username.setText(tt1_list.getMotherName());
+        holder.txt_picme_id.setText(tt1_list.getPicmeId());
+        String strunvisit1 = null;
+        String strunvisit2 = null;
+        String strunvisit3 = null;
+        String strunvisit4 = null;
+        String strunvisit5 = null;
+        String strunvisit6 = null;
+        String strunvisit7 = null;
         if (tt1_list.getVisit1()==null){
             strunvisit1="1";
         }  if (tt1_list.getVisit2()==null){
@@ -59,12 +59,12 @@ String strunvisit7 = null;
         }if (tt1_list.getVisit5()==null){
             strunvisit5="5";
         }if (tt1_list.getVisit6()==null){
-
             strunvisit6="6";
         }if (tt1_list.getVisit7()==null){
             strunvisit7="";
         }
         holder.txt_visit_list.setText(strunvisit1+","+strunvisit2+","+strunvisit3+","+strunvisit4+","+strunvisit5+","+strunvisit6+","+strunvisit7);
+
         holder.img_call_mother.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

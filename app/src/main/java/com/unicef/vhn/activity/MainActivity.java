@@ -158,7 +158,9 @@ public class MainActivity extends AppCompatActivity
                         NotificationListFragment.newInstance()).commit();
                 return true;
             case R.id.action_help:
-                Toast.makeText(getApplicationContext(),"Help Menu",Toast.LENGTH_LONG).show();
+                preferenceData.setLogin(false);
+                finish();
+                Toast.makeText(getApplicationContext(),"Logged Out",Toast.LENGTH_LONG).show();
                 return true;
             default:
                 super.onOptionsItemSelected(item);
@@ -328,9 +330,9 @@ pDialog.dismiss();
     }
 
     @Override
-    public void NotificationResponseSuccess(String response) {/*
+    public void NotificationResponseSuccess(String response) {
 
-        Log.d(MainActivity.class.getSimpleName(), "Notification count response success" + response);
+        /*Log.d(MainActivity.class.getSimpleName(), "Notification count response success" + response);
         try {
             JSONObject jsonObject = new JSONObject(response);
             String status = jsonObject.getString("status");
@@ -348,7 +350,8 @@ pDialog.dismiss();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    */}
+    */
+    }
 
     @Override
     public void NotificationResponseError(String response) {
@@ -357,6 +360,17 @@ pDialog.dismiss();
 
     @Override
     public void TodayVisitResponseSuccess(String response) {
+        Log.d(MainActivity.class.getSimpleName(), "Notification count response success" + response);
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            String status = jsonObject.getString("status");
+            String msg = jsonObject.getString("message");
+             if (status.equalsIgnoreCase("1")) {
+                 preferenceData.setNotificationCount(jsonObject.getString(""));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
