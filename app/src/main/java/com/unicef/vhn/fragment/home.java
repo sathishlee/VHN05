@@ -4,6 +4,9 @@ package com.unicef.vhn.fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -297,13 +300,18 @@ public class home extends Fragment implements MotherListsViews {
                 txt_high_risk_count.setText(mJsnobject.getString("riskMothersCount"));
                 txt_infants_count.setText(mJsnobject.getString("infantCount"));
                 txt_sos_count.setText(mJsnobject.getString("sosCount"));
-                if (mJsnobject.getString("sosCount").equalsIgnoreCase("0")){
 
+                Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+                Ringtone ringtone = RingtoneManager.getRingtone(getActivity(),uri);
+                if (mJsnobject.getString("sosCount").equalsIgnoreCase("0")){
+                        ringtone.stop();
                 }else {
                     mFlipper.startFlipping();
                     mFlipper.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
                     mFlipper.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
+                        ringtone.play();
                 }
+
                 txt_antt_1_due.setText(mJsnobject.getString("ANTT1"));
                 txt_antt_2_due.setText(mJsnobject.getString("ANTT2"));
                 txt_pnhbnc_due.setText(mJsnobject.getString("pnhbncCount"));

@@ -26,13 +26,13 @@ import java.util.List;
  * Created by Suthishan on 20/1/2018.
  */
 
-public class ANTT1Adapter extends RecyclerView.Adapter<ANTT1Adapter.ViewHolder>  {
+public class ANTT1Adapter extends RecyclerView.Adapter<ANTT1Adapter.ViewHolder> {
 
     private List<ANTT1ResponseModel.TT1_List> tt1_lists;
     Activity activity;
     MakeCallInterface makeCallInterface;
 
-    public ANTT1Adapter(List<ANTT1ResponseModel.TT1_List> tt1_lists, Activity activity, MakeCallInterface makeCallInterface){
+    public ANTT1Adapter(List<ANTT1ResponseModel.TT1_List> tt1_lists, Activity activity, MakeCallInterface makeCallInterface) {
         this.tt1_lists = tt1_lists;
         this.activity = activity;
         this.makeCallInterface = makeCallInterface;
@@ -40,7 +40,7 @@ public class ANTT1Adapter extends RecyclerView.Adapter<ANTT1Adapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tt_mothers,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tt_mothers, parent, false);
         return new ViewHolder(view);
     }
 
@@ -52,7 +52,8 @@ public class ANTT1Adapter extends RecyclerView.Adapter<ANTT1Adapter.ViewHolder> 
         holder.img_call_mother.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               makeCallInterface.makeCall(tt1_list.getMMotherMobile());
+
+                makeCallInterface.makeCall(tt1_list.getMMotherMobile());
             }
         });
 
@@ -65,8 +66,9 @@ public class ANTT1Adapter extends RecyclerView.Adapter<ANTT1Adapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_picme_id,txt_username;
+        TextView txt_picme_id, txt_username;
         ImageView img_call_mother;
+
         public ViewHolder(View itemView) {
             super(itemView);
             txt_username = itemView.findViewById(R.id.txt_username);

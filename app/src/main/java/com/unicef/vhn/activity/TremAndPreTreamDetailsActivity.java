@@ -49,7 +49,9 @@ public class TremAndPreTreamDetailsActivity extends AppCompatActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+//        Intent intent = new Intent(this, MainActivity.class);
         finish();
+//        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 
@@ -58,8 +60,8 @@ public class TremAndPreTreamDetailsActivity extends AppCompatActivity implements
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
-        motherListPresenter = new MotherListPresenter(this,this);
-        motherListPresenter.getTremAndPreTremMothers(preferenceData.getVhnId(),preferenceData.getVhnCode(),AppConstants.SELECTED_MID);
+        motherListPresenter = new MotherListPresenter(this, this);
+        motherListPresenter.getTremAndPreTremMothers(preferenceData.getVhnId(), preferenceData.getVhnCode(), AppConstants.SELECTED_MID);
         txt_delivery_date = (TextView) findViewById(R.id.txt_delivery_date);
         txt_delivery_time = (TextView) findViewById(R.id.txt_delivery_time);
         txt_delivery_place = (TextView) findViewById(R.id.txt_delivery_place);
@@ -86,7 +88,7 @@ public class TremAndPreTreamDetailsActivity extends AppCompatActivity implements
 
     @Override
     public void hideProgress() {
-progressDialog.dismiss();
+        progressDialog.dismiss();
     }
 
     @Override
@@ -97,19 +99,19 @@ progressDialog.dismiss();
 
     private void deliveryValues(String response) {
 
-        JSONObject jsonObject_res =null;
-        try{
+        JSONObject jsonObject_res = null;
+        try {
             jsonObject_res = new JSONObject(response);
             String status = jsonObject_res.getString("status");
 
             String message = jsonObject_res.getString("message");
             if (status.equalsIgnoreCase("1")) {
-                JSONObject  jsonObject = jsonObject_res.getJSONObject("SingleDelveryInfo");
+                JSONObject jsonObject = jsonObject_res.getJSONObject("SingleDelveryInfo");
 
 //                preferenceData.storeDid(jsonObject.getString("did" ));
                 Log.d("message---->", message);
 //                if(jsonObject.getString("ddatetime")!="")
-                txt_delivery_date.setText(jsonObject.getString("ddatetime"   ));
+                txt_delivery_date.setText(jsonObject.getString("ddatetime"));
 //                if (jsonObject.getString("dtime")!="")
                 txt_delivery_time.setText(jsonObject.getString("dtime"));
 //                if (jsonObject.getString("dplace")!="")
@@ -143,14 +145,12 @@ progressDialog.dismiss();
                 txt_opv_given_date.setText(jsonObject.getString("dOPVDate"));
 //                if (jsonObject.getString("dHEPBDate")!="")
                 txt_hepb_given_date.setText(jsonObject.getString("dHEPBDate"));
-            }
-            else{
-                Log.d("message---->",message);
+            } else {
+                Log.d("message---->", message);
 
             }
 
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 

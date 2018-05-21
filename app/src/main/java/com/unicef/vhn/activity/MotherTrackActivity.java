@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 
 public class MotherTrackActivity extends AppCompatActivity implements MotherListsViews {
-TextView txt_mother_name,txt_picme_id,txt_mobile_number,txt_mage,txt_mlmpdate,txt_medddate;
+    TextView txt_mother_name, txt_picme_id, txt_mobile_number, txt_mage, txt_mlmpdate, txt_medddate;
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
@@ -40,7 +40,7 @@ TextView txt_mother_name,txt_picme_id,txt_mobile_number,txt_mage,txt_mlmpdate,tx
 
     }
 
-    public void showActionBar(){
+    public void showActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Mother's Detail");
         actionBar.setHomeButtonEnabled(true);
@@ -49,7 +49,9 @@ TextView txt_mother_name,txt_picme_id,txt_mobile_number,txt_mage,txt_mlmpdate,tx
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(this, MainActivity.class);
         finish();
+        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 
@@ -57,10 +59,10 @@ TextView txt_mother_name,txt_picme_id,txt_mobile_number,txt_mage,txt_mlmpdate,tx
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
-        preferenceData =new PreferenceData(this);
-        pnMotherListPresenter = new MotherListPresenter(MotherTrackActivity.this,this);
+        preferenceData = new PreferenceData(this);
+        pnMotherListPresenter = new MotherListPresenter(MotherTrackActivity.this, this);
 //        pnMotherListPresenter.getSelectedMother("V10001","1","1");
-        pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(),preferenceData.getVhnId(),  AppConstants.SELECTED_MID);
+        pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
 
         txt_mother_name = (TextView) findViewById(R.id.txt_mother_name);
         txt_picme_id = (TextView) findViewById(R.id.txt_picme_id);
@@ -83,7 +85,7 @@ TextView txt_mother_name,txt_picme_id,txt_mobile_number,txt_mage,txt_mlmpdate,tx
 
     @Override
     public void showLoginSuccess(String response) {
-        AppConstants.SELECTED_MID="0";
+        AppConstants.SELECTED_MID = "0";
         Log.e(MotherTrackActivity.class.getSimpleName(), "Response success" + response);
 
         try {
@@ -91,7 +93,7 @@ TextView txt_mother_name,txt_picme_id,txt_mobile_number,txt_mage,txt_mlmpdate,tx
             String status = mJsnobject.getString("status");
             String message = mJsnobject.getString("message");
             if (status.equalsIgnoreCase("1")) {
-                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                 JSONObject mJsnobject_tracking = mJsnobject.getJSONObject("tracking");
                 txt_mother_name.setText(mJsnobject_tracking.getString("mName"));
                 txt_picme_id.setText(mJsnobject_tracking.getString("mPicmeId"));
@@ -99,19 +101,19 @@ TextView txt_mother_name,txt_picme_id,txt_mobile_number,txt_mage,txt_mlmpdate,tx
                 txt_mage.setText(mJsnobject_tracking.getString("mAge"));
                 txt_mlmpdate.setText(mJsnobject_tracking.getString("mLMP"));
                 txt_medddate.setText(mJsnobject_tracking.getString("mEDD"));
-            }else{
-                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 
             }
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
     @Override
     public void showLoginError(String message) {
-        AppConstants.SELECTED_MID="0";
-        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+        AppConstants.SELECTED_MID = "0";
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 
     }
 

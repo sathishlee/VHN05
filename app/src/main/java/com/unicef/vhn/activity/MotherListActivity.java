@@ -164,43 +164,37 @@ public class MotherListActivity extends AppCompatActivity implements MotherLists
         Log.e(MotherListActivity.class.getSimpleName(), "Response success" + response);
         try {
             JSONObject mJsnobject = new JSONObject(response);
-            JSONArray jsonArray = mJsnobject.getJSONArray("vhnAN_Mothers_List");
-            if (jsonArray.length()!=0) {
-                mother_recycler_view.setVisibility(View.VISIBLE);
-                txt_no_records_found.setVisibility(View.GONE);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    mresponseResult.setMid(jsonObject.getString("mid"));
-                    mresponseResult.setMName(jsonObject.getString("mName"));
-                    mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
-                    mresponseResult.setVhnId(jsonObject.getString("vhnId"));
-                    mresponseResult.setmMotherMobile(jsonObject.getString("mMotherMobile"));
-                    mresponseResult.setMotherType(jsonObject.getString("motherType"));
-                    mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
-                    mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
-                    mresponseResult.setmPhoto(jsonObject.getString("mPhoto"));
+            String status = mJsnobject.getString("status");
+            String message = mJsnobject.getString("message");
+            if(status.equalsIgnoreCase("1")) {
+                JSONArray jsonArray = mJsnobject.getJSONArray("vhnAN_Mothers_List");
+                if (jsonArray.length() != 0) {
+                    mother_recycler_view.setVisibility(View.VISIBLE);
+                    txt_no_records_found.setVisibility(View.GONE);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        mresponseResult.setMid(jsonObject.getString("mid"));
+                        mresponseResult.setMName(jsonObject.getString("mName"));
+                        mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
+                        mresponseResult.setVhnId(jsonObject.getString("vhnId"));
+                        mresponseResult.setmMotherMobile(jsonObject.getString("mMotherMobile"));
+                        mresponseResult.setMotherType(jsonObject.getString("motherType"));
+                        mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
+                        mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
+                        mresponseResult.setmPhoto(jsonObject.getString("mPhoto"));
 
-                    //Photo Display
-                    /*str_mPhoto = jsonObject.getString("mPhoto");
-                    Log.d("mphoto-->",Apiconstants.PHOTO_URL+str_mPhoto);
-                    Picasso.with(context)
-                            .load(Apiconstants.PHOTO_URL+str_mPhoto)
-                            .placeholder(R.drawable.girl)
-                            .fit()
-                            .centerCrop()
-                            .memoryPolicy(MemoryPolicy.NO_CACHE)
-                            .networkPolicy(NetworkPolicy.NO_CACHE)
-                            .transform(new RoundedTransformation(90,4))
-                            .error(R.drawable.girl)
-                            .into(cardview_image);*/
 
-                    mResult.add(mresponseResult);
-                    mAdapter.notifyDataSetChanged();
-                }
+                        mResult.add(mresponseResult);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }else{
+                    mother_recycler_view.setVisibility(View.GONE);
+                    txt_no_records_found.setVisibility(View.VISIBLE);
+                    }
             }else{
-                mother_recycler_view.setVisibility(View.GONE);
-                txt_no_records_found.setVisibility(View.VISIBLE);
+                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+
             }
         }catch (JSONException e) {
             e.printStackTrace();

@@ -98,10 +98,12 @@ public class PNViewReportsActivity extends AppCompatActivity implements VisitANM
         viewPager.setOffscreenPageLimit(mPnHbncVisitRecordsList.size());
         viewPager.setAdapter(pnhbncVisitRecordsAdapter);
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+//        Intent intent = new Intent(MothersDetailsActivity.this, MainActivity.class);
         finish();
+//        startActivity(intent);
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -126,10 +128,8 @@ pDialog.dismiss();
                 txt_no_records_found.setVisibility(View.GONE);
                 viewPager.setVisibility(View.VISIBLE);
                 tabLayout.setVisibility(View.VISIBLE);
-
-
                 JSONArray jsonArray = mJsnobject.getJSONArray("pnMothersVisit");
-                if(jsonArray.length()!=0) {
+                if (jsonArray.length()!=0) {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         mPnHbncVisitRecordsModel = new PnHbncVisitRecordsModel.PnMothersVisit();
 
@@ -161,8 +161,6 @@ pDialog.dismiss();
                         mPnHbncVisitRecordsModel.setCBreastFeedingReason(jsonObject.getString("cBreastFeedingReason"));
                         mPnHbncVisitRecordsModel.setCOutCome(jsonObject.getString("cOutCome"));
 
-                        AppConstants.MOTHER_PICME_ID = mPnHbncVisitRecordsModel.getPicmeId();
-                        AppConstants.SELECTED_MID = mPnHbncVisitRecordsModel.getMid();
 
                         mPnHbncVisitRecordsList.add(mPnHbncVisitRecordsModel);
                         pnhbncVisitRecordsAdapter.notifyDataSetChanged();
@@ -172,7 +170,6 @@ pDialog.dismiss();
                     viewPager.setVisibility(View.GONE);
                     tabLayout.setVisibility(View.GONE);
                 }
-
                 }else{
                 txt_no_records_found.setVisibility(View.VISIBLE);
                 viewPager.setVisibility(View.GONE);

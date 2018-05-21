@@ -10,7 +10,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
@@ -66,32 +65,19 @@ import static android.R.attr.fraction;
 
 public class MotherLocationActivity extends FragmentActivity implements LocationViews, OnMapReadyCallback, View.OnClickListener {
 
-    List<LocationRequestModel.Tracking> trackings;
-
     ProgressDialog progressDialog;
-
     LocationPresenter locationPresenter;
-    LocationRequestModel locationRequestModel;
-
     Activity applicationContext;
 
-    private static final int MY_PERMISSION_ACCESS_COARSE_LOCATION = 11;
-    private static final int MY_PERMISSION_ACCESS_FINE_LOCATION = 12;
-
-    LocationManager locationManager;
-    android.location.LocationListener listener;
     PreferenceData preferenceData;
     private static final int overview = 0;
-    private final int PLACE_AUTOCOMPLETE_REQUEST_CODE_FROM = 201;
-    private final int PLACE_AUTOCOMPLETE_REQUEST_CODE_TO = 202;
     private String TAG = getClass().getSimpleName();
     private GoogleMap mMap;
     private String GOOGLE_PLACES_API_KEY = "AIzaSyD789ejb86QhaIBRPovLCtjW_XrrDAKdto";
     private List<Marker> markers;
     TextView txt_username, txt_picme_id;
-    String strLat,strLon, motherLatitude, motherLongitude, vhnLatitude, vhnLongitude, motherLocation, VhnLocation;
+    String strLat, strLon, motherLatitude, motherLongitude, vhnLatitude, vhnLongitude;
     String strMotherloc, strVHNloc, strmAdd, strvAdd;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,8 +85,6 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         setContentView(R.layout.activity_maps);
         bindActivity();
     }
-    FloatingActionButton get_directions;
-
 
 
     private void bindActivity() {
@@ -111,14 +95,14 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Please Wait ...");
 
-        txt_username = (TextView)findViewById(R.id.txt_username);
-        txt_picme_id = (TextView)findViewById(R.id.txt_picme_id);
+        txt_username = (TextView) findViewById(R.id.txt_username);
+        txt_picme_id = (TextView) findViewById(R.id.txt_picme_id);
 
         preferenceData = new PreferenceData(this);
 //        this.trackings = trackings;
 
         locationPresenter = new LocationPresenter(MotherLocationActivity.this, this);
-        locationPresenter.getMotherLocatin(preferenceData.getVhnCode(),preferenceData.getVhnId(), AppConstants.SELECTED_MID);
+        locationPresenter.getMotherLocatin(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
 
         findViewById(R.id.get_directions).setOnClickListener(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -157,26 +141,6 @@ public class MotherLocationActivity extends FragmentActivity implements Location
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         setupGoogleMapScreenSettings(googleMap);
-
-//        mMap.setMyLocationEnabled(true);
-//        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            // TODO: Consider calling
-//            Toast.makeText(MotherLocationActivity.this, "First enable LOCATION ACCESS in settings.", Toast.LENGTH_LONG).show();
-//            return;
-//        }
-//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 1, listener);
-
-
-        // Add a marker in Sydney and move the camera
-
-/*        double mlat = Double.parseDouble(motherLatitude);
-        double mlong = Double.parseDouble(motherLongitude);
-        LatLng latLng = new LatLng(mlat,mlong);
-        mMap.addMarker(new MarkerOptions().position(latLng).title(strmAdd));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));*/
-        get_directions = (FloatingActionButton)findViewById(R.id.get_directions);
-
-
     }
 
     @Override
@@ -192,68 +156,37 @@ public class MotherLocationActivity extends FragmentActivity implements Location
 //                    showMessage("Please pick to address");
 //                    return;
 //                }
-                if (view.equals(get_directions)){
-                    addMarkersToMaplatlng(motherLatitude, motherLongitude, vhnLatitude, vhnLongitude);
-                    getResultLocation();
-                }else{
-                    addMotherLocation(motherLatitude, motherLongitude);
-                }
+                getResultLocation();
 //                getDirections();
                 break;
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        finish();
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void getDirections(){
+    public void getDirections() {
         Log.e("Mlatitude--", motherLatitude);
         Log.e("Mlong--", motherLongitude);
-        Uri gmmIntentUri = Uri.parse("google.navigation:q="+motherLatitude+","+motherLongitude);
+        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + motherLatitude + "," + motherLongitude);
 
 
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                mapIntent.setPackage("com.google.android.apps.maps");
-                if (mapIntent.resolveActivity(applicationContext.getPackageManager()) != null) {
-                    applicationContext. startActivity(mapIntent);
-                }
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        if (mapIntent.resolveActivity(applicationContext.getPackageManager()) != null) {
+            applicationContext.startActivity(mapIntent);
+        }
     }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        Intent intent = new Intent(MotherLocationActivity.this, .class);
-//        finish();
-//        startActivity(intent);
-//        return super.onOptionsItemSelected(item);
-//    }
-//    private void getResult() {
-//        DirectionsResult results = getDirectionsDetails(mTvFrom.getText().toString(), mTvTo.getText().toString(), TravelMode.DRIVING);
-//        if (results != null) {
-//            addPolyline(results, mMap);
-//            addMarkersToMap(results, mMap);
-//            positionCamera(results.routes[overview], mMap);
-//        }
-//    }
 
     private void getResultLocation() {
         DirectionsResult directionsResult = getDirectionsDetails(strmAdd, strvAdd, TravelMode.DRIVING);
 
-        Log.d("Mother---",strmAdd);
-        Log.d("VHN--",strvAdd);
+        Log.d("Mother---", strmAdd);
+        Log.d("VHN--", strvAdd);
         if (directionsResult != null) {
             addPolyline(directionsResult, mMap);
 //            addMarkersToMap(directionsResult, mMap);
-            addMarkersToMap(directionsResult,mMap);
+            addMarkersToMap(directionsResult, mMap);
 
             positionCamera(directionsResult.routes[overview], mMap);
         }
-    }
-
-    public  void addMarkerMap(DirectionsResult directionsResult, GoogleMap mMap){
-//        Marker markerSrc = mMap.addMarker(new MarkerOptions().position(new LatLng(directionsResult.routes[overview])))
     }
 
     private void addMarkersToMap(DirectionsResult directionsResult, GoogleMap mMap) {
@@ -262,18 +195,7 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         markers = new ArrayList<>();
         markers.add(markerSrc);
         markers.add(markerDes);
-    }
-    private void addMotherLocation(String motherLatitude, String motherLongitude) {
-        double mlat = Double.parseDouble(motherLatitude);
-        double mlong = Double.parseDouble(motherLongitude);
 
-        final LatLng mlatlng = new LatLng(mlat,mlong);
-        MarkerOptions mothermarker = new MarkerOptions().position(new LatLng(mlat,mlong)).title(strmAdd);
-
-        strMotherloc = String.valueOf(mothermarker);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mlatlng, 12));
-        mothermarker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-        mMap.addMarker(mothermarker);
     }
 
     private void addMarkersToMaplatlng(String motherLatitude, String motherLongitude, String vhnLatitude, String vhnLongitude) {
@@ -282,16 +204,16 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         double vlat = Double.parseDouble(vhnLatitude);
         double vlong = Double.parseDouble(vhnLongitude);
 
-        final LatLng mlatlng = new LatLng(mlat,mlong);
+        final LatLng mlatlng = new LatLng(mlat, mlong);
         strLat = String.valueOf(mlatlng);
-        Log.d("Mother Location--->",strLat);
+        Log.d("Mother Location--->", strLat);
 
-        final LatLng vlatlng = new LatLng(vlat,vlong);
+        final LatLng vlatlng = new LatLng(vlat, vlong);
         strLon = String.valueOf(vlatlng);
-        Log.d("VHN Location--->",strLon);
+        Log.d("VHN Location--->", strLon);
 
-        MarkerOptions mothermarker = new MarkerOptions().position(new LatLng(mlat,mlong)).title(strmAdd);
-        MarkerOptions vhnmarker = new MarkerOptions().position(new LatLng(vlat,vlong)).title(preferenceData.getVhnName());
+        MarkerOptions mothermarker = new MarkerOptions().position(new LatLng(mlat, mlong)).title(AppConstants.SELECTED_MID);
+        MarkerOptions vhnmarker = new MarkerOptions().position(new LatLng(vlat, vlong)).title(preferenceData.getVhnName());
 
         strMotherloc = String.valueOf(mothermarker);
         strVHNloc = String.valueOf(vhnmarker);
@@ -309,58 +231,34 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         Geocoder geocoder = new Geocoder(this, Locale.ENGLISH);
 
         try {
-            List<Address> addresses = geocoder.getFromLocation(mlat,mlong,1);
-            List<Address> addresses1 = geocoder.getFromLocation(vlat,vlong,1);
+            List<Address> addresses = geocoder.getFromLocation(mlat, mlong, 1);
+            List<Address> addresses1 = geocoder.getFromLocation(vlat, vlong, 1);
 
-            if(addresses !=null){
+            if (addresses != null) {
                 String maddress = addresses.get(0).getAddressLine(0);
-                String mcity =  addresses.get(0).getLocality();
+                String mcity = addresses.get(0).getLocality();
                 String mstate = addresses.get(0).getAdminArea();
                 String mcountry = addresses.get(0).getCountryName();
                 String mpostalcode = addresses.get(0).getPostalCode();
                 String mknownname = addresses.get(0).getFeatureName();
 
-                strmAdd = String.valueOf(maddress+mcity+mstate);
+                strmAdd = String.valueOf(maddress + mcity + mstate);
             }
 
-            if(addresses !=null){
+            if (addresses != null) {
                 String vaddress = addresses1.get(0).getAddressLine(0);
-                String vcity =  addresses1.get(0).getLocality();
+                String vcity = addresses1.get(0).getLocality();
                 String vstate = addresses1.get(0).getAdminArea();
                 String vcountry = addresses1.get(0).getCountryName();
                 String vpostalcode = addresses1.get(0).getPostalCode();
                 String vknownname = addresses1.get(0).getFeatureName();
 
-                strvAdd = String.valueOf(vaddress+vcity+vstate);
+                strvAdd = String.valueOf(vaddress + vcity + vstate);
             }
-
-            if (strmAdd.equals(strvAdd)){
-                Toast.makeText(getApplicationContext(),"You are Nearer to Mother...", Toast.LENGTH_SHORT).show();
-            }
-//            if (addresses != null) {
-//                Address returnedAddress = addresses.get(0);
-//                StringBuilder strReturnedAddress = new StringBuilder("Mother Address:\n");
-//
-//                for(int i=0; i<returnedAddress.getMaxAddressLineIndex(); i++) {
-//                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
-//                }
-//                strmAdd = String.valueOf(strReturnedAddress);
-//
-//            }
-//            if (addresses1 != null) {
-//                Address address = addresses1.get(0);
-//                StringBuilder stringBuilder = new StringBuilder("VHN Address:\n");
-//                for(int i=0; i<address.getMaxAddressLineIndex(); i++) {
-//                    stringBuilder.append(address.getAddressLine(i)).append("\n");
-//                }
-//                strvAdd = String.valueOf(stringBuilder);
-//            }
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return;
-
 
 
     }
@@ -399,7 +297,7 @@ public class MotherLocationActivity extends FragmentActivity implements Location
 
     private DirectionsResult getDirectionsDetails(String origin, String destination, TravelMode mode) {
 
-        Log.d("Origin",origin);
+        Log.d("Origin", origin);
         Log.d("Destination", destination);
 
         DateTime now = new DateTime();
@@ -411,18 +309,18 @@ public class MotherLocationActivity extends FragmentActivity implements Location
                     .departureTime(now)
                     .await();
         } catch (ApiException e) {
-            Log.e("DirectionsResult1",e.toString());
+            Log.e("DirectionsResult1", e.toString());
             e.printStackTrace();
             showMessage(e.getMessage());
             return null;
         } catch (InterruptedException e) {
-            Log.e("DirectionsResult2",e.toString());
+            Log.e("DirectionsResult2", e.toString());
 
             e.printStackTrace();
             showMessage(e.getMessage());
             return null;
         } catch (IOException e) {
-            Log.e("DirectionsResult",e.toString());
+            Log.e("DirectionsResult", e.toString());
 
             e.printStackTrace();
             showMessage(e.getMessage());
@@ -445,7 +343,7 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         } catch (GooglePlayServicesRepairableException e) {
             showMessage(e.getMessage());
             // TODO: Handle the error.
-            } catch (GooglePlayServicesNotAvailableException e) {
+        } catch (GooglePlayServicesNotAvailableException e) {
             // TODO: Handle the error.
             showMessage(e.getMessage());
         }
@@ -466,19 +364,6 @@ public class MotherLocationActivity extends FragmentActivity implements Location
 
     }
 
-//    private void setResultText(Place place, int requestCode) {
-//        switch (requestCode) {
-//            case PLACE_AUTOCOMPLETE_REQUEST_CODE_FROM:
-//
-////                mTvFrom.setText(place.getAddress());
-//                break;
-//            case PLACE_AUTOCOMPLETE_REQUEST_CODE_TO:
-//
-//                mTvTo.setText(place.getAddress());
-//                break;
-//        }
-//    }
-
     private void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
@@ -495,7 +380,7 @@ public class MotherLocationActivity extends FragmentActivity implements Location
 
     @Override
     public void showLocationSuccess(String response) {
-        AppConstants.SELECTED_MID="0";
+        AppConstants.SELECTED_MID = "0";
 
         Log.e(MotherLocationActivity.class.getSimpleName(), "Response success" + response);
 
@@ -505,71 +390,28 @@ public class MotherLocationActivity extends FragmentActivity implements Location
             String message = mJsnobject.getString("message");
             mMap.clear();
             if (status.equalsIgnoreCase("1")) {
-                Toast.makeText(getApplicationContext(),message, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                 JSONObject mJsnobject_tracking = mJsnobject.getJSONObject("tracking");
                 txt_username.setText(mJsnobject_tracking.getString("mName"));
                 txt_picme_id.setText(mJsnobject_tracking.getString("mPicmeId"));
+                motherLatitude = mJsnobject_tracking.getString("mLatitude");
+                motherLongitude = mJsnobject_tracking.getString("mLongitude");
+                vhnLatitude = mJsnobject_tracking.getString("vLatitude");
+                vhnLongitude = mJsnobject_tracking.getString("vLongitude");
 
-                motherLocation = mJsnobject_tracking.getString("mLocation");
-                VhnLocation = mJsnobject_tracking.getString("vLocation");
-
-                if(motherLocation.equalsIgnoreCase("0")){
-                    Toast.makeText(getApplicationContext(),"Mother Location Not Found...!",Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-                if(motherLocation.equalsIgnoreCase("1")) {
-                    motherLatitude = mJsnobject_tracking.getString("mLatitude");
-                    motherLongitude = mJsnobject_tracking.getString("mLongitude");
-                    addMotherLocation(motherLatitude,motherLongitude);
-                }
-                if(VhnLocation.equalsIgnoreCase("1")) {
-                    vhnLatitude = mJsnobject_tracking.getString("vLatitude");
-                    vhnLongitude = mJsnobject_tracking.getString("vLongitude");
-                }else{
-                    Toast.makeText(getApplicationContext(),VhnLocation,Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-
-                /*JSONObject mJsonObject = mJsnobject.getJSONObject("mother_location");
-                motherLatitude = mJsonObject.getString("mLatitude");
-                motherLongitude = mJsonObject.getString("mLongitude");
-                JSONObject vJsonObject = mJsnobject.getJSONObject("vhn_location");
-                vhnLatitude = vJsonObject.getString("vLatitude");
-                vhnLongitude = vJsonObject.getString("vLongitude");*/
-
-
-                /*JSONArray routeArray = mJsnobject.getJSONArray("mother_location");
-                for (int i = 0; i < routeArray.length(); i++) {
-
-                    LatLng latLng1=new LatLng(Double.parseDouble(routeArray.getJSONObject(i).getString("mLatitude")),Double.parseDouble(routeArray.getJSONObject(i).getString("mLongitude")));
-                    mMap.addMarker(new MarkerOptions().position(latLng1).title("Mother Location"));
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng1, 12));
-                    addMarkersToMap(Double.parseDouble(routeArray.getJSONObject(i).getString("mLatitude")),
-                            Double.parseDouble(routeArray.getJSONObject(i).getString("mLongitude")));
-                }
-
-                JSONArray routeArray1 = mJsnobject.getJSONArray("vhn_location");
-                for (int i = 0; i < routeArray1.length(); i++) {
-                    LatLng latLng2=new LatLng(Double.parseDouble(routeArray1.getJSONObject(i).getString("vLatitude")),Double.parseDouble(routeArray.getJSONObject(i).getString("vLongitude")));
-                    mMap.addMarker(new MarkerOptions().position(latLng2).title("VHN Location"));
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng2, 12));
-                    addMarkersToMap(Double.parseDouble(routeArray.getJSONObject(i).getString("mLatitude")),
-                            Double.parseDouble(routeArray.getJSONObject(i).getString("mLongitude")));
-                }*/
-
-
-            }else{
-                Toast.makeText(getApplicationContext(),message, Toast.LENGTH_SHORT).show();
+                addMarkersToMaplatlng(motherLatitude, motherLongitude, vhnLatitude, vhnLongitude);
+            } else {
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 
             }
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
     @Override
     public void showLocationError(String string) {
-        AppConstants.SELECTED_MID="0";
+        AppConstants.SELECTED_MID = "0";
 
         Log.e(MotherLocationActivity.class.getSimpleName(), "Response success" + string);
 

@@ -15,35 +15,38 @@ public class MothersViewRecordActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
-    Button btn_primary_report,btn_view_report;
+    Button btn_primary_report, btn_view_report;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_health_records);
         initUI();
         onClickListner();
+
+
     }
 
-    public void initUI(){
+    public void initUI() {
         viewPager = (ViewPager) findViewById(R.id.hre_viewpager);
         setupViewPager(viewPager);
-        tabLayout = (TabLayout)findViewById(R.id.hre_tabs);
+        tabLayout = (TabLayout) findViewById(R.id.hre_tabs);
         tabLayout.setupWithViewPager(viewPager);
         btn_primary_report = (Button) findViewById(R.id.btn_primary_report);
         btn_view_report = (Button) findViewById(R.id.btn_view_report);
     }
 
-    private void onClickListner(){
+    private void onClickListner() {
         btn_primary_report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),MothersPrimaryRecordsActivity.class));
+                startActivity(new Intent(getApplicationContext(), MothersPrimaryRecordsActivity.class));
             }
         });
         btn_view_report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),MothersViewRecordActivity.class));
+                startActivity(new Intent(getApplicationContext(), MothersViewRecordActivity.class));
             }
         });
     }

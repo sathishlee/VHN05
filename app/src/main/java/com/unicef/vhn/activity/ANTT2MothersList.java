@@ -52,7 +52,7 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
     private List<ANTT2ResponseModel.TT2_List> tt2_lists;
     ANTT2ResponseModel.TT2_List tt2list;
 
-    boolean isDataUpdate=true;
+    boolean isDataUpdate = true;
     private RecyclerView recyclerView;
     private TextView textView;
     private ANTT2Adapter antt2Adapter;
@@ -70,7 +70,7 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
         initUI();
     }
 
-    public void showActionBar(){
+    public void showActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("AN TT 2 Due List");
         actionBar.setHomeButtonEnabled(true);
@@ -79,11 +79,13 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(ANTT2MothersList.this, MainActivity.class);
         finish();
+        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 
-    public void initUI(){
+    public void initUI() {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
@@ -94,33 +96,13 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
         tt2_lists = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.antt2_mother_recycler_view);
         textView = (TextView) findViewById(R.id.txt_no_records_found);
-        antt2Adapter = new ANTT2Adapter(tt2_lists, ANTT2MothersList.this,this);
+        antt2Adapter = new ANTT2Adapter(tt2_lists, ANTT2MothersList.this, this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(ANTT2MothersList.this);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(antt2Adapter);
 
-//        txt_filter = (TextView) findViewById(R.id.txt_filter);
-//
-//        txt_filter.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                final Dialog dialog = new Dialog(context);
-//                dialog.setContentView(R.layout.dialog_fragment);
-////                dialog.setTitle("Title...");
-//
-//
-//                Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
-//                btn_cancel.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        dialog.dismiss();
-//                    }
-//                });
-//                dialog.show();
-//            }
-//        });
     }
 
     @Override
@@ -139,27 +121,31 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
 
         try {
             JSONObject mJsnobject = new JSONObject(response);
-            String status =mJsnobject.getString("status");
-            String message =mJsnobject.getString("message");
-
+            String status = mJsnobject.getString("status");
+            String message = mJsnobject.getString("message");
             if (status.equalsIgnoreCase("1")) {
                 JSONArray jsonArray = mJsnobject.getJSONArray("TT2_List");
-                if (jsonArray.length()!=0) {
+                if (jsonArray.length() != 0) {
                     recyclerView.setVisibility(View.VISIBLE);
                     textView.setVisibility(View.GONE);
+
                     for (int i = 0; i < jsonArray.length(); i++) {
+
                         tt2list = new ANTT2ResponseModel.TT2_List();
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         tt2list.setMName(jsonObject.getString("mName"));
                         tt2list.setMPicmeId(jsonObject.getString("mPicmeId"));
                         tt2list.setMMotherMobile(jsonObject.getString("mMotherMobile"));
+
                         tt2_lists.add(tt2list);
                         antt2Adapter.notifyDataSetChanged();
                     }
-                }else{
+                } else {
                     recyclerView.setVisibility(View.GONE);
                     textView.setVisibility(View.VISIBLE);
                 }
+            }else{
+                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -184,12 +170,12 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
 
     @Override
     public void makeCall(String mMotherMobile) {
-        isDataUpdate=false;
+        isDataUpdate = false;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestCallPermission();
         } else {
-            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+"+mMotherMobile)));
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+" + mMotherMobile)));
         }
     }
 
@@ -197,7 +183,7 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
         Log.i(ANTT1MothersList.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CALL_PHONE)) {
-            Toast.makeText(getApplicationContext(),"Displaying Call permission rationale to provide additional context.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Displaying Call permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
                     MAKE_CALL_PERMISSION_REQUEST_CODE);

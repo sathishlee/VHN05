@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,9 +49,10 @@ public class MainActivity extends AppCompatActivity
     ProgressDialog pDialog;
     PreferenceData preferenceData;
     NotificationPresenter notificationPresenter;
-    TextView notification_count;
+   public static TextView notification_count;
     String strTodayVisitCount="0";
     int mCartItemCount = 10;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData =new PreferenceData(this);
+        preferenceData.setNotificationCount(strTodayVisitCount);
         notificationPresenter =new NotificationPresenter(this,this);
         notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(),preferenceData.getVhnId());
 
@@ -71,12 +74,10 @@ public class MainActivity extends AppCompatActivity
         TimerTask hourlyTask = new TimerTask () {
             @Override
             public void run () {
-                // your code here...
                 if (checkNetwork.isNetworkAvailable()){
                     notificationPresenter.getNotificationCount(preferenceData.getVhnId());
                 }else{
-                    notification_count.setText(preferenceData.getNotificationCount());
-
+                    strTodayVisitCount = preferenceData.getNotificationCount();
                 }
             }
         };
@@ -90,7 +91,11 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        ImageView imageView = (ImageView) findViewById(R.id.  cardview_image);
+        TextView vhnName = (TextView) findViewById(R.id.  txt_username);
+        TextView vhnId = (TextView) findViewById(R.id.  vhn_id);
+
+                navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
 
         setupNavigationView();
@@ -118,7 +123,7 @@ public class MainActivity extends AppCompatActivity
         MenuItemCompat.setActionView(menuItem, R.layout.notification_count);
         View view = MenuItemCompat.getActionView(menuItem);
         notification_count = (TextView) view.findViewById(R.id.notification_count);
-//        notification_count.setText(String.valueOf(strTodayVisitCount));
+        notification_count.setText(String.valueOf(strTodayVisitCount));
         setupNotiCount();
 
         view.setOnClickListener(new View.OnClickListener() {
@@ -151,16 +156,13 @@ public class MainActivity extends AppCompatActivity
 
         switch (item.getItemId()) {
             case R.id.action_notification:
-//                Toast.makeText(getApplicationContext(),"Notification Clicked", Toast.LENGTH_LONG).show();
                 notificationPresenter.getNotificationList(preferenceData.getVhnCode(),preferenceData.getVhnId());
                 android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content,
                         NotificationListFragment.newInstance()).commit();
                 return true;
             case R.id.action_help:
-                preferenceData.setLogin(false);
-                finish();
-                Toast.makeText(getApplicationContext(),"Logged Out",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Help Menu",Toast.LENGTH_LONG).show();
                 return true;
             default:
                 super.onOptionsItemSelected(item);
@@ -180,16 +182,12 @@ public class MainActivity extends AppCompatActivity
             AppConstants.MOTHER_LIST_TITLE="AN Mother List";
 
             startActivity(new Intent(getApplicationContext(), MotherListActivity.class));
-//            Intent i = new Intent(getApplicationContext(), AnMotherListActivity.class);
-//            startActivity(i);
         }
         if (id == R.id.pn_hbnc_mothers) {
             AppConstants.GET_MOTHER_LIST_TYPE="pn_hbnc_totlal_coun";
             AppConstants.MOTHER_LIST_TITLE="PN/HBNC Mother List";
 
             startActivity(new Intent(getApplicationContext(), PNHBNCListActivity.class));
-//            Intent i = new Intent(getApplicationContext(), PNHBNCListActivity.class);
-//            startActivity(i);
         }
         else if (id == R.id.immunization) {
             Intent i = new Intent(getApplicationContext(), ImmunizationListActivity.class);
@@ -257,10 +255,6 @@ public class MainActivity extends AppCompatActivity
                 selectedFragment = home.newInstance();
                 break;
 
-            /*case R.id.mothers:
-                // Action to perform when Bag Menu item is selected.
-                selectedFragment =  mothers.newInstance();
-                break;*/
             case R.id.mothers:
                 // Action to perform when Bag Menu item is selected.
 //                AppConstants.isfromhome=0;
@@ -272,14 +266,6 @@ public class MainActivity extends AppCompatActivity
 //                AppConstants.isfromhome=0;
                 selectedFragment =  risk.newInstance();
                 break;
-
-                /*case R.id.infant:
-                // Action to perform when Bag Menu item is selected.
-                selectedFragment =  mothers.newInstance();
-                break;*/
-
-
-
         }
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content, selectedFragment);
@@ -291,22 +277,13 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
-        if (checkNetwork.isNetworkAvailable()){
-            Log.w(MainActivity.class.getSimpleName(),"Is"+checkNetwork.isNetworkAvailable());
-        }else{
-            Log.w(MainActivity.class.getSimpleName(),"Is"+checkNetwork.isNetworkAvailable());
-            startActivity(new Intent( getApplicationContext(),NoInternetConnectionActivity.class));
-        }
-        // register connection status listener
+
         MyApplication.getInstance().setConnectivityListener(this);
 
 
     }
 
-    /**
-     * Callback will be triggered when there is change in
-     * network connection
-     */
+
     @Override
     public void onNetworkConnectionChanged(boolean isConnected)
     {
@@ -330,28 +307,7 @@ pDialog.dismiss();
     }
 
     @Override
-    public void NotificationResponseSuccess(String response) {
-
-        /*Log.d(MainActivity.class.getSimpleName(), "Notification count response success" + response);
-        try {
-            JSONObject jsonObject = new JSONObject(response);
-            String status = jsonObject.getString("status");
-            String msg = jsonObject.getString("message");
-//            strTodayVisitCount = jsonObject.getString("notificationCount");
-
-            if (status.equalsIgnoreCase("1")) {
-//                preferenceData.setTodayVisitCount(strTodayVisitCount);
-//                notification_count.setText(jsonObject.getString("notificationCount"));
-//                Log.d(MainActivity.class.getSimpleName(), "Notification Count-->" + strTodayVisitCount);
-
-            } else {
-                Log.d(MainActivity.class.getSimpleName(), "Notification messsage-->" + msg);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    */
-    }
+    public void NotificationResponseSuccess(String response) { }
 
     @Override
     public void NotificationResponseError(String response) {
@@ -366,7 +322,7 @@ pDialog.dismiss();
             String status = jsonObject.getString("status");
             String msg = jsonObject.getString("message");
              if (status.equalsIgnoreCase("1")) {
-                 preferenceData.setNotificationCount(jsonObject.getString(""));
+                 preferenceData.setNotificationCount(jsonObject.getString("notificationCount"));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -386,15 +342,7 @@ pDialog.dismiss();
             JSONObject jsonObject = new JSONObject(response);
             String status = jsonObject.getString("status");
             String msg = jsonObject.getString("message");
-//            strTodayVisitCount = jsonObject.getString("notificationCount");
-
             if (status.equalsIgnoreCase("1")) {
-                strTodayVisitCount = jsonObject.getString("notificationCount");
-
-                preferenceData.setNotificationCount(strTodayVisitCount);
-
-                notification_count.setText(jsonObject.getString("notificationCount"));
-                Log.d(MainActivity.class.getSimpleName(), "Notification Count-->" + strTodayVisitCount);
 
             } else {
                 Log.d(MainActivity.class.getSimpleName(), "Notification messsage-->" + msg);

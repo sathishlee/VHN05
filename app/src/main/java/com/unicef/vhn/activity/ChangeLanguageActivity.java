@@ -24,7 +24,7 @@ import java.util.Locale;
 
 public class ChangeLanguageActivity extends AppCompatActivity {
     Locale mylocale;
-    TextView tam,eng;
+    TextView tam, eng;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,12 +33,13 @@ public class ChangeLanguageActivity extends AppCompatActivity {
         showActionBar();
         initUi();
     }
-    public void initUi(){
-        tam = (TextView)findViewById(R.id.tam);
+
+    public void initUi() {
+        tam = (TextView) findViewById(R.id.tam);
         eng = (TextView) findViewById(R.id.eng);
-        tam.setOnClickListener(new View.OnClickListener(){
+        tam.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(ChangeLanguageActivity.this);
                 builder.setMessage("Are you Sure do you want to Change Language?")
@@ -58,9 +59,9 @@ public class ChangeLanguageActivity extends AppCompatActivity {
             }
         });
 
-        eng.setOnClickListener(new View.OnClickListener(){
+        eng.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(ChangeLanguageActivity.this);
                 builder.setMessage("Are you Sure do you want to Change Language?")
@@ -81,31 +82,33 @@ public class ChangeLanguageActivity extends AppCompatActivity {
         });
 
 
-
     }
 
-    public void showActionBar(){
+    public void showActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Select Language");
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
-    protected void setLanguage(String language){
-        mylocale=new Locale(language);
-        Resources resources=getResources();
-        DisplayMetrics dm=resources.getDisplayMetrics();
-        Configuration conf= resources.getConfiguration();
-        conf.locale=mylocale;
-        resources.updateConfiguration(conf,dm);
-        Intent refreshIntent=new Intent(ChangeLanguageActivity.this,MainActivity.class);
+    protected void setLanguage(String language) {
+        mylocale = new Locale(language);
+        Resources resources = getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        Configuration conf = resources.getConfiguration();
+        conf.locale = mylocale;
+        resources.updateConfiguration(conf, dm);
+        Intent refreshIntent = new Intent(ChangeLanguageActivity.this, MainActivity.class);
         finish();
         startActivity(refreshIntent);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        Intent intent = new Intent(ChangeLanguageActivity.this, MainActivity.class);
         finish();
+        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 }

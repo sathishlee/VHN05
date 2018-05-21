@@ -21,24 +21,24 @@ import java.util.List;
 
 public class ANTT2Adapter extends RecyclerView.Adapter<ANTT2Adapter.ViewHolder> {
 
-        private List<ANTT2ResponseModel.TT2_List> tt2_lists;
-        Activity activity;
-        MakeCallInterface makeCallInterface;
+    private List<ANTT2ResponseModel.TT2_List> tt2_lists;
+    Activity activity;
+    MakeCallInterface makeCallInterface;
 
-    public ANTT2Adapter(List<ANTT2ResponseModel.TT2_List> tt2_lists, Activity activity, MakeCallInterface makeCallInterface){
+    public ANTT2Adapter(List<ANTT2ResponseModel.TT2_List> tt2_lists, Activity activity, MakeCallInterface makeCallInterface) {
         this.tt2_lists = tt2_lists;
         this.activity = activity;
         this.makeCallInterface = makeCallInterface;
     }
 
     @Override
-    public ANTT2Adapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tt_mothers,parent,false);
-        return new ANTT2Adapter.ViewHolder(view);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tt_mothers, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ANTT2Adapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         final ANTT2ResponseModel.TT2_List tt2_list = tt2_lists.get(position);
         holder.txt_username.setText(tt2_list.getMName());
         holder.txt_picme_id.setText(tt2_list.getMPicmeId());
@@ -58,8 +58,9 @@ public class ANTT2Adapter extends RecyclerView.Adapter<ANTT2Adapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_picme_id,txt_username;
+        TextView txt_picme_id, txt_username;
         ImageView img_call_mother;
+
         public ViewHolder(View itemView) {
             super(itemView);
             txt_username = itemView.findViewById(R.id.txt_username);

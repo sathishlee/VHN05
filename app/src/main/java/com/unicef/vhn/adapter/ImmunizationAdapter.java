@@ -21,19 +21,19 @@ public class ImmunizationAdapter extends RecyclerView.Adapter<ImmunizationAdapte
     private List<ImmunizationListResponseModel.Immunization_list> immunization_lists;
     Activity activity;
 
-    public ImmunizationAdapter(List<ImmunizationListResponseModel.Immunization_list>immunization_lists, Activity activity){
+    public ImmunizationAdapter(List<ImmunizationListResponseModel.Immunization_list> immunization_lists, Activity activity) {
         this.activity = activity;
         this.immunization_lists = immunization_lists;
     }
 
     @Override
-    public ImmunizationAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_immunization,parent,false);
-        return new ImmunizationAdapter.ViewHolder(view);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_immunization, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ImmunizationAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         final ImmunizationListResponseModel.Immunization_list immunization_list = immunization_lists.get(position);
 
         holder.txt_due_date.setText(immunization_list.getImmDueDate());
@@ -52,7 +52,8 @@ public class ImmunizationAdapter extends RecyclerView.Adapter<ImmunizationAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_due_date,txt_provided_date, txt_opv_given, txt_prentavalent_given, txt_rota_given, txt_ipv_given;
+        TextView txt_due_date, txt_provided_date, txt_opv_given, txt_prentavalent_given, txt_rota_given, txt_ipv_given;
+
         public ViewHolder(View itemView) {
             super(itemView);
             txt_due_date = itemView.findViewById(R.id.txt_due_date);

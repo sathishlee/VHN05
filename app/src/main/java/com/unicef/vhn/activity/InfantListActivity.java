@@ -20,14 +20,14 @@ public class InfantListActivity extends AppCompatActivity {
         initUI();
     }
 
-    public void showActionBar(){
+    public void showActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Immunization Mothers");
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
-    public void initUI(){
+    public void initUI() {
 
     }
 

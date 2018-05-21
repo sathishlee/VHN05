@@ -39,7 +39,7 @@ import java.util.List;
  * Created by Suthishan on 20/1/2018.
  */
 
-public class MotherMigration  extends AppCompatActivity implements MotherListsViews, MakeCallInterface {
+public class MotherMigration extends AppCompatActivity implements MotherListsViews, MakeCallInterface {
 
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
 
@@ -50,7 +50,7 @@ public class MotherMigration  extends AppCompatActivity implements MotherListsVi
 
     MotherMigrationResponseModel.Vhn_migrated_mothers getVhn_migrated_mothers;
 
-    boolean isDataUpdate=true;
+    boolean isDataUpdate = true;
 
     private RecyclerView recyclerView;
     private TextView textView;
@@ -66,7 +66,7 @@ public class MotherMigration  extends AppCompatActivity implements MotherListsVi
 
     }
 
-    public void initUI(){
+    public void initUI() {
 
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
@@ -90,7 +90,7 @@ public class MotherMigration  extends AppCompatActivity implements MotherListsVi
     }
 
 
-    public void showActionBar(){
+    public void showActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Mother Migration List");
         actionBar.setHomeButtonEnabled(true);
@@ -99,7 +99,9 @@ public class MotherMigration  extends AppCompatActivity implements MotherListsVi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(this, MainActivity.class);
         finish();
+        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 
@@ -121,7 +123,7 @@ public class MotherMigration  extends AppCompatActivity implements MotherListsVi
         try {
             JSONObject mJsnobject = new JSONObject(response);
             JSONArray jsonArray = mJsnobject.getJSONArray("vhn_migrated_mothers");
-            if (jsonArray.length()!=0) {
+            if (jsonArray.length() != 0) {
                 recyclerView.setVisibility(View.VISIBLE);
                 textView.setVisibility(View.GONE);
                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -138,11 +140,11 @@ public class MotherMigration  extends AppCompatActivity implements MotherListsVi
                     vhn_migrated_mothers.add(getVhn_migrated_mothers);
                     motherMigrationAdapter.notifyDataSetChanged();
                 }
-            }else{
+            } else {
                 recyclerView.setVisibility(View.GONE);
                 textView.setVisibility(View.VISIBLE);
             }
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -164,19 +166,21 @@ public class MotherMigration  extends AppCompatActivity implements MotherListsVi
     }
 
     @Override
-    public void makeCall(String mMotherMobile) { isDataUpdate=false;
+    public void makeCall(String mMotherMobile) {
+        isDataUpdate = false;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestCallPermission();
         } else {
-            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+"+mMotherMobile)));
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+" + mMotherMobile)));
         }
     }
+
     private void requestCallPermission() {
         Log.i(ANTT1MothersList.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CALL_PHONE)) {
-            Toast.makeText(getApplicationContext(),"Displaying Call permission rationale to provide additional context.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Displaying Call permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
                     MAKE_CALL_PERMISSION_REQUEST_CODE);

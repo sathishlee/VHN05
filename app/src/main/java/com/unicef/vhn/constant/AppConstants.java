@@ -37,9 +37,9 @@ public class AppConstants {
     public static String LMP_DATE = "0";
 
     public static final int LOCATION_INTERVAL = 10000;
-    public static final int FASTEST_LOCATION_INTERVAL = 5000;
-    public static final String EXTRA_LATITUDE = "13.0011794";
-    public static final String EXTRA_LONGITUDE = "80.2824802";
+    public static final int FASTEST_LOCATION_INTERVAL = 1000;
+    public static final String EXTRA_LATITUDE = "";
+    public static final String EXTRA_LONGITUDE = "";
 
     public static final String TODAY_VISIT_COUNT = "0";
     public static final String NOTIFICATION_COUNT = "0";

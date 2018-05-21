@@ -36,6 +36,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
     PreferenceData preferenceData;
     String strOldPassword, strNewPassword, strConformPassword;
     ChangePasswordPresenter changePasswordPresenter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,15 +44,14 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         initUI();
         showActionBar();
         onClickListner();
-
-
     }
+
     private void initUI() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Please Wait...");
         preferenceData = new PreferenceData(this);
-        changePasswordPresenter = new ChangePasswordPresenter(ChangePasswordActivity.this,this);
+        changePasswordPresenter = new ChangePasswordPresenter(ChangePasswordActivity.this, this);
         input_old_password = (TextInputLayout) findViewById(R.id.input_old_password);
         input_new_password = (TextInputLayout) findViewById(R.id.input_new_password);
         input_conform_password = (TextInputLayout) findViewById(R.id.input_conform_password);
@@ -75,9 +75,12 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(ChangePasswordActivity.this, MainActivity.class);
         finish();
+        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public void showProgress() {
@@ -88,10 +91,11 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
     public void hideProgress() {
         progressDialog.hide();
     }
+
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
-        if (progressDialog!=null && progressDialog.isShowing() ){
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.cancel();
         }
     }
@@ -131,30 +135,27 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
 
     private void changePassword() {
         textValues();
-        if(TextUtils.isEmpty(strOldPassword)){
+        if (TextUtils.isEmpty(strOldPassword)) {
             input_old_password.setError("Please Enter Old Password");
-        }else {
+        } else {
             input_old_password.setError(null);
         }
-        if (TextUtils.isEmpty(strNewPassword)){
+        if (TextUtils.isEmpty(strNewPassword)) {
             input_new_password.setError("Please Enter New Password");
-        }else{
+        } else {
             input_new_password.setError(null);
         }
-        if(TextUtils.isEmpty(strConformPassword)){
+        if (TextUtils.isEmpty(strConformPassword)) {
             input_conform_password.setError("Please Enter Conform Password");
-        }else {
+        } else {
             input_conform_password.setError(null);
             changePasswordPresenter.changePassword(preferenceData.getVhnCode(), strOldPassword, strNewPassword, strConformPassword);
         }
-
-
-    }
+   }
 
     private void textValues() {
         strOldPassword = edt_old_password.getText().toString();
         strNewPassword = edt_new_password.getText().toString();
         strConformPassword = edt_conform_password.getText().toString();
     }
-
 }

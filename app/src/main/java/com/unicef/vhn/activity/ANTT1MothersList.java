@@ -146,7 +146,9 @@ public class ANTT1MothersList extends AppCompatActivity implements MotherListsVi
                     recyclerView.setVisibility(View.GONE);
                     textView.setVisibility(View.VISIBLE);
                 }
-            }
+            }else{
+                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+                }
         } catch (JSONException e) {
             e.printStackTrace();
         }

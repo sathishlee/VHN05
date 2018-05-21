@@ -30,21 +30,22 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.View
     MakeCallInterface makeCallInterface;
 
     String strMid;
-    public VisitListAdapter( Activity applicationContext, List<VisitListResponseModel.Vhn_current_visits> mResult,  MakeCallInterface makeCallInterface) {
+
+    public VisitListAdapter(Activity applicationContext, List<VisitListResponseModel.Vhn_current_visits> mResult, MakeCallInterface makeCallInterface) {
         this.applicationContext = applicationContext;
         this.mResult = mResult;
-        this.makeCallInterface =makeCallInterface;
+        this.makeCallInterface = makeCallInterface;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mother_visit,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mother_visit, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(VisitListAdapter.ViewHolder holder, int position) {
-        final  VisitListResponseModel.Vhn_current_visits current_visits=  mResult.get(position);
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        final VisitListResponseModel.Vhn_current_visits current_visits = mResult.get(position);
         holder.txt_username.setText(current_visits.getMName());
         holder.txt_picme_id.setText(current_visits.getPicmeId());
         holder.txt_list_type.setText(current_visits.getMtype());
@@ -56,28 +57,29 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.View
                 makeCallInterface.makeCall(current_visits.getMMotherMobile());
 
             }
-        });  holder.txt_track.setOnClickListener(new View.OnClickListener() {
+        });
+        holder.txt_track.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppConstants.SELECTED_MID = current_visits.getMid() ;
+                AppConstants.SELECTED_MID = current_visits.getMid();
                 applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MotherLocationActivity.class));
 
             }
         });
-holder.txt_list_type.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        AppConstants.SELECTED_MID=current_visits.getMid();
-        if (current_visits.getMtype().equalsIgnoreCase("PN")){
-            applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherDetailsActivity.class));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppConstants.SELECTED_MID = current_visits.getMid();
+                if (current_visits.getMtype().equalsIgnoreCase("PN")) {
+                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherDetailsActivity.class));
 
-        }else if (current_visits.getMtype().equalsIgnoreCase("AN")){
-            applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MothersDetailsActivity.class));
+                } else if (current_visits.getMtype().equalsIgnoreCase("AN")) {
+                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MothersDetailsActivity.class));
 
-        }
+                }
 
-    }
-});
+            }
+        });
     }
 
     @Override
@@ -86,15 +88,16 @@ holder.txt_list_type.setOnClickListener(new View.OnClickListener() {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_username,txt_picme_id,txt_list_type,txt_track,txt_call, txt_current_visit;
+        TextView txt_username, txt_picme_id, txt_list_type, txt_track, txt_call, txt_current_visit;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            txt_username =itemView.findViewById(R.id.txt_username);
-            txt_picme_id =itemView.findViewById(R.id.txt_picme_id);
-            txt_list_type =itemView.findViewById(R.id.txt_list_type);
-            txt_track =itemView.findViewById(R.id.txt_track);
-            txt_call =itemView.findViewById(R.id.txt_call);
-            txt_current_visit =itemView.findViewById(R.id.txt_current_visit);
+            txt_username = itemView.findViewById(R.id.txt_username);
+            txt_picme_id = itemView.findViewById(R.id.txt_picme_id);
+            txt_list_type = itemView.findViewById(R.id.txt_list_type);
+            txt_track = itemView.findViewById(R.id.txt_track);
+            txt_call = itemView.findViewById(R.id.txt_call);
+            txt_current_visit = itemView.findViewById(R.id.txt_current_visit);
         }
     }
 }

@@ -26,15 +26,15 @@ import java.util.List;
 
 public class MotherMigrationAdapter extends RecyclerView.Adapter<MotherMigrationAdapter.ViewHolder> {
 
-    private List<MotherMigrationResponseModel.Vhn_migrated_mothers>  vhn_migrated_mothers;
+    private List<MotherMigrationResponseModel.Vhn_migrated_mothers> vhn_migrated_mothers;
     Activity activity;
     String type;
     MakeCallInterface makeCallInterface;
     String strMid;
 
-    public MotherMigrationAdapter(List<MotherMigrationResponseModel.Vhn_migrated_mothers>  vhn_migrated_mothers, Activity activity, String type, MakeCallInterface makeCallInterface) {
-        this.activity =activity;
-        this.vhn_migrated_mothers =vhn_migrated_mothers;
+    public MotherMigrationAdapter(List<MotherMigrationResponseModel.Vhn_migrated_mothers> vhn_migrated_mothers, Activity activity, String type, MakeCallInterface makeCallInterface) {
+        this.activity = activity;
+        this.vhn_migrated_mothers = vhn_migrated_mothers;
         this.type = type;
         this.makeCallInterface = makeCallInterface;
 
@@ -43,13 +43,13 @@ public class MotherMigrationAdapter extends RecyclerView.Adapter<MotherMigration
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mother_migration,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mother_migration, parent, false);
         return new ViewHolder(view);
 
     }
 
     @Override
-    public void onBindViewHolder(MotherMigrationAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
 
         final MotherMigrationResponseModel.Vhn_migrated_mothers vhn_migrated_mother = vhn_migrated_mothers.get(position);
         holder.txt_username.setText(vhn_migrated_mother.getMName());
@@ -57,7 +57,7 @@ public class MotherMigrationAdapter extends RecyclerView.Adapter<MotherMigration
         holder.txt_list_type.setText(vhn_migrated_mother.getMtype());
         holder.txt_migrated_from.setText(vhn_migrated_mother.getSubject());
 
-        strMid=vhn_migrated_mother.getMid();
+        strMid = vhn_migrated_mother.getMid();
 
 //        if (type.equalsIgnoreCase("PN")) {
 //            holder.txt_list_type.setText(type);
@@ -77,27 +77,27 @@ public class MotherMigrationAdapter extends RecyclerView.Adapter<MotherMigration
         holder.ll_track_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppConstants.SELECTED_MID = vhn_migrated_mother.getMid() ;
+                AppConstants.SELECTED_MID = vhn_migrated_mother.getMid();
                 activity.startActivity(new Intent(activity.getApplicationContext(), MotherLocationActivity.class));
             }
         });
 
 
-        holder.ll_ll_mother_type.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppConstants.SELECTED_MID=vhn_migrated_mother.getMid();
-                if (type.equalsIgnoreCase("PN")){
+                AppConstants.SELECTED_MID = vhn_migrated_mother.getMid();
+                if (type.equalsIgnoreCase("PN")) {
                     activity.startActivity(new Intent(activity.getApplicationContext(), PNMotherDetailsActivity.class));
 
-                }else if (type.equalsIgnoreCase("AN")){
+                } else if (type.equalsIgnoreCase("AN")) {
                     activity.startActivity(new Intent(activity.getApplicationContext(), MothersDetailsActivity.class));
 
-                }else if (type.equalsIgnoreCase("Risk")){
+                } else if (type.equalsIgnoreCase("Risk")) {
                     activity.startActivity(new Intent(activity.getApplicationContext(), MothersDetailsActivity.class));
 
-                }else{
-                    activity.startActivity(new Intent(activity.getApplicationContext(),MothersDetailsActivity.class));
+                } else {
+                    activity.startActivity(new Intent(activity.getApplicationContext(), MothersDetailsActivity.class));
 
                 }
             }
@@ -110,8 +110,8 @@ public class MotherMigrationAdapter extends RecyclerView.Adapter<MotherMigration
         return vhn_migrated_mothers.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView txt_username, txt_picme_id,txt_list_type, txt_migrated_from;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView txt_username, txt_picme_id, txt_list_type, txt_migrated_from;
         LinearLayout ll_ll_mother_type, ll_track_location, ll_call;
 
 

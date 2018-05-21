@@ -45,10 +45,9 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
 
     LocationUpdatePresenter locationUpdatePresenter;
     PreferenceData preferenceData;
-//RelativeLayout rel_no_internet_connection;
     RelativeLayout rel_splash_screen;
 
-    GoogleApiClient googleApiClient=null;
+    GoogleApiClient googleApiClient = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +55,14 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
         setContentView(R.layout.activity_splash_screen);
         rel_splash_screen = (RelativeLayout) findViewById(R.id.rel_splash_screen);
         rel_splash_screen.setVisibility(View.GONE);
-//        rel_no_internet_connection = (RelativeLayout) findViewById(R.id.rel_no_internet_connection);
-        locationUpdatePresenter =new LocationUpdatePresenter(this,this);
+        locationUpdatePresenter = new LocationUpdatePresenter(this, this);
         preferenceData = new PreferenceData(this);
 
 
-
         startStep1();
-        if (mAlreadyStartedService ) {
-            if(!preferenceData.getLogin()) {
+
+        if (mAlreadyStartedService) {
+            if (!preferenceData.getLogin()) {
                 stopService(new Intent(this, LocationMonitoringService.class));
                 mAlreadyStartedService = false;
             }
@@ -78,12 +76,7 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
                             String longitude = intent.getStringExtra(AppConstants.EXTRA_LONGITUDE);
                             String mylocaton = latitude + "\t" + longitude;
                             if (latitude != null && longitude != null) {
-//                            serverUpload.sendlocationtServer(mylocaton,latitude,longitude,LocationUpdateActivity.this);
-//                                strAddress = getCompleteAddressString(latitude, longitude);
-//if (preferenceData.getPicmeId().equalsIgnoreCase("") && preferenceData.getVhnId().equalsIgnoreCase("")&& preferenceData.getMId().equalsIgnoreCase(""))
-
-                                locationUpdatePresenter.uploadLocationToServer( preferenceData.getVhnId(), latitude, longitude);
-
+                                locationUpdatePresenter.uploadLocationToServer(preferenceData.getVhnId(), latitude, longitude);
                             }
                         }
                     }, new IntentFilter(LocationMonitoringService.ACTION_LOCATION_BROADCAST)
@@ -93,12 +86,14 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
         }
 
     }
+
     @Override
     public void onResume() {
         super.onResume();
 
         startStep1();
     }
+
     /**
      * Step 1: Check Google Play services
      */
@@ -186,9 +181,7 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
         //And it will be keep running until you close the entire application from task manager.
         //This method will executed only once.
 
-        if (!mAlreadyStartedService ) {
-
-
+        if (!mAlreadyStartedService) {
             //Start location sharing service to app server.........
             Intent intent = new Intent(this, LocationMonitoringService.class);
             startService(intent);
@@ -214,8 +207,7 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
 
                     // close this activity
                     finish();
-                }
-                else{
+                } else {
                     Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
                     startActivity(i);
 
@@ -240,16 +232,15 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
         }
         return true;
     }
+
     /**
      * Return the current state of the permissions needed.
      */
     private boolean checkPermissions() {
         int permissionState1 = ActivityCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION);
-
+                Manifest.permission.ACCESS_FINE_LOCATION);
         int permissionState2 = ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION);
-
         int permissionState3 = ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.INTERNET);
         int permissionState4 = ActivityCompat.checkSelfPermission(this,
@@ -262,7 +253,6 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
                 Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int permissionState8 = ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.CALL_PHONE);
-
 
         return permissionState1 == PackageManager.PERMISSION_GRANTED && permissionState2 == PackageManager.PERMISSION_GRANTED &&
                 permissionState3 == PackageManager.PERMISSION_GRANTED && permissionState4 == PackageManager.PERMISSION_GRANTED
@@ -278,10 +268,12 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
 
         boolean shouldProvideRationale =
                 ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        android.Manifest.permission.ACCESS_FINE_LOCATION);
+                        Manifest.permission.ACCESS_FINE_LOCATION);
+
         boolean shouldProvideRationale2 =
                 ActivityCompat.shouldShowRequestPermissionRationale(this,
                         Manifest.permission.ACCESS_COARSE_LOCATION);
+
         boolean shouldProvideRationale3 =
                 ActivityCompat.shouldShowRequestPermissionRationale(this,
                         Manifest.permission.INTERNET);
@@ -323,6 +315,7 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
                                                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                                     Manifest.permission.CALL_PHONE,
                                                     Manifest.permission.SEND_SMS
+
                                             },
                                     REQUEST_PERMISSIONS_REQUEST_CODE);
                         }
@@ -439,16 +432,15 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
 
     @Override
     public void locationUpdateSuccess(String loginResponseModel) {
-//        rel_no_internet_connection.setVisibility(View.GONE);
-        Log.d(TAG,"success--->"+loginResponseModel);
+        Log.d(TAG, "success--->" + loginResponseModel);
     }
 
     @Override
     public void locationUpdateFailiure(String string) {
-        Log.d(TAG,"Error--->"+string);
+        Log.d(TAG, "Error--->" + string);
 
 
-            }
+    }
 
     @Override
     public void getNearbyHospitalSuccess(String loginResponseModel) {

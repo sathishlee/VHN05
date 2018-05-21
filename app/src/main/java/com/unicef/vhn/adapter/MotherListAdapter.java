@@ -32,15 +32,15 @@ import java.util.List;
  */
 
 public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.ViewHolder> {
-    private List<PNMotherListResponse.VhnAN_Mothers_List> mResult ;
+    private List<PNMotherListResponse.VhnAN_Mothers_List> mResult;
     Activity applicationContext;
     MakeCallInterface makeCallInterface;
     String strMid, str_mPhoto, type;
 
 
     public MotherListAdapter(List<PNMotherListResponse.VhnAN_Mothers_List> mResult, Activity applicationContext, String type, MakeCallInterface makeCallInterface) {
-        this.applicationContext =applicationContext;
-        this.mResult =mResult;
+        this.applicationContext = applicationContext;
+        this.mResult = mResult;
         this.type = type;
         this.makeCallInterface = makeCallInterface;
 
@@ -49,23 +49,24 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mothers_an,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mothers_an, parent, false);
         return new ViewHolder(view);
     }
-/*new*/
+
+    /*new*/
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final PNMotherListResponse.VhnAN_Mothers_List  pNMotherResponseModel = mResult.get(position);
+        final PNMotherListResponse.VhnAN_Mothers_List pNMotherResponseModel = mResult.get(position);
         holder.txt_username.setText(pNMotherResponseModel.getMName());
         holder.txt_picme_id.setText(pNMotherResponseModel.getMPicmeId());
         holder.txt_list_type.setText(pNMotherResponseModel.getMotherType());
 
         str_mPhoto = pNMotherResponseModel.getmPhoto();
-        Log.d("mphoto-->", Apiconstants.MOTHER_PHOTO_URL+str_mPhoto);
+        Log.d("mphoto-->", Apiconstants.MOTHER_PHOTO_URL + str_mPhoto);
 
-        if(!TextUtils.isEmpty(pNMotherResponseModel.getmPhoto())) {
+        if (!TextUtils.isEmpty(pNMotherResponseModel.getmPhoto())) {
             Picasso.with(applicationContext)
-                    .load(!TextUtils.isEmpty(pNMotherResponseModel.getmPhoto())? Apiconstants.MOTHER_PHOTO_URL+pNMotherResponseModel.getmPhoto():"")
+                    .load(!TextUtils.isEmpty(pNMotherResponseModel.getmPhoto()) ? Apiconstants.MOTHER_PHOTO_URL + pNMotherResponseModel.getmPhoto() : "")
                     .placeholder(R.drawable.girl)
                     .fit()
                     .centerCrop()
@@ -74,33 +75,32 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
                     .transform(new RoundedTransformation(90, 4))
                     .error(R.drawable.girl)
                     .into(holder.cardview_image);
-        }
-        else{
-        holder.cardview_image.setImageResource(R.drawable.girl);
+        } else {
+            holder.cardview_image.setImageResource(R.drawable.girl);
         }
 
-        strMid=pNMotherResponseModel.getMid();
-        type=pNMotherResponseModel.getMotherType();
+        strMid = pNMotherResponseModel.getMid();
+        type = pNMotherResponseModel.getMotherType();
 
         if (type.equalsIgnoreCase("PN")) {
-                holder.txt_list_type.setText(type);
-            }else if (type.equalsIgnoreCase("AN")) {
-                holder.txt_list_type.setText(type);
-            }else if (type.equalsIgnoreCase("Risk")) {
-                holder.txt_list_type.setText(type);
-            }
+            holder.txt_list_type.setText(type);
+        } else if (type.equalsIgnoreCase("AN")) {
+            holder.txt_list_type.setText(type);
+        } else if (type.equalsIgnoreCase("Risk")) {
+            holder.txt_list_type.setText(type);
+        }
 
-            holder.ll_call.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    makeCallInterface.makeCall(pNMotherResponseModel.getmMotherMobile());
-                }
-            });
+        holder.ll_call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeCallInterface.makeCall(pNMotherResponseModel.getmMotherMobile());
+            }
+        });
 
         holder.ll_track_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppConstants.SELECTED_MID = pNMotherResponseModel.getMid() ;
+                AppConstants.SELECTED_MID = pNMotherResponseModel.getMid();
                 applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MotherLocationActivity.class));
             }
         });
@@ -110,17 +110,17 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
             @Override
             public void onClick(View v) {
 //                AppConstants.SELECTED_MID=pNMotherResponseModel.getMid();
-                type=pNMotherResponseModel.getMotherType();
-                if (type.equalsIgnoreCase("PN")){
-                    AppConstants.SELECTED_MID=pNMotherResponseModel.getMid();
+                type = pNMotherResponseModel.getMotherType();
+                if (type.equalsIgnoreCase("PN")) {
+                    AppConstants.SELECTED_MID = pNMotherResponseModel.getMid();
                     applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherDetailsActivity.class));
 
-                }else if (type.equalsIgnoreCase("AN")){
-                    AppConstants.SELECTED_MID=pNMotherResponseModel.getMid();
+                } else if (type.equalsIgnoreCase("AN")) {
+                    AppConstants.SELECTED_MID = pNMotherResponseModel.getMid();
                     applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MothersDetailsActivity.class));
 
-                }else if (type.equalsIgnoreCase("Risk")){
-                    AppConstants.SELECTED_MID=pNMotherResponseModel.getMid();
+                } else if (type.equalsIgnoreCase("Risk")) {
+                    AppConstants.SELECTED_MID = pNMotherResponseModel.getMid();
                     applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MothersDetailsActivity.class));
 
                 }
@@ -144,8 +144,8 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
         return mResult.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView txt_username, txt_picme_id,txt_list_type;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView txt_username, txt_picme_id, txt_list_type;
         LinearLayout ll_ll_mother_type, ll_track_location, ll_call;
         ImageView cardview_image;
 

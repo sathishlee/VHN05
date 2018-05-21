@@ -44,29 +44,28 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
-    private List<PNMotherListResponse.VhnAN_Mothers_List> mResult ;
+    private List<PNMotherListResponse.VhnAN_Mothers_List> mResult;
     PNMotherListResponse.VhnAN_Mothers_List mresponseResult;
     //    private RecyclerView recyclerView;
     private RecyclerView mother_recycler_view;
     private MotherListAdapter mAdapter;
 
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
-    boolean isDataUpdate=true;
+    boolean isDataUpdate = true;
 
-    public static risk newInstance()
-    {
+    public static risk newInstance() {
         risk fragment = new risk();
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_risk, container, false);
 
         initUI(view);
@@ -77,14 +76,14 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
         pDialog = new ProgressDialog(getActivity());
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
-        preferenceData =new PreferenceData(getActivity());
-        pnMotherListPresenter = new MotherListPresenter(getActivity(),this);
-        pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_MOTHERS_RISK,preferenceData.getVhnCode(),preferenceData.getVhnId());
+        preferenceData = new PreferenceData(getActivity());
+        pnMotherListPresenter = new MotherListPresenter(getActivity(), this);
+        pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_MOTHERS_RISK, preferenceData.getVhnCode(), preferenceData.getVhnId());
 
 //        pnMotherListPresenter.getPNMotherList("V10001","1");
         mResult = new ArrayList<>();
-        mother_recycler_view = (RecyclerView)view. findViewById(R.id.recycler_view);
-        mAdapter = new MotherListAdapter(mResult, getActivity(), "Risk",this);
+        mother_recycler_view = (RecyclerView) view.findViewById(R.id.recycler_view);
+        mAdapter = new MotherListAdapter(mResult, getActivity(), "Risk", this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mother_recycler_view.setLayoutManager(mLayoutManager);
         mother_recycler_view.setItemAnimator(new DefaultItemAnimator());
@@ -111,7 +110,7 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
             JSONObject mJsnobject = new JSONObject(response);
             JSONArray jsonArray = mJsnobject.getJSONArray("vhnAN_Mothers_List");
             for (int i = 0; i < jsonArray.length(); i++) {
-                mresponseResult =new PNMotherListResponse.VhnAN_Mothers_List();
+                mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 mresponseResult.setMid(jsonObject.getString("mid"));
                 mresponseResult.setMName(jsonObject.getString("mName"));
@@ -124,7 +123,7 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
                 mResult.add(mresponseResult);
                 mAdapter.notifyDataSetChanged();
             }
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -149,19 +148,19 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
 
     @Override
     public void makeCall(String mMotherMobile) {
-        isDataUpdate=false;
+        isDataUpdate = false;
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestCallPermission();
         } else {
-            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+"+mMotherMobile)));
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+" + mMotherMobile)));
         }
     }
 
     private void requestCallPermission() {
         Log.i(ANTT1MothersList.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
-        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),Manifest.permission.CALL_PHONE)) {
-            Toast.makeText(getActivity(),"Displaying Call permission rationale to provide additional context.",Toast.LENGTH_SHORT).show();
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CALL_PHONE)) {
+            Toast.makeText(getActivity(), "Displaying Call permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();
         } else {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE},
                     MAKE_CALL_PERMISSION_REQUEST_CODE);
