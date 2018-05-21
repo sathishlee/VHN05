@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -18,12 +18,12 @@
             android:weightSum="2">
 
             <TextView
+                android:id="@+id/tam"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tamil"
                 android:layout_gravity="center"
-                android:id="@+id/tam"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                android:text="Tamil" />
         </LinearLayout>
 
         <include layout="@layout/language_divider" />
@@ -34,13 +34,14 @@
             android:orientation="horizontal"
             android:padding="10dp"
             android:weightSum="2">
+
             <TextView
+                android:id="@+id/eng"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="English"
                 android:layout_gravity="center"
-                android:id="@+id/eng"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                android:text="English" />
         </LinearLayout>
     </LinearLayout>
 

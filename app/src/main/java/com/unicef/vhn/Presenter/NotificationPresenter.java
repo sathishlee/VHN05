@@ -1,6 +1,8 @@
 package com.unicef.vhn.Presenter;
 
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Base64;
 import android.util.Log;
 
@@ -37,7 +39,7 @@ public class NotificationPresenter implements NotificationInteractor {
         String url = Apiconstants.BASE_URL + Apiconstants.POST_NOTIFICATION_COUNT;
         Log.d("Url--->", url);
         Log.d("mid--->", vhnId);
-        notificationViews.showProgress();
+//        notificationViews.showProgress();
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -45,13 +47,14 @@ public class NotificationPresenter implements NotificationInteractor {
                 notificationViews.hideProgress();
                 notificationViews.NotificationCountSuccess(String.valueOf(response));
             }
-        },new Response.ErrorListener() {
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                notificationViews.hideProgress();
+//                notificationViews.hideProgress();
                 notificationViews.NotificationCountError(error.toString());
             }
-        }){
+        }) {
+            @RequiresApi(api = Build.VERSION_CODES.FROYO)
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 String credentials = "admin" + ":" + "1234";
@@ -64,13 +67,14 @@ public class NotificationPresenter implements NotificationInteractor {
 
                 return header;
             }
+
             @Override
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("vhnId",vhnId);
+                params.put("vhnId", vhnId);
 
-                Log.d("params--->",params.toString());
+                Log.d("params--->", params.toString());
 
                 return params;
             }
@@ -102,13 +106,13 @@ public class NotificationPresenter implements NotificationInteractor {
                 notificationViews.hideProgress();
                 notificationViews.TodayVisitResponseSuccess(String.valueOf(response));
             }
-        },new Response.ErrorListener() {
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 notificationViews.hideProgress();
                 notificationViews.TodayVisitResponseError(error.toString());
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 String credentials = "admin" + ":" + "1234";
@@ -120,14 +124,15 @@ public class NotificationPresenter implements NotificationInteractor {
 
                 return header;
             }
+
             @Override
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("vhnId",vhnId);
-//                params.put("vhnCode",vhnCode);
+                params.put("vhnId", vhnId);
+                params.put("vhnCode", vhnCode);
 
-                Log.d("params--->",params.toString());
+                Log.d("params--->", params.toString());
 
                 return params;
             }
@@ -145,7 +150,7 @@ public class NotificationPresenter implements NotificationInteractor {
     }
 
     @Override
-    public void getNotificationList(final String vhnCode,final String vhnId) {
+    public void getNotificationList(final String vhnCode, final String vhnId) {
 
 
         String url = Apiconstants.BASE_URL + Apiconstants.POST_NOTIFICATION_LIST;
@@ -160,13 +165,13 @@ public class NotificationPresenter implements NotificationInteractor {
                 notificationViews.hideProgress();
                 notificationViews.NotificationResponseSuccess(String.valueOf(response));
             }
-        },new Response.ErrorListener() {
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 notificationViews.hideProgress();
                 notificationViews.NotificationResponseError(error.toString());
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 String credentials = "admin" + ":" + "1234";
@@ -179,14 +184,15 @@ public class NotificationPresenter implements NotificationInteractor {
 
                 return header;
             }
+
             @Override
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("vhnCode",vhnCode);
-                params.put("vhnId",vhnId);
+                params.put("vhnCode", vhnCode);
+                params.put("vhnId", vhnId);
 
-                Log.d("params--->",params.toString());
+                Log.d("params--->", params.toString());
 
                 return params;
             }

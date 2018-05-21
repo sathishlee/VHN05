@@ -1,6 +1,8 @@
 package com.unicef.vhn.Presenter;
 
 import android.app.Activity;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Base64;
 import android.util.Log;
 
@@ -21,7 +23,7 @@ import java.util.Map;
  * Created by Suthishan on 20/1/2018.
  */
 
-public class MotherPrimaryRegisterPresenter implements MotherPrimaryRegisterInteractor{
+public class MotherPrimaryRegisterPresenter implements MotherPrimaryRegisterInteractor {
 
     private PrimaryRegisterViews primaryRegisterViews;
     private Activity activity;
@@ -30,7 +32,6 @@ public class MotherPrimaryRegisterPresenter implements MotherPrimaryRegisterInte
         this.primaryRegisterViews = primaryRegisterViews;
         this.activity = activity;
     }
-
 
 
     @Override
@@ -68,6 +69,7 @@ public class MotherPrimaryRegisterPresenter implements MotherPrimaryRegisterInte
                 return params;
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.FROYO)
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 String credentials = "admin" + ":" + "1234";

@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/pn_visit"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_margin="6.0dip"
     android:orientation="vertical"
     android:padding="16.0dip"
-    android:id="@+id/pn_visit"
     app:cardBackgroundColor="@android:color/white">
 
 
-
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rec_immunization"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/rec_immunization">
+        android:layout_height="match_parent">
 
     </android.support.v7.widget.RecyclerView>
-
-
-
 
 
     <!--not in use-->
@@ -48,24 +44,24 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="3dp"
                 android:drawablePadding="4.0dip"
                 android:drawableStart="@drawable/ic_weekly_calendar_24dp"
                 android:gravity="start|center"
-                android:textSize="@dimen/text_secondary"
-                android:layout_margin="3dp"
                 android:text="Due Date"
-                android:textColor="@color/text_primary" />
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_secondary" />
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="3dp"
                 android:drawablePadding="4.0dip"
                 android:drawableStart="@drawable/ic_hospital_24dp"
                 android:gravity="start|center"
-                android:layout_margin="3dp"
-                android:textSize="@dimen/text_secondary"
                 android:text="Sai Hospital"
-                android:textColor="@color/text_primary" />
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_secondary" />
 
         </LinearLayout>
 

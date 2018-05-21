@@ -5,6 +5,10 @@ package com.unicef.vhn.interactor;
  */
 
 public interface LocationUpdateIntractor {
-      void uploadLocationToServer(String vhnId, String latitude, String longitude);
+    void uploadLocationToServer(
+            String vhnId,
+            String latitude,
+            String longitude
+    );
 
 }

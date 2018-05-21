@@ -295,7 +295,7 @@ public class MainActivity extends AppCompatActivity
             Log.w(MainActivity.class.getSimpleName(),"Is"+checkNetwork.isNetworkAvailable());
         }else{
             Log.w(MainActivity.class.getSimpleName(),"Is"+checkNetwork.isNetworkAvailable());
-            startActivity(new Intent( getApplicationContext(),NoInternetConnectionActivity.class));
+//            startActivity(new Intent( getApplicationContext(),NoInternetConnectionActivity.class));
         }
         // register connection status listener
         MyApplication.getInstance().setConnectivityListener(this);

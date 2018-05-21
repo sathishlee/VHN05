@@ -36,11 +36,6 @@ public class LocationMonitoringService extends Service implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
-    TextView mMsgView;
-
-    private static final String REGISTER_REQUEST_URL = "http://192.168.100.19/maps/sample.php";
-    private Map<String, String> params;
-
     private static final String TAG = LocationMonitoringService.class.getSimpleName();
     GoogleApiClient mLocationClient;
 
@@ -50,8 +45,6 @@ public class LocationMonitoringService extends Service implements
 
 
     public static final String ACTION_LOCATION_BROADCAST = LocationMonitoringService.class.getName() + "LocationBroadcast";
-//    public static final String EXTRA_LATITUDE = "extra_latitude";
-//    public static final String EXTRA_LONGITUDE = "extra_longitude";
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -99,15 +92,15 @@ public class LocationMonitoringService extends Service implements
 
             return;
         }
-      LocationServices.FusedLocationApi.requestLocationUpdates(mLocationClient, mLocationRequest, this);
+        LocationServices.FusedLocationApi.requestLocationUpdates(mLocationClient, mLocationRequest, this);
 
         Log.d(TAG, "Connected to Google API");
     }
 
     /*
-         * LOCATION CALLBACKS
-         */
-/* LOCATION CALLBACKS*//*
+     * LOCATION CALLBACKS
+     */
+    /* LOCATION CALLBACKS*//*
 
 
 
@@ -148,21 +141,12 @@ public class LocationMonitoringService extends Service implements
 
 
         if (location != null) {
-//            Log.d(TAG, "== location != null");
-//            Log.d(TAG, "== location != null");
-//            Log.d(TAG, "Latitude"+String.valueOf(location.getLatitude()));
-//            Log.d(TAG, "Longitude"+String.valueOf(location.getLongitude()));
-
-            //Send result to activities
             sendMessageToUI(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
         }
 
     }
 
     private void sendMessageToUI(String lat, String lng) {
-
-//        Log.d(TAG, "Sending info...");
-
         Intent intent = new Intent(ACTION_LOCATION_BROADCAST);
         intent.putExtra(EXTRA_LATITUDE, lat);
         intent.putExtra(EXTRA_LONGITUDE, lng);

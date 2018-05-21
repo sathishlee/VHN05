@@ -6,6 +6,9 @@ package com.unicef.vhn.interactor;
 
 public interface MotherDeliveryInteractor {
 
-    void deliveryDetails(String strPicmeid, String strMid);
+    void deliveryDetails(
+            String strPicmeid,
+            String strMid
+    );
 
 }

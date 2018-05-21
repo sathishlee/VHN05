@@ -16,6 +16,7 @@ public class PreferenceData {
     public PreferenceData(Context context) {
         sharedPreferences = context.getSharedPreferences(AppConstants.PREF_NAME, Context.MODE_PRIVATE);
     }
+
     public SharedPreferences getPreference() {
         return sharedPreferences;
     }
@@ -26,72 +27,74 @@ public class PreferenceData {
     }
 
     public boolean getLogin() {
-        return  sharedPreferences.getBoolean(AppConstants.IS_LOGIN, Boolean.parseBoolean(""));
+        return sharedPreferences.getBoolean(AppConstants.IS_LOGIN, Boolean.parseBoolean(""));
     }
 
     public void storeUserInfo(String vhnName, String vhnCode, String vhnId) {
-        sharedPreferences.edit().putString(AppConstants.VHN_ID,vhnId).commit();
-        sharedPreferences.edit().putString(AppConstants.VHN_NAME,vhnName).commit();
-        sharedPreferences.edit().putString(AppConstants.VHN_CODE,vhnCode).commit();
+        sharedPreferences.edit().putString(AppConstants.VHN_ID, vhnId).commit();
+        sharedPreferences.edit().putString(AppConstants.VHN_NAME, vhnName).commit();
+        sharedPreferences.edit().putString(AppConstants.VHN_CODE, vhnCode).commit();
 
-        Log.e("VHN_ID",sharedPreferences.getString(AppConstants.VHN_ID,""));
-        Log.e("VHN_NAME",sharedPreferences.getString(AppConstants.VHN_NAME,""));
-        Log.e("VHN_CODE",sharedPreferences.getString(AppConstants.VHN_CODE,""));
+        Log.e("VHN_ID", sharedPreferences.getString(AppConstants.VHN_ID, ""));
+        Log.e("VHN_NAME", sharedPreferences.getString(AppConstants.VHN_NAME, ""));
+        Log.e("VHN_CODE", sharedPreferences.getString(AppConstants.VHN_CODE, ""));
 
     }
 
-    public void setPicmeId(String mPicmeId){
+    public void setPicmeId(String mPicmeId) {
         sharedPreferences.edit().putString(AppConstants.PICME_ID, mPicmeId).commit();
     }
-    public String getPicmeId(){
-        return sharedPreferences.getString(AppConstants.PICME_ID,"");
+
+    public String getPicmeId() {
+        return sharedPreferences.getString(AppConstants.PICME_ID, "");
     }
 
-    public void setMId(String mid){
+    public void setMId(String mid) {
         sharedPreferences.edit().putString(AppConstants.M_ID, mid).commit();
     }
-    public String getMId(){
-        return sharedPreferences.getString(AppConstants.M_ID,"");
+
+    public String getMId() {
+        return sharedPreferences.getString(AppConstants.M_ID, "");
     }
 
     public void setDeviceId(String deviceId) {
         sharedPreferences.edit().putString(AppConstants.DEVICE_ID, deviceId).commit();
     }
 
-    public String getDeviceId(){
-        return sharedPreferences.getString(AppConstants.DEVICE_ID,"");
+    public String getDeviceId() {
+        return sharedPreferences.getString(AppConstants.DEVICE_ID, "");
     }
 
 
-    public String getVhnId(){
-        return sharedPreferences.getString(AppConstants.VHN_ID,"");
+    public String getVhnId() {
+        return sharedPreferences.getString(AppConstants.VHN_ID, "");
     }
-    public String getVhnName(){
-        return sharedPreferences.getString(AppConstants.VHN_NAME,"");
+
+    public String getVhnName() {
+        return sharedPreferences.getString(AppConstants.VHN_NAME, "");
     }
-    public String getVhnCode(){
-        return sharedPreferences.getString(AppConstants.VHN_CODE,"");
+
+    public String getVhnCode() {
+        return sharedPreferences.getString(AppConstants.VHN_CODE, "");
     }
 
     public void setTodayVisitCount(String strTodayVisitCount) {
         sharedPreferences.edit().putString(AppConstants.TODAY_VISIT_COUNT, strTodayVisitCount).commit();
-    }   public void setNotificationCount(String strTodayVisitCount) {
-        sharedPreferences.edit().putString(AppConstants.NOTIFICATION_COUNT, strTodayVisitCount).commit();
     }
-    public String getTodayVisitCount(){
-        return sharedPreferences.getString(AppConstants.TODAY_VISIT_COUNT,"");
-    }public String getNotificationCount(){
-        return sharedPreferences.getString(AppConstants.NOTIFICATION_COUNT,"");
-    }
-    public String getNotificationCount(){
-        return sharedPreferences.getString(AppConstants.NOTIFICATION_COUNT,"");
-    }
+
     public void setNotificationCount(String strTodayVisitCount) {
         sharedPreferences.edit().putString(AppConstants.NOTIFICATION_COUNT, strTodayVisitCount).commit();
     }
 
-    public void storeDid(String strDid) {
-        sharedPreferences.edit().putString(AppConstants.DELIVERY_ID,strDid).commit();
+    public String getTodayVisitCount() {
+        return sharedPreferences.getString(AppConstants.TODAY_VISIT_COUNT, "");
     }
 
+    public String getNotificationCount() {
+        return sharedPreferences.getString(AppConstants.NOTIFICATION_COUNT, "");
+    }
+
+    public void storeDid(String strDid) {
+        sharedPreferences.edit().putString(AppConstants.DELIVERY_ID, strDid).commit();
+    }
 }

@@ -1,415 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <!--<android.support.v7.widget.CardView-->
-    <!--android:id="@+id/cardview"-->
-    <!--android:orientation="vertical"-->
-    <!--android:padding="5.0dip"-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_margin="4.0dip"-->
-    <!--app:cardBackgroundColor="@android:color/white"-->
-    <!--app:cardElevation="3dp"-->
-    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto">-->
-
-    <!--<RelativeLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:background="@color/list_item_color">-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/txt_user_name"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="Mrs. Tamil Selvi, 28"-->
-    <!--android:padding="5dp"-->
-    <!--android:layout_centerHorizontal="true"-->
-    <!--android:textSize="16sp"-->
-    <!--android:textStyle="bold"-->
-    <!--android:elevation="2dp"-->
-    <!--android:textColor="#000000"-->
-    <!--android:drawablePadding="5dp"/>-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="vertical"-->
-    <!--android:layout_below="@+id/txt_user_name">-->
-
-    <!--&lt;!&ndash;<LinearLayout&ndash;&gt;-->
-    <!--&lt;!&ndash;android:id="@+id/ll_vhn"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:orientation="horizontal"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:weightSum="2"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_below="@+id/txt_user_name">&ndash;&gt;-->
-
-
-    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
-    <!--&lt;!&ndash;android:id="@+id/txt_vhn_name"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:elevation="2dp"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:text="Julle"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:padding="5dp"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:textSize="18sp"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:textStyle="normal"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:textColor="#000000"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:drawablePadding="5dp"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:drawableStart="@drawable/ic_nurse"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
-    <!--&lt;!&ndash;/>&ndash;&gt;-->
-    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
-    <!--&lt;!&ndash;android:id="@+id/txt_phc_name"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:elevation="2dp"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:text="Sai Hospital"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:padding="5dp"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_alignParentRight="true"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:textSize="18sp"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:textStyle="normal"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:textColor="#000000"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:drawablePadding="5dp"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:drawableStart="@drawable/ic_hospital"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
-    <!--&lt;!&ndash;/>&ndash;&gt;-->
-    <!--&lt;!&ndash;</LinearLayout>&ndash;&gt;-->
-    <!--<LinearLayout-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:layout_marginTop="5dp"-->
-    <!--android:orientation="horizontal">-->
-    <!--<TextView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginStart="5dp"-->
-    <!--android:text="Height : "-->
-    <!--android:layout_gravity="start"-->
-    <!--android:textColor="@color/secondary"-->
-    <!--android:textStyle="bold" />-->
-    <!--<TextView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginStart="5dp"-->
-    <!--android:text="152cms"-->
-    <!--android:layout_gravity="start"-->
-    <!--android:textColor="@color/secondary"-->
-    <!--android:textStyle="bold" />-->
-
-    <!--<TextView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginStart="5dp"-->
-    <!--android:text="Blood Group : "-->
-    <!--android:layout_gravity="end"-->
-    <!--android:textColor="@color/secondary"-->
-    <!--android:textStyle="bold" />-->
-
-    <!--<TextView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginStart="5dp"-->
-    <!--android:text="156cms"-->
-    <!--android:layout_gravity="start"-->
-    <!--android:textColor="@color/secondary"-->
-    <!--android:textStyle="bold" />-->
-
-    <!--</LinearLayout>-->
-    <!--<LinearLayout-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:layout_gravity="center_horizontal"-->
-    <!--android:weightSum="2"-->
-    <!--android:visibility="gone">-->
-
-    <!--<TextView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="LMP Date : "-->
-    <!--android:layout_gravity="start"-->
-    <!--android:textColor="@color/secondary"-->
-    <!--android:textStyle="bold" />-->
-
-    <!--<TextView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginStart="5dp"-->
-    <!--android:text="02/12/2017"-->
-    <!--android:layout_gravity="start"-->
-    <!--android:textColor="@color/secondary"-->
-    <!--android:textStyle="bold" />-->
-
-    <!--<TextView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginStart="10dp"-->
-    <!--android:text="EDD Date : "-->
-    <!--android:layout_gravity="end"-->
-    <!--android:textColor="@color/secondary"-->
-    <!--android:textStyle="bold" />-->
-
-    <!--<TextView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginStart="5dp"-->
-    <!--android:text="02/10/2018"-->
-    <!--android:layout_gravity="start"-->
-    <!--android:textColor="@color/secondary"-->
-    <!--android:textStyle="bold" />-->
-
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:baselineAligned="false"-->
-    <!--android:padding="5dp"-->
-    <!--android:weightSum="2"-->
-    <!--android:visibility="gone">-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="start"-->
-    <!--android:layout_weight="1"-->
-    <!--android:orientation="vertical">-->
-
-    <!--<TextView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="Occupation"-->
-    <!--android:layout_gravity="start"-->
-    <!--android:textColor="@color/secondary"-->
-    <!--android:textStyle="bold" />-->
-
-    <!--<TextView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="House Wife"-->
-    <!--android:layout_gravity="start"-->
-    <!--android:textColor="@color/secondary"-->
-    <!--android:textStyle="bold" />-->
-
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="start"-->
-    <!--android:layout_weight="1"-->
-    <!--android:orientation="vertical">-->
-
-    <!--<TextView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="Husbands Occupation :"-->
-    <!--android:layout_gravity="end"-->
-    <!--android:textColor="@color/secondary"-->
-    <!--android:textStyle="bold" />-->
-
-    <!--<TextView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="Self Employed"-->
-    <!--android:layout_gravity="start"-->
-    <!--android:textColor="@color/secondary"-->
-    <!--android:textStyle="bold" />-->
-
-    <!--</LinearLayout>-->
-
-    <!--</LinearLayout>-->
-
-    <!--</LinearLayout>-->
-
-    <!--</RelativeLayout>-->
-
-    <!--</android.support.v7.widget.CardView>-->
-
-    <!--<android.support.v7.widget.CardView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="50dp"-->
-    <!--android:layout_margin="10dp"-->
-    <!--android:backgroundT="@drawable/tab_background_left"-->
-    <!--app:cardElevation="2dp"-->
-    <!--app:cardUseCompatPadding="true">-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:orientation="vertical">-->
-
-    <!--<android.support.design.widget.TabLayout-->
-    <!--android:id="@+id/tabLayout"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="50dp"-->
-    <!--app:tabBackground="@drawable/tab_color_selector"-->
-    <!--app:tabSelectedTextColor="@color/white"-->
-    <!--app:tabTextColor="@color/black"-->
-    <!--android:minHeight="?attr/actionBarSize"-->
-    <!--android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />-->
-
-    <!--</LinearLayout>-->
-
-    <!--</android.support.v7.widget.CardView>-->
-
-
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_margin="10dp"-->
-    <!--android:weightSum="2"-->
-    <!--android:orientation="horizontal">-->
-
-    <!--<Button-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_weight="1"-->
-    <!--android:text="PICME Visit"-->
-    <!--android:background="@color/colorPrimary"-->
-    <!--android:textColor="#ffffff"-->
-    <!--android:id="@+id/btn_picme"/>-->
-
-    <!--<Button-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:background="@color/secondary"-->
-    <!--android:layout_weight="1"-->
-    <!--android:text="Other Visit"-->
-    <!--android:textColor="#ffffff"-->
-    <!--android:id="@+id/btn_submit"/>-->
-
-    <!--</LinearLayout>-->
-
-
-
-
+    android:orientation="vertical">
 
     <android.support.design.widget.TabLayout
         android:id="@+id/hre_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        app:tabMode="scrollable"
         app:tabGravity="center"
-        app:tabTextColor="#ffffff"/>
-
-    <!--<LinearLayout-->
-        <!--android:id="@+id/ll_click_visit_view"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:gravity="center"-->
-        <!--android:layout_margin="2dp"-->
-        <!--android:weightSum="2"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_below="@+id/hre_tabs">-->
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:orientation="vertical">-->
-
-            <!--<LinearLayout-->
-                <!--android:id="@+id/ll_click_pickme_visit"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="end"-->
-                <!--android:backgroundTint="@color/colorPrimary"-->
-                <!--android:background="@drawable/tab_background_left"-->
-                <!--android:orientation="vertical">-->
-
-                <!--<TextView-->
-                    <!--android:textSize="@dimen/text_primary"-->
-                    <!--android:textStyle="bold"-->
-                    <!--android:layout_margin="2dp"-->
-                    <!--android:layout_gravity="end"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:textColor="#FFFFFF"-->
-                    <!--android:text="Picme Visit"/>-->
-            <!--</LinearLayout>-->
-
-        <!--</LinearLayout>-->
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:orientation="vertical">-->
-
-            <!--<LinearLayout-->
-                <!--android:id="@+id/ll_click_other_visit"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:background="@drawable/tab_background_left"-->
-                <!--android:orientation="vertical">-->
-
-                <!--<TextView-->
-                    <!--android:textSize="@dimen/text_primary"-->
-                    <!--android:textStyle="bold"-->
-                    <!--android:padding="2dp"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:textColor="#2F80ED"-->
-                    <!--android:text="Other Visit"/>-->
-
-            <!--</LinearLayout>-->
-
-        <!--</LinearLayout>-->
-
-    <!--</LinearLayout>-->
+        app:tabMode="scrollable"
+        app:tabTextColor="#ffffff" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/hre_viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_above="@+id/rel_bottom"
         android:layout_below="@+id/ll_click_visit_view"
-        android:layout_above="@+id/rel_bottom"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
     <LinearLayout
         android:id="@+id/rel_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:weightSum="2"
-        android:layout_alignParentBottom="true">
+        android:weightSum="2">
 
         <Button
             android:id="@+id/btn_primary_report"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:text="PRIMARY RECORDS"
-            android:textColor="#ffffff"
-            android:layout_weight="1"
-            android:padding="5dp"
             android:layout_margin="5dp"
-            android:drawableEnd="@drawable/ic_file_view"/>
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:drawableEnd="@drawable/ic_file_view"
+            android:padding="5dp"
+            android:text="PRIMARY RECORDS"
+            android:textColor="#ffffff" />
 
         <Button
             android:id="@+id/btn_view_report"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:text="View Reports"
-            android:textColor="#ffffff"
-            android:layout_weight="1"
-            android:padding="5dp"
             android:layout_margin="5dp"
-            android:drawableEnd="@drawable/ic_file_view"/>
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:drawableEnd="@drawable/ic_file_view"
+            android:padding="5dp"
+            android:text="View Reports"
+            android:textColor="#ffffff" />
 
     </LinearLayout>
 

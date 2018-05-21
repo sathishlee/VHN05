@@ -51,26 +51,26 @@ public class ImmunizationActivity extends AppCompatActivity implements MotherLis
         initUI();
     }
 
-    public void showActionBar(){
+    public void showActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Mother Dose List");
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
-    public void initUI(){
+    public void initUI() {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
 
         pnMotherListPresenter = new MotherListPresenter(ImmunizationActivity.this, this);
-        pnMotherListPresenter.getSelectedImmuMother(preferenceData.getVhnCode(),preferenceData.getVhnId(), AppConstants.SELECTED_MID);
+        pnMotherListPresenter.getSelectedImmuMother(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
 
         immunization_lists = new ArrayList<>();
-        recyclerView = (RecyclerView)findViewById(R.id.mother_recycler_view);
+        recyclerView = (RecyclerView) findViewById(R.id.mother_recycler_view);
         textView = (TextView) findViewById(R.id.txt_no_records_found);
-        immunizationAdapter = new ImmunizationAdapter(immunization_lists,ImmunizationActivity.this);
+        immunizationAdapter = new ImmunizationAdapter(immunization_lists, ImmunizationActivity.this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(ImmunizationActivity.this);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -98,15 +98,15 @@ public class ImmunizationActivity extends AppCompatActivity implements MotherLis
     @Override
     public void showLoginSuccess(String response) {
 
-        AppConstants.SELECTED_MID="0";
+        AppConstants.SELECTED_MID = "0";
         Log.e(ImmunizationActivity.class.getSimpleName(), "Response success" + response);
 
         try {
             JSONObject mJsnobject = new JSONObject(response);
-            String status =mJsnobject.getString("status");
+            String status = mJsnobject.getString("status");
             if (status.equalsIgnoreCase("1")) {
                 JSONArray jsonArray = mJsnobject.getJSONArray("immunization_list");
-                if (jsonArray.length()!=0) {
+                if (jsonArray.length() != 0) {
                     recyclerView.setVisibility(View.VISIBLE);
                     textView.setVisibility(View.GONE);
 
@@ -124,7 +124,7 @@ public class ImmunizationActivity extends AppCompatActivity implements MotherLis
                         immunization_lists.add(immunizationList);
                         immunizationAdapter.notifyDataSetChanged();
                     }
-                }else{
+                } else {
                     recyclerView.setVisibility(View.GONE);
                     textView.setVisibility(View.VISIBLE);
                 }
@@ -137,9 +137,9 @@ public class ImmunizationActivity extends AppCompatActivity implements MotherLis
 
     @Override
     public void showLoginError(String message) {
-        AppConstants.SELECTED_MID="0";
+        AppConstants.SELECTED_MID = "0";
 
-        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

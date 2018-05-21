@@ -33,11 +33,11 @@ public class ANVisitAdapter extends PagerAdapter {
 
 
     public ANVisitAdapter(Context mContext, ArrayList<ANMotherVisitResponseModel.VhnAN_Mothers_List> mhealthRecordList) {
-        Log.e("ANVIEWREPORT List",mhealthRecordList.size()+"");
+        Log.e("ANVIEWREPORT List", mhealthRecordList.size() + "");
 
         this.mContext = mContext;
         this.mhealthRecordList = mhealthRecordList;
-        inflater    = LayoutInflater.from(mContext);
+        inflater = LayoutInflater.from(mContext);
 
     }
 
@@ -46,11 +46,11 @@ public class ANVisitAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup view, int position) {
 
         View healthRecordLayout = inflater.inflate(R.layout.item_visit_screen, view, false);
-        mhealthRecordResponseModel   =mhealthRecordList.get(position);
+        mhealthRecordResponseModel = mhealthRecordList.get(position);
 //                Log.e(HealthRecordsAdapter.class.getSimpleName(),mhealthRecordResponseModel.getVisitId());
         initUI(healthRecordLayout);
         setValuetoUI(mhealthRecordResponseModel);
-        view.addView(healthRecordLayout, position);
+        view.addView(healthRecordLayout);
 
         return healthRecordLayout;
     }
@@ -61,7 +61,7 @@ public class ANVisitAdapter extends PagerAdapter {
         txtVisitedType.setText(mhealthRecordResponseModel.getVtypeOfVisit());
         txtFacility.setText(mhealthRecordResponseModel.getVFacility());
         txtAnyComplient.setText(mhealthRecordResponseModel.getVAnyComplaints());
-        txtBPValue.setText(mhealthRecordResponseModel.getVClinicalBPDiastolic()+"/"+mhealthRecordResponseModel.getVClinicalBPDiastolic());
+        txtBPValue.setText(mhealthRecordResponseModel.getVClinicalBPDiastolic() + "/" + mhealthRecordResponseModel.getVClinicalBPDiastolic());
         txtPluseRate.setText(mhealthRecordResponseModel.getVEnterPulseRate());
         txtWeight.setText(mhealthRecordResponseModel.getVEnterWeight());
         txtFunbalHeight.setText(mhealthRecordResponseModel.getVFundalHeight());
@@ -92,13 +92,13 @@ public class ANVisitAdapter extends PagerAdapter {
         txtWeight = healthRecordLayout.findViewById(R.id.txt_weight);
         txtFunbalHeight = healthRecordLayout.findViewById(R.id.txt_funbal_height);
         txtFhs = healthRecordLayout.findViewById(R.id.txt_fhs);
-        txtPep =healthRecordLayout.findViewById(R.id.txt_pep);
+        txtPep = healthRecordLayout.findViewById(R.id.txt_pep);
         txtHp = healthRecordLayout.findViewById(R.id.txt_hp);
         txtFbs = healthRecordLayout.findViewById(R.id.txt_fbs);
         txtPpbs = healthRecordLayout.findViewById(R.id.txt_ppbs);
         txtGtt = healthRecordLayout.findViewById(R.id.txt_gtt);
-        txtSugar =healthRecordLayout.findViewById(R.id.txt_sugar);
-        txtFetus =healthRecordLayout.findViewById(R.id.txt_fetus);
+        txtSugar = healthRecordLayout.findViewById(R.id.txt_sugar);
+        txtFetus = healthRecordLayout.findViewById(R.id.txt_fetus);
         txtGestationSac = healthRecordLayout.findViewById(R.id.txt_gestation_sac);
         txtLiquor = healthRecordLayout.findViewById(R.id.txt_liquor);
         txtPlacenta = healthRecordLayout.findViewById(R.id.txt_placenta);
@@ -113,7 +113,7 @@ public class ANVisitAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        Log.e("ANVIEWREPORT List",mhealthRecordList.size()+"");
+        Log.e("ANVIEWREPORT List", mhealthRecordList.size() + "");
         return mhealthRecordList.size();
     }
 
@@ -126,9 +126,10 @@ public class ANVisitAdapter extends PagerAdapter {
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
     }
+
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return "Visit "+mhealthRecordList.get(position).getVisitId();
+        return "Visit " + mhealthRecordList.get(position).getVisitId();
     }
 }

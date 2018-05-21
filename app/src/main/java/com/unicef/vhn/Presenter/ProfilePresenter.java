@@ -2,6 +2,8 @@ package com.unicef.vhn.Presenter;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Base64;
 import android.util.Log;
 
@@ -27,10 +29,10 @@ import java.util.Map;
 
 public class ProfilePresenter implements ProfileInteractor {
 
-private ProfileViews profileViews;
+    private ProfileViews profileViews;
     private Activity activity;
 
-    public ProfilePresenter(ProfileViews profileViews, Activity activity){
+    public ProfilePresenter(ProfileViews profileViews, Activity activity) {
 
         this.profileViews = profileViews;
         this.activity = activity;
@@ -72,6 +74,7 @@ private ProfileViews profileViews;
                 return params;
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.FROYO)
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 String credentials = "admin" + ":" + "1234";
@@ -109,16 +112,16 @@ private ProfileViews profileViews;
     public void getVHNProfile(final String vhnCode, final String vhnId) {
         profileViews.showProgress();
 
-        String url = Apiconstants.BASE_URL+Apiconstants.VHN_PROFILE;
-        Log.d("VHNID-->",vhnId);
-        Log.d("VHNCODE-->",vhnCode);
-        Log.d("URL-->",url);
+        String url = Apiconstants.BASE_URL + Apiconstants.VHN_PROFILE;
+        Log.d("VHNID-->", vhnId);
+        Log.d("VHNCODE-->", vhnCode);
+        Log.d("URL-->", url);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
-                Log.d("Log in success",response);
+                Log.d("Log in success", response);
                 profileViews.hideProgress();
                 profileViews.successViewProfile(response);
             }
@@ -126,24 +129,25 @@ private ProfileViews profileViews;
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.d("Log in Error",error.toString());
+                Log.d("Log in Error", error.toString());
                 profileViews.hideProgress();
                 profileViews.errorViewProfile(error.toString());
             }
-        }){
+        }) {
 
 
             @Override
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("vhnCode",vhnCode);
-                params.put("vhnId",vhnId);
+                params.put("vhnCode", vhnCode);
+                params.put("vhnId", vhnId);
 
-                Log.d("params--->",params.toString());
+                Log.d("params--->", params.toString());
 
                 return params;
             }
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 String credentials = "admin" + ":" + "1234";
@@ -151,7 +155,7 @@ private ProfileViews profileViews;
                 HashMap<String, String> header = new HashMap<>();
 //                header.put("Content-Type", "application/x-www-from-urlencoded; charset=utf-8");
                 header.put("Authorization", "Basic " + base64EncodedCredentials);
-                Log.d("Credentials ","Basic " +base64EncodedCredentials.toString());
+                Log.d("Credentials ", "Basic " + base64EncodedCredentials.toString());
 
                 return header;
             }

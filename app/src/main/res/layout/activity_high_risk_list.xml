@@ -1,5 +1,4 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="match_parent">
@@ -12,15 +11,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="7dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="7dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:baselineAligned="false"
-                android:weightSum="2"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -29,13 +28,13 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_margin="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
                         android:text="Risk Status"
-                        android:textSize="@dimen/text_label"
                         android:textAlignment="textStart"
                         android:textColor="@color/startblue"
+                        android:textSize="@dimen/text_label"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -52,16 +51,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/filter_background">
+
                         <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_margin="4dp"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
+                                android:layout_gravity="end"
                                 android:layout_marginEnd="5dp"
                                 android:drawableStart="@drawable/filter"
-                                android:layout_gravity="end"
                                 android:textSize="@dimen/text_secondary"
                                 android:textStyle="bold" />
 
@@ -69,11 +70,11 @@
                                 android:id="@+id/txt_risk"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
+                                android:layout_gravity="end"
                                 android:layout_marginEnd="5dp"
                                 android:text="Filter"
-                                android:textSize="@dimen/text_secondary"
-                                android:layout_gravity="end"
                                 android:textColor="@color/startblue"
+                                android:textSize="@dimen/text_secondary"
                                 android:textStyle="bold" />
                         </LinearLayout>
                     </LinearLayout>
@@ -83,17 +84,17 @@
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
-                android:paddingTop="4.0dip"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="4.0dip">
 
                 <View
-                    android:layout_gravity="center"
-                    android:background="@drawable/header_line"
                     android:layout_width="match_parent"
                     android:layout_height="5.0dp"
+                    android:layout_gravity="center"
                     android:layout_weight="1.0"
+                    android:background="@drawable/header_line"
                     android:layerType="software" />
 
             </LinearLayout>
@@ -107,13 +108,13 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/high_risk_recycler_view"
-                android:scrollbars="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical" />
 
         </LinearLayout>
 
-        <include layout="@layout/item_mother_risk"/>
+        <include layout="@layout/item_mother_risk" />
 
     </LinearLayout>
 </LinearLayout>

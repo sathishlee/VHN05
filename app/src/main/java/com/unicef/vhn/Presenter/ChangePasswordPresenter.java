@@ -21,13 +21,13 @@ import java.util.Map;
  * Created by Suthishan on 20/1/2018.
  */
 
-public class ChangePasswordPresenter implements ChangePasswordInteractor{
+public class ChangePasswordPresenter implements ChangePasswordInteractor {
 
 
     private ChangePasswordViews changePasswordViews;
     private Activity activity;
 
-    public ChangePasswordPresenter(ChangePasswordViews changePasswordViews, Activity activity){
+    public ChangePasswordPresenter(ChangePasswordViews changePasswordViews, Activity activity) {
         this.changePasswordViews = changePasswordViews;
         this.activity = activity;
     }
@@ -38,7 +38,7 @@ public class ChangePasswordPresenter implements ChangePasswordInteractor{
         String url = Apiconstants.BASE_URL + Apiconstants.CHANGE_PASSWORD;
         Log.d("VHN Code--->", vhnCode);
         Log.d("VHN Password--->", vhnPassword);
-        Log.d("VHN New Password",vhnNewPassword);
+        Log.d("VHN New Password", vhnNewPassword);
         Log.d("VHN Conform Password", vhnConPassword);
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -53,20 +53,21 @@ public class ChangePasswordPresenter implements ChangePasswordInteractor{
                 changePasswordViews.hideProgress();
                 changePasswordViews.changePasswordFailure(error.toString());
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("vhnCode",vhnCode);
-                params.put("vhnPassword",vhnPassword);
-                params.put("vhnNewPassword",vhnNewPassword);
-                params.put("vhnConPassword",vhnConPassword);
+                params.put("vhnCode", vhnCode);
+                params.put("vhnPassword", vhnPassword);
+                params.put("vhnNewPassword", vhnNewPassword);
+                params.put("vhnConPassword", vhnConPassword);
 
-                Log.d("params--->",params.toString());
+                Log.d("params--->", params.toString());
 
                 return params;
             }
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 String credentials = "admin" + ":" + "1234";
@@ -74,7 +75,7 @@ public class ChangePasswordPresenter implements ChangePasswordInteractor{
                 HashMap<String, String> header = new HashMap<>();
 //                header.put("Content-Type", "application/x-www-from-urlencoded; charset=utf-8");
                 header.put("Authorization", "Basic " + base64EncodedCredentials);
-                Log.d("Credentials ","Basic " +base64EncodedCredentials.toString());
+                Log.d("Credentials ", "Basic " + base64EncodedCredentials.toString());
 
                 return header;
             }

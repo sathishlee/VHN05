@@ -4,8 +4,12 @@ package com.unicef.vhn.fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -40,8 +44,10 @@ import com.unicef.vhn.activity.PNHBNCListActivity;
 import com.unicef.vhn.activity.SosAlertListActivity;
 import com.unicef.vhn.activity.TreamPreTreamListActivity;
 import com.unicef.vhn.activity.VhnProfile;
+import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
+import com.unicef.vhn.realmDbModel.DashBoardRealmModel;
 import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.utiltiy.RoundedTransformation;
 import com.unicef.vhn.view.MotherListsViews;
@@ -49,10 +55,13 @@ import com.unicef.vhn.view.MotherListsViews;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
+
 
 public class home extends Fragment implements MotherListsViews {
     ImageView img_mother_count, img_high_risk_count, img_infant_count, userImageProfile;
-    TextView txt_mother_count, txt_high_risk_count, txt_infants_count, txt_sos_count;
+    public TextView txt_mother_count, txt_high_risk_count, txt_infants_count, txt_sos_count;
     Button but_an_mother_total_count, but_an_mother_high_risk_count, but_an_mother_pn_hbnc_totlal_count, but_an_mother_pn_hbnc_term_preterm_count;
     TextView txt_antt_1_due, txt_antt_2_due, txt_pnhbnc_due;
 
@@ -68,7 +77,8 @@ public class home extends Fragment implements MotherListsViews {
     String str_mPhoto;
 
     Context context;
-
+    boolean isoffline = false;
+    Realm realm;
 
     public static home newInstance() {
         home fragment = new home();
@@ -83,7 +93,9 @@ public class home extends Fragment implements MotherListsViews {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_new, container, false);
-        checkInterNetConnection();
+        realm = RealmController.with(getActivity()).getRealm(); // opens "myrealm.realm"
+
+//        checkInterNetConnection();
         initUI(view);
 
         profile = (CardView) view.findViewById(R.id.user_profile_photo);
@@ -97,9 +109,6 @@ public class home extends Fragment implements MotherListsViews {
             }
         });
 
-        userImageProfile = (ImageView) view.findViewById(R.id.userImageProfile);
-
-        img_mother_count = (ImageView) view.findViewById(R.id.img_mother_count);
         img_mother_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -191,8 +200,8 @@ public class home extends Fragment implements MotherListsViews {
         txt_antt_2_due.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppConstants.ANTT_2_LIST="TT2_List";
-                AppConstants.ANTT_2_TITLE="AN TT 2 Due List";
+                AppConstants.ANTT_2_LIST = "TT2_List";
+                AppConstants.ANTT_2_TITLE = "AN TT 2 Due List";
 
                 startActivity(new Intent(getActivity(), ANTT2MothersList.class));
             }
@@ -224,6 +233,9 @@ public class home extends Fragment implements MotherListsViews {
     }
 
     private void initUI(View view) {
+
+        checkNetwork = new CheckNetwork(getActivity());
+
         pDialog = new ProgressDialog(getActivity());
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
@@ -231,12 +243,10 @@ public class home extends Fragment implements MotherListsViews {
         homePresenter = new HomePresenter(getActivity(), this);
         context = getActivity();
 
-        if (checkNetwork.isNetworkAvailable()) {
-            homePresenter.getDashBoard(preferenceData.getVhnCode(), preferenceData.getVhnId());
-        } else {
-            Log.w(home.class.getSimpleName(), "Is" + checkNetwork.isNetworkAvailable());
-            startActivity(new Intent(getActivity(), NoInternetConnectionActivity.class));
-        }
+        userImageProfile = (ImageView) view.findViewById(R.id.userImageProfile);
+
+        img_mother_count = (ImageView) view.findViewById(R.id.img_mother_count);
+
         ll_sos_view = view.findViewById(R.id.ll_sos_view);
         txt_vhn_name = view.findViewById(R.id.txt_vhn_name);
         txt_hsc = view.findViewById(R.id.txt_hsc);
@@ -262,15 +272,80 @@ public class home extends Fragment implements MotherListsViews {
         txt_antt_2_due = view.findViewById(R.id.txt_antt_2_due);
         txt_pnhbnc_due = view.findViewById(R.id.txt_pnhbnc_due);
 
+        if (checkNetwork.isNetworkAvailable()) {
+            homePresenter.getDashBoard(preferenceData.getVhnCode(), preferenceData.getVhnId());
+        } else {
+//            Log.w(home.class.getSimpleName(), "Is" + checkNetwork.isNetworkAvailable());
+//            startActivity(new Intent(getActivity(), NoInternetConnectionActivity.class));
+            isoffline = true;
+        }
+        mFlipper = ((ViewFlipper) view.findViewById(R.id.flipper));
+        if (isoffline) {
+            showOfflineData();
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("Record Not Found");
+            builder.create();
+        }
+    }
 
-        mFlipper = ((ViewFlipper)view.findViewById(R.id.flipper));
-      /*  if (txt_sos_count.getText().toString().equalsIgnoreCase("")){
+    private void showOfflineData() {
+        realm.beginTransaction();
+        RealmResults<DashBoardRealmModel> userInfoRealmResult = realm.where(DashBoardRealmModel.class).findAll();
+        for (int i = 0; i < userInfoRealmResult.size(); i++) {
+            DashBoardRealmModel model = userInfoRealmResult.get(i);
 
-        }else {
-            mFlipper.startFlipping();
-            mFlipper.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
-            mFlipper.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
-        }*/
+            Log.e("getMothersCount", model.getMothersCount() + "");
+            Log.e("getRiskMothersCount", model.getRiskMothersCount() + "");
+            Log.e("getInfantCount", model.getInfantCount() + "");
+            Log.e("getSosCount", model.getSosCount() + "");
+            txt_mother_count.setText(model.getMothersCount() + "");
+            txt_high_risk_count.setText(model.getRiskMothersCount() + "");
+            txt_infants_count.setText(model.getInfantCount() + "");
+            txt_sos_count.setText(model.getSosCount() + "");
+            if (model.getSosCount() == 0) {
+
+            } else {
+                mFlipper.startFlipping();
+                mFlipper.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+                mFlipper.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
+            }
+            txt_antt_1_due.setText(model.getANTT1() + "");
+            txt_antt_2_due.setText(model.getANTT2() + "");
+            txt_pnhbnc_due.setText(model.getPnhbncCount() + "");
+
+            but_an_mother_total_count.setText("Total: " + model.getANMothersCount() + "");
+            but_an_mother_high_risk_count.setText("High Risk: " + model.getANMotherRiskCount() + "");
+            but_an_mother_pn_hbnc_totlal_count.setText("Total: " + model.getPNMotherCount() + "");
+            but_an_mother_pn_hbnc_term_preterm_count.setText("Term/Preterm: " + model.getTermsCount() + "");
+
+//            JSONObject mJsnobject_phcDetails = mJsnobject.getJSONObject("phcDetails");
+//                JSONObject mJsnobject_phcDetails = mJsnobject.getJSONObject("phcDetails");
+            txt_vhn_name.setText(model.getVhnName());
+            txt_phc.setText(model.getPhcName());
+            txt_hsc.setText(model.getFacilityName());
+            txt_block.setText(model.getBlock());
+            txt_address.setText(model.getDistrict());
+
+            str_mPhoto = model.getVphoto();
+            if (TextUtils.isEmpty(str_mPhoto)) {
+                userImageProfile.setImageResource(R.drawable.ic_nurse);
+            } else {
+                Picasso.with(context)
+                        .load(Apiconstants.PHOTO_URL + str_mPhoto)
+                        .placeholder(R.drawable.ic_nurse)
+                        .fit()
+                        .centerCrop()
+                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+                        .networkPolicy(NetworkPolicy.NO_CACHE)
+                        .transform(new RoundedTransformation(90, 4))
+                        .error(R.drawable.ic_nurse)
+                        .into(userImageProfile);
+            }
+        }
+
+        realm.commitTransaction();
+
     }
 
 
@@ -293,62 +368,65 @@ public class home extends Fragment implements MotherListsViews {
             String message = mJsnobject.getString("message");
 
             if (status.equalsIgnoreCase("1")) {
-                txt_mother_count.setText(mJsnobject.getString("mothersCount"));
-                txt_high_risk_count.setText(mJsnobject.getString("riskMothersCount"));
-                txt_infants_count.setText(mJsnobject.getString("infantCount"));
-                txt_sos_count.setText(mJsnobject.getString("sosCount"));
-                if (mJsnobject.getString("sosCount").equalsIgnoreCase("0")){
 
-                }else {
-                    mFlipper.startFlipping();
-                    mFlipper.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
-                    mFlipper.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
+                RealmResults<DashBoardRealmModel> DashBoardRealmResult = realm.where(DashBoardRealmModel.class).findAll();
+                Log.e("Realm size ---->", DashBoardRealmResult.size() + "");
+                if (DashBoardRealmResult.size() != 0) {
+
+//
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            realm.delete(DashBoardRealmModel.class);
+                        }
+                    });
+                } else {
+                    Log.e("Realm size  ---->", DashBoardRealmResult.size() + "");
                 }
-                txt_antt_1_due.setText(mJsnobject.getString("ANTT1"));
-                txt_antt_2_due.setText(mJsnobject.getString("ANTT2"));
-                txt_pnhbnc_due.setText(mJsnobject.getString("pnhbncCount"));
+                Log.e("After Realm size  ---->", DashBoardRealmResult.size() + "");
 
 
-                but_an_mother_total_count.setText("Total: " + mJsnobject.getString("ANMothersCount"));
-                but_an_mother_high_risk_count.setText("High Risk: " + mJsnobject.getString("ANMotherRiskCount"));
-                but_an_mother_pn_hbnc_totlal_count.setText("Total: " + mJsnobject.getString("PNMotherCount"));
-                but_an_mother_pn_hbnc_term_preterm_count.setText("Term/Preterm: " + mJsnobject.getString("termsCount"));
+                //create new realm Table
+                realm.beginTransaction();       //create or open
+                DashBoardRealmModel dashBoardRealmModel = realm.createObject(DashBoardRealmModel.class);  //this will create a UserInfoRealmModel object which will be inserted in database
+                dashBoardRealmModel.setMothersCount(Integer.parseInt(mJsnobject.getString("mothersCount")));
+                dashBoardRealmModel.setRiskMothersCount(Integer.parseInt(mJsnobject.getString("riskMothersCount")));
+                dashBoardRealmModel.setInfantCount(Integer.parseInt(mJsnobject.getString("infantCount")));
+                dashBoardRealmModel.setSosCount(Integer.parseInt(mJsnobject.getString("sosCount")));
+                dashBoardRealmModel.setANTT1(Integer.parseInt(mJsnobject.getString("ANTT1")));
+                dashBoardRealmModel.setANTT2(Integer.parseInt(mJsnobject.getString("ANTT2")));
+                dashBoardRealmModel.setPnhbncCount(Integer.parseInt(mJsnobject.getString("pnhbncCount")));
 
+                dashBoardRealmModel.setANMothersCount(Integer.parseInt(mJsnobject.getString("ANMothersCount")));
+                dashBoardRealmModel.setANMotherRiskCount(Integer.parseInt(mJsnobject.getString("ANMotherRiskCount")));
+                dashBoardRealmModel.setPNMotherCount(Integer.parseInt(mJsnobject.getString("PNMotherCount")));
+                dashBoardRealmModel.setTermsCount(Integer.parseInt(mJsnobject.getString("termsCount")));
 
-
-                JSONObject mJsnobject_phcDetails = mJsnobject.getJSONObject("phcDetails");
-//                JSONObject mJsnobject_phcDetails = mJsnobject.getJSONObject("phcDetails");
-                txt_vhn_name.setText(mJsnobject_phcDetails.getString("vhnName"));
-                txt_phc.setText(mJsnobject_phcDetails.getString("phcName"));
-                txt_hsc.setText(mJsnobject_phcDetails.getString("facilityName"));
-                txt_block.setText(mJsnobject_phcDetails.getString("block"));
-                txt_address.setText(mJsnobject_phcDetails.getString("District"));
-
-                str_mPhoto = mJsnobject_phcDetails.getString("vphoto");
-                Log.d("vphoto-->",Apiconstants.PHOTO_URL+str_mPhoto);
-
-                if(!TextUtils.isEmpty(str_mPhoto)){
-                    Picasso.with(context)
-                            .load(Apiconstants.PHOTO_URL+str_mPhoto)
-                            .placeholder(R.drawable.ic_nurse)
-                            .fit()
-                            .centerCrop()
-                            .memoryPolicy(MemoryPolicy.NO_CACHE)
-                            .networkPolicy(NetworkPolicy.NO_CACHE)
-                            .transform(new RoundedTransformation(90,4))
-                            .error(R.drawable.ic_nurse)
-                            .into(userImageProfile);
-                }else{
-                    userImageProfile.setImageResource(R.drawable.ic_nurse);
+                JSONObject jobj__phcDetails = mJsnobject.getJSONObject("phcDetails");
+                dashBoardRealmModel.setVhnName(jobj__phcDetails.getString("vhnName"));
+                dashBoardRealmModel.setPhcName(jobj__phcDetails.getString("phcName"));
+                dashBoardRealmModel.setFacilityName(jobj__phcDetails.getString("facilityName"));
+                dashBoardRealmModel.setBlock(jobj__phcDetails.getString("block"));
+                dashBoardRealmModel.setDistrict(jobj__phcDetails.getString("District"));
+                if (jobj__phcDetails.getString("vphoto").equalsIgnoreCase("null")) {
+                    dashBoardRealmModel.setVphoto("");
                 }
+                dashBoardRealmModel.setVphoto(jobj__phcDetails.getString("vphoto"));
+
+
+                realm.commitTransaction(); //close table
+
 
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        setValueToUI();
+
 
     }
+
 
     @Override
     public void showLoginError(String response) {
@@ -365,4 +443,66 @@ public class home extends Fragment implements MotherListsViews {
     public void showAlertClosedError(String string) {
 
     }
+
+    private void setValueToUI() {
+
+        realm.beginTransaction();
+        RealmResults<DashBoardRealmModel> userInfoRealmResult = realm.where(DashBoardRealmModel.class).findAll();
+        for (int i = 0; i < userInfoRealmResult.size(); i++) {
+            DashBoardRealmModel model = userInfoRealmResult.get(i);
+
+            Log.e("getMothersCount", model.getMothersCount() + "");
+            Log.e("getRiskMothersCount", model.getRiskMothersCount() + "");
+            Log.e("getInfantCount", model.getInfantCount() + "");
+            Log.e("getSosCount", model.getSosCount() + "");
+            txt_mother_count.setText(model.getMothersCount() + "");
+            txt_high_risk_count.setText(model.getRiskMothersCount() + "");
+            txt_infants_count.setText(model.getInfantCount() + "");
+            txt_sos_count.setText(model.getSosCount() + "");
+            Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+            Ringtone ringtone = RingtoneManager.getRingtone(getActivity(), uri);
+            if (model.getSosCount() == 0) {
+                ringtone.stop();
+            } else {
+                mFlipper.startFlipping();
+                mFlipper.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+                mFlipper.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
+
+                ringtone.play();
+            }
+            txt_antt_1_due.setText(model.getANTT1() + "");
+            txt_antt_2_due.setText(model.getANTT2() + "");
+            txt_pnhbnc_due.setText(model.getPnhbncCount() + "");
+
+            but_an_mother_total_count.setText("Total: " + model.getANMothersCount() + "");
+            but_an_mother_high_risk_count.setText("High Risk: " + model.getANMotherRiskCount() + "");
+            but_an_mother_pn_hbnc_totlal_count.setText("Total: " + model.getPNMotherCount() + "");
+            but_an_mother_pn_hbnc_term_preterm_count.setText("Term/Preterm: " + model.getTermsCount() + "");
+
+//            JSONObject mJsnobject_phcDetails = mJsnobject.getJSONObject("phcDetails");
+//                JSONObject mJsnobject_phcDetails = mJsnobject.getJSONObject("phcDetails");
+            txt_vhn_name.setText(model.getVhnName());
+            txt_phc.setText(model.getPhcName());
+            txt_hsc.setText(model.getFacilityName());
+            txt_block.setText(model.getBlock());
+            txt_address.setText(model.getDistrict());
+
+            str_mPhoto = model.getVphoto();
+            Log.d("vphoto-->", Apiconstants.PHOTO_URL + str_mPhoto);
+
+            Picasso.with(context)
+                    .load(Apiconstants.PHOTO_URL + str_mPhoto)
+                    .placeholder(R.drawable.ic_nurse)
+                    .fit()
+                    .centerCrop()
+                    .memoryPolicy(MemoryPolicy.NO_CACHE)
+                    .networkPolicy(NetworkPolicy.NO_CACHE)
+                    .transform(new RoundedTransformation(90, 4))
+                    .error(R.drawable.ic_nurse)
+                    .into(userImageProfile);
+        }
+
+        realm.commitTransaction();
+    }
+
 }

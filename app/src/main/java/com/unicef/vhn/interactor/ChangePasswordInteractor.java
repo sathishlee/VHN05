@@ -5,5 +5,10 @@ package com.unicef.vhn.interactor;
  */
 
 public interface ChangePasswordInteractor {
-    void changePassword(String vhnCode, String vhnPassword, String vhnNewPassword, String vhnConPassword);
+    void changePassword(
+            String vhnCode,
+            String vhnPassword,
+            String vhnNewPassword,
+            String vhnConPassword
+    );
 }

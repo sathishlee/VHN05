@@ -1,14 +1,11 @@
 package com.unicef.vhn.activity;
 
-import android.Manifest;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,9 +20,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.transition.Slide;
 import android.util.Log;
@@ -34,7 +29,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -102,8 +96,7 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_profile);
-        if(CheckingPermissionIsEnabledOrNot())
-        {
+        if (CheckingPermissionIsEnabledOrNot()) {
             Toast.makeText(VhnProfile.this, "All Permissions Granted Successfully", Toast.LENGTH_LONG).show();
         }
 
@@ -128,6 +121,7 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
         });
 
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -144,8 +138,7 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
                     if (CameraPermission && RecordAudioPermission && SendSMSPermission && GetAccountsPermission) {
 
 //                        Toast.makeText(ImageSelectedActivity.this, "Permission Granted", Toast.LENGTH_LONG).show();
-                    }
-                    else {
+                    } else {
 //                        Toast.makeText(ImageSelectedActivity.this,"Permission Denied",Toast.LENGTH_LONG).show();
 
                     }
@@ -190,7 +183,7 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
     }
 
 
-    private void showActionBar(){
+    private void showActionBar() {
         ViewCompat.setTransitionName(findViewById(R.id.app_bar), UPLOAD_IMAGE);
         supportPostponeEnterTransition();
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
@@ -253,7 +246,7 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
         }
     }
 
-    private void applyPalette(Palette palette) {
+  /*  private void applyPalette(Palette palette) {
         int primaryDark = getResources().getColor(R.color.primary_dark);
         int primary = getResources().getColor(R.color.primary);
         toolbar_layout.setContentScrimColor(palette.getMutedColor(primary));
@@ -261,6 +254,7 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
         updateBackground((FloatingActionButton) findViewById(R.id.fab), palette);
         supportStartPostponedEnterTransition();
     }
+
     private void updateBackground(FloatingActionButton fab, Palette palette) {
         int lightVibrantColor = palette.getLightVibrantColor(getResources().getColor(android.R.color.white));
         int vibrantColor = palette.getVibrantColor(getResources().getColor(R.color.accent));
@@ -268,7 +262,7 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
         fab.setRippleColor(lightVibrantColor);
         fab.setBackgroundTintList(ColorStateList.valueOf(vibrantColor));
     }
-
+*/
 
     @Override
     public void showProgress() {
@@ -281,16 +275,16 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
     }
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
-        if (pDialog!=null && pDialog.isShowing() ){
+        if (pDialog != null && pDialog.isShowing()) {
             pDialog.cancel();
         }
     }
 
     @Override
     public void successViewProfile(String response) {
-        Log.d("ProfileActivity success",response);
+        Log.d("ProfileActivity success", response);
 
         try {
             JSONObject jsonObject = new JSONObject(response);
@@ -309,10 +303,10 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
 
                 str_mPhoto = editprofile.getString("vphoto");
 
-                Log.d("vphoto-->", Apiconstants.PHOTO_URL+str_mPhoto);
+                Log.d("vphoto-->", Apiconstants.PHOTO_URL + str_mPhoto);
 
                 Picasso.with(context)
-                        .load(Apiconstants.PHOTO_URL+str_mPhoto)
+                        .load(Apiconstants.PHOTO_URL + str_mPhoto)
                         .placeholder(R.drawable.ln_logo)
                         .fit()
                         .centerCrop()
@@ -335,13 +329,13 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
 
     @Override
     public void successUploadPhoto(String response) {
-        Log.d("Image upload success",response);
+        Log.d("Image upload success", response);
         pDialog.dismiss();
     }
 
     @Override
     public void errorUploadPhoto(String response) {
-        Log.d("Image upload error",response);
+        Log.d("Image upload error", response);
         pDialog.dismiss();
     }
 
@@ -366,8 +360,6 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
         bottomSheetDialog.show();
 
 
-
-
         bottomSheetDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
@@ -382,7 +374,7 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
         img_camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    cameraIntent();
+                cameraIntent();
 
             }
         });
@@ -390,7 +382,7 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
         img_gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    galleryIntent();
+                galleryIntent();
 
             }
         });
@@ -401,14 +393,13 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);//
-        startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
+        startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
     }
 
     private void cameraIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_CAMERA);
     }
-
 
 
     @Override
@@ -460,12 +451,12 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
             e.printStackTrace();
         }
         user_profile_photo.setImageBitmap(thumbnail);
-        profilePresenter.uploadUserProfilePhoto(preferenceData.getVhnCode(),preferenceData.getVhnId(),thumbnail);
+        profilePresenter.uploadUserProfilePhoto(preferenceData.getVhnCode(), preferenceData.getVhnId(), thumbnail);
 
     }
 
     private void onSelectFromGalleryResult(Intent data) {
-        Bitmap bm=null;
+        Bitmap bm = null;
         if (data != null) {
             try {
                 bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
@@ -474,7 +465,7 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
             }
         }
         user_profile_photo.setImageBitmap(bm);
-        profilePresenter.uploadUserProfilePhoto(preferenceData.getVhnCode(),preferenceData.getVhnId(),bm);
+        profilePresenter.uploadUserProfilePhoto(preferenceData.getVhnCode(), preferenceData.getVhnId(), bm);
     }
 
     private void uploadBitmap(Bitmap bitmap) {

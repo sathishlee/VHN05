@@ -5,6 +5,10 @@ package com.unicef.vhn.interactor;
  */
 
 public interface HomeInteractor {
-    void getDashBoard(String strVhnId, String strPassword) ;
+    void getDashBoard(
+
+            String strVhnId,
+            String strPassword
+    );
 
 }

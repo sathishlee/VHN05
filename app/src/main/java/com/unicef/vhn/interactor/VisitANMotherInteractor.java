@@ -5,6 +5,9 @@ package com.unicef.vhn.interactor;
  */
 
 public interface VisitANMotherInteractor {
-    void  getVisitANMotherRecords(String vhnCode,String vhnId,String mid);
-    void  getVisitPNMotherRecords(String vhnCode,String vhnId,String mid);
+
+    void getVisitANMotherRecords(String vhnCode, String vhnId, String mid);
+
+    void getVisitPNMotherRecords(String vhnCode, String vhnId, String mid);
+
 }

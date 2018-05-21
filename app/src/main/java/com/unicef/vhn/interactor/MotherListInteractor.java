@@ -5,17 +5,22 @@ package com.unicef.vhn.interactor;
  */
 
 public interface MotherListInteractor {
-    void getPNMotherList(String callUrl,String vhnCode, String vhnId) ;
-    void getPNMotherRecordsList(String vhnCode, String vhnId) ;
-    void getSelectedMother(String vhnCode, String vhnId, String mid) ;
-    void getSelectedPNMother( String mid) ;
-    void getSelectedSosMother(final String vhnId,final String vhnCode,final String sosId);
-    void closeSosAlertSelectedMother(final String vhnId,final String vhnCode,final String sosId);
+    void getPNMotherList(String callUrl, String vhnCode, String vhnId);
+
+    void getPNMotherRecordsList(String vhnCode, String vhnId);
+
+    void getSelectedMother(String vhnCode, String vhnId, String mid);
+
+    void getSelectedPNMother(String mid);
+
+    void getSelectedSosMother(final String vhnId, final String vhnCode, final String sosId);
+
+    void closeSosAlertSelectedMother(final String vhnId, final String vhnCode, final String sosId);
 
 
-    void getTremAndPreTremMothersList(String vhnCode, String vhnId) ;
+    void getTremAndPreTremMothersList(String vhnCode, String vhnId);
 
-    void getTremAndPreTremMothers(String vhnId,String VhnCode, String mid) ;
+    void getTremAndPreTremMothers(String vhnId, String VhnCode, String mid);
 
     void getANTTMotherList(String vhnCode, String vhnId);
 
@@ -26,7 +31,7 @@ public interface MotherListInteractor {
     void getSelectedImmuMother(String vhnCode, String vhnId, String mid);
 
 
-    void getPNHBNCDUEMotherList(String vhnCode, String vhnId,String tempCount);
+    void getPNHBNCDUEMotherList(String vhnCode, String vhnId, String tempCount);
 
     void getMigratedMothersList(String vhnCode, String vhnId);
 

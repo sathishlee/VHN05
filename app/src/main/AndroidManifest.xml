@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.unicef.vhn">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
@@ -103,26 +104,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SosAlertListActivity"
-            android:theme="@style/AppTheme"/>
-        <activity android:name=".activity.SosMotherDetailsActivity"
-            android:theme="@style/AppTheme"/>
-        <activity android:name=".activity.ANViewReportsActivity"
-            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".activity.SosAlertListActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.SosMotherDetailsActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.ANViewReportsActivity"
+            android:theme="@style/AppTheme" />
         <activity android:name=".activity.PNViewReportsActivity" />
         <activity android:name=".activity.TreamPreTreamListActivity" />
-        <activity android:name=".activity.TremAndPreTreamDetailsActivity"/>
-        <activity android:name=".activity.ANTT1MothersList"/>
-        <activity android:name=".activity.ANTT2MothersList"/>
         <activity android:name=".activity.TremAndPreTreamDetailsActivity" />
+        <activity android:name=".activity.ANTT1MothersList" />
+        <activity android:name=".activity.ANTT2MothersList" />
+        <activity android:name=".activity.TremAndPreTreamDetailsActivity"
+            tools:ignore="DuplicateActivity" />
         <activity android:name=".activity.PNHBNCDueListActivity" />
         <activity android:name=".activity.AlertActivity" />
         <activity android:name=".activity.VisitActivity" />
         <activity android:name=".activity.MotherMigration" />
-        <activity android:name=".activity.MothersPrimaryRecordsActivity"/>
-        <activity android:name=".activity.PNMotherDeliveryReportActivity"/>
-        <activity android:name=".activity.ChangePasswordActivity"/>
-        <activity android:name=".activity.ChangeLanguageActivity"/>
+        <activity android:name=".activity.MothersPrimaryRecordsActivity" />
+        <activity android:name=".activity.PNMotherDeliveryReportActivity" />
+        <activity android:name=".activity.ChangePasswordActivity" />
+        <activity android:name=".activity.ChangeLanguageActivity" />
 
         <service android:name=".service.LocationMonitoringService" />
         <service android:name=".utiltiy.MyFirebaseInstanceIDService">
@@ -134,9 +139,9 @@
         <service
             android:name="com.unicef.vhn.utiltiy.MyFirebaseMessagingService"
             android:enabled="true"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
@@ -148,16 +153,26 @@
         <receiver
             android:name=".broadcastReceiver.ConnectivityReceiver"
             android:enabled="true">
-        <intent-filter>
-            <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-        </intent-filter>
-    </receiver>
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
 
-        <meta-data android:name="com.google.firebase.messaging.default_notification_icon"
+        <receiver android:name=".broadcastReceiver.GpsLocationReceiver">
+            <intent-filter>
+                <action android:name="android.location.PROVIDERS_CHANGED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_launcher" />
-        <meta-data android:name="com.google.firebase.messaging.default_notification_color"
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorPrimary" />
-        <meta-data android:name="com.google.android.gms.version"
+        <meta-data
+            android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
     </application>
 

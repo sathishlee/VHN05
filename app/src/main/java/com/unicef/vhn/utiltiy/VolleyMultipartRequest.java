@@ -1,5 +1,8 @@
 package com.unicef.vhn.utiltiy;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
@@ -47,6 +50,7 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
         return "multipart/form-data;boundary=" + boundary;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
     public byte[] getBody() throws AuthFailureError {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -131,6 +135,7 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
      * @param data             loop through data
      * @throws IOException
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     private void dataParse(DataOutputStream dataOutputStream, Map<String, DataPart> data) throws IOException {
         for (Map.Entry<String, DataPart> entry : data.entrySet()) {
             buildDataPart(dataOutputStream, entry.getValue(), entry.getKey());
@@ -160,6 +165,7 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
      * @param inputName        name of data input
      * @throws IOException
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     private void buildDataPart(DataOutputStream dataOutputStream, DataPart dataFile, String inputName) throws IOException {
         dataOutputStream.writeBytes(twoHyphens + boundary + lineEnd);
         dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"" +

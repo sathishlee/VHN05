@@ -21,7 +21,7 @@ import java.util.Map;
  * Created by sathish on 3/22/2018.
  */
 
-public class HomePresenter implements HomeInteractor{
+public class HomePresenter implements HomeInteractor {
 
     Activity activity;
     MotherListsViews motherListsViews;
@@ -36,13 +36,13 @@ public class HomePresenter implements HomeInteractor{
     public void getDashBoard(final String vhnCode, final String vhnId) {
         motherListsViews.showProgress();
         String url = Apiconstants.BASE_URL + Apiconstants.DASH_BOARD;
-        Log.d("Log in check Url--->",url);
-        Log.d("vhnCode--->",vhnCode);
-        Log.d("vhnId--->",vhnId);
-        StringRequest stringRequest =new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        Log.d("Log in check Url--->", url);
+        Log.d("vhnCode--->", vhnCode);
+        Log.d("vhnId--->", vhnId);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d(HomePresenter.class.getSimpleName(),response);
+                Log.d(HomePresenter.class.getSimpleName(), response);
                 motherListsViews.hideProgress();
                 motherListsViews.showLoginSuccess(response);
             }
@@ -52,29 +52,32 @@ public class HomePresenter implements HomeInteractor{
                 motherListsViews.hideProgress();
                 motherListsViews.showLoginSuccess(error.toString());
             }
-        }){
-
+        }) {
 
 
             @Override
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("vhnCode",vhnCode);
-                params.put("vhnId",vhnId);
+                params.put("vhnCode", vhnCode);
+                params.put("vhnId", vhnId);
 
-                Log.d("params--->",params.toString());
+                Log.d("params--->", params.toString());
 
                 return params;
             }
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 String credentials = "admin" + ":" + "1234";
-                String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.DEFAULT);
+                String base64EncodedCredentials = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.FROYO) {
+                    base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.DEFAULT);
+                }
                 HashMap<String, String> header = new HashMap<>();
 //                header.put("Content-Type", "application/x-www-from-urlencoded; charset=utf-8");
                 header.put("Authorization", "Basic " + base64EncodedCredentials);
-                Log.d("Credentials ","Basic " +base64EncodedCredentials.toString());
+                Log.d("Credentials ", "Basic " + base64EncodedCredentials.toString());
 
                 return header;
             }

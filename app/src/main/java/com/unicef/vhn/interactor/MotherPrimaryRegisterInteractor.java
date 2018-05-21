@@ -5,5 +5,7 @@ package com.unicef.vhn.interactor;
  */
 
 public interface MotherPrimaryRegisterInteractor {
+
     void getAllMotherPrimaryRegistration(String picmeId);
+
 }

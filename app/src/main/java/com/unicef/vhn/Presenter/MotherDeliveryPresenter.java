@@ -26,7 +26,7 @@ public class MotherDeliveryPresenter implements MotherDeliveryInteractor {
     Activity context;
     MotherDeliveryViews views;
 
-    public MotherDeliveryPresenter (Activity context, MotherDeliveryViews views){
+    public MotherDeliveryPresenter(Activity context, MotherDeliveryViews views) {
         this.context = context;
         this.views = views;
     }
@@ -51,17 +51,19 @@ public class MotherDeliveryPresenter implements MotherDeliveryInteractor {
                 views.hideProgress();
                 views.deliveryDetailsFailure(error.toString());
             }
-        })
-        {
+        }) {
 
 
             @Override
-            public Map<String,String> getHeaders() throws AuthFailureError {
-                String credentials ="admin"+":"+"1234";
-                String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(),Base64.DEFAULT);
-                HashMap<String,String> header = new HashMap<>();
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                String credentials = "admin" + ":" + "1234";
+                String base64EncodedCredentials = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.FROYO) {
+                    base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.DEFAULT);
+                }
+                HashMap<String, String> header = new HashMap<>();
 //                header.put("Content-Type","application/x-www-from-urlencoded; charset=utf-8");
-                header.put("Authorization","Basic "+base64EncodedCredentials);
+                header.put("Authorization", "Basic " + base64EncodedCredentials);
                 return header;
             }
 
@@ -69,17 +71,18 @@ public class MotherDeliveryPresenter implements MotherDeliveryInteractor {
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("dpicmeId",strPicmeid);
-                params.put("mid",strMid);
+                params.put("dpicmeId", strPicmeid);
+                params.put("mid", strMid);
 
-                Log.d("params--->",params.toString());
+                Log.d("params--->", params.toString());
 
                 return params;
             }
+
             //            public String getBodyContentType(){
 //                return "application/x-www-from-urlencoded; charset=utf-8";
 //            }
-            public int getMethod(){
+            public int getMethod() {
                 return Method.POST;
             }
         };

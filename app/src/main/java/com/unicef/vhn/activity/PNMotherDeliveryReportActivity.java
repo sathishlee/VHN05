@@ -42,7 +42,7 @@ public class PNMotherDeliveryReportActivity extends AppCompatActivity implements
 
     }
 
-    private void initUI(){
+    private void initUI() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Please Wait ...");
@@ -68,6 +68,7 @@ public class PNMotherDeliveryReportActivity extends AppCompatActivity implements
         txt_hepb_given_date = (TextView) findViewById(R.id.txt_hepb_given_date);
 
     }
+
     private void showActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Mother Delivery Details");
@@ -88,9 +89,9 @@ public class PNMotherDeliveryReportActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
-        if (progressDialog!=null && progressDialog.isShowing() ){
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.cancel();
         }
     }
@@ -113,17 +114,17 @@ public class PNMotherDeliveryReportActivity extends AppCompatActivity implements
 
     }
 
-    public void deliveryValues (String response){
-        JSONObject jsonObject_res =null;
-        try{
+    public void deliveryValues(String response) {
+        JSONObject jsonObject_res = null;
+        try {
             jsonObject_res = new JSONObject(response);
             String status = jsonObject_res.getString("status");
 
             String message = jsonObject_res.getString("message");
             if (status.equalsIgnoreCase("1")) {
-                JSONObject  jsonObject = jsonObject_res.getJSONObject("Delevery_Info");
+                JSONObject jsonObject = jsonObject_res.getJSONObject("Delevery_Info");
 
-                preferenceData.storeDid(jsonObject.getString("did" ));
+                preferenceData.storeDid(jsonObject.getString("did"));
                 Log.d("response---->", response);
                 txt_delivery_date.setText(jsonObject.getString("ddatetime"));
                 txt_delivery_time.setText(jsonObject.getString("dtime"));
@@ -142,13 +143,11 @@ public class PNMotherDeliveryReportActivity extends AppCompatActivity implements
                 txt_bcg_given_date.setText(jsonObject.getString("dBCGDate"));
                 txt_opv_given_date.setText(jsonObject.getString("dOPVDate"));
                 txt_hepb_given_date.setText(jsonObject.getString("dHEPBDate"));
-            }
-            else{
-                Log.d("message---->",message);
+            } else {
+                Log.d("message---->", message);
             }
 
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }

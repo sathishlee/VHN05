@@ -75,7 +75,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Initializing views and adding onclick listeners
 
     }
-    protected synchronized void buildGoogleApiClient(){
+
+    protected synchronized void buildGoogleApiClient() {
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -141,8 +142,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.setMyLocationEnabled(true);
 
             }
-        }
-        else {
+        } else {
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }

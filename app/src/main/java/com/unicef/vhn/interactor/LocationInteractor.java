@@ -5,5 +5,10 @@ package com.unicef.vhn.interactor;
  */
 
 public interface LocationInteractor {
-    void getMotherLocatin(String vhnCode, String vhnId, String mid) ;
+
+    void getMotherLocatin(
+            String vhnCode,
+            String vhnId,
+            String mid
+    );
 }

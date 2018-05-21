@@ -57,7 +57,7 @@ public class TreamPreTreamListActivity extends AppCompatActivity implements Moth
         pnMotherListPresenter.getTremAndPreTremMothersList(preferenceData.getVhnCode(), preferenceData.getVhnId());
         mResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView) findViewById(R.id.mother_recycler_view);
-        txt_no_records_found =(TextView) findViewById(R.id.txt_no_records_found);
+        txt_no_records_found = (TextView) findViewById(R.id.txt_no_records_found);
         mAdapter = new TremAndPreTremAdapter(mResult, TreamPreTreamListActivity.this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(TreamPreTreamListActivity.this);
@@ -86,7 +86,7 @@ public class TreamPreTreamListActivity extends AppCompatActivity implements Moth
 
     @Override
     public void hideProgress() {
-    pDialog.dismiss();
+        pDialog.dismiss();
     }
 
     @Override
@@ -95,10 +95,10 @@ public class TreamPreTreamListActivity extends AppCompatActivity implements Moth
         Log.e(TreamPreTreamListActivity.class.getSimpleName(), "Response success" + response);
         try {
             JSONObject mJsnobject = new JSONObject(response);
-            String status =mJsnobject.getString("status");
+            String status = mJsnobject.getString("status");
             if (status.equalsIgnoreCase("1")) {
                 JSONArray jsonArray = mJsnobject.getJSONArray("delveryInfo");
-                if (jsonArray.length()!=0) {
+                if (jsonArray.length() != 0) {
                     mother_recycler_view.setVisibility(View.VISIBLE);
                     txt_no_records_found.setVisibility(View.GONE);
 
@@ -115,7 +115,7 @@ public class TreamPreTreamListActivity extends AppCompatActivity implements Moth
                         mResult.add(mresponseResult);
                         mAdapter.notifyDataSetChanged();
                     }
-                }else{
+                } else {
                     mother_recycler_view.setVisibility(View.GONE);
                     txt_no_records_found.setVisibility(View.VISIBLE);
                 }

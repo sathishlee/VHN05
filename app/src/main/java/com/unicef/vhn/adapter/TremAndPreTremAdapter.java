@@ -31,27 +31,26 @@ public class TremAndPreTremAdapter extends RecyclerView.Adapter<TremAndPreTremAd
     }
 
 
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.term_pre_term_infant_activity,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.term_pre_term_infant_activity, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        TremAndPreTremResponseModel.DelveryInfo tremAndPreTremModel =mResult.get(position);
+        TremAndPreTremResponseModel.DelveryInfo tremAndPreTremModel = mResult.get(position);
         holder.txt_infant_id.setText(tremAndPreTremModel.getDInfantId());
         holder.txt_birth_type.setText(tremAndPreTremModel.getDBirthDetails());
         holder.txt_delivery_date.setText(tremAndPreTremModel.getDdatetime());
         holder.txt_delivery_time.setText(tremAndPreTremModel.getDtime());
-        holder.txt_username.setText("Mother Name:"+tremAndPreTremModel.getmName());
-        strMid= tremAndPreTremModel.getMid();
+        holder.txt_username.setText("Mother Name:" + tremAndPreTremModel.getmName());
+        strMid = tremAndPreTremModel.getMid();
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppConstants.SELECTED_MID=strMid;
+                AppConstants.SELECTED_MID = strMid;
 
                 applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), TremAndPreTreamDetailsActivity.class));
 
@@ -65,7 +64,8 @@ public class TremAndPreTremAdapter extends RecyclerView.Adapter<TremAndPreTremAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_infant_id,txt_birth_type,txt_delivery_date,txt_delivery_time,txt_username;
+        TextView txt_infant_id, txt_birth_type, txt_delivery_date, txt_delivery_time, txt_username;
+
         public ViewHolder(View itemView) {
             super(itemView);
             txt_infant_id = itemView.findViewById(R.id.txt_infant_id);

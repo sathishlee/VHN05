@@ -1,54 +1,16 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:id="@+id/postnatal_mother"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/ll_postnatal_mother"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
         android:orientation="vertical"
-        android:id="@+id/ll_postnatal_mother">
-
-    <!--<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:elevation="10dp"
-        android:background="#5ac7bcbc"
-        android:weightSum="2">
-
-        <TextView
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:gravity="start"
-            android:padding="2dp"
-            android:layout_weight="1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4.0dip"
-            android:layout_marginRight="4.0dip"
-            android:textColor="@color/text_secondary"
-            android:text="@string/post_natal_mother_visit"/>
-
-        <TextView
-            android:id="@+id/txt_edit"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:gravity="start|center"
-            android:padding="2dp"
-            android:layout_weight="1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4.0dip"
-            android:layout_marginRight="4.0dip"
-            android:textColor="@color/text_secondary"
-            android:drawableEnd="@drawable/edit_small"/>
-
-        </LinearLayout>-->
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,23 +22,23 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/post_natal"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Visit 1"
                 android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"/>
-
+                android:textStyle="bold" />
 
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -87,17 +49,17 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/due_date"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="21-02-2018"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:text="21-02-2018" />
 
         </LinearLayout>
 
@@ -111,20 +73,19 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/care_provided_date"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="21-02-2018"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:text="21-02-2018" />
 
         </LinearLayout>
-
 
 
         <LinearLayout
@@ -137,21 +98,20 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/place"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"/>
+                android:textStyle="bold" />
 
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="HSC"
                 android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"/>
-
+                android:textStyle="bold" />
 
 
         </LinearLayout>
@@ -167,23 +127,23 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/any_complient"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Fever"
                 android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"/>
-
+                android:textStyle="bold" />
 
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/ll_bp"
             android:layout_width="match_parent"
@@ -194,40 +154,44 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="10dp"
                 android:text="Blood presure"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                android:padding="10dp"
-                />
+                android:textStyle="bold" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_weight="1"
+                android:orientation="horizontal"
                 android:weightSum="2">
+
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:editable="false"
                     android:hint="160"
-                    android:textSize="@dimen/text_field"
-                    android:editable="false"/>
+                    android:textSize="@dimen/text_field" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="/"/>
+                    android:text="/" />
+
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="@dimen/text_field"
+                    android:editable="false"
                     android:hint="120"
-                    android:editable="false"/>
+                    android:textSize="@dimen/text_field" />
 
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -238,20 +202,20 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/pulse_rate"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"/>
+                android:textStyle="bold" />
 
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="90"
+                android:layout_weight="1"
                 android:editable="false"
+                android:text="90"
                 android:textColor="@color/text_primary"
-                android:textSize="@dimen/text_secondary"
-                android:layout_weight="1"/>
+                android:textSize="@dimen/text_secondary" />
 
         </LinearLayout>
 
@@ -265,20 +229,20 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/weight"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"/>
+                android:textStyle="bold" />
 
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="130"
+                android:layout_weight="1"
                 android:editable="false"
+                android:text="130"
                 android:textColor="@color/text_primary"
-                android:textSize="@dimen/text_secondary"
-                android:layout_weight="1"/>
+                android:textSize="@dimen/text_secondary" />
 
         </LinearLayout>
 
@@ -292,20 +256,20 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/temp"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"/>
+                android:textStyle="bold" />
 
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="60"
+                android:layout_weight="1"
                 android:editable="false"
+                android:text="60"
                 android:textColor="@color/text_primary"
-                android:textSize="@dimen/text_secondary"
-                android:layout_weight="1"/>
+                android:textSize="@dimen/text_secondary" />
 
         </LinearLayout>
 
@@ -320,19 +284,19 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/epistomy"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Healthy"
                 android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -345,80 +309,82 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/pv_discharge"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Normal"
                 android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"/>
-
-            </LinearLayout>
-
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding ="10dp"
-            android:weightSum="2">
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/exclusive_breast_feeding"
-                android:textColor="@color/text_primary"
-                android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"
-               />
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="No"
-                android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"
-               />
-
+                android:textStyle="bold" />
 
         </LinearLayout>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="10dp"
-            android:weightSum="2"
-            >
+            android:weightSum="2">
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/exclusive_breast_feeding"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_secondary"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="No"
+                android:textSize="@dimen/text_secondary"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/exclusive_breast_feeding_no_reasons"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_secondary"
                 android:textStyle="bold"
-                android:layout_weight="1"
 
-                /> <TextView
+                />
+
+            <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Milk amount not enough"
                 android:textSize="@dimen/text_secondary"
                 android:textStyle="bold"
-                android:layout_weight="1"
 
                 />
 
 
-        </LinearLayout><LinearLayout
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -428,22 +394,24 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/breast_examinatione"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                /><TextView
+                android:textStyle="bold" />
+
+            <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Engorgement"
                 android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                />
+                android:textStyle="bold" />
 
 
-        </LinearLayout><LinearLayout
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -453,24 +421,23 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/nipple_examination"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                />
+                android:textStyle="bold" />
 
-        <TextView
+            <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Inverted"
                 android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                />
+                android:textStyle="bold" />
 
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -481,20 +448,19 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/outcome"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                />
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="No intervention"
                 android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                />
+                android:textStyle="bold" />
 
 
         </LinearLayout>
@@ -509,31 +475,31 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/diagnosis_in"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_secondary"
-                android:textStyle="bold"
-                android:layout_weight="1"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text=""
-                android:textSize="@dimen/text_secondary"
-                android:layout_weight="1"/>
+                android:textSize="@dimen/text_secondary" />
 
         </LinearLayout>
 
         <Button
+            android:id="@+id/btn_submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:background="#1e8ffe"
+            android:padding="10dp"
             android:text="@string/submit"
             android:textColor="#ffffff"
-            android:id="@+id/btn_submit"
-            android:padding="10dp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
     </LinearLayout>
 

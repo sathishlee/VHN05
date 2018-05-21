@@ -38,9 +38,10 @@ import java.util.List;
  */
 
 
-public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder>  {
+public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
     private List<NotificationListResponseModel.Vhn_migrated_mothers> moviesList;
     FragmentActivity activity;
+
     public NotificationAdapter(List<NotificationListResponseModel.Vhn_migrated_mothers> moviesList, FragmentActivity activity) {
         this.moviesList = moviesList;
         this.activity = activity;
@@ -55,7 +56,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
 
     }
-//ll
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
@@ -63,7 +64,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         if (movie.getClickHeremId().equalsIgnoreCase("1")) {
             holder.ll_mig_view.setVisibility(View.GONE);
             holder.ll_flash_notify_view.setVisibility(View.VISIBLE);
-        } else  {
+        } else {
             holder.ll_mig_view.setVisibility(View.VISIBLE);
             holder.ll_flash_notify_view.setVisibility(View.GONE);
         }
@@ -81,7 +82,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         try {
-             date = format.parse(dtStart);
+            date = format.parse(dtStart);
             System.out.println(date);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -99,8 +100,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.ll_mig_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                activity.startActivity(new Intent(activity.getApplicationContext(), MapsActivity.class));
-                AppConstants.SELECTED_MID = movie.getMid() ;
+                AppConstants.SELECTED_MID = movie.getMid();
                 activity.startActivity(new Intent(activity.getApplicationContext(), MotherLocationActivity.class));
 
             }
@@ -110,18 +110,15 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             @Override
             public void onClick(View v) {
 
-                AppConstants.SELECTED_MID=movie.getMid();
-                if (movie.getMtype().equalsIgnoreCase("PN")){
+                AppConstants.SELECTED_MID = movie.getMid();
+                if (movie.getMtype().equalsIgnoreCase("PN")) {
                     activity.startActivity(new Intent(activity.getApplicationContext(), PNMotherDetailsActivity.class));
 
-                }else if (movie.getMtype().equalsIgnoreCase("AN")){
+                } else if (movie.getMtype().equalsIgnoreCase("AN")) {
                     activity.startActivity(new Intent(activity.getApplicationContext(), MothersDetailsActivity.class));
 
-                }/*else if (movie.getMtype().equalsIgnoreCase("Risk")){
+                } else {
                     activity.startActivity(new Intent(activity.getApplicationContext(), MothersDetailsActivity.class));
-
-                }*/else{
-                    activity.startActivity(new Intent(activity.getApplicationContext(),MothersDetailsActivity.class));
 
                 }
 
@@ -154,7 +151,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 e.printStackTrace();
             }
         }
-           return ago;
+        return ago;
     }
 
     @Override
@@ -165,10 +162,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView txt_flash_notify_time, txt_flash_message, txt_flash_name, txt_mig_notify_time, txt_mig_message, txt_mig_name, txt_flash_call;
-        public ImageView txt_mig_unread,txt_flash_unread;
+        public ImageView txt_mig_unread, txt_flash_unread;
         //        public ImageView imageView;
         public LinearLayout ll_mig_view, ll_flash_notify_view;
-        RelativeTimeTextView txt_flash_notify_timestamp,txt_mig_notify_timestamp;
+        RelativeTimeTextView txt_flash_notify_timestamp, txt_mig_notify_timestamp;
+
         @SuppressLint("WrongViewCast")
         public ViewHolder(View view) {
             super(view);
