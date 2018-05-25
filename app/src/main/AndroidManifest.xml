@@ -94,7 +94,7 @@
 
         <activity
             android:name=".activity.MotherLocationActivity"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.SplashScreenActivity"
             android:theme="@style/AppTheme1">
@@ -118,7 +118,8 @@
         <activity android:name=".activity.TremAndPreTreamDetailsActivity" />
         <activity android:name=".activity.ANTT1MothersList" />
         <activity android:name=".activity.ANTT2MothersList" />
-        <activity android:name=".activity.TremAndPreTreamDetailsActivity"
+        <activity
+            android:name=".activity.TremAndPreTreamDetailsActivity"
             tools:ignore="DuplicateActivity" />
         <activity android:name=".activity.PNHBNCDueListActivity" />
         <activity android:name=".activity.AlertActivity" />
@@ -135,16 +136,14 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
         <service
-            android:name="com.unicef.vhn.utiltiy.MyFirebaseMessagingService"
+            android:name=".utiltiy.MyFirebaseMessagingService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -157,10 +156,10 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-
         <receiver android:name=".broadcastReceiver.GpsLocationReceiver">
             <intent-filter>
                 <action android:name="android.location.PROVIDERS_CHANGED" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
@@ -174,6 +173,8 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+
     </application>
 
 </manifest>

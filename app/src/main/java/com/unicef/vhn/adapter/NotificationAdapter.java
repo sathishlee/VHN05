@@ -187,7 +187,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
             txt_mig_unread = view.findViewById(R.id.txt_mig_unread);
             txt_flash_unread = view.findViewById(R.id.txt_flash_unread);
-
         }
     }
 }

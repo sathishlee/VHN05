@@ -72,12 +72,12 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void run () {
                 // your code here...
-                if (checkNetwork.isNetworkAvailable()){
+              /*  if (checkNetwork.isNetworkAvailable()){
                     notificationPresenter.getNotificationCount(preferenceData.getVhnId());
                 }else{
                     notification_count.setText(preferenceData.getNotificationCount());
 
-                }
+                }*/
             }
         };
 

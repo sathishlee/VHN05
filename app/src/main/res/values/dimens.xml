@@ -3,7 +3,7 @@
 
     <dimen name="appbar_padding_top">8dp</dimen>
 
-   <!---Mother-->
+    <!---Mother-->
 
     <dimen name="text_primary">14.0sp</dimen>
 

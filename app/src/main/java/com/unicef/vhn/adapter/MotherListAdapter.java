@@ -36,11 +36,14 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
     Activity applicationContext;
     MakeCallInterface makeCallInterface;
     String strMid, str_mPhoto, type;
+    public MotherListAdapter(){
 
+    }
 
     public MotherListAdapter(List<PNMotherListResponse.VhnAN_Mothers_List> mResult, Activity applicationContext, String type, MakeCallInterface makeCallInterface) {
         this.applicationContext =applicationContext;
         this.mResult =mResult;
+        Log.e("Mother list Adapter ",mResult.toString() );
         this.type = type;
         this.makeCallInterface = makeCallInterface;
 

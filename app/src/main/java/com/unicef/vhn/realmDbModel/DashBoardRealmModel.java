@@ -3,8 +3,6 @@ package com.unicef.vhn.realmDbModel;
 import io.realm.RealmObject;
 
 public class DashBoardRealmModel extends RealmObject {
-
-
     private int pnhbncCount;
     private int ANTT2;
     private int ANTT1;

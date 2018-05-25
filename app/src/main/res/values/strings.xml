@@ -171,5 +171,6 @@
     <string name="msg_location_service_started">Location Tracking Started</string>
     <string name="btn_label_refresh">Refresh</string>
     <string name="action_search">Search</string>
+    <string name="title_activity_all_moter_list">AllMoterListActivity</string>
 
 </resources>

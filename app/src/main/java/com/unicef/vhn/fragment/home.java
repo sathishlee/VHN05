@@ -116,6 +116,7 @@ public class home extends Fragment implements MotherListsViews {
                 AppConstants.MOTHER_LIST_TITLE = "All Mother List";
 
                 startActivity(new Intent(getActivity(), MotherListActivity.class));
+//                startActivity(new Intent(getActivity(), AllMoterListActivity.class));
 
             }
         });
@@ -290,6 +291,7 @@ public class home extends Fragment implements MotherListsViews {
     }
 
     private void showOfflineData() {
+        Log.e(home.class.getSimpleName(),"your app is now OFF LINE");
         realm.beginTransaction();
         RealmResults<DashBoardRealmModel> userInfoRealmResult = realm.where(DashBoardRealmModel.class).findAll();
         for (int i = 0; i < userInfoRealmResult.size(); i++) {
@@ -372,8 +374,6 @@ public class home extends Fragment implements MotherListsViews {
                 RealmResults<DashBoardRealmModel> DashBoardRealmResult = realm.where(DashBoardRealmModel.class).findAll();
                 Log.e("Realm size ---->", DashBoardRealmResult.size() + "");
                 if (DashBoardRealmResult.size() != 0) {
-
-//
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {
@@ -445,6 +445,7 @@ public class home extends Fragment implements MotherListsViews {
     }
 
     private void setValueToUI() {
+        Log.e(home.class.getSimpleName(),"your app is now ON LINE");
 
         realm.beginTransaction();
         RealmResults<DashBoardRealmModel> userInfoRealmResult = realm.where(DashBoardRealmModel.class).findAll();
@@ -505,4 +506,16 @@ public class home extends Fragment implements MotherListsViews {
         realm.commitTransaction();
     }
 
+  /*  @Override
+    public void onDestroy() {
+        super.onDestroy();
+        realm.close();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        realm = RealmController.with(getActivity()).getRealm(); // opens "myrealm.realm"
+
+    }*/
 }

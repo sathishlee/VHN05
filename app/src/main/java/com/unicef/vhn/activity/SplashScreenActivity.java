@@ -61,8 +61,24 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
         preferenceData = new PreferenceData(this);
 
         checkNetwork = new CheckNetwork(this);
+if (checkNetwork.isNetworkAvailable()) {
+    startStep1();
+}
+else{
+    if (preferenceData.getLogin()) {
+        Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
+        startActivity(i);
 
-        startStep1();
+        // close this activity
+        finish();
+    } else {
+        Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
+        startActivity(i);
+
+        // close this activity
+        finish();
+    }
+}
 
         if (mAlreadyStartedService) {
             if (!preferenceData.getLogin()) {

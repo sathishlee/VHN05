@@ -1,53 +1,24 @@
 package com.unicef.vhn.realmDbModel;
 
-import com.google.gson.annotations.SerializedName;
-
 import io.realm.RealmObject;
 
-public class MotherListAdapterRealmModel extends RealmObject{
+public class MotherListRealm extends RealmObject {
 
-    @SerializedName("id")
-    private String id;
-    @SerializedName("mLongitude")
     private String mLongitude;
-    @SerializedName("mLatitude")
     private String mLatitude;
-    @SerializedName("vhnId")
     private String vhnId;
-    @SerializedName("mid")
     private String mid;
-    @SerializedName("mPicmeId")
     private String mPicmeId;
-    @SerializedName("mName")
     private String mName;
-    @SerializedName("motherType")
     private String motherType;
-    @SerializedName("vLatitude")
     private String vLatitude;
-    @SerializedName("vLongitude")
     private String vLongitude;
-    @SerializedName("mMotherMobile")
     private String mMotherMobile;
-    @SerializedName("mPhoto")
     private String mPhoto;
-    @SerializedName("pnId")
-    private String pnId;
-/*
-    public MotherListAdapterRealmModel(String id, String mLongitude, String mLatitude, String vhnId, String mid, String mPicmeId, String mName, String motherType, String vLatitude, String vLongitude, String mMotherMobile, String mPhoto, String pnId) {
-        this.id = id;
-        this.mLongitude = mLongitude;
-        this.mLatitude = mLatitude;
-        this.vhnId = vhnId;
-        this.mid = mid;
-        this.mPicmeId = mPicmeId;
-        this.mName = mName;
-        this.motherType = motherType;
-        this.vLatitude = vLatitude;
-        this.vLongitude = vLongitude;
-        this.mMotherMobile = mMotherMobile;
-        this.mPhoto = mPhoto;
-        this.pnId = pnId;
-    }*/
+    private String mLMP;
+
+
+
 
     public String getmPhoto(){return mPhoto;}
     public void setmPhoto(String mPhoto){this.mPhoto = mPhoto;}
@@ -79,6 +50,7 @@ public class MotherListAdapterRealmModel extends RealmObject{
         this.pnId = pnId;
     }
 
+    private String pnId;
 
     public String getMLongitude() {
         return mLongitude;
@@ -126,5 +98,12 @@ public class MotherListAdapterRealmModel extends RealmObject{
 
     public void setMName(String mName) {
         this.mName = mName;
+    }
+
+    public String getMlmp(){
+        return mLMP;
+    }
+    public void setMlmp(String mLMP){
+        this.mLMP = mLMP;
     }
 }
