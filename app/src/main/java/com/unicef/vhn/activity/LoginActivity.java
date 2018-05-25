@@ -4,9 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.LoginPresenter;
 import com.unicef.vhn.R;
+import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.view.LoginViews;
 
 import org.json.JSONException;
@@ -28,7 +32,7 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
     };
 
     private EditText edtVhnId, edtPassword;
-    String strVhnId, strPassword;
+    String strVhnId, strPassword,mobileCheck, ipAddress;
     FloatingActionButton fabLogin;
 
     ProgressDialog pDialog;
@@ -76,7 +80,15 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
         } else if (strPassword.equalsIgnoreCase("")) {
             edtPassword.setError("Password is Empty");
         } else {
-            loginPresenter.login(strVhnId, strPassword, preferenceData.getDeviceId());
+            WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+            ipAddress = Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());
+
+
+            mobileCheck = "Mobile:"+ Build.MANUFACTURER +","+ "Model:" +Build.MODEL + "," + "Api Version:"
+                    + Build.VERSION.RELEASE + "," + "SDK Version:" + Build.VERSION.SDK_INT + "," + "IP Address:"+ ipAddress;
+
+            Log.d("Mobile Check Version-->", mobileCheck);
+            loginPresenter.login(strVhnId, strPassword, preferenceData.getDeviceId(),mobileCheck, AppConstants.EXTRA_LATITUDE, AppConstants.EXTRA_LONGITUDE);
 
         }
 

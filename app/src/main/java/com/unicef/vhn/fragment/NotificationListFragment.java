@@ -33,7 +33,7 @@ import java.util.ArrayList;
 
 
 public class NotificationListFragment extends Fragment implements NotificationViews {
-    TextView txt_today_visit_count,txt_count_today_visit;
+    TextView txt_today_visit_count, txt_count_today_visit;
     LinearLayout ll_go_visit_list;
     NotificationAdapter mAdapter;
     ArrayList<NotificationListResponseModel.Vhn_migrated_mothers> moviesList;
@@ -75,11 +75,11 @@ public class NotificationListFragment extends Fragment implements NotificationVi
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(getActivity());
         notificationPresenter = new NotificationPresenter(getActivity(), this);
-        notificationPresenter.getNotificationList(preferenceData.getVhnCode(),preferenceData.getVhnId());
-        notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(),preferenceData.getVhnId());
+        notificationPresenter.getNotificationList(preferenceData.getVhnCode(), preferenceData.getVhnId());
+        notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(), preferenceData.getVhnId());
 
-        txt_today_visit_count=view.findViewById(R.id.txt_today_visit_count);
-        txt_count_today_visit=view.findViewById(R.id.txt_count_today_visit);
+        txt_today_visit_count = view.findViewById(R.id.txt_today_visit_count);
+        txt_count_today_visit = view.findViewById(R.id.txt_count_today_visit);
         ll_go_visit_list = view.findViewById(R.id.ll_go_visit_list);
 //        if (preferenceData.getTodayVisitCount().equalsIgnoreCase("0")) {
 //            txt_today_visit_count.setText(preferenceData.getTodayVisitCount());
@@ -95,15 +95,15 @@ public class NotificationListFragment extends Fragment implements NotificationVi
 //        mRecyclerView.setHasFixedSize(true);
 
 
-        mRecyclerView = view. findViewById(R.id.notification_recycler_view);
+        mRecyclerView = view.findViewById(R.id.notification_recycler_view);
         mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        moviesList=new ArrayList<>();
+        moviesList = new ArrayList<>();
         // specify an adapter (see also next example)
-        mAdapter = new NotificationAdapter(moviesList,getActivity());
+        mAdapter = new NotificationAdapter(moviesList, getActivity());
         mRecyclerView.setAdapter(mAdapter);
 //        prepareMovieData();
         return view;
@@ -166,7 +166,7 @@ public class NotificationListFragment extends Fragment implements NotificationVi
                     movie.setNoteId(jsonObject1.getString("noteId"));
                     movie.setNoteStartDateTime(jsonObject1.getString("noteStartDateTime"));
                     movie.setMtype(jsonObject1.getString("mtype"));
-                    Log.d(NotificationListFragment.class.getSimpleName(), "Notification details" +i+movie);
+                    Log.d(NotificationListFragment.class.getSimpleName(), "Notification details" + i + movie);
 
                     moviesList.add(movie);
 
@@ -197,19 +197,19 @@ public class NotificationListFragment extends Fragment implements NotificationVi
             JSONObject jsonObject = new JSONObject(response);
             String status = jsonObject.getString("status");
             String msg = jsonObject.getString("message");
-            String strTodayVisitCount ="0";
+            String strTodayVisitCount = "0";
             if (status.equalsIgnoreCase("1")) {
 //                preferenceData.setTodayVisitCount(strTodayVisitCount);
                 strTodayVisitCount = jsonObject.getString("visitCount");
 
                 txt_today_visit_count.setText(strTodayVisitCount);
-            txt_count_today_visit.setText(strTodayVisitCount+" Mothers Visiting Today");
+                txt_count_today_visit.setText(strTodayVisitCount + " Mothers Visiting Today");
 
                 Log.d(MainActivity.class.getSimpleName(), "Today Visit Count-->" + strTodayVisitCount);
 
             } else {
                 txt_today_visit_count.setText(strTodayVisitCount);
-                txt_count_today_visit.setText(strTodayVisitCount+" Mothers Visiting Today");
+                txt_count_today_visit.setText(strTodayVisitCount + " Mothers Visiting Today");
                 Log.d(MainActivity.class.getSimpleName(), "Today Visit messsage-->" + msg);
             }
         } catch (JSONException e) {

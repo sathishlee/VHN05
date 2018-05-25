@@ -14,7 +14,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,7 +50,7 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
     private TextView textView;
 
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
-    boolean isDataUpdate=true;
+    boolean isDataUpdate = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,18 +82,12 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
 
         textView = (TextView) findViewById(R.id.txt_no_records_found);
 
-        mAdapter = new MotherListAdapter(mResult, PNHBNCListActivity.this,"PN",this);
+        mAdapter = new MotherListAdapter(mResult, PNHBNCListActivity.this, "PN", this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(PNHBNCListActivity.this);
         mother_recycler_view.setLayoutManager(mLayoutManager);
         mother_recycler_view.setItemAnimator(new DefaultItemAnimator());
         mother_recycler_view.setAdapter(mAdapter);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        finish();
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -112,35 +105,32 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
         Log.e(PNHBNCListActivity.class.getSimpleName(), "Response success" + response);
         try {
             JSONObject mJsnobject = new JSONObject(response);
-           String status =mJsnobject.getString("status");
-           if (status.equalsIgnoreCase("1")) {
-               JSONArray jsonArray = mJsnobject.getJSONArray("pnMothersList");
-               if (jsonArray.length() != 0){
-                   mother_recycler_view.setVisibility(View.VISIBLE);
-                   textView.setVisibility(View.GONE);
+            String status = mJsnobject.getString("status");
+            if (status.equalsIgnoreCase("1")) {
+                JSONArray jsonArray = mJsnobject.getJSONArray("pnMothersList");
+                if (jsonArray.length() != 0) {
+                    mother_recycler_view.setVisibility(View.VISIBLE);
+                    textView.setVisibility(View.GONE);
 
-                   for (int i = 0; i < jsonArray.length(); i++) {
-                       mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
-                       JSONObject jsonObject = jsonArray.getJSONObject(i);
-                       mresponseResult.setMid(jsonObject.getString("mid"));
-                       mresponseResult.setMName(jsonObject.getString("mName"));
-                       mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
-                       mresponseResult.setPnId(jsonObject.getString("pnId"));
-                       mresponseResult.setMotherType(jsonObject.getString("motherType"));
-                       mresponseResult.setVhnId(jsonObject.getString("vhnId"));
-                       mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
-                       mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
-                       mresponseResult.setmPhoto(jsonObject.getString("mPhoto"));
-                       mresponseResult.setMlmp(jsonObject.getString("mLMP"));
-
-                       mResult.add(mresponseResult);
-                       mAdapter.notifyDataSetChanged();
-                   }
-           }else{
-                   mother_recycler_view.setVisibility(View.GONE);
-                   textView.setVisibility(View.VISIBLE);
-               }
-           }
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        mresponseResult.setMid(jsonObject.getString("mid"));
+                        mresponseResult.setMName(jsonObject.getString("mName"));
+                        mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
+                        mresponseResult.setPnId(jsonObject.getString("pnId"));
+                        mresponseResult.setMotherType(jsonObject.getString("motherType"));
+                        mresponseResult.setVhnId(jsonObject.getString("vhnId"));
+                        mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
+                        mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
+                        mResult.add(mresponseResult);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                } else {
+                    mother_recycler_view.setVisibility(View.GONE);
+                    textView.setVisibility(View.VISIBLE);
+                }
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -163,12 +153,12 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
 
     @Override
     public void makeCall(String mMotherMobile) {
-        isDataUpdate=false;
+        isDataUpdate = false;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestCallPermission();
         } else {
-            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+"+mMotherMobile)));
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+" + mMotherMobile)));
         }
     }
 
@@ -176,7 +166,7 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
         Log.i(ANTT1MothersList.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CALL_PHONE)) {
-            Toast.makeText(getApplicationContext(),"Displaying Call permission rationale to provide additional context.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Displaying Call permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
                     MAKE_CALL_PERMISSION_REQUEST_CODE);

@@ -33,7 +33,6 @@ import com.unicef.vhn.Presenter.LocationUpdatePresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.service.LocationMonitoringService;
-import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.view.LocationUpdateViews;
 
 public class SplashScreenActivity extends AppCompatActivity implements LocationUpdateViews {
@@ -47,7 +46,6 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
     LocationUpdatePresenter locationUpdatePresenter;
     PreferenceData preferenceData;
     RelativeLayout rel_splash_screen;
-    CheckNetwork checkNetwork;
 
     GoogleApiClient googleApiClient = null;
 
@@ -60,25 +58,8 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
         locationUpdatePresenter = new LocationUpdatePresenter(this, this);
         preferenceData = new PreferenceData(this);
 
-        checkNetwork = new CheckNetwork(this);
-if (checkNetwork.isNetworkAvailable()) {
-    startStep1();
-}
-else{
-    if (preferenceData.getLogin()) {
-        Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
-        startActivity(i);
 
-        // close this activity
-        finish();
-    } else {
-        Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
-        startActivity(i);
-
-        // close this activity
-        finish();
-    }
-}
+        startStep1();
 
         if (mAlreadyStartedService) {
             if (!preferenceData.getLogin()) {
@@ -189,7 +170,7 @@ else{
                 });
 
         AlertDialog dialog = builder.create();
-//        dialog.show();
+        dialog.show();
     }
 
     /**
@@ -218,7 +199,6 @@ else{
 
             @Override
             public void run() {
-                if (checkNetwork.isNetworkAvailable()) {
                 // This method will be executed once the timer is over
                 // Start your app main activity
                 if (preferenceData.getLogin()) {
@@ -233,23 +213,6 @@ else{
 
                     // close this activity
                     finish();
-                }
-
-
-                }else {
-                    if (preferenceData.getLogin()) {
-                        Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
-                        startActivity(i);
-
-                        // close this activity
-                        finish();
-                    } else {
-                        Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
-                        startActivity(i);
-
-                        // close this activity
-                        finish();
-                    }
                 }
             }
         }, SPLASH_TIME_OUT);
@@ -275,12 +238,26 @@ else{
      */
     private boolean checkPermissions() {
         int permissionState1 = ActivityCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION);
-
+                Manifest.permission.ACCESS_FINE_LOCATION);
         int permissionState2 = ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION);
+        int permissionState3 = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.INTERNET);
+        int permissionState4 = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA);
+        int permissionState5 = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.SEND_SMS);
+        int permissionState6 = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE);
+        int permissionState7 = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int permissionState8 = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.CALL_PHONE);
 
-        return permissionState1 == PackageManager.PERMISSION_GRANTED && permissionState2 == PackageManager.PERMISSION_GRANTED;
+        return permissionState1 == PackageManager.PERMISSION_GRANTED && permissionState2 == PackageManager.PERMISSION_GRANTED &&
+                permissionState3 == PackageManager.PERMISSION_GRANTED && permissionState4 == PackageManager.PERMISSION_GRANTED
+                && permissionState5 == PackageManager.PERMISSION_GRANTED && permissionState6 == PackageManager.PERMISSION_GRANTED
+                && permissionState7 == PackageManager.PERMISSION_GRANTED && permissionState8 == PackageManager.PERMISSION_GRANTED;
 
     }
 
@@ -291,16 +268,36 @@ else{
 
         boolean shouldProvideRationale =
                 ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        android.Manifest.permission.ACCESS_FINE_LOCATION);
+                        Manifest.permission.ACCESS_FINE_LOCATION);
 
         boolean shouldProvideRationale2 =
                 ActivityCompat.shouldShowRequestPermissionRationale(this,
                         Manifest.permission.ACCESS_COARSE_LOCATION);
 
+        boolean shouldProvideRationale3 =
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.INTERNET);
+        boolean shouldProvideRationale4 =
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.CAMERA);
+        boolean shouldProvideRationale5 =
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.SEND_SMS);
+        boolean shouldProvideRationale6 =
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.READ_EXTERNAL_STORAGE);
+        boolean shouldProvideRationale7 =
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        boolean shouldProvideRationale8 =
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.CALL_PHONE);
+
 
         // Provide an additional rationale to the img_user. This would happen if the img_user denied the
         // request previously, but didn't check the "Don't ask again" checkbox.
-        if (shouldProvideRationale || shouldProvideRationale2) {
+        if (shouldProvideRationale || shouldProvideRationale2 || shouldProvideRationale3 || shouldProvideRationale4
+                || shouldProvideRationale5 || shouldProvideRationale6 || shouldProvideRationale7 || shouldProvideRationale8) {
             Log.i(TAG, "Displaying permission rationale to provide additional context.");
             showSnackbar(R.string.permission_rationale,
                     android.R.string.ok, new View.OnClickListener() {
@@ -308,7 +305,18 @@ else{
                         public void onClick(View view) {
                             // Request permission
                             ActivityCompat.requestPermissions(SplashScreenActivity.this,
-                                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                                    new String[]
+                                            {
+                                                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+                                                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                                                    Manifest.permission.INTERNET,
+                                                    Manifest.permission.CAMERA,
+                                                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                                                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                                    Manifest.permission.CALL_PHONE,
+                                                    Manifest.permission.SEND_SMS
+
+                                            },
                                     REQUEST_PERMISSIONS_REQUEST_CODE);
                         }
                     });
@@ -318,7 +326,17 @@ else{
             // sets the permission in a given state or the img_user denied the permission
             // previously and checked "Never ask again".
             ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    new String[]
+                            {
+                                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+                                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                                    Manifest.permission.INTERNET,
+                                    Manifest.permission.CAMERA,
+                                    Manifest.permission.SEND_SMS,
+                                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                    Manifest.permission.CALL_PHONE
+                            },
                     REQUEST_PERMISSIONS_REQUEST_CODE);
         }
     }

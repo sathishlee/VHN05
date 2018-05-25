@@ -44,7 +44,7 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(VisitListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         final VisitListResponseModel.Vhn_current_visits current_visits = mResult.get(position);
         holder.txt_username.setText(current_visits.getMName());
         holder.txt_picme_id.setText(current_visits.getPicmeId());

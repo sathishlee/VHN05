@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherDeliveryPresenter;
 import com.unicef.vhn.R;
-import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.view.MotherDeliveryViews;
 
 import org.json.JSONException;
@@ -48,7 +47,7 @@ public class PNMotherDeliveryReportActivity extends AppCompatActivity implements
         progressDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
         motherDeliveryPresenter = new MotherDeliveryPresenter(PNMotherDeliveryReportActivity.this, this);
-        motherDeliveryPresenter.deliveryDetails(AppConstants.MOTHER_PICME_ID, AppConstants.SELECTED_MID);
+        motherDeliveryPresenter.deliveryDetails(preferenceData.getPicmeId(), preferenceData.getMId());
         txt_delivery_date = (TextView) findViewById(R.id.txt_delivery_date);
         txt_delivery_time = (TextView) findViewById(R.id.txt_delivery_time);
         txt_delivery_place = (TextView) findViewById(R.id.txt_delivery_place);
@@ -76,8 +75,6 @@ public class PNMotherDeliveryReportActivity extends AppCompatActivity implements
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
-
-
     @Override
     public void showProgress() {
         progressDialog.show();
@@ -98,7 +95,9 @@ public class PNMotherDeliveryReportActivity extends AppCompatActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+//        Intent intent = new Intent(AddReferral.this, ReferralList.class);
         finish();
+//        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 

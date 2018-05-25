@@ -42,7 +42,7 @@ import java.util.List;
  * Created by Suthishan on 20/1/2018.
  */
 
-public class VisitActivity  extends AppCompatActivity implements MotherListsViews, MakeCallInterface {
+public class VisitActivity extends AppCompatActivity implements MotherListsViews, MakeCallInterface {
 
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
@@ -55,7 +55,7 @@ public class VisitActivity  extends AppCompatActivity implements MotherListsView
     private VisitListAdapter mAdapter;
 
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
-    boolean isDataUpdate=true;
+    boolean isDataUpdate = true;
 
 
     @Override
@@ -67,7 +67,7 @@ public class VisitActivity  extends AppCompatActivity implements MotherListsView
         onClickListner();
     }
 
-    public void initUI(){
+    public void initUI() {
 
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
@@ -76,12 +76,12 @@ public class VisitActivity  extends AppCompatActivity implements MotherListsView
         pnMotherListPresenter = new MotherListPresenter(VisitActivity.this, this);
 //        pnMotherListPresenter.getPNMotherList("V10001","1");
 //        pnMotherListPresenter.getTremAndPreTremMothersList(preferenceData.getVhnCode(), preferenceData.getVhnId());
-        pnMotherListPresenter.getPNMotherList(Apiconstants.CURRENT_VISIT_LIST,preferenceData.getVhnCode(),preferenceData.getVhnId());
+        pnMotherListPresenter.getPNMotherList(Apiconstants.CURRENT_VISIT_LIST, preferenceData.getVhnCode(), preferenceData.getVhnId());
 
         mResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView) findViewById(R.id.mother_recycler_view);
-        txt_no_records_found =(TextView) findViewById(R.id.txt_no_records_found);
-        mAdapter = new VisitListAdapter(VisitActivity.this,mResult, this);
+        txt_no_records_found = (TextView) findViewById(R.id.txt_no_records_found);
+        mAdapter = new VisitListAdapter(VisitActivity.this, mResult, this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(VisitActivity.this);
         mother_recycler_view.setLayoutManager(mLayoutManager);
@@ -93,7 +93,7 @@ public class VisitActivity  extends AppCompatActivity implements MotherListsView
 
     }
 
-    public void showActionBar(){
+    public void showActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Today Visits List");
         actionBar.setHomeButtonEnabled(true);
@@ -102,7 +102,9 @@ public class VisitActivity  extends AppCompatActivity implements MotherListsView
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(this, MainActivity.class);
         finish();
+        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 
@@ -113,7 +115,7 @@ public class VisitActivity  extends AppCompatActivity implements MotherListsView
 
     @Override
     public void hideProgress() {
-pDialog.dismiss();
+        pDialog.dismiss();
     }
 
     @Override
@@ -123,34 +125,31 @@ pDialog.dismiss();
 
         try {
             JSONObject mJsnobject = new JSONObject(response);
-            String status = mJsnobject.getString("status");
-            if (status.equalsIgnoreCase("1")) {
-                JSONArray jsonArray = mJsnobject.getJSONArray("vhn_today_visit_count");
-                if (jsonArray.length() != 0) {
-                    mother_recycler_view.setVisibility(View.VISIBLE);
-                    txt_no_records_found.setVisibility(View.GONE);
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        mresponseResult = new VisitListResponseModel.Vhn_current_visits();
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        mresponseResult.setMid(jsonObject.getString("mid"));
-                        mresponseResult.setMName(jsonObject.getString("mName"));
-                        mresponseResult.setPicmeId(jsonObject.getString("picmeId"));
-                        mresponseResult.setVhnId(jsonObject.getString("vhnId"));
-                        mresponseResult.setMMotherMobile(jsonObject.getString("mMotherMobile"));
-                        mresponseResult.setMtype(jsonObject.getString("mtype"));
-                        mresponseResult.setNextVisit(jsonObject.getString("nextVisit"));
-                        mresponseResult.setMotherType(jsonObject.getString("motherType"));
-                        mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
-                        mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
-                        mResult.add(mresponseResult);
-                        mAdapter.notifyDataSetChanged();
-                    }
+            JSONArray jsonArray = mJsnobject.getJSONArray("vhn_today_visit_count");
+            if (jsonArray.length() != 0) {
+                mother_recycler_view.setVisibility(View.VISIBLE);
+                txt_no_records_found.setVisibility(View.GONE);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    mresponseResult = new VisitListResponseModel.Vhn_current_visits();
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    mresponseResult.setMid(jsonObject.getString("mid"));
+                    mresponseResult.setMName(jsonObject.getString("mName"));
+                    mresponseResult.setPicmeId(jsonObject.getString("picmeId"));
+                    mresponseResult.setVhnId(jsonObject.getString("vhnId"));
+                    mresponseResult.setMMotherMobile(jsonObject.getString("mMotherMobile"));
+                    mresponseResult.setMtype(jsonObject.getString("mtype"));
+                    mresponseResult.setNextVisit(jsonObject.getString("nextVisit"));
+//                    mresponseResult.setMotherType(jsonObject.getString("motherType"));
+//                mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
+//                mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
+                    mResult.add(mresponseResult);
+                    mAdapter.notifyDataSetChanged();
                 }
-            }else{
+            } else {
                 mother_recycler_view.setVisibility(View.GONE);
                 txt_no_records_found.setVisibility(View.VISIBLE);
             }
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -173,12 +172,12 @@ pDialog.dismiss();
 
     @Override
     public void makeCall(String mMotherMobile) {
-        isDataUpdate=false;
+        isDataUpdate = false;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestCallPermission();
         } else {
-            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+"+mMotherMobile)));
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+" + mMotherMobile)));
         }
     }
 
@@ -186,7 +185,7 @@ pDialog.dismiss();
         Log.i(ANTT1MothersList.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CALL_PHONE)) {
-            Toast.makeText(getApplicationContext(),"Displaying Call permission rationale to provide additional context.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Displaying Call permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
                     MAKE_CALL_PERMISSION_REQUEST_CODE);

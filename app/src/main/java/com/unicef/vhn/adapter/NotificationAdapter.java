@@ -136,7 +136,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private CharSequence timeago(String noteStartDateTime) {
         SimpleDateFormat sdf = null;
         CharSequence ago = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 //            sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
             sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");      //31-03-2018 14:35:54
             sdf.setTimeZone(TimeZone.getTimeZone("GMT"));

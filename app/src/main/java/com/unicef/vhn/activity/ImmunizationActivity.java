@@ -81,7 +81,9 @@ public class ImmunizationActivity extends AppCompatActivity implements MotherLis
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(ImmunizationActivity.this, ImmunizationListActivity.class);
         finish();
+        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 
@@ -104,6 +106,7 @@ public class ImmunizationActivity extends AppCompatActivity implements MotherLis
         try {
             JSONObject mJsnobject = new JSONObject(response);
             String status = mJsnobject.getString("status");
+            String message = mJsnobject.getString("message");
             if (status.equalsIgnoreCase("1")) {
                 JSONArray jsonArray = mJsnobject.getJSONArray("immunization_list");
                 if (jsonArray.length() != 0) {
@@ -128,6 +131,8 @@ public class ImmunizationActivity extends AppCompatActivity implements MotherLis
                     recyclerView.setVisibility(View.GONE);
                     textView.setVisibility(View.VISIBLE);
                 }
+            }else{
+                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
             }
         } catch (JSONException e) {
             e.printStackTrace();

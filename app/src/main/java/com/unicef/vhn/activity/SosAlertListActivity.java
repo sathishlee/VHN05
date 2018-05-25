@@ -90,7 +90,7 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
         mResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView) findViewById(R.id.mother_recycler_view);
         txt_no_records_found  =(TextView)findViewById(R.id.txt_no_records_found);
-        mAdapter = new SOSListAdapter(mResult, SosAlertListActivity.this,"",this);
+        mAdapter = new SOSListAdapter(mResult, SosAlertListActivity.this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(SosAlertListActivity.this);
         mother_recycler_view.setLayoutManager(mLayoutManager);

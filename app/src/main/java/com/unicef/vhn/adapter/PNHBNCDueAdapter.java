@@ -32,7 +32,7 @@ public class PNHBNCDueAdapter extends RecyclerView.Adapter<PNHBNCDueAdapter.View
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pnhbnc_due_list,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pnhbnc_due_list, parent, false);
         return new ViewHolder(view);
     }
 
@@ -48,23 +48,29 @@ public class PNHBNCDueAdapter extends RecyclerView.Adapter<PNHBNCDueAdapter.View
         String strunvisit5 = null;
         String strunvisit6 = null;
         String strunvisit7 = null;
-        if (tt1_list.getVisit1()==null){
-            strunvisit1="1";
-        }  if (tt1_list.getVisit2()==null){
-            strunvisit2="2";
-        }if (tt1_list.getVisit3()==null){
-            strunvisit3="3";
-        }if (tt1_list.getVisit4()==null){
-            strunvisit4="4";
-        }if (tt1_list.getVisit5()==null){
-            strunvisit5="5";
-        }if (tt1_list.getVisit6()==null){
-            strunvisit6="6";
-        }if (tt1_list.getVisit7()==null){
-            strunvisit7="";
+        if (tt1_list.getVisit1() == null) {
+            strunvisit1 = "1";
         }
-        holder.txt_visit_list.setText(strunvisit1+","+strunvisit2+","+strunvisit3+","+strunvisit4+","+strunvisit5+","+strunvisit6+","+strunvisit7);
+        if (tt1_list.getVisit2() == null) {
+            strunvisit2 = "2";
+        }
+        if (tt1_list.getVisit3() == null) {
+            strunvisit3 = "3";
+        }
+        if (tt1_list.getVisit4() == null) {
+            strunvisit4 = "4";
+        }
+        if (tt1_list.getVisit5() == null) {
+            strunvisit5 = "5";
+        }
+        if (tt1_list.getVisit6() == null) {
 
+            strunvisit6 = "6";
+        }
+        if (tt1_list.getVisit7() == null) {
+            strunvisit7 = "";
+        }
+        holder.txt_visit_list.setText(strunvisit1 + "," + strunvisit2 + "," + strunvisit3 + "," + strunvisit4 + "," + strunvisit5 + "," + strunvisit6 + "," + strunvisit7);
         holder.img_call_mother.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,14 +85,15 @@ public class PNHBNCDueAdapter extends RecyclerView.Adapter<PNHBNCDueAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_username,txt_picme_id,txt_visit_list;
+        TextView txt_username, txt_picme_id, txt_visit_list;
         ImageView img_call_mother;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            txt_username =itemView.findViewById(R.id.txt_username);
-            txt_picme_id =itemView.findViewById(R.id.txt_picme_id);
-            txt_visit_list =itemView.findViewById(R.id.txt_visit_list);
-            img_call_mother =itemView.findViewById(R.id.img_call_mother);
+            txt_username = itemView.findViewById(R.id.txt_username);
+            txt_picme_id = itemView.findViewById(R.id.txt_picme_id);
+            txt_visit_list = itemView.findViewById(R.id.txt_visit_list);
+            img_call_mother = itemView.findViewById(R.id.img_call_mother);
         }
     }
 }

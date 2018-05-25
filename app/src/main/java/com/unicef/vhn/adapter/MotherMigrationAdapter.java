@@ -49,7 +49,7 @@ public class MotherMigrationAdapter extends RecyclerView.Adapter<MotherMigration
     }
 
     @Override
-    public void onBindViewHolder(MotherMigrationAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
 
         final MotherMigrationResponseModel.Vhn_migrated_mothers vhn_migrated_mother = vhn_migrated_mothers.get(position);
         holder.txt_username.setText(vhn_migrated_mother.getMName());
