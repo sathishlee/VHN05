@@ -3,6 +3,8 @@ package com.unicef.vhn.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Build;
@@ -87,7 +89,23 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
             mobileCheck = "Mobile:"+ Build.MANUFACTURER +","+ "Model:" +Build.MODEL + "," + "Api Version:"
                     + Build.VERSION.RELEASE + "," + "SDK Version:" + Build.VERSION.SDK_INT + "," + "IP Address:"+ ipAddress;
 
+
+
             Log.d("Mobile Check Version-->", mobileCheck);
+
+            PackageInfo packageInfo = null;
+            String version_name = "Latest";
+            int version_code = 2;
+            String appversion = String.valueOf(version_code);
+
+            try {
+                packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+                version_name = packageInfo.versionName;
+                version_code = packageInfo.versionCode;
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+
             loginPresenter.login(strVhnId, strPassword, preferenceData.getDeviceId(),mobileCheck, AppConstants.EXTRA_LATITUDE, AppConstants.EXTRA_LONGITUDE);
 
         }
@@ -125,21 +143,20 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
         try {
             jObj = new JSONObject(response);
             String status = jObj.getString("status");
-            JSONObject strVhnDetails = jObj.getJSONObject("VhnDetails");
             String message = jObj.getString("message");
-            if (status.equalsIgnoreCase("1")) {
-                Log.d("message---->", message);
-                preferenceData.storeUserInfo(strVhnDetails.getString("vhnName"), strVhnDetails.getString("vhnCode"),
-                        strVhnDetails.getString("vhnId"));
-                preferenceData.setLogin(true);
-                if (message.equalsIgnoreCase("Successfully Logined..!")) {
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    finish();
-                } else {
-                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-
-                }
-            } else {
+            if(status.equalsIgnoreCase("1")) {
+                JSONObject strVhnDetails = jObj.getJSONObject("VhnDetails");
+                    Log.d("message---->", message);
+                    preferenceData.storeUserInfo(strVhnDetails.getString("vhnName"), strVhnDetails.getString("vhnCode"),
+                            strVhnDetails.getString("vhnId"));
+                    preferenceData.setLogin(true);
+                    if (message.equalsIgnoreCase("Successfully Logined..!")) {
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
+                    } else {
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                    }
+            }else {
                 Log.d("message---->", message);
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
             }

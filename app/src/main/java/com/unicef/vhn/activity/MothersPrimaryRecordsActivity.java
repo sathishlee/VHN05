@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherPrimaryRegisterPresenter;
 import com.unicef.vhn.R;
+import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.view.PrimaryRegisterViews;
 
 import org.json.JSONException;
@@ -24,7 +25,7 @@ import org.json.JSONObject;
 public class MothersPrimaryRecordsActivity extends AppCompatActivity implements PrimaryRegisterViews {
 
     TextView txt_name, txt_mother_age, txt_lmp_date, txt_edd_date, txt_pry_mobile_no,
-            txt_alter_mobile_no, txt_mother_occupation, txt_hus_occupation, txt_age_at_marriage, txt_consanguineous_marraige,
+            txt_alter_mobile_no,txt_mother_occupation, txt_hus_occupation, txt_age_at_marriage,txt_consanguineous_marraige,
             txt_history_of_illness, txt_history_of_illness_family, txt_any_surgery_done, txt_tobacco, txt_alcohol,
             txt_on_any_medication, txt_allergic_to_any_drug, txt_history_of_previous_pregnancy, txt_lscs_done,
             txt_any_complication, txt_g, txt_p, txt_a, txt_l, txt_registration_week, txt_an_tt_1st, txt_an_tt_2nd,
@@ -64,7 +65,7 @@ public class MothersPrimaryRecordsActivity extends AppCompatActivity implements 
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
         motherPrimaryRegisterPresenter = new MotherPrimaryRegisterPresenter(MothersPrimaryRecordsActivity.this, this);
-        motherPrimaryRegisterPresenter.getAllMotherPrimaryRegistration(preferenceData.getPicmeId());
+        motherPrimaryRegisterPresenter.getAllMotherPrimaryRegistration(AppConstants.MOTHER_PICME_ID);
         txt_name = (TextView) findViewById(R.id.txt_name);
         txt_mother_age = (TextView) findViewById(R.id.txt_mother_age);
         txt_lmp_date = (TextView) findViewById(R.id.txt_lmp_date);

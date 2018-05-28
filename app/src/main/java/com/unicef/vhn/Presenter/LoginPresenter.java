@@ -31,7 +31,7 @@ public class LoginPresenter implements LoginInteractor{
     }
 
     @Override
-    public void login(final String strVhnId, final String strPassword, final String strdeviceId, final String mobileCheck, final String vLatitude, final String vLongitude) {
+    public void login(final String strVhnId, final String strPassword, final String strdeviceId, final String mobileCheck, final String vLatitude, final String vLongitude, final String versionCode) {
         view.showProgress();
         String url = Apiconstants.BASE_URL + Apiconstants.LOG_IN_CHECK;
         Log.d("Log in check Url--->",url);
@@ -41,6 +41,7 @@ public class LoginPresenter implements LoginInteractor{
         Log.d("mobileCheck-->",mobileCheck);
         Log.d("vLatitude-->",vLatitude);
         Log.d("vLongitude-->",vLongitude);
+        Log.d("versionCode-->",versionCode);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -69,6 +70,7 @@ public class LoginPresenter implements LoginInteractor{
                 params.put("mobileCheck",mobileCheck);
                 params.put("vLatitude",vLatitude);
                 params.put("vLongitude",vLongitude);
+                params.put("appversion",versionCode);
 
                 Log.d("params--->",params.toString());
 

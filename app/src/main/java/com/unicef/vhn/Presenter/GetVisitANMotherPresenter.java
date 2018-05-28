@@ -122,8 +122,8 @@ public class GetVisitANMotherPresenter  implements VisitANMotherInteractor {
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-//                params.put("vhnCode",vhnCode);
-//                params.put("vhnId",vhnId);
+                params.put("vhnCode",vhnCode);
+                params.put("vhnId",vhnId);
                 params.put("mid",mid);
 
                 Log.d("params--->",params.toString());

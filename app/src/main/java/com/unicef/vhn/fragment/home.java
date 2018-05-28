@@ -69,7 +69,7 @@ public class home extends Fragment implements MotherListsViews {
     CheckNetwork checkNetwork;
     CardView profile;
     String str_mPhoto;
-
+    Ringtone ringtone;
     Context context;
 
 
@@ -119,6 +119,7 @@ public class home extends Fragment implements MotherListsViews {
             public void onClick(View v) {
                 AppConstants.GET_MOTHER_LIST_TYPE = "sos_count";
                 AppConstants.MOTHER_LIST_TITLE = "SOS List";
+                ringtone.stop();
                 startActivity(new Intent(getActivity(), SosAlertListActivity.class));
 
             }
@@ -302,7 +303,7 @@ public class home extends Fragment implements MotherListsViews {
                 txt_sos_count.setText(mJsnobject.getString("sosCount"));
 
                 Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-                Ringtone ringtone = RingtoneManager.getRingtone(getActivity(),uri);
+                ringtone = RingtoneManager.getRingtone(getActivity(),uri);
                 if (mJsnobject.getString("sosCount").equalsIgnoreCase("0")){
                         ringtone.stop();
                 }else {

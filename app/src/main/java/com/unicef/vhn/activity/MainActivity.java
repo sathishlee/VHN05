@@ -162,7 +162,9 @@ public class MainActivity extends AppCompatActivity
                         NotificationListFragment.newInstance()).commit();
                 return true;
             case R.id.action_help:
-                Toast.makeText(getApplicationContext(),"Help Menu",Toast.LENGTH_LONG).show();
+                preferenceData.setLogin(false);
+                finish();
+                Toast.makeText(getApplicationContext(), "Logged Out", Toast.LENGTH_LONG).show();
                 return true;
             default:
                 super.onOptionsItemSelected(item);
