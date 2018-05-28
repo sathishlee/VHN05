@@ -2,11 +2,11 @@ package com.unicef.vhn.application;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 
 
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 
 public class RealmController extends Application {

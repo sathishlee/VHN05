@@ -20,6 +20,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Slide;
@@ -38,7 +39,12 @@ import com.squareup.picasso.Picasso;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.ProfilePresenter;
 import com.unicef.vhn.R;
+import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
+import com.unicef.vhn.realmDbModel.DashBoardRealmModel;
+import com.unicef.vhn.realmDbModel.VhnProfileRealmModel;
+import com.unicef.vhn.realmDbModel.VisitListRealmModel;
+import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.view.ProfileViews;
 
 import org.json.JSONException;
@@ -49,6 +55,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.GET_ACCOUNTS;
@@ -90,10 +99,15 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
 
     String userChoosenTask, str_mPhoto;
 
+    CheckNetwork checkNetwork;
+    Realm realm;
+    boolean isOffline;
+    VhnProfileRealmModel vhnProfileRealmModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        realm = RealmController.with(this).getRealm();
         setContentView(R.layout.layout_profile);
         if (CheckingPermissionIsEnabledOrNot()) {
             Toast.makeText(VhnProfile.this, "All Permissions Granted Successfully", Toast.LENGTH_LONG).show();
@@ -201,7 +215,7 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
     }
 
     private void initUI() {
-
+        checkNetwork = new CheckNetwork(this);
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
@@ -209,8 +223,11 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
         context = VhnProfile.this;
 
         profilePresenter = new ProfilePresenter(VhnProfile.this, this);
-
-        profilePresenter.getVHNProfile(preferenceData.getVhnCode(), preferenceData.getVhnId());
+        if (checkNetwork.isNetworkAvailable()) {
+            profilePresenter.getVHNProfile(preferenceData.getVhnCode(), preferenceData.getVhnId());
+        } else {
+            isOffline = false;
+        }
         user_profile_photo = (ImageView) findViewById(R.id.user_profile_photo);
         user_name = (TextView) findViewById(R.id.user_name);
         txt_vhn_id = (TextView) findViewById(R.id.txt_vhn_id);
@@ -220,8 +237,17 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
         district_name = (TextView) findViewById(R.id.district_name);
         tvNumber1 = (TextView) findViewById(R.id.tvNumber1);
 
+        if (isOffline) {
+            showOfflineData();
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Record Not Found");
+            builder.create();
+        }
+
 
     }
+
 
     @Override
     public void onBackPressed() {
@@ -290,10 +316,33 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
             JSONObject jsonObject = new JSONObject(response);
             String status = jsonObject.getString("status");
             String msg = jsonObject.getString("message");
+            RealmResults<VhnProfileRealmModel> motherListAdapterRealmModel = realm.where(VhnProfileRealmModel.class).findAll();
+            Log.e("Realm size ---->", motherListAdapterRealmModel.size() + "");
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realm.delete(VhnProfileRealmModel.class);
+                }
+            });
             if (status.equalsIgnoreCase("1")) {
+                realm.beginTransaction();
+                vhnProfileRealmModel = realm.createObject(VhnProfileRealmModel.class);
+
                 JSONObject editprofile = jsonObject.getJSONObject("EditProfile");
 
-                user_name.setText(editprofile.getString("vhnName"));
+
+                vhnProfileRealmModel.setVhnName(editprofile.getString("vhnName"));
+                vhnProfileRealmModel.setVhnCode(editprofile.getString("vhncode"));
+                vhnProfileRealmModel.setVhnCode(editprofile.getString("vhnAddress"));
+                vhnProfileRealmModel.setVhnCode(editprofile.getString("hscName"));
+                vhnProfileRealmModel.setVhnCode(editprofile.getString("vhnDistrict"));
+                vhnProfileRealmModel.setVhnCode(editprofile.getString("vhnMobile"));
+                vhnProfileRealmModel.setVhnCode(editprofile.getString("vhnBlock"));
+                vhnProfileRealmModel.setVhnCode(editprofile.getString("vphoto"));
+
+                realm.commitTransaction();
+
+                /*user_name.setText(editprofile.getString("vhnName"));
                 txt_vhn_id.setText(editprofile.getString("vhnCode"));
                 address.setText(editprofile.getString("vhnAddress"));
                 phc_name.setText(editprofile.getString("hscName"));
@@ -313,11 +362,75 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
                         .memoryPolicy(MemoryPolicy.NO_CACHE)
                         .networkPolicy(NetworkPolicy.NO_CACHE)
                         .error(R.drawable.ln_logo)
-                        .into(user_profile_photo);
+                        .into(user_profile_photo);*/
+
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+        setValuesToUI();
+    }
+
+    private void setValuesToUI() {
+        realm.beginTransaction();
+        RealmResults<VhnProfileRealmModel> vhnProfileRealmModelRealmResults = realm.where(VhnProfileRealmModel.class).findAll();
+
+        for (int i = 0; i < vhnProfileRealmModelRealmResults.size(); i++) {
+            VhnProfileRealmModel model = vhnProfileRealmModelRealmResults.get(i);
+            user_name.setText(model.getVhnName());
+            txt_vhn_id.setText(model.getVhnId());
+            address.setText(model.getVhnAddress());
+            phc_name.setText(model.getHscName());
+            district_name.setText(model.getVhnDistrict());
+            tvNumber1.setText(model.getVhnMobile());
+            tvNumber5.setText(model.getVhnBlock());
+
+            str_mPhoto = model.getVphoto();
+
+            Log.d("vphoto-->", Apiconstants.PHOTO_URL + str_mPhoto);
+
+            Picasso.with(context)
+                    .load(Apiconstants.PHOTO_URL + str_mPhoto)
+                    .placeholder(R.drawable.ln_logo)
+                    .fit()
+                    .centerCrop()
+                    .memoryPolicy(MemoryPolicy.NO_CACHE)
+                    .networkPolicy(NetworkPolicy.NO_CACHE)
+                    .error(R.drawable.ln_logo)
+                    .into(user_profile_photo);
+        }
+    }
+
+
+    private void showOfflineData() {
+
+        realm.beginTransaction();
+        RealmResults<VhnProfileRealmModel> vhnProfileRealmModelRealmResults = realm.where(VhnProfileRealmModel.class).findAll();
+
+        for (int i = 0; i < vhnProfileRealmModelRealmResults.size(); i++) {
+            VhnProfileRealmModel model = vhnProfileRealmModelRealmResults.get(i);
+            user_name.setText(model.getVhnName());
+            txt_vhn_id.setText(model.getVhnId());
+            address.setText(model.getVhnAddress());
+            phc_name.setText(model.getHscName());
+            district_name.setText(model.getVhnDistrict());
+            tvNumber1.setText(model.getVhnMobile());
+            tvNumber5.setText(model.getVhnBlock());
+
+            str_mPhoto = model.getVphoto();
+
+            Log.d("vphoto-->", Apiconstants.PHOTO_URL + str_mPhoto);
+
+            Picasso.with(context)
+                    .load(Apiconstants.PHOTO_URL + str_mPhoto)
+                    .placeholder(R.drawable.ln_logo)
+                    .fit()
+                    .centerCrop()
+                    .memoryPolicy(MemoryPolicy.NO_CACHE)
+                    .networkPolicy(NetworkPolicy.NO_CACHE)
+                    .error(R.drawable.ln_logo)
+                    .into(user_profile_photo);
         }
     }
 

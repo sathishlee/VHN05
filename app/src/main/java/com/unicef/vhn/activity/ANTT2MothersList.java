@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,8 +29,12 @@ import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.adapter.ANTT1Adapter;
 import com.unicef.vhn.adapter.ANTT2Adapter;
+import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.model.ANTT1ResponseModel;
 import com.unicef.vhn.model.ANTT2ResponseModel;
+import com.unicef.vhn.realmDbModel.ANTT1RealmModel;
+import com.unicef.vhn.realmDbModel.ANTT2RealmModel;
+import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.view.MotherListsViews;
 
 import org.json.JSONArray;
@@ -38,6 +43,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Created by Suthishan on 20/1/2018.
@@ -62,9 +70,15 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
     final Context context = this;
     TextView txt_filter;
 
+    CheckNetwork checkNetwork;
+    boolean isoffline = false;
+    Realm realm;
+    ANTT2RealmModel antt2RealmModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        realm = RealmController.with(this).getRealm(); // opens "myrealm.realm"
         setContentView(R.layout.antt2_mother_list_activity);
         showActionBar();
         initUI();
@@ -86,13 +100,19 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
     }
 
     public void initUI() {
+        checkNetwork = new CheckNetwork(this);
+
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
 
         pnMotherListPresenter = new MotherListPresenter(ANTT2MothersList.this, this);
-        pnMotherListPresenter.getANTT2MotherList(preferenceData.getVhnCode(), preferenceData.getVhnId());
+        if (checkNetwork.isNetworkAvailable()) {
+            pnMotherListPresenter.getANTT2MotherList(preferenceData.getVhnCode(), preferenceData.getVhnId());
+        }else{
+            isoffline=true;
+        }
         tt2_lists = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.antt2_mother_recycler_view);
         textView = (TextView) findViewById(R.id.txt_no_records_found);
@@ -102,6 +122,13 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(antt2Adapter);
+        if (isoffline) {
+            showOfflineData();
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Record Not Found");
+            builder.create();
+        }
 
     }
 
@@ -125,21 +152,41 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
             String message = mJsnobject.getString("message");
             if (status.equalsIgnoreCase("1")) {
                 JSONArray jsonArray = mJsnobject.getJSONArray("TT2_List");
+
+                RealmResults<ANTT2RealmModel> motherListAdapterRealmModel = realm.where(ANTT2RealmModel.class).findAll();
+                Log.e("Realm size ---->", motherListAdapterRealmModel.size() + "");
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.delete(ANTT2RealmModel.class);
+                    }
+                });
+
                 if (jsonArray.length() != 0) {
                     recyclerView.setVisibility(View.VISIBLE);
                     textView.setVisibility(View.GONE);
 
+                    realm.beginTransaction();       //create or open
+
                     for (int i = 0; i < jsonArray.length(); i++) {
+                        antt2RealmModel = realm.createObject(ANTT2RealmModel.class);  //this will create a UserInfoRealmModel object which will be inserted in database
 
                         tt2list = new ANTT2ResponseModel.TT2_List();
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        tt2list.setMName(jsonObject.getString("mName"));
-                        tt2list.setMPicmeId(jsonObject.getString("mPicmeId"));
-                        tt2list.setMMotherMobile(jsonObject.getString("mMotherMobile"));
 
-                        tt2_lists.add(tt2list);
-                        antt2Adapter.notifyDataSetChanged();
+//                        tt2list.setMName(jsonObject.getString("mName"));
+//                        tt2list.setMPicmeId(jsonObject.getString("mPicmeId"));
+//                        tt2list.setMMotherMobile(jsonObject.getString("mMotherMobile"));
+
+                        antt2RealmModel.setMName(jsonObject.getString("mName"));
+                        antt2RealmModel.setMPicmeId(jsonObject.getString("mPicmeId"));;
+                        antt2RealmModel.setMMotherMobile(jsonObject.getString("mMotherMobile"));
+
+
+//                        tt2_lists.add(tt2list);
+//                        antt2Adapter.notifyDataSetChanged();
                     }
+                    realm.commitTransaction();
                 } else {
                     recyclerView.setVisibility(View.GONE);
                     textView.setVisibility(View.VISIBLE);
@@ -150,6 +197,7 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        setValueToUI();
 
     }
 
@@ -200,5 +248,55 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
                 }
                 return;
         }
+    }
+
+
+
+    private void setValueToUI() {
+
+        Log.e(ANTT1MothersList.class.getSimpleName(),"ON LINE ");
+
+        realm.beginTransaction();
+        RealmResults<ANTT2RealmModel> antt1listRealmResult = realm.where(ANTT2RealmModel.class).findAll();
+        Log.e("ANTT1 list size ->", antt1listRealmResult.size() + "");
+        for (int i = 0; i < antt1listRealmResult.size(); i++) {
+            tt2list = new ANTT2ResponseModel.TT2_List();
+
+            ANTT2RealmModel model = antt1listRealmResult.get(i);
+
+
+
+            tt2list.setMName(model.getMName());
+            tt2list.setMPicmeId(model.getMPicmeId());
+            tt2list.setMMotherMobile(model.getMMotherMobile());
+            tt2_lists.add(tt2list);
+            antt2Adapter.notifyDataSetChanged();
+        }
+
+        realm.commitTransaction();
+    }
+
+    private void showOfflineData() {
+
+        Log.e(ANTT1MothersList.class.getSimpleName(),"OFF LINE ");
+
+        realm.beginTransaction();
+        RealmResults<ANTT2RealmModel> antt1listRealmResult = realm.where(ANTT2RealmModel.class).findAll();
+        Log.e("ANTT1 list size ->", antt1listRealmResult.size() + "");
+        for (int i = 0; i < antt1listRealmResult.size(); i++) {
+            tt2list = new ANTT2ResponseModel.TT2_List();
+
+            ANTT2RealmModel model = antt1listRealmResult.get(i);
+
+
+
+            tt2list.setMName(model.getMName());
+            tt2list.setMPicmeId(model.getMPicmeId());
+            tt2list.setMMotherMobile(model.getMMotherMobile());
+            tt2_lists.add(tt2list);
+            antt2Adapter.notifyDataSetChanged();
+        }
+
+        realm.commitTransaction();
     }
 }

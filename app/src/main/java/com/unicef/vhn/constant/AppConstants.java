@@ -5,6 +5,8 @@ package com.unicef.vhn.constant;
  */
 
 public class AppConstants {
+    public static String NEAR_LATITUDE = "";
+    public static String NEAR_LONGITUDE = "";
     public static   int isfromhome=0;
     public static String PNMotherDetails="";
     public static String GET_MOTHER_LIST_TYPE="";

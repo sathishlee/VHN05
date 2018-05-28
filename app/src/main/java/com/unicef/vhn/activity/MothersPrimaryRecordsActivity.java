@@ -17,6 +17,8 @@ import com.unicef.vhn.view.PrimaryRegisterViews;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import io.realm.Realm;
+
 /**
  * Created by Suthishan on 20/1/2018.
  */
@@ -33,9 +35,10 @@ public class MothersPrimaryRecordsActivity extends AppCompatActivity implements 
 
     ProgressDialog pDialog;
     MotherPrimaryRegisterPresenter motherPrimaryRegisterPresenter;
-
     PreferenceData preferenceData;
 
+    boolean isoffline = false;
+    Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

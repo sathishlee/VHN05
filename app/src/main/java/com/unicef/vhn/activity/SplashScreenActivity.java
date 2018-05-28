@@ -36,6 +36,7 @@ import com.unicef.vhn.service.LocationMonitoringService;
 import com.unicef.vhn.view.LocationUpdateViews;
 
 public class SplashScreenActivity extends AppCompatActivity implements LocationUpdateViews {
+
     private static final String TAG = SplashScreenActivity.class.getSimpleName();
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
     private boolean mAlreadyStartedService = false;
@@ -112,26 +113,30 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
      * Step 2: Check & Prompt Internet connection
      */
     private Boolean startStep2(DialogInterface dialog) {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if (preferenceData.getLogin()){
+            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+        }else {
+            ConnectivityManager connectivityManager
+                    = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+//
+            if (activeNetworkInfo == null || !activeNetworkInfo.isConnected()) {
+//            promptInternetConnect();
+                return false;
+            }
 
-        if (activeNetworkInfo == null || !activeNetworkInfo.isConnected()) {
-            promptInternetConnect();
-            return false;
-        }
 
+            if (dialog != null) {
+                dialog.dismiss();
+            }
 
-        if (dialog != null) {
-            dialog.dismiss();
-        }
+            //Yes there is active internet connection. Next check Location is granted by user or not.
 
-        //Yes there is active internet connection. Next check Location is granted by user or not.
-
-        if (checkPermissions()) { //Yes permissions are granted by the user. Go to the next step.
-            startStep3();
-        } else {  //No user has not granted the permissions yet. Request now.
-            requestPermissions();
+            if (checkPermissions()) { //Yes permissions are granted by the user. Go to the next step.
+                startStep3();
+            } else {  //No user has not granted the permissions yet. Request now.
+                requestPermissions();
+            }
         }
         return true;
     }

@@ -1,9 +1,15 @@
 package com.unicef.vhn.activity;
 
+import android.app.AlertDialog;
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +25,7 @@ import android.widget.Toast;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.LoginPresenter;
 import com.unicef.vhn.R;
+import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.view.LoginViews;
 
@@ -87,8 +94,24 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
             mobileCheck = "Mobile:"+ Build.MANUFACTURER +","+ "Model:" +Build.MODEL + "," + "Api Version:"
                     + Build.VERSION.RELEASE + "," + "SDK Version:" + Build.VERSION.SDK_INT + "," + "IP Address:"+ ipAddress;
 
+
+
             Log.d("Mobile Check Version-->", mobileCheck);
-            loginPresenter.login(strVhnId, strPassword, preferenceData.getDeviceId(),mobileCheck, AppConstants.EXTRA_LATITUDE, AppConstants.EXTRA_LONGITUDE);
+
+            PackageInfo packageInfo = null;
+            String version_name = "Latest";
+            int version_code = 2;
+            String appversion = String.valueOf(version_code);
+
+            try {
+                packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+                version_name = packageInfo.versionName;
+                version_code = packageInfo.versionCode;
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            loginPresenter.login(strVhnId, strPassword, preferenceData.getDeviceId(),mobileCheck, AppConstants.EXTRA_LATITUDE, AppConstants.EXTRA_LONGITUDE, appversion);
 
         }
 
@@ -125,9 +148,23 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
         try {
             jObj = new JSONObject(response);
             String status = jObj.getString("status");
-            JSONObject strVhnDetails = jObj.getJSONObject("VhnDetails");
             String message = jObj.getString("message");
-            if (status.equalsIgnoreCase("1")) {
+            if(message.equalsIgnoreCase("Please update the latest version app.")){
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                builder.setTitle(R.string.app_name);
+                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setMessage("Your are using Older Version of Apk Please Click Ok to Download New Apk")
+                        .setCancelable(false)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                openUrl();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }else if(status.equalsIgnoreCase("1")) {
+                JSONObject strVhnDetails = jObj.getJSONObject("VhnDetails");
                 Log.d("message---->", message);
                 preferenceData.storeUserInfo(strVhnDetails.getString("vhnName"), strVhnDetails.getString("vhnCode"),
                         strVhnDetails.getString("vhnId"));
@@ -137,9 +174,8 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
                     finish();
                 } else {
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-
                 }
-            } else {
+            }else {
                 Log.d("message---->", message);
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
             }
@@ -155,6 +191,14 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
 
     }
 
+    private void openUrl() {
+        DownloadManager downloadManager;
+        downloadManager = (DownloadManager)getSystemService(Context.DOWNLOAD_SERVICE);
+        Uri uri = Uri.parse(Apiconstants.APK_URL+Apiconstants.DOWNLOAD_APK);
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        Long reference = downloadManager.enqueue(request);
+    }
 
 }
 

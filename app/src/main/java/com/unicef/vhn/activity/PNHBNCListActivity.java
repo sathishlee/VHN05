@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,7 +24,11 @@ import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.adapter.MotherListAdapter;
+import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.model.PNMotherListResponse;
+import com.unicef.vhn.realmDbModel.PNHBNCDueListRealmModel;
+import com.unicef.vhn.realmDbModel.PNHBNCMotherListRealmModel;
+import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.view.MotherListsViews;
 
 import org.json.JSONArray;
@@ -32,6 +37,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 /**
  * Created by Suthishan on 20/1/2018.
@@ -52,9 +61,15 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
     boolean isDataUpdate = true;
 
+    CheckNetwork checkNetwork;
+    boolean isoffline = false;
+    Realm realm;
+    PNHBNCMotherListRealmModel pnhbncMotherListRealmModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        realm = RealmController.with(this).getRealm();
         setContentView(R.layout.pnhbnc_mothers_list_activity);
         showActionBar();
         initUI();
@@ -70,13 +85,18 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
     }
 
     public void initUI() {
+        checkNetwork =new CheckNetwork(this);
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
         pnMotherListPresenter = new MotherListPresenter(PNHBNCListActivity.this, this);
 //        pnMotherListPresenter.getPNMotherList("V10001","1");
-        pnMotherListPresenter.getPNMotherRecordsList(preferenceData.getVhnCode(), preferenceData.getVhnId());
+        if (checkNetwork.isNetworkAvailable()) {
+            pnMotherListPresenter.getPNMotherRecordsList(preferenceData.getVhnCode(), preferenceData.getVhnId());
+        }else{
+            isoffline = true;
+        }
         mResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView) findViewById(R.id.mother_recycler_view);
 
@@ -88,7 +108,17 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
         mother_recycler_view.setLayoutManager(mLayoutManager);
         mother_recycler_view.setItemAnimator(new DefaultItemAnimator());
         mother_recycler_view.setAdapter(mAdapter);
+        if (isoffline){
+            showOffline();
+        }else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Record Not Found");
+            builder.create();
+        }
     }
+
+
+
 
     @Override
     public void showProgress() {
@@ -108,14 +138,27 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
             String status = mJsnobject.getString("status");
             if (status.equalsIgnoreCase("1")) {
                 JSONArray jsonArray = mJsnobject.getJSONArray("pnMothersList");
+
+                RealmQuery<PNHBNCMotherListRealmModel> pnhbncDueListRealmModels = realm.where(PNHBNCMotherListRealmModel.class);
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.delete(PNHBNCMotherListRealmModel.class);
+                    }
+                });
+
                 if (jsonArray.length() != 0) {
                     mother_recycler_view.setVisibility(View.VISIBLE);
                     textView.setVisibility(View.GONE);
-
+                    realm.beginTransaction();
                     for (int i = 0; i < jsonArray.length(); i++) {
+                        pnhbncMotherListRealmModel =realm.createObject(PNHBNCMotherListRealmModel.class);
+
                         mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
+
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        mresponseResult.setMid(jsonObject.getString("mid"));
+
+                       /* mresponseResult.setMid(jsonObject.getString("mid"));
                         mresponseResult.setMName(jsonObject.getString("mName"));
                         mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
                         mresponseResult.setPnId(jsonObject.getString("pnId"));
@@ -124,8 +167,18 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
                         mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
                         mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
                         mResult.add(mresponseResult);
-                        mAdapter.notifyDataSetChanged();
+                        mAdapter.notifyDataSetChanged();*/
+
+                        pnhbncMotherListRealmModel.setMid(jsonObject.getString("mid"));
+                        pnhbncMotherListRealmModel.setmName(jsonObject.getString("mName"));
+                        pnhbncMotherListRealmModel.setmPicmeId(jsonObject.getString("mPicmeId"));
+//                        pnhbncMotherListRealmModel.pni(jsonObject.getString("pnId"));
+                        pnhbncMotherListRealmModel.setMotherType(jsonObject.getString("motherType"));
+                        pnhbncMotherListRealmModel.setVhnId(jsonObject.getString("vhnId"));
+                        pnhbncMotherListRealmModel.setmLatitude(jsonObject.getString("mLatitude"));
+                        pnhbncMotherListRealmModel.setmLongitude(jsonObject.getString("mLongitude"));
                     }
+                    realm.commitTransaction();
                 } else {
                     mother_recycler_view.setVisibility(View.GONE);
                     textView.setVisibility(View.VISIBLE);
@@ -134,6 +187,35 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        setValueToUI();
+
+    }
+
+    private void setValueToUI() {
+    }
+
+
+    private void showOffline() {
+
+        Log.d(PNHBNCDueListActivity.class.getSimpleName(),"off Line");
+
+        realm.beginTransaction();
+        RealmResults<PNHBNCMotherListRealmModel> pnhbncMotherListRealmModelRealmResults =realm.where(PNHBNCMotherListRealmModel.class).findAll();
+        for (int i=0;i<pnhbncMotherListRealmModelRealmResults.size();i++){
+            mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
+            PNHBNCMotherListRealmModel model = pnhbncMotherListRealmModelRealmResults.get(i);
+            mresponseResult.setMid(model.getMid());
+            mresponseResult.setMName(model.getmName());
+            mresponseResult.setMPicmeId(model.getmPicmeId());
+//    mresponseResult.setPnId(jsonObject.getString("pnId"));
+            mresponseResult.setMotherType(model.getMotherType());
+            mresponseResult.setVhnId(model.getVhnId());
+            mresponseResult.setMLatitude(model.getmLatitude());
+            mresponseResult.setMLongitude(model.getmLongitude());
+            mResult.add(mresponseResult);
+            mAdapter.notifyDataSetChanged();
+        }
+        realm.commitTransaction();
     }
 
     @Override

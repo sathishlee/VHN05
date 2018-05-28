@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,8 +22,14 @@ import com.unicef.vhn.R;
 import com.unicef.vhn.activity.MainActivity;
 import com.unicef.vhn.activity.VisitActivity;
 import com.unicef.vhn.adapter.NotificationAdapter;
+import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.model.NotificationListResponseModel;
 import com.unicef.vhn.constant.AppConstants;
+import com.unicef.vhn.model.PNMotherListResponse;
+import com.unicef.vhn.realmDbModel.MotherListRealm;
+import com.unicef.vhn.realmDbModel.MotherRiskListRealm;
+import com.unicef.vhn.realmDbModel.NotificationListRealm;
+import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.view.NotificationViews;
 
 import org.json.JSONArray;
@@ -31,13 +38,16 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
+
 
 public class NotificationListFragment extends Fragment implements NotificationViews {
     TextView txt_today_visit_count, txt_count_today_visit;
     LinearLayout ll_go_visit_list;
     NotificationAdapter mAdapter;
     ArrayList<NotificationListResponseModel.Vhn_migrated_mothers> moviesList;
-    NotificationListResponseModel.Vhn_migrated_mothers movie;
+    NotificationListResponseModel.Vhn_migrated_mothers mresponseResult;
     LinearLayoutManager mLayoutManager;
     RecyclerView mRecyclerView;
     private OnFragmentInteractionListener mListener;
@@ -46,6 +56,13 @@ public class NotificationListFragment extends Fragment implements NotificationVi
     ProgressDialog pDialog;
 
     NotificationPresenter notificationPresenter;
+
+
+
+    CheckNetwork checkNetwork;
+    boolean isoffline = false;
+    Realm realm;
+    NotificationListRealm notificationListRealm;
 
     public NotificationListFragment() {
         // Required empty public constructor
@@ -69,13 +86,20 @@ public class NotificationListFragment extends Fragment implements NotificationVi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        realm = RealmController.with(getActivity()).getRealm(); // opens "myrealm.realm"
+
         View view = inflater.inflate(R.layout.fragment_notification_list, container, false);
         pDialog = new ProgressDialog(getActivity());
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(getActivity());
+        checkNetwork = new CheckNetwork(getActivity());
         notificationPresenter = new NotificationPresenter(getActivity(), this);
-        notificationPresenter.getNotificationList(preferenceData.getVhnCode(), preferenceData.getVhnId());
+        if (checkNetwork.isNetworkAvailable()){
+            notificationPresenter.getNotificationList(preferenceData.getVhnCode(), preferenceData.getVhnId());
+        }else{
+            isoffline = true;
+        }
         notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(), preferenceData.getVhnId());
 
         txt_today_visit_count = view.findViewById(R.id.txt_today_visit_count);
@@ -105,8 +129,58 @@ public class NotificationListFragment extends Fragment implements NotificationVi
         // specify an adapter (see also next example)
         mAdapter = new NotificationAdapter(moviesList, getActivity());
         mRecyclerView.setAdapter(mAdapter);
+        if (isoffline) {
+            showOfflineData();
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("Record Not Found");
+            builder.create();
+        }
 //        prepareMovieData();
         return view;
+    }
+
+    private void showOfflineData() {
+//        Log.e("off ->",  "offline");
+//
+//        realm.beginTransaction();
+//        RealmResults<NotificationListRealm> realmResults = realm.where(NotificationListRealm.class).findAll();
+//        Log.e("Mother list size ->", realmResults.size() + "");
+
+
+
+
+        Log.e("ON LINE ->",  "on line");
+
+        realm.beginTransaction();
+        RealmResults<NotificationListRealm> userInfoRealmResult = realm.where(NotificationListRealm.class).findAll();
+        Log.e("Mother list size ->", userInfoRealmResult.size() + "");
+        for (int i = 0; i < userInfoRealmResult.size(); i++) {
+            mresponseResult = new NotificationListResponseModel.Vhn_migrated_mothers();
+
+
+
+            NotificationListRealm model = userInfoRealmResult.get(i);
+
+            mresponseResult.setMPicmeId(model.getMPicmeId());
+            mresponseResult.setMName(model.getMName());
+            mresponseResult.setMid(model.getMid());
+            mresponseResult.setVhnId(model.getVhnId());
+            mresponseResult.setSubject(model.getSubject());
+            mresponseResult.setMMotherMobile(model.getMMotherMobile());
+            mresponseResult.setClickHeremId(model.getClickHeremId());
+            mresponseResult.setMigratedmId(model.getMigratedmId());
+            mresponseResult.setNoteId(model.getNoteId());
+            mresponseResult.setNoteStartDateTime(model.getNoteStartDateTime());
+            mresponseResult.setMtype(model.getMtype());
+
+
+
+            moviesList.add(mresponseResult);
+
+        }
+        mAdapter.notifyDataSetChanged();
+        realm.commitTransaction();
     }
 
 
@@ -141,21 +215,44 @@ public class NotificationListFragment extends Fragment implements NotificationVi
     @Override
     public void NotificationResponseSuccess(String response) {
 
-        Log.d(NotificationListFragment.class.getSimpleName(), "Notification count response success" + response);
+        Log.d(NotificationListFragment.class.getSimpleName(), "Notification response success" + response);
         try {
             JSONObject jsonObject = new JSONObject(response);
             String status = jsonObject.getString("status");
             String msg = jsonObject.getString("message");
             if (status.equalsIgnoreCase("1")) {
-
+                RealmResults<NotificationListRealm> motherListAdapterRealmModel = realm.where(NotificationListRealm.class).findAll();
+                Log.e("Realm size ---->", motherListAdapterRealmModel.size() + "");
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.delete(NotificationListRealm.class);
+                    }
+                });
                 JSONArray jsonArray = jsonObject.getJSONArray("vhn_Mother_notification");
                 Log.d(NotificationListFragment.class.getSimpleName(), "Notification count" + jsonArray.length());
-
+                realm.beginTransaction();
                 for (int i = 0; i < jsonArray.length(); i++) {
-                    movie = new NotificationListResponseModel.Vhn_migrated_mothers();
+//                    movie = new NotificationListResponseModel.Vhn_migrated_mothers();
+
+                    notificationListRealm = realm.createObject(NotificationListRealm.class);
 
                     JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                    movie.setMPicmeId(jsonObject1.getString("mPicmeId"));
+
+
+                    notificationListRealm.setMPicmeId(jsonObject1.getString("mPicmeId"));
+                    notificationListRealm.setMName(jsonObject1.getString("mName"));
+                    notificationListRealm.setMid(jsonObject1.getString("mid"));
+                    notificationListRealm.setVhnId(jsonObject1.getString("vhnId"));
+                    notificationListRealm.setSubject(jsonObject1.getString("subject"));
+                    notificationListRealm.setMMotherMobile(jsonObject1.getString("mMotherMobile"));
+                    notificationListRealm.setClickHeremId(jsonObject1.getString("clickHeremId"));
+                    notificationListRealm.setMigratedmId(jsonObject1.getString("migratedmId"));
+                    notificationListRealm.setNoteId(jsonObject1.getString("noteId"));
+                    notificationListRealm.setNoteStartDateTime(jsonObject1.getString("noteStartDateTime"));
+                    notificationListRealm.setMtype(jsonObject1.getString("mtype"));
+
+                    /*ovie.setMPicmeId(jsonObject1.getString("mPicmeId"));
                     movie.setMName(jsonObject1.getString("mName"));
                     movie.setMid(jsonObject1.getString("mid"));
                     movie.setVhnId(jsonObject1.getString("vhnId"));
@@ -165,13 +262,14 @@ public class NotificationListFragment extends Fragment implements NotificationVi
                     movie.setMigratedmId(jsonObject1.getString("migratedmId"));
                     movie.setNoteId(jsonObject1.getString("noteId"));
                     movie.setNoteStartDateTime(jsonObject1.getString("noteStartDateTime"));
-                    movie.setMtype(jsonObject1.getString("mtype"));
-                    Log.d(NotificationListFragment.class.getSimpleName(), "Notification details" + i + movie);
+                    movie.setMtype(jsonObject1.getString("mtype"));*/
+//                    Log.d(NotificationListFragment.class.getSimpleName(), "Notification details" + i + movie);
 
-                    moviesList.add(movie);
+//                    moviesList.add(movie);
 
-                    mAdapter.notifyDataSetChanged();
+//                    mAdapter.notifyDataSetChanged();
                 }
+                realm.commitTransaction(); //close table
             } else {
                 Log.d(NotificationListFragment.class.getSimpleName(), "Notification messsage-->" + msg);
             }
@@ -179,7 +277,37 @@ public class NotificationListFragment extends Fragment implements NotificationVi
             e.printStackTrace();
         }
 
+        setValueToUI();
+
+
 //        prepareMovieData(response);
+    }
+
+    private void setValueToUI() {
+
+        Log.e("ON LINE ->",  "on line");
+
+        realm.beginTransaction();
+        RealmResults<NotificationListRealm> userInfoRealmResult = realm.where(NotificationListRealm.class).findAll();
+        Log.e("Mother list size ->", userInfoRealmResult.size() + "");
+        for (int i = 0; i < userInfoRealmResult.size(); i++) {
+            mresponseResult = new NotificationListResponseModel.Vhn_migrated_mothers();
+            NotificationListRealm model = userInfoRealmResult.get(i);
+            mresponseResult.setMPicmeId(model.getMPicmeId());
+            mresponseResult.setMName(model.getMName());
+            mresponseResult.setMid(model.getMid());
+            mresponseResult.setVhnId(model.getVhnId());
+            mresponseResult.setSubject(model.getSubject());
+            mresponseResult.setMMotherMobile(model.getMMotherMobile());
+            mresponseResult.setClickHeremId(model.getClickHeremId());
+            mresponseResult.setMigratedmId(model.getMigratedmId());
+            mresponseResult.setNoteId(model.getNoteId());
+            mresponseResult.setNoteStartDateTime(model.getNoteStartDateTime());
+            mresponseResult.setMtype(model.getMtype());
+            moviesList.add(mresponseResult);
+        }
+        mAdapter.notifyDataSetChanged();
+        realm.commitTransaction();
     }
 
     @Override
