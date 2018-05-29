@@ -180,8 +180,8 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
                     }
                     realm.commitTransaction();
                 } else {
-                    mother_recycler_view.setVisibility(View.GONE);
-                    textView.setVisibility(View.VISIBLE);
+//                    mother_recycler_view.setVisibility(View.GONE);
+//                    textView.setVisibility(View.VISIBLE);
                 }
             }
         } catch (JSONException e) {
@@ -201,6 +201,10 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
 
         realm.beginTransaction();
         RealmResults<PNHBNCMotherListRealmModel> pnhbncMotherListRealmModelRealmResults =realm.where(PNHBNCMotherListRealmModel.class).findAll();
+       if (pnhbncMotherListRealmModelRealmResults.size()==0){
+           mother_recycler_view.setVisibility(View.GONE);
+           textView.setVisibility(View.VISIBLE);
+       }
         for (int i=0;i<pnhbncMotherListRealmModelRealmResults.size();i++){
             mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
             PNHBNCMotherListRealmModel model = pnhbncMotherListRealmModelRealmResults.get(i);

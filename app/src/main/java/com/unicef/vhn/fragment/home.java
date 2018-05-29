@@ -36,6 +36,8 @@ import com.unicef.vhn.activity.ANTT1MothersList;
 import com.unicef.vhn.activity.ANTT2MothersList;
 import com.unicef.vhn.activity.InfantListActivity;
 import com.unicef.vhn.activity.MainActivity;
+import com.unicef.vhn.activity.MotherList.ANMotherListActivity;
+import com.unicef.vhn.activity.MotherList.AllMotherListActivity;
 import com.unicef.vhn.activity.MotherListActivity;
 import com.unicef.vhn.activity.MotherTrackActivity;
 import com.unicef.vhn.activity.NoInternetConnectionActivity;
@@ -115,8 +117,8 @@ public class home extends Fragment implements MotherListsViews {
                 AppConstants.GET_MOTHER_LIST_TYPE = "mother_count";
                 AppConstants.MOTHER_LIST_TITLE = "All Mother List";
 
-                startActivity(new Intent(getActivity(), MotherListActivity.class));
-//                startActivity(new Intent(getActivity(), AllMoterListActivity.class));
+//                startActivity(new Intent(getActivity(), MotherListActivity.class));
+                startActivity(new Intent(getActivity(), AllMotherListActivity.class));
 
             }
         });
@@ -157,7 +159,8 @@ public class home extends Fragment implements MotherListsViews {
                 AppConstants.GET_MOTHER_LIST_TYPE = "an_mother_total_count";
                 AppConstants.MOTHER_LIST_TITLE = "AN Mother List";
 
-                startActivity(new Intent(getActivity(), MotherListActivity.class));
+//                startActivity(new Intent(getActivity(), MotherListActivity.class));
+                startActivity(new Intent(getActivity(), ANMotherListActivity.class));
             }
         });
 
@@ -167,7 +170,9 @@ public class home extends Fragment implements MotherListsViews {
                 AppConstants.GET_MOTHER_LIST_TYPE = "high_risk_count";
                 AppConstants.MOTHER_LIST_TITLE = "AN High Risk Mother List";
 
-                startActivity(new Intent(getActivity(), MotherListActivity.class));
+//                startActivity(new Intent(getActivity(), MotherListActivity.class));
+                startActivity(new Intent(getActivity(), ANMotherListActivity.class));
+
             }
         });
         but_an_mother_pn_hbnc_totlal_count.setOnClickListener(new View.OnClickListener() {

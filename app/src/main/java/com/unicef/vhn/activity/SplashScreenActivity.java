@@ -121,7 +121,7 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
             NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 //
             if (activeNetworkInfo == null || !activeNetworkInfo.isConnected()) {
-//            promptInternetConnect();
+            promptInternetConnect();
                 return false;
             }
 
@@ -146,19 +146,20 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
      * Show A Dialog with button to refresh the internet state.
      */
     private void promptInternetConnect() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.title_alert_no_intenet);
-        builder.setMessage(R.string.msg_alert_no_internet);
-
-        String positiveText = getString(R.string.btn_label_refresh);
-        builder.setPositiveButton(positiveText,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle(R.string.title_alert_no_intenet);
+//        builder.setMessage(R.string.msg_alert_no_internet);
+//
+//        String positiveText = getString(R.string.btn_label_refresh);
+//        builder.setPositiveButton(positiveText,
+//                new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
 
 
                         //Block the Application Execution until user grants the permissions
-                        if (startStep2(dialog)) {
+//                        if (startStep2(dialog)) {
+                        if (startStep2(null)) {
 
                             //Now make sure about location permission.
                             if (checkPermissions()) {
@@ -171,11 +172,11 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
                             }
 
                         }
-                    }
-                });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
+//                    }
+//                });
+//
+//        AlertDialog dialog = builder.create();
+//        dialog.show();
     }
 
     /**

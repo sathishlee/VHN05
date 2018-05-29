@@ -1,20 +1,111 @@
 package com.unicef.vhn.realmDbModel;
 
+import java.util.List;
+
 import io.realm.RealmObject;
 
 public class PNMMotherListRealmModel extends RealmObject {
+
+
+    private String mRiskStatus;
+    private String mEDD;
+    private String mHusbandName;
+    private String vLongitude;
+    private String vLatitude;
+    private String mVillage;
+    private int currentMonth;
+    private String mLMP;
+    private String motherType;
     private String mLongitude;
     private String mLatitude;
     private String vhnId;
+    private String mMotherMobile;
     private String mid;
     private String mPicmeId;
     private String mName;
-    private String motherType;
-    private String vLatitude;
-    private String vLongitude;
-    private String mMotherMobile;
     private String mPhoto;
-    private String mLMP;
+    private String mHusbandMobile;
+    private String nextVisit;
+
+    public String getmPhoto() {
+        return mPhoto;
+    }
+
+    public void setmPhoto(String mPhoto) {
+        this.mPhoto = mPhoto;
+    }
+
+    public String getmRiskStatus() {
+        return mRiskStatus;
+    }
+
+    public void setmRiskStatus(String mRiskStatus) {
+        this.mRiskStatus = mRiskStatus;
+    }
+
+    public String getmEDD() {
+        return mEDD;
+    }
+
+    public void setmEDD(String mEDD) {
+        this.mEDD = mEDD;
+    }
+
+    public String getmHusbandName() {
+        return mHusbandName;
+    }
+
+    public void setmHusbandName(String mHusbandName) {
+        this.mHusbandName = mHusbandName;
+    }
+
+    public String getvLongitude() {
+        return vLongitude;
+    }
+
+    public void setvLongitude(String vLongitude) {
+        this.vLongitude = vLongitude;
+    }
+
+    public String getvLatitude() {
+        return vLatitude;
+    }
+
+    public void setvLatitude(String vLatitude) {
+        this.vLatitude = vLatitude;
+    }
+
+    public String getmVillage() {
+        return mVillage;
+    }
+
+    public void setmVillage(String mVillage) {
+        this.mVillage = mVillage;
+    }
+
+    public int getCurrentMonth() {
+        return currentMonth;
+    }
+
+    public void setCurrentMonth(int currentMonth) {
+        this.currentMonth = currentMonth;
+    }
+
+    public String getmLMP() {
+        return mLMP;
+    }
+
+    public void setmLMP(String mLMP) {
+        this.mLMP = mLMP;
+    }
+
+    public String getMotherType() {
+        return motherType;
+    }
+
+    public void setMotherType(String motherType) {
+        this.motherType = motherType;
+    }
 
     public String getmLongitude() {
         return mLongitude;
@@ -38,6 +129,14 @@ public class PNMMotherListRealmModel extends RealmObject {
 
     public void setVhnId(String vhnId) {
         this.vhnId = vhnId;
+    }
+
+    public String getmMotherMobile() {
+        return mMotherMobile;
+    }
+
+    public void setmMotherMobile(String mMotherMobile) {
+        this.mMotherMobile = mMotherMobile;
     }
 
     public String getMid() {
@@ -64,51 +163,5 @@ public class PNMMotherListRealmModel extends RealmObject {
         this.mName = mName;
     }
 
-    public String getMotherType() {
-        return motherType;
-    }
 
-    public void setMotherType(String motherType) {
-        this.motherType = motherType;
-    }
-
-    public String getvLatitude() {
-        return vLatitude;
-    }
-
-    public void setvLatitude(String vLatitude) {
-        this.vLatitude = vLatitude;
-    }
-
-    public String getvLongitude() {
-        return vLongitude;
-    }
-
-    public void setvLongitude(String vLongitude) {
-        this.vLongitude = vLongitude;
-    }
-
-    public String getmMotherMobile() {
-        return mMotherMobile;
-    }
-
-    public void setmMotherMobile(String mMotherMobile) {
-        this.mMotherMobile = mMotherMobile;
-    }
-
-    public String getmPhoto() {
-        return mPhoto;
-    }
-
-    public void setmPhoto(String mPhoto) {
-        this.mPhoto = mPhoto;
-    }
-
-    public String getmLMP() {
-        return mLMP;
-    }
-
-    public void setmLMP(String mLMP) {
-        this.mLMP = mLMP;
-    }
 }

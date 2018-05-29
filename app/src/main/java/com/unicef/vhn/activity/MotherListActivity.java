@@ -95,9 +95,7 @@ public class MotherListActivity extends AppCompatActivity implements MotherLists
         pDialog.setMessage("Please Wait ...");
         preferenceData =new PreferenceData(this);
         pnMotherListPresenter = new MotherListPresenter(MotherListActivity.this,this);
-        mResult = new ArrayList<>();
-        mother_recycler_view.setVisibility(View.GONE);
-        txt_no_records_found.setVisibility(View.GONE);
+
 if (checkNetwork.isNetworkAvailable()) {
     if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("mother_count")) {
         pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_LIST, preferenceData.getVhnCode(), preferenceData.getVhnId());
@@ -124,6 +122,11 @@ if (checkNetwork.isNetworkAvailable()) {
 else{
     isOffline =true;
 }
+
+        mResult = new ArrayList<>();
+//        mother_recycler_view.setVisibility(View.GONE);
+//        txt_no_records_found.setVisibility(View.GONE);
+
         if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("an_mother_total_count")) {
             mAdapter = new MotherListAdapter(mResult, MotherListActivity.this, "AN",this);
         }if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("high_risk_count")) {
@@ -136,14 +139,15 @@ else{
         mother_recycler_view.setLayoutManager(mLayoutManager);
         mother_recycler_view.setItemAnimator(new DefaultItemAnimator());
         mother_recycler_view.setAdapter(mAdapter);
-
         if (isOffline){
-            showOffLineData();
+//            showOffLineData();
+            setValuetoUI();
         }else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Record Not Found");
             builder.create();
         }
+
         txt_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -280,9 +284,9 @@ else{
 
 
                         mResult.add(mresponseResult);
-                        mAdapter.notifyDataSetChanged();
 
         }
+        mAdapter.notifyDataSetChanged();
 
         realm.commitTransaction();
     }

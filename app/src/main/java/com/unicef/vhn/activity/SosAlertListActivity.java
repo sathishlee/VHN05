@@ -219,6 +219,10 @@ pDialog.dismiss();
 
         realm.beginTransaction();
         RealmResults<SosListRealmModel> antt1listRealmResult = realm.where(SosListRealmModel.class).findAll();
+        if (antt1listRealmResult.size()==0){
+            mother_recycler_view .setVisibility(View.GONE);
+            txt_no_records_found  .setVisibility(View.VISIBLE);
+        }
         Log.e("ANTT1 list size ->", antt1listRealmResult.size() + "");
         for (int i = 0; i < antt1listRealmResult.size(); i++) {
             mresponseResult = new SOSListResponse.VhnAN_Mothers_List();
@@ -252,6 +256,10 @@ pDialog.dismiss();
         realm.beginTransaction();
         RealmResults<SosListRealmModel> antt1listRealmResult = realm.where(SosListRealmModel.class).findAll();
         Log.e("ANTT1 list size ->", antt1listRealmResult.size() + "");
+        if (antt1listRealmResult.size()==0){
+            mother_recycler_view .setVisibility(View.VISIBLE);
+            txt_no_records_found  .setVisibility(View.VISIBLE);
+        }
         for (int i = 0; i < antt1listRealmResult.size(); i++) {
             mresponseResult = new SOSListResponse.VhnAN_Mothers_List();
 
