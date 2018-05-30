@@ -176,7 +176,9 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".activity.MotherList.AllMotherListActivity" />
-        <activity android:name=".activity.MotherList.ANMotherListActivity"></activity>
+        <activity android:name=".activity.MotherList.ANMotherListActivity" />
+        <activity android:name=".activity.MotherDetails.ANMotherDetailsViewActivcity" />
+        <activity android:name=".activity.MotherDetails.PNMotherDetailsViewActivity"></activity>
     </application>
 
 </manifest>

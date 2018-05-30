@@ -12,6 +12,8 @@ import com.unicef.vhn.constant.AppConstants;
 
 public class PreferenceData {
     SharedPreferences sharedPreferences;
+    private boolean highRiskStatus;
+    private boolean descendingStatus;
 
     public PreferenceData(Context context) {
         sharedPreferences = context.getSharedPreferences(AppConstants.PREF_NAME, Context.MODE_PRIVATE);
@@ -96,5 +98,55 @@ public class PreferenceData {
 
     public void storeDid(String strDid) {
         sharedPreferences.edit().putString(AppConstants.DELIVERY_ID, strDid).commit();
+    }
+
+
+    public void setHighRiskStatus(boolean highRiskStatus) {
+        sharedPreferences.edit().putBoolean( AppConstants.ISHIGHRISK, highRiskStatus).commit();
+
+    } public boolean getHighRiskStatus() {
+        return sharedPreferences.getBoolean(AppConstants.ISHIGHRISK, Boolean.parseBoolean(""));
+
+    }
+
+    public void setDescendingStatus(boolean descendingStatus) {
+        sharedPreferences.edit().putBoolean(AppConstants.ISDECENDING, descendingStatus).commit();
+
+    }
+    public boolean getDescendingStatus() {
+        return sharedPreferences.getBoolean(AppConstants.ISDECENDING, Boolean.parseBoolean(""));
+     }
+
+     public void setVillageName(String villageName) {
+        sharedPreferences.edit().putString(AppConstants.VILLAGENAME, villageName).commit();
+
+    }
+    public String getVillageName() {
+        return sharedPreferences.getString(AppConstants.VILLAGENAME,  "");
+     }
+
+     public void setTermister(String villageName) {
+        sharedPreferences.edit().putString(AppConstants.TERMISTER, villageName).commit();
+
+    }
+    public String getTermister() {
+        return sharedPreferences.getString(AppConstants.TERMISTER, "");
+     }
+
+    public void setTermisterPosition(int termisterPosition) {
+        sharedPreferences.edit().putString(AppConstants.TERMISTER_POSITION, String.valueOf(termisterPosition)).commit();
+    }
+    public int getTermisterPosition() {
+        return Integer.parseInt(sharedPreferences.getString(AppConstants.TERMISTER_POSITION, ""));
+    }
+
+    public void setVillageNamePosition(int villageNamePosition) {
+        sharedPreferences.edit().putString(AppConstants.VILLAGENAME_POSITION, String.valueOf(villageNamePosition)).commit();
+
+
+    }
+    public int getVillageNamePosition() {
+        return Integer.parseInt(sharedPreferences.getString(AppConstants.VILLAGENAME_POSITION,""));
+
     }
 }

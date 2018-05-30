@@ -43,14 +43,14 @@ public class HomePresenter implements HomeInteractor {
             @Override
             public void onResponse(String response) {
                 Log.d(HomePresenter.class.getSimpleName(), response);
-                motherListsViews.hideProgress();
+                motherListsViews.showProgress();
                 motherListsViews.showLoginSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 motherListsViews.hideProgress();
-                motherListsViews.showLoginSuccess(error.toString());
+                motherListsViews.showLoginError(error.toString());
             }
         }) {
 

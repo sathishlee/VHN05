@@ -47,6 +47,14 @@ public class AppConstants {
     public static final String NOTIFICATION_COUNT = "0";
 
 
+    public static String ISHIGHRISK="isHighRisk";
+    public static String ISDECENDING="isDecending";
+    public static String VILLAGENAME="villageName";
+    public static String TERMISTER="termister";
+    public static String TERMISTER_POSITION="termister_position";
+    public static String VILLAGENAME_POSITION="villageName_position";
+
+
 
 
 

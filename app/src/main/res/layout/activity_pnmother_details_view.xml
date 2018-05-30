@@ -1,0 +1,306 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_pn_mother_details"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/user_profile_photo"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6.0dip"
+        android:orientation="vertical"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardElevation="2.0dip">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:padding="3dp"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/cardview_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="profile_image"
+                    android:elevation="5dp"
+                    android:padding="5dp"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/girl" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:gravity="start"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="start"
+                    android:text="Mrs. Tamil Selvi"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/text_lable" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:padding="1dp"
+                            android:text="Picme Id"
+                            android:textColor="@color/secondary"
+                            android:textSize="@dimen/text_primary" />
+
+                        <TextView
+                            android:id="@+id/txt_picme_id"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="1dp"
+                            android:text="123456789101"
+                            android:textAlignment="textStart"
+                            android:textColor="#333333"
+                            android:textSize="@dimen/text_secondary" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:padding="1dp"
+                            android:text="Age"
+                            android:textColor="@color/secondary"
+                            android:textSize="@dimen/text_primary" />
+
+                        <TextView
+                            android:id="@+id/txt_age"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="1dp"
+                            android:text="28"
+                            android:textAlignment="textStart"
+                            android:textColor="#333333"
+                            android:textSize="@dimen/text_secondary" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:padding="1dp"-->
+                <!--android:weightSum="2">-->
+
+                <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="start"-->
+                <!--android:layout_weight="1"-->
+                <!--android:orientation="vertical">-->
+
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:drawableStart="@drawable/age_user"-->
+                <!--android:gravity="start"-->
+                <!--android:padding="1dp"-->
+                <!--android:text=" Age : "-->
+                <!--android:textSize="14sp" />-->
+
+                <!--<TextView-->
+                <!--android:id="@+id/regDob"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textAlignment="textStart"-->
+                <!--android:layout_marginStart="20dp"-->
+                <!--android:padding="1dp"-->
+                <!--android:text="28"-->
+                <!--android:textColor="@color/secondary"-->
+                <!--android:textSize="14sp" />-->
+                <!--</LinearLayout>-->
+
+                <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="start"-->
+                <!--android:layout_weight="1"-->
+                <!--android:orientation="vertical">-->
+
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:drawableStart="@drawable/ic_blood_transfusion"-->
+                <!--android:gravity="start"-->
+                <!--android:padding="1dp"-->
+                <!--android:text=" Blood Group : "-->
+                <!--android:textSize="14sp" />-->
+
+                <!--<TextView-->
+                <!--android:id="@+id/regBlood"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textAlignment="textStart"-->
+                <!--android:layout_marginStart="20dp"-->
+                <!--android:padding="1dp"-->
+                <!--android:text="O+ve"-->
+                <!--android:textColor="@color/secondary"-->
+                <!--android:textSize="14sp" />-->
+
+                <!--</LinearLayout>-->
+
+                <!--</LinearLayout>-->
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:padding="1dp"
+                    android:visibility="gone"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:padding="1dp"
+                            android:text="District"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="1dp"
+                            android:text="Chennai"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/secondary"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:padding="1dp"
+                            android:text="Mobile No"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="1dp"
+                            android:text="9788782667"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/secondary"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <include layout="@layout/pn_block" />
+
+    <include layout="@layout/layout_emergency_call_2" />
+
+
+    <!--<include-->
+    <!--layout="@layout/layout_emergency_call_5"/>-->
+    <LinearLayout
+        android:id="@+id/rel_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/btn_view_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:drawableStart="@drawable/ic_show_location"
+            android:padding="5dp"
+            android:text="View Location"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/btn_view_report"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:drawableStart="@drawable/ic_view_report"
+            android:padding="5dp"
+            android:text="Mother Report"
+            android:textColor="#ffffff" />
+
+    </LinearLayout>
+</LinearLayout>

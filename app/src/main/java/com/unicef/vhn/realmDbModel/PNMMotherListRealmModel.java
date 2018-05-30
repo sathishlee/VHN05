@@ -24,7 +24,25 @@ public class PNMMotherListRealmModel extends RealmObject {
     private String mPicmeId;
     private String mName;
     private String mPhoto;
+
+    public String getmHusbandMobile() {
+        return mHusbandMobile;
+    }
+
+    public void setmHusbandMobile(String mHusbandMobile) {
+        this.mHusbandMobile = mHusbandMobile;
+    }
+
     private String mHusbandMobile;
+
+    public String getNextVisit() {
+        return nextVisit;
+    }
+
+    public void setNextVisit(String nextVisit) {
+        this.nextVisit = nextVisit;
+    }
+
     private String nextVisit;
 
     public String getmPhoto() {

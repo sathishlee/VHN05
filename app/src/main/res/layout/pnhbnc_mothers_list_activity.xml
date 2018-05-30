@@ -118,7 +118,8 @@
                 android:layout_height="wrap_content"
                 android:text="NO RECORDES FOUND"
                 android:layout_gravity="center"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <include layout="@layout/item_pnhbnc_due_list"

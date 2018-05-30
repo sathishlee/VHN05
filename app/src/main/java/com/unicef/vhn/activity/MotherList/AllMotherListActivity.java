@@ -34,7 +34,6 @@ import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.activity.ANTT1MothersList;
-import com.unicef.vhn.activity.MotherListActivity;
 import com.unicef.vhn.adapter.MotherListAdapter;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
@@ -54,8 +53,6 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
-
-import static android.R.layout.simple_spinner_item;
 
 public class AllMotherListActivity extends AppCompatActivity implements MotherListsViews, MakeCallInterface {
     ProgressDialog pDialog;
@@ -79,21 +76,19 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
     boolean isOffline;
     Realm realm;
     PNMMotherListRealmModel pnmMotherListRealmModel;
-    boolean strHighRisk=false;
-    boolean strDescending=false;
-    String strVillageName="";
-    String strTrimester="";
+    boolean strHighRisk = false;
+    boolean strDescending = false;
+    String strVillageName = "";
+    String strTrimester = "";
     boolean strMotherType;
     ArrayList<String> vhnVillageList;
     ArrayList<String> termisterlist;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.w(AllMotherListActivity.class.getSimpleName(), "Activity created");
         realm = RealmController.with(this).getRealm(); // opens "myrealm.realm"
         setContentView(R.layout.activity_all_mother_list);
-        Log.w(AllMotherListActivity.class.getSimpleName(), "realm init");
-
         initUI();
         showActionBar();
     }
@@ -117,18 +112,11 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
         preferenceData = new PreferenceData(this);
         pnMotherListPresenter = new MotherListPresenter(AllMotherListActivity.this, this);
         if (checkNetwork.isNetworkAvailable()) {
-            Log.w(AllMotherListActivity.class.getSimpleName(), "Is Internet connection :-" + checkNetwork.isNetworkAvailable());
-
             pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_LIST, preferenceData.getVhnCode(), preferenceData.getVhnId());
         } else {
-            Log.w(AllMotherListActivity.class.getSimpleName(), "Is Internet connection :-" + checkNetwork.isNetworkAvailable());
-
             isOffline = true;
         }
         mResult = new ArrayList<>();
-//        mother_recycler_view.setVisibility(View.GONE);
-//        txt_no_records_found.setVisibility(View.GONE);
-        Log.w(AllMotherListActivity.class.getSimpleName(), "Adapter list size :-" + mResult.size());
 
         mAdapter = new MotherListAdapter(mResult, AllMotherListActivity.this, "AN", this);
 
@@ -137,7 +125,6 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
         mother_recycler_view.setItemAnimator(new DefaultItemAnimator());
         mother_recycler_view.setAdapter(mAdapter);
         if (isOffline) {
-            Log.w(AllMotherListActivity.class.getSimpleName(), "is Offline -" + checkNetwork.isNetworkAvailable());
             setValuetoUI();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -150,52 +137,56 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
             public void onClick(View v) {
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.dialog_fragment);
-
-
-                CheckBox ch_highRisk,ch_desc,ch_anmother,ch_pnmother;
-                Spinner sp_village_wise,sp_trimester;
-                ch_highRisk = (CheckBox)dialog.findViewById(R.id.ch_high_risk);
-                ch_desc = (CheckBox)dialog.findViewById(R.id.ch_desc);
-                ch_anmother = (CheckBox)dialog.findViewById(R.id.ch_anmother);
-                ch_pnmother = (CheckBox)dialog.findViewById(R.id.ch_pnmother);
-                sp_village_wise = (Spinner)dialog.findViewById(R.id.sp_village_wise);
-                sp_trimester = (Spinner)dialog.findViewById(R.id.sp_trimester);
+                CheckBox ch_highRisk, ch_desc, ch_anmother, ch_pnmother;
+                Spinner sp_village_wise, sp_trimester;
+                ch_highRisk = (CheckBox) dialog.findViewById(R.id.ch_high_risk);
+                ch_desc = (CheckBox) dialog.findViewById(R.id.ch_desc);
+                ch_anmother = (CheckBox) dialog.findViewById(R.id.ch_anmother);
+                ch_pnmother = (CheckBox) dialog.findViewById(R.id.ch_pnmother);
+                sp_village_wise = (Spinner) dialog.findViewById(R.id.sp_village_wise);
+                sp_trimester = (Spinner) dialog.findViewById(R.id.sp_trimester);
+                ch_anmother.setVisibility(View.GONE);
+                ch_pnmother.setVisibility(View.GONE);
                 Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
                 Button btn_submit = (Button) dialog.findViewById(R.id.btn_submit);
+                if (preferenceData.getHighRiskStatus()) {
+                    ch_highRisk.setChecked(true);
+                }
+                if (preferenceData.getDescendingStatus()) {
+                    ch_desc.setChecked(true);
+                }
 
                 ch_highRisk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        strHighRisk=isChecked;
+                        strHighRisk = isChecked;
+                        preferenceData.setHighRiskStatus(isChecked);
                     }
                 });
                 ch_desc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                         strDescending=isChecked;
+                        preferenceData.setDescendingStatus(isChecked);
+
                     }
                 });
-                 vhnVillageList=new ArrayList<>();
-                termisterlist=new ArrayList<>();
+                vhnVillageList = new ArrayList<>();
+                termisterlist = new ArrayList<>();
+                termisterlist.add("All");
                 termisterlist.add("1-3");
                 termisterlist.add("4-6");
-                termisterlist.add("6-10");
+                termisterlist.add("7-10");
 
                 realm.beginTransaction();
-                RealmResults<PNMMotherListRealmModel> getVillageList =realm.where(PNMMotherListRealmModel.class).findAll();
-                Log.e("vhnVillageList",getVillageList.size()+"");
+                RealmResults<PNMMotherListRealmModel> getVillageList = realm.where(PNMMotherListRealmModel.class).findAll();
 
-                for (int i=0; i< getVillageList.size();i++){
-                    strVillageName =getVillageList.get(0).getmVillage();
+                for (int i = 0; i < getVillageList.size(); i++) {
+                    strVillageName = getVillageList.get(0).getmVillage();
                     vhnVillageList.add(getVillageList.get(i).getmVillage());
-                    Log.e("vhnVillageList",getVillageList.get(i).getmVillage());
+                    Log.e("vhnVillageList", getVillageList.get(i).getmVillage());
                 }
                 realm.commitTransaction();
 
-
-//                for (int i=0; i< vhnVillageList.size();i++){
-//                   Log.e("vhnVillageList",vhnVillageList.get(i));
-//                }
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                         getApplicationContext(),
                         android.R.layout.simple_spinner_item,
@@ -213,7 +204,9 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
                 sp_trimester.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        strTrimester = termisterlist.get(position);
+                        preferenceData.setTermister(termisterlist.get(position));
+                        preferenceData.setTermisterPosition(position);
+
                     }
 
                     @Override
@@ -224,7 +217,8 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
                 sp_village_wise.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        strVillageName = vhnVillageList.get(position);
+                        preferenceData.setVillageName(vhnVillageList.get(position));
+                        preferenceData.setVillageNamePosition(position);
                     }
 
                     @Override
@@ -232,6 +226,9 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
 
                     }
                 });
+                sp_village_wise.setSelection(preferenceData.getVillageNamePosition());
+                sp_trimester.setSelection(preferenceData.getTermisterPosition());
+
                 btn_cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -242,9 +239,8 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
                 btn_submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        setFilterDatatToUI();
-                        dialog.dismiss();
-                        setValuetoUI();
+                        startActivity(new Intent(getApplicationContext(), AllMotherListActivity.class));
+                        finish();
                     }
                 });
                 dialog.show();
@@ -254,88 +250,7 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
 
     }
 
-    private void setFilterDatatToUI() {
-        mResult.clear();
-        RealmResults<PNMMotherListRealmModel> motherListAdapterRealmModel = null;
 
-        if (strHighRisk) {
-            realm.beginTransaction();
-            if (strTrimester.equalsIgnoreCase("1-3")) {
-                motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("mRiskStatus", "HIGH").equalTo("mVillage", strVillageName).between("currentMonth", 1, 3).findAll();
-            } else if (strTrimester.equalsIgnoreCase("4-6")) {
-                motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("mRiskStatus", "HIGH").equalTo("mVillage", strVillageName).between("currentMonth", 4, 6).findAll();
-
-            } else if (strTrimester.equalsIgnoreCase("7-10")) {
-                motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("mRiskStatus", "HIGH").equalTo("mVillage", strVillageName).between("currentMonth", 7, 10).findAll();
-            }
-            if (strDescending){
-                motherListAdapterRealmModel = motherListAdapterRealmModel.sort("mPicmeId", Sort.DESCENDING);
-        }else {
-                motherListAdapterRealmModel = motherListAdapterRealmModel.sort("mPicmeId", Sort.ASCENDING);
-
-            }
-
-            for (int i = 0; i < motherListAdapterRealmModel.size(); i++) {
-                mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
-                Log.w(AllMotherListActivity.class.getSimpleName(), "PNMMotherListRealmModel:--------" + i);
-                PNMMotherListRealmModel model = motherListAdapterRealmModel.get(i);
-                mresponseResult.setMid(model.getMid());
-                mresponseResult.setMName(model.getmName());
-                mresponseResult.setMPicmeId(model.getmPicmeId());
-                mresponseResult.setVhnId(model.getVhnId());
-                mresponseResult.setmMotherMobile(model.getmMotherMobile());
-                mresponseResult.setMotherType(model.getMotherType());
-                mresponseResult.setMLatitude(model.getmLatitude());
-                mresponseResult.setMLongitude(model.getmLongitude());
-                mresponseResult.setmPhoto(model.getmPhoto());
-
-
-                mResult.add(mresponseResult);
-            }
-            mAdapter.notifyDataSetChanged();
-            realm.commitTransaction();
-        }else{
-
-            realm.beginTransaction();
-            if (strTrimester.equalsIgnoreCase("1-3")) {
-                motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("mRiskStatus", "HIGH").equalTo("mVillage", strVillageName).between("currentMonth", 1, 3).findAll();
-            } else if (strTrimester.equalsIgnoreCase("4-6")) {
-                motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("mRiskStatus", "HIGH").equalTo("mVillage", strVillageName).between("currentMonth", 4, 6).findAll();
-
-            } else if (strTrimester.equalsIgnoreCase("7-10")) {
-                motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("mRiskStatus", "HIGH").equalTo("mVillage", strVillageName).between("currentMonth", 7, 10).findAll();
-            }
-            if (strDescending){
-                motherListAdapterRealmModel = motherListAdapterRealmModel.sort("mPicmeId", Sort.DESCENDING);
-            }else {
-                motherListAdapterRealmModel = motherListAdapterRealmModel.sort("mPicmeId", Sort.ASCENDING);
-
-            }
-
-            for (int i = 0; i < motherListAdapterRealmModel.size(); i++) {
-                mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
-                Log.w(AllMotherListActivity.class.getSimpleName(), "PNMMotherListRealmModel:--------" + i);
-                PNMMotherListRealmModel model = motherListAdapterRealmModel.get(i);
-                mresponseResult.setMid(model.getMid());
-                mresponseResult.setMName(model.getmName());
-                mresponseResult.setMPicmeId(model.getmPicmeId());
-                mresponseResult.setVhnId(model.getVhnId());
-                mresponseResult.setmMotherMobile(model.getmMotherMobile());
-                mresponseResult.setMotherType(model.getMotherType());
-                mresponseResult.setMLatitude(model.getmLatitude());
-                mresponseResult.setMLongitude(model.getmLongitude());
-                mresponseResult.setmPhoto(model.getmPhoto());
-
-
-                mResult.add(mresponseResult);
-            }
-            mAdapter.notifyDataSetChanged();
-            realm.commitTransaction();
-
-        }
-
-
-    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();
@@ -373,16 +288,11 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
                 });
 
                 if (jsonArray.length() != 0) {
-                    mother_recycler_view.setVisibility(View.VISIBLE);
-                    txt_no_records_found.setVisibility(View.GONE);
                     realm.beginTransaction();
                     for (int i = 0; i < jsonArray.length(); i++) {
                         pnmMotherListRealmModel = realm.createObject(PNMMotherListRealmModel.class);
-
                         mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
-
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-
                         pnmMotherListRealmModel.setMid(jsonObject.getString("mid"));
                         pnmMotherListRealmModel.setmName(jsonObject.getString("mName"));
                         pnmMotherListRealmModel.setmPicmeId(jsonObject.getString("mPicmeId"));
@@ -395,34 +305,16 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
                         pnmMotherListRealmModel.setmRiskStatus(jsonObject.getString("mRiskStatus"));
                         pnmMotherListRealmModel.setmEDD(jsonObject.getString("mEDD"));
                         pnmMotherListRealmModel.setmHusbandName(jsonObject.getString("mHusbandName"));
+                        pnmMotherListRealmModel.setmHusbandMobile(jsonObject.getString("mHusbandMobile"));
                         pnmMotherListRealmModel.setvLongitude(jsonObject.getString("vLongitude"));
                         pnmMotherListRealmModel.setvLatitude(jsonObject.getString("vLatitude"));
                         pnmMotherListRealmModel.setCurrentMonth(Integer.parseInt(jsonObject.getString("currentMonth")));
                         pnmMotherListRealmModel.setmLMP(jsonObject.getString("mLMP"));
                         pnmMotherListRealmModel.setmVillage(jsonObject.getString("mVillage"));
-//                        pnmMotherListRealmModel.setne(jsonObject.getString("nextVisit"));
-
-
-
-
-
-
-                        /*mresponseResult.setMid(jsonObject.getString("mid"));
-                        mresponseResult.setMName(jsonObject.getString("mName"));
-                        mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
-                        mresponseResult.setVhnId(jsonObject.getString("vhnId"));
-                        mresponseResult.setmMotherMobile(jsonObject.getString("mMotherMobile"));
-                        mresponseResult.setMotherType(jsonObject.getString("motherType"));
-                        mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
-                        mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
-                        mresponseResult.setmPhoto(jsonObject.getString("mPhoto"));
-                        mResult.add(mresponseResult);
-                        mAdapter.notifyDataSetChanged();*/
+                        pnmMotherListRealmModel.setNextVisit(jsonObject.getString("nextVisit"));
                     }
                     realm.commitTransaction();
                 } else {
-                    mother_recycler_view.setVisibility(View.GONE);
-                    txt_no_records_found.setVisibility(View.VISIBLE);
                 }
             } else {
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
@@ -435,15 +327,57 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
     }
 
     private void setValuetoUI() {
+        RealmResults<PNMMotherListRealmModel> motherListAdapterRealmModel = null;
         Log.w(AllMotherListActivity.class.getSimpleName(), "setValuetoUI is Internet Conection-" + checkNetwork.isNetworkAvailable());
         realm.beginTransaction();
+        if (preferenceData.getHighRiskStatus()) {
+            Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T");
 
-        RealmResults<PNMMotherListRealmModel> motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).findAll();
-//        RealmResults<PNMMotherListRealmModel> motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("mRiskStatus","LOW").equalTo("mVillage","PERAMANUR").findAll();
-//        RealmResults<PNMMotherListRealmModel> motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).between("currentMonth",1,10).equalTo("mVillage","PERAMANUR").findAll();
-        motherListAdapterRealmModel =motherListAdapterRealmModel.sort("mPicmeId",Sort.ASCENDING);
+            if (preferenceData.getTermister().equalsIgnoreCase("1-3")) {
+                Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T    Termister -->1");
 
+                motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel, "HIGH", 1, 3, preferenceData.getDescendingStatus());
+            } else if (preferenceData.getTermister().equalsIgnoreCase("4-6")) {
+                Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T    Termister -->2");
+                motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel, "HIGH", 4, 6, preferenceData.getDescendingStatus());
 
+            } else if (preferenceData.getTermister().equalsIgnoreCase("7-10")) {
+                Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T    Termister -->3");
+                motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel, "HIGH", 7, 10, preferenceData.getDescendingStatus());
+
+            } else {
+                Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T    Termister -->Null");
+                motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel, "HIGH", 1, 10, preferenceData.getDescendingStatus());
+            }
+        } else {
+
+            Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> F ");
+
+            if (preferenceData.getTermister().equalsIgnoreCase("1-3")) {
+                Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T    Termister -->1");
+
+                motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel, "", 1, 3, preferenceData.getDescendingStatus());
+            } else if (preferenceData.getTermister().equalsIgnoreCase("4-6")) {
+                Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T    Termister -->2");
+                motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel, "", 4, 6, preferenceData.getDescendingStatus());
+
+            } else if (preferenceData.getTermister().equalsIgnoreCase("7-10")) {
+                Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T    Termister -->3");
+                motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel, "", 7, 10, preferenceData.getDescendingStatus());
+
+            } else {
+                Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T    Termister -->Null");
+                motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel, "", 1, 10, preferenceData.getDescendingStatus());
+
+            }
+        }
+        if (motherListAdapterRealmModel.size() == 0) {
+            mother_recycler_view.setVisibility(View.GONE);
+            txt_no_records_found.setVisibility(View.VISIBLE);
+        } else {
+            mother_recycler_view.setVisibility(View.VISIBLE);
+            txt_no_records_found.setVisibility(View.GONE);
+        }
         for (int i = 0; i < motherListAdapterRealmModel.size(); i++) {
             mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
             Log.w(AllMotherListActivity.class.getSimpleName(), "PNMMotherListRealmModel:--------" + i);
@@ -457,12 +391,24 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
             mresponseResult.setMLatitude(model.getmLatitude());
             mresponseResult.setMLongitude(model.getmLongitude());
             mresponseResult.setmPhoto(model.getmPhoto());
-
-
             mResult.add(mresponseResult);
         }
         mAdapter.notifyDataSetChanged();
         realm.commitTransaction();
+    }
+
+    private RealmResults<PNMMotherListRealmModel> setTermister(RealmResults<PNMMotherListRealmModel> motherListAdapterRealmModel, String riskStatus, int s, int s1, boolean strDescending) {
+        if (riskStatus.equalsIgnoreCase("HIGH")) {
+            motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("mRiskStatus", riskStatus).between("currentMonth", s, s1).equalTo("mVillage", preferenceData.getVillageName()).findAll();
+        } else {
+            motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).between("currentMonth", s, s1).equalTo("mVillage", preferenceData.getVillageName()).findAll();
+        }
+        if (strDescending) {
+            motherListAdapterRealmModel = motherListAdapterRealmModel.sort("mPicmeId", Sort.DESCENDING);
+        } else {
+            motherListAdapterRealmModel = motherListAdapterRealmModel.sort("mPicmeId", Sort.ASCENDING);
+        }
+        return motherListAdapterRealmModel;
     }
 
     @Override

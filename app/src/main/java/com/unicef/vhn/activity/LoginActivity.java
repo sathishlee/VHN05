@@ -27,6 +27,7 @@ import com.unicef.vhn.Presenter.LoginPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
+import com.unicef.vhn.fragment.home;
 import com.unicef.vhn.view.LoginViews;
 
 import org.json.JSONException;
@@ -187,7 +188,9 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
 
     @Override
     public void showLoginError(String message) {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
+        builder.setMessage(message);
+        builder.create();
 
     }
 

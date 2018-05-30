@@ -46,7 +46,7 @@ public class LocationUpdatePresenter implements LocationUpdateIntractor {
         StringRequest strReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                view.hideProgress();
+//                view.hideProgress();
                 Log.d("success",response);
 
                 view.locationUpdateSuccess(response.toString());
@@ -54,7 +54,7 @@ public class LocationUpdatePresenter implements LocationUpdateIntractor {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                view.hideProgress();
+//                view.hideProgress();
                 Log.d(" error",error.toString());
 
                 view.locationUpdateFailiure(error.toString());

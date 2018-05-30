@@ -436,7 +436,9 @@ public class home extends Fragment implements MotherListsViews {
     @Override
     public void showLoginError(String response) {
         Log.e(home.class.getSimpleName(), "Response Error" + response);
-
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(response);
+        builder.create();
     }
 
     @Override

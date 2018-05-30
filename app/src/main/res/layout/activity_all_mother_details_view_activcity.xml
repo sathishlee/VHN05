@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.unicef.vhn.activity.MothersDetailsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="7dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mother's Information"
+                        android:textAlignment="textStart"
+                        android:textColor="#2F80ED"
+                        android:textSize="@dimen/text_label"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="4.0dip">
+
+                <!--   <View
+                       android:layout_gravity="center"
+                       android:background="@drawable/header_line"
+                       android:layout_width="match_parent"
+                       android:layout_height="5.0dp"
+                       android:layout_weight="1.0"
+                       android:layerType="software" />-->
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <include layout="@layout/card_mother_profile" />
+
+        <include
+            layout="@layout/card_verify_otp"
+            android:visibility="gone" />
+
+        <include
+            layout="@layout/card_vhn_profile"
+            android:visibility="gone" />
+
+        <!--<include layout="@layout/card_present_status"/>-->
+
+        <LinearLayout
+            android:id="@+id/rel_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/btn_view_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:drawableStart="@drawable/ic_show_location"
+                android:padding="5dp"
+                android:text="View Location"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/btn_view_report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:drawableStart="@drawable/ic_view_report"
+                android:padding="5dp"
+                android:text="Mother Report"
+                android:textColor="#ffffff" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

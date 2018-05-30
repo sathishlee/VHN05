@@ -17,8 +17,11 @@ import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.unicef.vhn.Interface.MakeCallInterface;
 import com.unicef.vhn.R;
+import com.unicef.vhn.activity.MotherDetails.ANMotherDetailsViewActivcity;
+import com.unicef.vhn.activity.MotherDetails.PNMotherDetailsViewActivity;
 import com.unicef.vhn.activity.MotherLocationActivity;
 import com.unicef.vhn.activity.MothersDetailsActivity;
+import com.unicef.vhn.activity.PNMotherDeliveryReportActivity;
 import com.unicef.vhn.activity.PNMotherDetailsActivity;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
@@ -113,11 +116,13 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
                 type = pNMotherResponseModel.getMotherType();
                 if (type.equalsIgnoreCase("PN")) {
                     AppConstants.SELECTED_MID = pNMotherResponseModel.getMid();
-                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherDetailsActivity.class));
+//                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherDetailsActivity.class));
+                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherDetailsViewActivity.class));
 
                 } else if (type.equalsIgnoreCase("AN")) {
                     AppConstants.SELECTED_MID = pNMotherResponseModel.getMid();
-                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MothersDetailsActivity.class));
+//                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MothersDetailsActivity.class));
+                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), ANMotherDetailsViewActivcity.class));
 
                 } else if (type.equalsIgnoreCase("Risk")) {
                     AppConstants.SELECTED_MID = pNMotherResponseModel.getMid();
