@@ -35,7 +35,8 @@ import com.unicef.vhn.view.MotherListsViews;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
+/*PN Mother Details  have api call working well is not use this project,
+use for PNMotherDetailviewActivity */
 public class PNMotherDetailsActivity extends AppCompatActivity implements View.OnClickListener, MotherListsViews {
     LinearLayout ll_pn_mother_details;
     TextView txt_username, txt_picme_id, txt_mage, txt_risk,

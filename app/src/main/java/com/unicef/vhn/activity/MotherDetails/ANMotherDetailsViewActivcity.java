@@ -27,10 +27,12 @@ import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.activity.ANViewReportsActivity;
 import com.unicef.vhn.activity.MotherLocationActivity;
+import com.unicef.vhn.activity.MotherVisitReport.ANMotherVisitReportActivity;
 import com.unicef.vhn.activity.MothersDetailsActivity;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
+import com.unicef.vhn.realmDbModel.MotherListRealm;
 import com.unicef.vhn.realmDbModel.PNMMotherListRealmModel;
 import com.unicef.vhn.utiltiy.RoundedTransformation;
 
@@ -52,6 +54,8 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
 
     Realm realm;
     PNMMotherListRealmModel pnmMotherListRealmModel;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +129,7 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
     }
 
     private void getValuesFromRealm() {
+
         realm.beginTransaction();
         RealmResults<PNMMotherListRealmModel> realmResults =realm.where(PNMMotherListRealmModel.class).equalTo("mid", AppConstants.SELECTED_MID).findAll();
         Log.w(ANMotherDetailsViewActivcity.class.getSimpleName(),realmResults.size()+"");
@@ -148,7 +153,6 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
             strLongitude = model.getmLongitude();
 
             str_mPhoto = model.getmPhoto();
-
 
             Picasso.with(context)
                     .load(Apiconstants.MOTHER_PHOTO_URL + str_mPhoto)
@@ -202,7 +206,8 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
 //                startActivity(new Intent(getApplicationContext(), MotherLocationActivity.class));
                 break;
             case R.id.btn_view_report:
-                startActivity(new Intent(getApplicationContext(), ANViewReportsActivity.class));
+//                startActivity(new Intent(getApplicationContext(), ANViewReportsActivity.class));
+                startActivity(new Intent(getApplicationContext(), ANMotherVisitReportActivity.class));
                 break;
         }
     }

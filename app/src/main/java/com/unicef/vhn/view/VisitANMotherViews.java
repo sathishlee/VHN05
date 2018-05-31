@@ -7,6 +7,9 @@ package com.unicef.vhn.view;
 public interface VisitANMotherViews {
     void showProgress();
     void hideProgress();
-    void showVisitRecordsSuccess(String response);
-    void showVisitRecordsFailiur(String response);
+    void showANVisitRecordsSuccess(String response);
+    void showANVisitRecordsFailiur(String response);
+
+    void showPNVisitRecordsSuccess(String response);
+    void showPNVisitRecordsFailiur(String response);
 }

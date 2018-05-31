@@ -27,7 +27,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
+/*AN Mother visit Report have api call working well is not use this project,
+use for ANMothervistReportActivity */
 public class ANViewReportsActivity extends AppCompatActivity implements VisitANMotherViews, View.OnClickListener {
     private ProgressDialog pDialog;
     private TabLayout tabLayout;
@@ -128,7 +129,7 @@ public class ANViewReportsActivity extends AppCompatActivity implements VisitANM
     }
 
     @Override
-    public void showVisitRecordsSuccess(String response) {
+    public void showANVisitRecordsSuccess(String response) {
 
         Log.d(ANViewReportsActivity.class.getSimpleName(), "--->healthRecordResponseModel" + response);
 
@@ -210,7 +211,17 @@ public class ANViewReportsActivity extends AppCompatActivity implements VisitANM
     }
 
     @Override
-    public void showVisitRecordsFailiur(String response) {
+    public void showANVisitRecordsFailiur(String response) {
+
+    }
+
+    @Override
+    public void showPNVisitRecordsSuccess(String response) {
+
+    }
+
+    @Override
+    public void showPNVisitRecordsFailiur(String response) {
 
     }
 }

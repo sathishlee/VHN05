@@ -179,7 +179,7 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
 
                 realm.beginTransaction();
                 RealmResults<PNMMotherListRealmModel> getVillageList = realm.where(PNMMotherListRealmModel.class).findAll();
-
+                vhnVillageList.add("All");
                 for (int i = 0; i < getVillageList.size(); i++) {
                     strVillageName = getVillageList.get(0).getmVillage();
                     vhnVillageList.add(getVillageList.get(i).getmVillage());
@@ -399,9 +399,18 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
 
     private RealmResults<PNMMotherListRealmModel> setTermister(RealmResults<PNMMotherListRealmModel> motherListAdapterRealmModel, String riskStatus, int s, int s1, boolean strDescending) {
         if (riskStatus.equalsIgnoreCase("HIGH")) {
-            motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("mRiskStatus", riskStatus).between("currentMonth", s, s1).equalTo("mVillage", preferenceData.getVillageName()).findAll();
+            if (preferenceData.getVillageName().equalsIgnoreCase("All")) {
+                motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("mRiskStatus", riskStatus).between("currentMonth", s, s1).findAll();
+            }else{
+                motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("mRiskStatus", riskStatus).between("currentMonth", s, s1).equalTo("mVillage", preferenceData.getVillageName()).findAll();
+            }
         } else {
-            motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).between("currentMonth", s, s1).equalTo("mVillage", preferenceData.getVillageName()).findAll();
+            if (preferenceData.getVillageName().equalsIgnoreCase("All")) {
+                motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).between("currentMonth", s, s1).findAll();
+            }else{
+                motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).between("currentMonth", s, s1).equalTo("mVillage", preferenceData.getVillageName()).findAll();
+
+            }
         }
         if (strDescending) {
             motherListAdapterRealmModel = motherListAdapterRealmModel.sort("mPicmeId", Sort.DESCENDING);

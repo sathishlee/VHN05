@@ -9,7 +9,7 @@ public class Apiconstants {
 //    public static final String BASE_URL = "http://218.248.44.77/thaimaiapp/api/vhn/Vhn/";
             public static final String BASE_URL = "http://192.168.100.222/thaimaiapp/api/vhn/Vhn/";
 //        public static final String BASE_URL = "http://demo.satvatinfosol.com/thaimai/api/vhn/Vhn/";
-//
+
         public static final String MOTHER_BASE_URL = "http://192.168.100.222/thaimaiapp/api/";
 //    public static final String MOTHER_BASE_URL = "http://218.248.44.77/thaimaiapp/api/";
 //        public static final String MOTHER_BASE_URL = "http://demo.satvatinfosol.com/thaimai/api/";
@@ -127,10 +127,5 @@ public class Apiconstants {
 
     public  static  final String CHANGE_PASSWORD = "changePassword";
 
-
     public static final String DOWNLOAD_APK = "AdmLogin/downloadapp/vhn.apk";
-
-
-
-
 }

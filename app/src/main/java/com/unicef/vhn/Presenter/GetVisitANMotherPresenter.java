@@ -45,13 +45,13 @@ public class GetVisitANMotherPresenter implements VisitANMotherInteractor {
             @Override
             public void onResponse(String response) {
                 visitANMotherViews.hideProgress();
-                visitANMotherViews.showVisitRecordsSuccess(response);
+                visitANMotherViews.showANVisitRecordsSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 visitANMotherViews.hideProgress();
-                visitANMotherViews.showVisitRecordsFailiur(error.toString());
+                visitANMotherViews.showANVisitRecordsFailiur(error.toString());
             }
         }) {
 
@@ -108,13 +108,13 @@ public class GetVisitANMotherPresenter implements VisitANMotherInteractor {
             @Override
             public void onResponse(String response) {
                 visitANMotherViews.hideProgress();
-                visitANMotherViews.showVisitRecordsSuccess(response);
+                visitANMotherViews.showPNVisitRecordsSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 visitANMotherViews.hideProgress();
-                visitANMotherViews.showVisitRecordsFailiur(error.toString());
+                visitANMotherViews.showPNVisitRecordsFailiur(error.toString());
             }
         }) {
 

@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.unicef.vhn.Interface.MakeCallInterface;
 import com.unicef.vhn.Preference.PreferenceData;
+import com.unicef.vhn.Presenter.GetVisitANMotherPresenter;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.activity.ANTT1MothersList;
@@ -29,47 +30,34 @@ import com.unicef.vhn.adapter.MotherListAdapter;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.model.PNMotherListResponse;
+import com.unicef.vhn.realmDbModel.ANMVisitRealmModel;
 import com.unicef.vhn.realmDbModel.MotherListRealm;
+import com.unicef.vhn.realmDbModel.PNMVisitRealmModel;
 import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.view.MotherListsViews;
+import com.unicef.vhn.view.VisitANMotherViews;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
 import io.realm.Realm;
-import io.realm.RealmModel;
 import io.realm.RealmResults;
-
-
-//import com.unicef.vhn.adapter.MoviesAdapter;
-
 
 /**
  * Created by priyan on 2/3/2018.
  */
 
-public class mothers extends Fragment implements MotherListsViews, MakeCallInterface {
+public class mothers extends Fragment implements MotherListsViews, MakeCallInterface, VisitANMotherViews {
 
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
     private List<PNMotherListResponse.VhnAN_Mothers_List> mResult;
     PNMotherListResponse.VhnAN_Mothers_List mresponseResult;
-    //
-//     List<MotherListAdapterRealmModel> mRealmResult ;
-//    MotherListAdapterRealmModel motherListAdapterRealmModel;
-    //    private RecyclerView recyclerView;
     private RecyclerView mother_recycler_view;
     private MotherListAdapter mAdapter;
-
-//    private MotherListAdapter_RM mAdapter_rm;
-
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
     boolean isDataUpdate = true;
 
@@ -78,7 +66,14 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
     Realm realm;
     MotherListRealm dashBoardRealmModel;
 
-    //    CardView mother_card;
+
+    GetVisitANMotherPresenter getVisitANMotherPresenter;
+
+    ANMVisitRealmModel mhealthRecordResponseModel;
+    PNMVisitRealmModel pnmVisitRealmModel;
+
+    boolean isPNMother=false;
+
     public static mothers newInstance() {
         mothers fragment = new mothers();
         return fragment;
@@ -98,13 +93,10 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mothers, container, false);
-
         realm = RealmController.with(getActivity()).getRealm(); // opens "myrealm.realm"
         getActivity().setTitle("Mothers List");
         initUI(view);
         return view;
-
-
     }
 
     private void initUI(View view) {
@@ -114,6 +106,10 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(getActivity());
         pnMotherListPresenter = new MotherListPresenter(getActivity(), this);
+
+        //ANMOtherVisitReportActivity
+        getVisitANMotherPresenter = new GetVisitANMotherPresenter(getActivity(), this);
+
         if (checkNetwork.isNetworkAvailable()) {
             pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_LIST, preferenceData.getVhnCode(), preferenceData.getVhnId());
         } else {
@@ -121,7 +117,6 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
         }
 
         mResult = new ArrayList<>();
-//        mRealmResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView) view.findViewById(R.id.mother_recycler_view);
         mAdapter = new MotherListAdapter(mResult, getActivity(), "", this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -152,11 +147,161 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
     }
 
     @Override
+    public void showANVisitRecordsSuccess(String response) {
+
+        try {
+            JSONObject mJsnobject = new JSONObject(response);
+            String status = mJsnobject.getString("status");
+            String message = mJsnobject.getString("message");
+            if (status.equalsIgnoreCase("1")) {
+                JSONArray jsonArray = mJsnobject.getJSONArray("vhnAN_Mothers_List");
+                RealmResults<ANMVisitRealmModel> motherListAdapterRealmModel = realm.where(ANMVisitRealmModel.class).findAll();
+                Log.e("Realm size ---->", motherListAdapterRealmModel.size() + "");
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.delete(ANMVisitRealmModel.class);
+                    }
+                });
+
+                if (jsonArray.length() != 0) {
+                    realm.beginTransaction();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        mhealthRecordResponseModel = realm.createObject(ANMVisitRealmModel.class);  //this will create a UserInfoRealmModel object which will be inserted in database
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        mhealthRecordResponseModel.setVDate(jsonObject.getString("vDate"));
+                        mhealthRecordResponseModel.setVFacility(jsonObject.getString("vFacility"));
+                        //              mhealthRecordResponseModel.setMLongitude(jsonObject.getString("mLongitude"));
+                        //              mhealthRecordResponseModel.setMLatitude(jsonObject.getString("mLatitude"));
+                        mhealthRecordResponseModel.setMotherStatus(jsonObject.getString("motherStatus"));
+                        mhealthRecordResponseModel.setMotherCloseDate(jsonObject.getString("motherCloseDate"));
+                        mhealthRecordResponseModel.setMRiskStatus(jsonObject.getString("mRiskStatus"));
+                        mhealthRecordResponseModel.setMEDD(jsonObject.getString("mEDD"));
+                        mhealthRecordResponseModel.setMLMP(jsonObject.getString("mLMP"));
+                        mhealthRecordResponseModel.setPhcId(jsonObject.getString("phcId"));
+                        mhealthRecordResponseModel.setAwwId(jsonObject.getString("awwId"));
+                        mhealthRecordResponseModel.setVhnId(jsonObject.getString("vhnId"));
+                        mhealthRecordResponseModel.setMasterId(jsonObject.getString("masterId"));
+                        mhealthRecordResponseModel.setVTSH(jsonObject.getString("vTSH"));
+                        mhealthRecordResponseModel.setUsgPlacenta(jsonObject.getString("usgPlacenta"));
+                        mhealthRecordResponseModel.setUsgLiquor(jsonObject.getString("usgLiquor"));
+                        mhealthRecordResponseModel.setUsgGestationSac(jsonObject.getString("usgGestationSac"));
+                        mhealthRecordResponseModel.setUsgFetus(jsonObject.getString("usgFetus"));
+                        mhealthRecordResponseModel.setVAlbumin(jsonObject.getString("vAlbumin"));
+                        mhealthRecordResponseModel.setVUrinSugar(jsonObject.getString("vUrinSugar"));
+                        mhealthRecordResponseModel.setVGTT(jsonObject.getString("vGTT"));
+                        mhealthRecordResponseModel.setVPPBS(jsonObject.getString("vPPBS"));
+                        mhealthRecordResponseModel.setVFBS(jsonObject.getString("vFBS"));
+                        mhealthRecordResponseModel.setVRBS(jsonObject.getString("vRBS"));
+                        mhealthRecordResponseModel.setVFHS(jsonObject.getString("vFHS"));
+                        mhealthRecordResponseModel.setVHemoglobin(jsonObject.getString("vHemoglobin"));
+                        mhealthRecordResponseModel.setVBodyTemp(jsonObject.getString("vBodyTemp"));
+                        mhealthRecordResponseModel.setVPedalEdemaPresent(jsonObject.getString("vPedalEdemaPresent"));
+                        mhealthRecordResponseModel.setVFundalHeight(jsonObject.getString("vFundalHeight"));
+                        mhealthRecordResponseModel.setVEnterWeight(jsonObject.getString("vEnterWeight"));
+                        mhealthRecordResponseModel.setVEnterPulseRate(jsonObject.getString("vEnterPulseRate"));
+                        mhealthRecordResponseModel.setVClinicalBPDiastolic(jsonObject.getString("vClinicalBPDiastolic"));
+                        mhealthRecordResponseModel.setVClinicalBPSystolic(jsonObject.getString("vClinicalBPSystolic"));
+//                mhealthRecordResponseModel.setVAnyComplaintsOthers(jsonObject.getString("vAnyComplaintsOthers"));
+                        mhealthRecordResponseModel.setVAnyComplaints(jsonObject.getString("vAnyComplaints"));
+//                mhealthRecordResponseModel.setVFacilityOthers(jsonObject.getString("vFacilityOthers"));
+                        mhealthRecordResponseModel.setVtypeOfVisit(jsonObject.getString("vtypeOfVisit"));
+                        mhealthRecordResponseModel.setPicmeId(jsonObject.getString("picmeId"));
+                        mhealthRecordResponseModel.setMid(jsonObject.getString("mid"));
+                        mhealthRecordResponseModel.setVisitId(jsonObject.getString("visitId"));
+                        mhealthRecordResponseModel.setVDate(jsonObject.getString("vDate"));
+                        mhealthRecordResponseModel.setVid(jsonObject.getString("vid"));
+                    }
+                    realm.commitTransaction();
+                } else {
+//                Toast.makeText(getActivity(), "RECORD NOT FOUND", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void showANVisitRecordsFailiur(String response) {
+Toast.makeText(getActivity(),response.toString(),Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showPNVisitRecordsSuccess(String response) {
+     try {
+            JSONObject mJsnobject = new JSONObject(response);
+            String status = mJsnobject.getString("status");
+            String message = mJsnobject.getString("message");
+            if (status.equalsIgnoreCase("1")) {
+
+                JSONArray jsonArray = mJsnobject.getJSONArray("pnMothersVisit");
+                RealmResults<PNMVisitRealmModel> motherListAdapterRealmModel = realm.where(PNMVisitRealmModel.class).findAll();
+                Log.e("Realm size ---->", motherListAdapterRealmModel.size() + "");
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.delete(PNMVisitRealmModel.class);
+                    }
+                });
+
+                if (jsonArray.length() != 0) {
+                    realm.beginTransaction();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        pnmVisitRealmModel = realm.createObject(PNMVisitRealmModel.class);  //this will create a UserInfoRealmModel object which will be inserted in database
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        pnmVisitRealmModel.setPnId(jsonObject.getString("pnId"));
+                        pnmVisitRealmModel.setMid(jsonObject.getString("mid"));
+                        pnmVisitRealmModel.setPicmeId(jsonObject.getString("picmeId"));
+                        pnmVisitRealmModel.setPnVisitNo(jsonObject.getString("pnVisitNo"));
+                        pnmVisitRealmModel.setPnDueDate(jsonObject.getString("pnDueDate"));
+                        pnmVisitRealmModel.setPnCareProvidedDate(jsonObject.getString("pnCareProvidedDate"));
+                        pnmVisitRealmModel.setPnPlace(jsonObject.getString("pnPlace"));
+                        pnmVisitRealmModel.setPnAnyComplaints(jsonObject.getString("pnAnyComplaints"));
+                        pnmVisitRealmModel.setPnBPSystolic(jsonObject.getString("pnBPSystolic"));
+                        pnmVisitRealmModel.setPnPulseRate(jsonObject.getString("pnPulseRate"));
+                        pnmVisitRealmModel.setPnTemp(jsonObject.getString("pnTemp"));
+                        pnmVisitRealmModel.setPnEpistomyTear(jsonObject.getString("pnEpistomyTear"));
+                        pnmVisitRealmModel.setPnPVDischarge(jsonObject.getString("pnPVDischarge"));
+                        pnmVisitRealmModel.setPnBreastFeedingReason(jsonObject.getString("pnBreastFeedingReason"));
+                        pnmVisitRealmModel.setPnBreastExamination(jsonObject.getString("pnBreastExamination"));
+                        pnmVisitRealmModel.setPnOutCome(jsonObject.getString("pnOutCome"));
+                        pnmVisitRealmModel.setCWeight(jsonObject.getString("cWeight"));
+                        pnmVisitRealmModel.setCTemp(jsonObject.getString("cTemp"));
+                        pnmVisitRealmModel.setCUmbilicalStump(jsonObject.getString("cUmbilicalStump"));
+                        pnmVisitRealmModel.setCCry(jsonObject.getString("cCry"));
+                        pnmVisitRealmModel.setCEyes(jsonObject.getString("cEyes"));
+                        pnmVisitRealmModel.setCSkin(jsonObject.getString("cSkin"));
+                        pnmVisitRealmModel.setCBreastFeeding(jsonObject.getString("cBreastFeeding"));
+                        pnmVisitRealmModel.setCBreastFeedingReason(jsonObject.getString("cBreastFeedingReason"));
+                        pnmVisitRealmModel.setCOutCome(jsonObject.getString("cOutCome"));
+                    }
+                    realm.commitTransaction();
+                } else {
+                    Toast.makeText(getActivity(), "RECORD NOT FOUND", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    @Override
+    public void showPNVisitRecordsFailiur(String response) {
+        Toast.makeText(getActivity(),response.toString(),Toast.LENGTH_LONG).show();
+    }
+
+
+
+    @Override
     public void showLoginSuccess(String response) {
-
-
         Log.e(mothers.class.getSimpleName(), "Response success" + response);
-
         try {
             JSONObject res_mJsnobject = new JSONObject(response);
             String status = res_mJsnobject.getString("status");
@@ -172,19 +317,7 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
                         realm.delete(MotherListRealm.class);
                     }
                 });
-//                realm.commitTransaction();
-              /*  if (DashBoardRealmResult.size() != 0) {
 
-//
-                    realm.executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            realm.delete(DashBoardRealmModel.class);
-                        }
-                    });
-                } else {
-                    Log.e("Realm size  ---->", DashBoardRealmResult.size() + "");
-                }*/
                 Log.e("After Realm size  ---->", motherListAdapterRealmModel.size() + "");
 
                 //create new realm Table
@@ -195,13 +328,6 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
                      dashBoardRealmModel = realm.createObject(MotherListRealm.class);  //this will create a UserInfoRealmModel object which will be inserted in database
 
                     JSONObject mJsnobject = jsonArray.getJSONObject(i);
-            /*        Log.e("position", i+"");
-                    Log.e("mName", mJsnobject.getString("mName"));
-                    Log.e("PICMEID", mJsnobject.getString("mPicmeId"));
-                    Log.e("PICMEID", mJsnobject.getString("mid"));
-                    Log.e("mMotherMobile", mJsnobject.getString("mMotherMobile"));
-                    Log.e("vhnId", mJsnobject.getString("vhnId"));*/
-
                     dashBoardRealmModel.setMName(mJsnobject.getString("mName"));
                     dashBoardRealmModel.setMPicmeId(mJsnobject.getString("mPicmeId"));
                     dashBoardRealmModel.setMid(mJsnobject.getString("mid"));
@@ -211,15 +337,23 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
                     dashBoardRealmModel.setMLongitude(mJsnobject.getString("mLongitude"));
                     dashBoardRealmModel.setMotherType(mJsnobject.getString("motherType"));
                     dashBoardRealmModel.setmPhoto(mJsnobject.getString("mPhoto"));
+                    if (mJsnobject.getString("motherType").equalsIgnoreCase("AN")) {
+                        getVisitANMotherPresenter.getVisitANMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), mJsnobject.getString("mid"));
+                    }else if (mJsnobject.getString("motherType").equalsIgnoreCase("PN")){
+                        getVisitANMotherPresenter.getVisitPNMotherRecords(preferenceData.getVhnCode(),preferenceData.getVhnId(),mJsnobject.getString("mid"));
+                    }
                 }
 
                 realm.commitTransaction(); //close table
+
+
             } else {
                 Log.e(mothers.class.getSimpleName(), message);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
 
         setValueToUI();
     }
@@ -234,17 +368,6 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
             mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
 
             MotherListRealm model = userInfoRealmResult.get(i);
-           /* Log.e("Mother list size ->", model+ "");
-            Log.e("getMid", model.getMid() + "");
-            Log.e("getMName", model.getMName() + "");
-            Log.e("getMPicmeId", model.getMPicmeId() + "");
-            Log.e("getmMotherMobile", model.getmMotherMobile() + "");
-            Log.e("getVhnId", model.getVhnId() + "");
-            Log.e("getvLatitude", model.getvLatitude() + "");
-            Log.e("getvLongitude", model.getvLongitude() + "");
-            Log.e("getMotherType", model.getMotherType() + "");
-            Log.e("getmPhoto", model.getmPhoto() + "");*/
-
 
             mresponseResult.setMid(model.getMid());
             mresponseResult.setMName(model.getMName());
@@ -262,6 +385,8 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
         realm.commitTransaction();
     }
 
+
+
     private void showOfflineData() {
         Log.e("off ->",  "offline");
 
@@ -272,17 +397,6 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
             mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
 
             MotherListRealm model = realmResults.get(i);
-            Log.e("off list size ->", model+ "");
-            Log.e("offline  getMid", model.getMid() + "");
-            Log.e("offlinegetMName", model.getMName() + "");
-            Log.e("offlinegetMPicmeId", model.getMPicmeId() + "");
-            Log.e("offlinegetmMotherMobile", model.getmMotherMobile() + "");
-            Log.e("offlinegetVhnId", model.getVhnId() + "");
-            Log.e("offlinegetvLatitude", model.getvLatitude() + "");
-            Log.e("offlinegetvLongitude", model.getvLongitude() + "");
-            Log.e("offlinegetMotherType", model.getMotherType() + "");
-            Log.e("offlinegetmPhoto", model.getmPhoto() + "");
-
 
             mresponseResult.setMid(model.getMid());
             mresponseResult.setMName(model.getMName());

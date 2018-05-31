@@ -28,7 +28,13 @@ import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.PNMotherListResponse;
 import com.unicef.vhn.utiltiy.RoundedTransformation;
 
+import java.nio.file.DirectoryStream;
+import java.util.ArrayList;
 import java.util.List;
+
+
+import android.widget.Filter;
+import android.widget.Filterable;
 
 /**
  * Created by sathish on 3/20/2018.
@@ -36,6 +42,7 @@ import java.util.List;
 
 public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.ViewHolder> {
     private List<PNMotherListResponse.VhnAN_Mothers_List> mResult;
+    private List<PNMotherListResponse.VhnAN_Mothers_List> mResultfilter;
     Activity applicationContext;
     MakeCallInterface makeCallInterface;
     String strMid, str_mPhoto, type;
@@ -166,4 +173,39 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
             cardview_image = itemView.findViewById(R.id.cardview_image);
         }
     }
+
+   /* @Override
+    public Filter getFilter(){
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    mResultfilter = mResult;
+                } else {
+                    List<PNMotherListResponse.VhnAN_Mothers_List> filteredList = new ArrayList<>();
+                    for (PNMotherListResponse.VhnAN_Mothers_List row : mResult) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        *//*if (row.getName().toLowerCase().contains(charString.toLowerCase()) || row.getPhone().contains(charSequence)) {
+                            filteredList.add(row);
+                        }*//*
+                    }
+                    mResultfilter = filteredList;
+
+                }
+//                return null;
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = mResultfilter;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                mResultfilter = (ArrayList<PNMotherListResponse.VhnAN_Mothers_List>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }*/
 }

@@ -27,7 +27,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
+/*pN Mother visit Report have api call working well is not use this project,
+use for PNMothervistReportActivity */
 public class PNViewReportsActivity extends AppCompatActivity implements VisitANMotherViews, View.OnClickListener {
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -118,7 +119,17 @@ pDialog.dismiss();
     }
 
     @Override
-    public void showVisitRecordsSuccess(String response) {
+    public void showANVisitRecordsSuccess(String response) {
+
+    }
+
+    @Override
+    public void showANVisitRecordsFailiur(String response) {
+
+    }
+
+    @Override
+    public void showPNVisitRecordsSuccess(String response) {
         Log.e(PNViewReportsActivity.class.getSimpleName(),"Response success"+response);
         try {
             JSONObject mJsnobject = new JSONObject(response);
@@ -182,7 +193,7 @@ pDialog.dismiss();
     }
 
     @Override
-    public void showVisitRecordsFailiur(String response) {
+    public void showPNVisitRecordsFailiur(String response) {
         Log.e(PNViewReportsActivity.class.getSimpleName(),"Response Error"+response);
 
     }

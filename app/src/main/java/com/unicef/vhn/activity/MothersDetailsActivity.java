@@ -35,7 +35,8 @@ import com.unicef.vhn.view.MotherListsViews;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
+/*AN Mother Details  have api call working well is not use this project,
+use for ANMotherDetailsViewActivity */
 public class MothersDetailsActivity extends AppCompatActivity implements View.OnClickListener, MotherListsViews {
     TextView txt_mother_name, txt_picme_id, txt_mage, txt_risk_status, txt_gest_week, txt_weight, txt_lmp_date, txt_edd_date, txt_next_visit;
     String strMobileNo, strAltMobileNo;

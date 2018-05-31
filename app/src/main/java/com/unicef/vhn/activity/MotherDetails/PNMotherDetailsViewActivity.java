@@ -27,6 +27,7 @@ import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.activity.MotherLocationActivity;
+import com.unicef.vhn.activity.MotherVisitReport.PNMotherVisitReportActivity;
 import com.unicef.vhn.activity.MothersDetailsActivity;
 import com.unicef.vhn.activity.PNMotherDetailsActivity;
 import com.unicef.vhn.activity.PNViewReportsActivity;
@@ -166,7 +167,9 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
             case R.id.btn_view_location:
                 startActivity(new Intent(getApplicationContext(),MotherLocationActivity.class));
                 break;
-            case R.id.btn_view_report: startActivity(new Intent(getApplicationContext(),PNViewReportsActivity.class));
+            case R.id.btn_view_report:
+//                startActivity(new Intent(getApplicationContext(),PNViewReportsActivity.class));
+                startActivity(new Intent(getApplicationContext(),PNMotherVisitReportActivity.class));
                 break;
             case R.id.img_call_1:
                 makeCall(strMobileNo);
