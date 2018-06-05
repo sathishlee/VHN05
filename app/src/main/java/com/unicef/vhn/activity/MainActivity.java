@@ -28,6 +28,7 @@ import com.squareup.picasso.Picasso;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.NotificationPresenter;
 import com.unicef.vhn.activity.MotherList.AllMotherListActivity;
+import com.unicef.vhn.activity.MotherList.MigrationMotherListActivity;
 import com.unicef.vhn.application.MyApplication;
 import com.unicef.vhn.broadcastReceiver.ConnectivityReceiver;
 import com.unicef.vhn.constant.Apiconstants;
@@ -220,7 +221,8 @@ public class MainActivity extends AppCompatActivity
 
         }
         else if (id == R.id.migration_mother) {
-            Intent i = new Intent(getApplicationContext(),MotherMigration.class);
+//            Intent i = new Intent(getApplicationContext(),MotherMigration.class);
+            Intent i = new Intent(getApplicationContext(),MigrationMotherListActivity.class);
             startActivity(i);
         }
         else if (id == R.id.change_language) {

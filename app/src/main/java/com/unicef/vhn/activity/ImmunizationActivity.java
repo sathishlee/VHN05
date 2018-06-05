@@ -20,8 +20,11 @@ import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.adapter.ImmunizationAdapter;
 import com.unicef.vhn.adapter.ImmunizationListAdapter;
+import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.ImmunizationListResponseModel;
+import com.unicef.vhn.realmDbModel.ImmuniationListRealmModel;
+import com.unicef.vhn.realmDbModel.ImmunizationDeatilsListRealmModel;
 import com.unicef.vhn.view.MotherListsViews;
 
 import org.json.JSONArray;
@@ -31,10 +34,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImmunizationActivity extends AppCompatActivity implements MotherListsViews {
+import io.realm.Realm;
+import io.realm.RealmResults;
 
-    ProgressDialog pDialog;
-    MotherListPresenter pnMotherListPresenter;
+public class ImmunizationActivity extends AppCompatActivity  {
+//implements MotherListsViews
+
+//    ProgressDialog pDialog;
+//    MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
     private List<ImmunizationListResponseModel.Immunization_list> immunization_lists;
     ImmunizationListResponseModel.Immunization_list immunizationList;
@@ -42,10 +49,11 @@ public class ImmunizationActivity extends AppCompatActivity implements MotherLis
     private RecyclerView recyclerView;
     private TextView textView;
     private ImmunizationAdapter immunizationAdapter;
-
+Realm realm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        realm = RealmController.with(this).getRealm();
         setContentView(R.layout.activity_immunization_details);
         showActionBar();
         initUI();
@@ -59,13 +67,13 @@ public class ImmunizationActivity extends AppCompatActivity implements MotherLis
     }
 
     public void initUI() {
-        pDialog = new ProgressDialog(this);
-        pDialog.setCancelable(false);
-        pDialog.setMessage("Please Wait ...");
+//        pDialog = new ProgressDialog(this);
+//        pDialog.setCancelable(false);
+//        pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
 
-        pnMotherListPresenter = new MotherListPresenter(ImmunizationActivity.this, this);
-        pnMotherListPresenter.getSelectedImmuMother(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
+//        pnMotherListPresenter = new MotherListPresenter(ImmunizationActivity.this, this);
+//        pnMotherListPresenter.getSelectedImmuMother(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
 
         immunization_lists = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.mother_recycler_view);
@@ -77,6 +85,46 @@ public class ImmunizationActivity extends AppCompatActivity implements MotherLis
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(immunizationAdapter);
 
+        getRealmData();
+    }
+
+    private void getRealmData() {
+        Log.d(ImmunizationActivity.class.getSimpleName(),"  AppConstants.SELECTED_MID "+  AppConstants.SELECTED_MID );
+
+        realm.beginTransaction();
+        RealmResults<ImmunizationDeatilsListRealmModel> immuniationListRealmModels = realm.where(ImmunizationDeatilsListRealmModel.class).equalTo("mid",AppConstants.SELECTED_MID).findAll();
+        Log.e("ANTT1 list size ->", immuniationListRealmModels.size() + "");
+        for (int i = 0; i < immuniationListRealmModels.size(); i++) {
+            immunizationList = new ImmunizationListResponseModel.Immunization_list();
+
+            ImmunizationDeatilsListRealmModel model = immuniationListRealmModels.get(i);
+
+            immunizationList.setMid(model.getMid());
+            Log.e("immuniationListRealm", model.getMName());
+            Log.e("immuniationListRealm", model.getMPicmeId());
+            Log.e("immuniationListRealm", model.getDeleveryDate());
+            Log.e("immuniationListRealm", model.getImmDoseId());
+            Log.e("immuniationListRealm", model.getImmId());
+            Log.e("immuniationListRealm", model.getImmCarePovidedDate());
+            Log.e("immuniationListRealm", model.getImmActualDate());
+
+            immunizationList.setMName(model.getMName());
+            immunizationList.setMPicmeId(model.getMPicmeId());
+            immunizationList.setImmDoseNumber(model.getImmDoseNumber());
+            immunizationList.setImmDueDate(model.getImmDueDate());
+            immunizationList.setImmCarePovidedDate(model.getImmCarePovidedDate());
+            immunizationList.setImmOpvStatus(model.getImmOpvStatus());
+            immunizationList.setImmRotaStatus(model.getImmRotaStatus());
+            immunizationList.setImmIpvStatus(model.getImmIpvStatus());
+            immunizationList.setImmDoseId(model.getImmDoseId());
+            immunizationList.setDeleveryDate(model.getDeleveryDate());
+
+            immunization_lists.add(immunizationList);
+        }
+        immunizationAdapter.notifyDataSetChanged();
+
+        realm.commitTransaction();
+
     }
 
     @Override
@@ -87,7 +135,7 @@ public class ImmunizationActivity extends AppCompatActivity implements MotherLis
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+  /*  @Override
     public void showProgress() {
 
     }
@@ -117,6 +165,7 @@ public class ImmunizationActivity extends AppCompatActivity implements MotherLis
 
                         immunizationList = new ImmunizationListResponseModel.Immunization_list();
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
+
                         immunizationList.setImmDueDate(jsonObject.getString("immDueDate"));
                         immunizationList.setImmCarePovidedDate(jsonObject.getString("immCarePovidedDate"));
                         immunizationList.setImmOpvStatus(jsonObject.getString("immOpvStatus"));
@@ -155,5 +204,5 @@ public class ImmunizationActivity extends AppCompatActivity implements MotherLis
     @Override
     public void showAlertClosedError(String string) {
 
-    }
+    }*/
 }

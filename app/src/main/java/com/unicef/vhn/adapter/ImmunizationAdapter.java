@@ -2,6 +2,7 @@ package com.unicef.vhn.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,13 +36,16 @@ public class ImmunizationAdapter extends RecyclerView.Adapter<ImmunizationAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final ImmunizationListResponseModel.Immunization_list immunization_list = immunization_lists.get(position);
+        Log.e(ImmunizationAdapter.class.getSimpleName(),immunization_list.getImmDueDate());
+        Log.e(ImmunizationAdapter.class.getSimpleName(),immunization_list.getImmCarePovidedDate());
+        Log.e(ImmunizationAdapter.class.getSimpleName(),immunization_list.getImmOpvStatus());
 
         holder.txt_due_date.setText(immunization_list.getImmDueDate());
         holder.txt_provided_date.setText(immunization_list.getImmCarePovidedDate());
         holder.txt_opv_given.setText(immunization_list.getImmOpvStatus());
         holder.txt_prentavalent_given.setText(immunization_list.getImmPentanvalentStatus());
         holder.txt_rota_given.setText(immunization_list.getImmRotaStatus());
-        holder.txt_ipv_given.setText(immunization_list.getImmIpvStatus());
+        holder.txt_imm_dose_number.setText(immunization_list.getImmDoseNumber());
 
 
     }
@@ -52,7 +56,7 @@ public class ImmunizationAdapter extends RecyclerView.Adapter<ImmunizationAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_due_date, txt_provided_date, txt_opv_given, txt_prentavalent_given, txt_rota_given, txt_ipv_given;
+        TextView txt_due_date, txt_provided_date, txt_opv_given, txt_prentavalent_given, txt_rota_given, txt_ipv_given,txt_imm_dose_number;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -62,6 +66,7 @@ public class ImmunizationAdapter extends RecyclerView.Adapter<ImmunizationAdapte
             txt_prentavalent_given = itemView.findViewById(R.id.txt_prentavalent_given);
             txt_rota_given = itemView.findViewById(R.id.txt_rota_given);
             txt_ipv_given = itemView.findViewById(R.id.txt_ipv_given);
+            txt_imm_dose_number = itemView.findViewById(R.id.imm_dose_number);
         }
     }
 }

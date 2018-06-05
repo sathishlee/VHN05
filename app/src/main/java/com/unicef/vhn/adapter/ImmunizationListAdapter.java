@@ -3,6 +3,7 @@ package com.unicef.vhn.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,7 @@ public class ImmunizationListAdapter extends RecyclerView.Adapter<ImmunizationLi
             @Override
             public void onClick(View v) {
                 AppConstants.SELECTED_MID = strMid;
+                Log.d(ImmunizationListAdapter.class.getSimpleName(),"  AppConstants.SELECTED_MID "+  AppConstants.SELECTED_MID );
                 activity.startActivity(new Intent(activity.getApplicationContext(), ImmunizationActivity.class));
             }
         });

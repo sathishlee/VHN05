@@ -178,6 +178,7 @@
         <activity android:name=".activity.MotherList.AllMotherListActivity" />
         <activity android:name=".activity.MotherList.ANMotherListActivity" />
         <activity android:name=".activity.MotherList.InfanentTreamListActivity" />
+        <activity android:name=".activity.MotherList.MigrationMotherListActivity" />
         <activity android:name=".activity.MotherDetails.ANMotherDetailsViewActivcity" />
         <activity android:name=".activity.MotherDetails.PNMotherDetailsViewActivity" />
         <activity android:name=".activity.MotherDetails.InfanentTreamDetailsActivity" />
