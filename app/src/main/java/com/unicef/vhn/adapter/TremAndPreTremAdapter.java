@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.unicef.vhn.R;
+import com.unicef.vhn.activity.MotherDetails.InfanentTreamDetailsActivity;
 import com.unicef.vhn.activity.PNMotherDetailsActivity;
 import com.unicef.vhn.activity.TremAndPreTreamDetailsActivity;
 import com.unicef.vhn.constant.AppConstants;
@@ -52,7 +53,8 @@ public class TremAndPreTremAdapter extends RecyclerView.Adapter<TremAndPreTremAd
             public void onClick(View v) {
                 AppConstants.SELECTED_MID = strMid;
 
-                applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), TremAndPreTreamDetailsActivity.class));
+//                applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), TremAndPreTreamDetailsActivity.class));
+                applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), InfanentTreamDetailsActivity.class));
 
             }
         });

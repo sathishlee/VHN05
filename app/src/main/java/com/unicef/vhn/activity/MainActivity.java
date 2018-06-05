@@ -3,8 +3,6 @@ package com.unicef.vhn.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,10 +22,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.NotificationPresenter;
+import com.unicef.vhn.activity.MotherList.AllMotherListActivity;
 import com.unicef.vhn.application.MyApplication;
 import com.unicef.vhn.broadcastReceiver.ConnectivityReceiver;
+import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.R;
 import com.unicef.vhn.fragment.home;
@@ -35,6 +38,7 @@ import com.unicef.vhn.fragment.mothers;
 import com.unicef.vhn.fragment.risk;
 import com.unicef.vhn.fragment.NotificationListFragment;
 import com.unicef.vhn.utiltiy.CheckNetwork;
+import com.unicef.vhn.utiltiy.RoundedTransformation;
 import com.unicef.vhn.view.NotificationViews;
 
 import org.json.JSONException;
@@ -92,9 +96,20 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         ImageView imageView = (ImageView) findViewById(R.id.  cardview_image);
+       /* Picasso.with(this)
+                .load(Apiconstants.MOTHER_PHOTO_URL + preferenceData.get)
+                .placeholder(R.drawable.girl)
+                .fit()
+                .centerCrop()
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
+                .transform(new RoundedTransformation(90, 4))
+                .error(R.drawable.girl)
+                .into(cardview_image);*/
         TextView vhnName = (TextView) findViewById(R.id.  txt_username);
+//        vhnName.setText(preferenceData.getVhnName());
         TextView vhnId = (TextView) findViewById(R.id.  vhn_id);
-
+//        vhnId.setText(preferenceData.getVhnId());
                 navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
 
@@ -181,7 +196,7 @@ public class MainActivity extends AppCompatActivity
             AppConstants.GET_MOTHER_LIST_TYPE="an_mother_total_count";
             AppConstants.MOTHER_LIST_TITLE="AN Mother List";
 
-            startActivity(new Intent(getApplicationContext(), MotherListActivity.class));
+            startActivity(new Intent(getApplicationContext(), AllMotherListActivity.class));
         }
         if (id == R.id.pn_hbnc_mothers) {
             AppConstants.GET_MOTHER_LIST_TYPE="pn_hbnc_totlal_coun";

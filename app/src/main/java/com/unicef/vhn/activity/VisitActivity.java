@@ -146,7 +146,7 @@ public class VisitActivity extends AppCompatActivity implements MotherListsViews
     @Override
     public void showLoginSuccess(String response) {
 
-        Log.e(MotherListActivity.class.getSimpleName(), "Response success" + response);
+        Log.e(VisitActivity.class.getSimpleName(), "Response success" + response);
 
         try {
             JSONObject mJsnobject = new JSONObject(response);

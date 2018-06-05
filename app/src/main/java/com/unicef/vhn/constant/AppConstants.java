@@ -51,8 +51,12 @@ public class AppConstants {
     public static String ISDECENDING="isDecending";
     public static String VILLAGENAME="villageName";
     public static String TERMISTER="termister";
-    public static String TERMISTER_POSITION="termister_position";
-    public static String VILLAGENAME_POSITION="villageName_position";
+    public static String TERMISTER_POSITION="0";
+    public static String VILLAGENAME_POSITION="0";
+
+
+
+    public static boolean IS_MOTHER_LIST=false;
 
 
 

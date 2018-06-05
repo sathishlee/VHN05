@@ -54,6 +54,7 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
 
     Realm realm;
     PNMMotherListRealmModel pnmMotherListRealmModel;
+    MotherListRealm dashBoardRealmModel;
 
 
 
@@ -130,44 +131,45 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
 
     private void getValuesFromRealm() {
 
-        realm.beginTransaction();
-        RealmResults<PNMMotherListRealmModel> realmResults =realm.where(PNMMotherListRealmModel.class).equalTo("mid", AppConstants.SELECTED_MID).findAll();
-        Log.w(ANMotherDetailsViewActivcity.class.getSimpleName(),realmResults.size()+"");
-        for (int i=0; i<realmResults.size();i++){
-           PNMMotherListRealmModel model = realmResults.get(i);
+    realm.beginTransaction();
+    RealmResults<PNMMotherListRealmModel> realmResults =realm.where(PNMMotherListRealmModel.class).equalTo("mid", AppConstants.SELECTED_MID).findAll();
+    Log.w(ANMotherDetailsViewActivcity.class.getSimpleName(),realmResults.size()+"");
+    for (int i=0; i<realmResults.size();i++){
+        PNMMotherListRealmModel model = realmResults.get(i);
 
-            txt_mother_name.setText(model.getmName());
-            txt_picme_id.setText(model.getmPicmeId());
-            strMobileNo = model.getmMotherMobile();
-            txt_husb_name.setText(model.getmHusbandName());
-            txt_mother_name_call.setText(model.getmMotherMobile());
-            strAltMobileNo = model.getmHusbandMobile();
+        txt_mother_name.setText(model.getmName());
+        txt_picme_id.setText(model.getmPicmeId());
+        strMobileNo = model.getmMotherMobile();
+        txt_husb_name.setText(model.getmHusbandName());
+        txt_mother_name_call.setText(model.getmMotherMobile());
+        strAltMobileNo = model.getmHusbandMobile();
 //            txt_mage.setText(mJsnobject_tracking.);
-            txt_risk_status.setText(model.getmRiskStatus());
+        txt_risk_status.setText(model.getmRiskStatus());
 //            txt_gest_week.setText(mJsnobject_tracking.getCurrentMonth());
 //            txt_weight.setText(mJsnobject_tracking.);
-            txt_next_visit.setText(model.getNextVisit());
-            txt_lmp_date.setText(model.getmLMP());
-            txt_edd_date.setText(model.getmEDD());
-            strLatitude = model.getmLatitude();
-            strLongitude = model.getmLongitude();
+        txt_next_visit.setText(model.getNextVisit());
+        txt_lmp_date.setText(model.getmLMP());
+        txt_edd_date.setText(model.getmEDD());
+        strLatitude = model.getmLatitude();
+        strLongitude = model.getmLongitude();
 
-            str_mPhoto = model.getmPhoto();
+        str_mPhoto = model.getmPhoto();
 
-            Picasso.with(context)
-                    .load(Apiconstants.MOTHER_PHOTO_URL + str_mPhoto)
-                    .placeholder(R.drawable.girl)
-                    .fit()
-                    .centerCrop()
-                    .memoryPolicy(MemoryPolicy.NO_CACHE)
-                    .networkPolicy(NetworkPolicy.NO_CACHE)
-                    .transform(new RoundedTransformation(90, 4))
-                    .error(R.drawable.girl)
-                    .into(cardview_image);
+        Picasso.with(context)
+                .load(Apiconstants.MOTHER_PHOTO_URL + str_mPhoto)
+                .placeholder(R.drawable.girl)
+                .fit()
+                .centerCrop()
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
+                .transform(new RoundedTransformation(90, 4))
+                .error(R.drawable.girl)
+                .into(cardview_image);
 
-        }
-        realm.commitTransaction();
     }
+    realm.commitTransaction();
+
+       }
 
 
     private void makeCall(String str_mobile_number) {
@@ -202,8 +204,9 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_view_location:
+
                 Toast.makeText(getApplicationContext(),"you are in offline, check Internet connection",Toast.LENGTH_LONG).show();
-//                startActivity(new Intent(getApplicationContext(), MotherLocationActivity.class));
+                startActivity(new Intent(getApplicationContext(), MotherLocationActivity.class));
                 break;
             case R.id.btn_view_report:
 //                startActivity(new Intent(getApplicationContext(), ANViewReportsActivity.class));

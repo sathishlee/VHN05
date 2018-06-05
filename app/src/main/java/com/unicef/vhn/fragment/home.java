@@ -21,7 +21,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.squareup.picasso.MemoryPolicy;
@@ -29,17 +28,14 @@ import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.HomePresenter;
-import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 //import com.unicef.vhn.activity.HighRiskListActivity;
 import com.unicef.vhn.activity.ANTT1MothersList;
 import com.unicef.vhn.activity.ANTT2MothersList;
-import com.unicef.vhn.activity.InfantListActivity;
-import com.unicef.vhn.activity.MainActivity;
+import com.unicef.vhn.activity.MotherHighRiskListActivity;
 import com.unicef.vhn.activity.MotherList.ANMotherListActivity;
 import com.unicef.vhn.activity.MotherList.AllMotherListActivity;
-import com.unicef.vhn.activity.MotherListActivity;
-import com.unicef.vhn.activity.MotherTrackActivity;
+import com.unicef.vhn.activity.MotherList.InfanentTreamListActivity;
 import com.unicef.vhn.activity.NoInternetConnectionActivity;
 import com.unicef.vhn.activity.PNHBNCDueListActivity;
 import com.unicef.vhn.activity.PNHBNCListActivity;
@@ -117,7 +113,7 @@ public class home extends Fragment implements MotherListsViews {
                 AppConstants.GET_MOTHER_LIST_TYPE = "mother_count";
                 AppConstants.MOTHER_LIST_TITLE = "All Mother List";
 
-//                startActivity(new Intent(getActivity(), MotherListActivity.class));
+//                startActivity(new Intent(getActivity(), MotherHighRiskListActivity.class));
                 startActivity(new Intent(getActivity(), AllMotherListActivity.class));
 
             }
@@ -139,7 +135,9 @@ public class home extends Fragment implements MotherListsViews {
                 AppConstants.GET_MOTHER_LIST_TYPE = "risk_count";
                 AppConstants.MOTHER_LIST_TITLE = "High Risk Mother List";
 
-                startActivity(new Intent(getActivity(), MotherListActivity.class));
+//                startActivity(new Intent(getActivity(), MotherHighRiskListActivity.class));
+                startActivity(new Intent(getActivity(), AllMotherListActivity.class));
+
             }
         });
 
@@ -149,7 +147,8 @@ public class home extends Fragment implements MotherListsViews {
                 AppConstants.GET_MOTHER_LIST_TYPE = "infant_count";
                 AppConstants.MOTHER_LIST_TITLE = "Infant List";
 
-                startActivity(new Intent(getActivity(), TreamPreTreamListActivity.class));
+//                startActivity(new Intent(getActivity(), TreamPreTreamListActivity.class));
+                startActivity(new Intent(getActivity(), InfanentTreamListActivity.class));
             }
         });
 
@@ -159,8 +158,8 @@ public class home extends Fragment implements MotherListsViews {
                 AppConstants.GET_MOTHER_LIST_TYPE = "an_mother_total_count";
                 AppConstants.MOTHER_LIST_TITLE = "AN Mother List";
 
-//                startActivity(new Intent(getActivity(), MotherListActivity.class));
-                startActivity(new Intent(getActivity(), ANMotherListActivity.class));
+//                startActivity(new Intent(getActivity(), MotherHighRiskListActivity.class));
+                startActivity(new Intent(getActivity(), AllMotherListActivity.class));
             }
         });
 
@@ -170,8 +169,8 @@ public class home extends Fragment implements MotherListsViews {
                 AppConstants.GET_MOTHER_LIST_TYPE = "high_risk_count";
                 AppConstants.MOTHER_LIST_TITLE = "AN High Risk Mother List";
 
-//                startActivity(new Intent(getActivity(), MotherListActivity.class));
-                startActivity(new Intent(getActivity(), ANMotherListActivity.class));
+//                startActivity(new Intent(getActivity(), MotherHighRiskListActivity.class));
+                startActivity(new Intent(getActivity(), AllMotherListActivity.class));
 
             }
         });
@@ -181,7 +180,8 @@ public class home extends Fragment implements MotherListsViews {
                 AppConstants.GET_MOTHER_LIST_TYPE = "pn_hbnc_totlal_coun";
                 AppConstants.MOTHER_LIST_TITLE = "PN/HBNC Mother List";
 
-                startActivity(new Intent(getActivity(), PNHBNCListActivity.class));
+//                startActivity(new Intent(getActivity(), PNHBNCListActivity.class));
+                startActivity(new Intent(getActivity(), AllMotherListActivity.class));
             }
         });
         but_an_mother_pn_hbnc_term_preterm_count.setOnClickListener(new View.OnClickListener() {
@@ -190,7 +190,8 @@ public class home extends Fragment implements MotherListsViews {
                 AppConstants.GET_MOTHER_LIST_TYPE = "pn_hbnc_term_preterm_count";
                 AppConstants.MOTHER_LIST_TITLE = "TERM/PRE TERM List";
 
-                startActivity(new Intent(getActivity(), TreamPreTreamListActivity.class));
+//                startActivity(new Intent(getActivity(), TreamPreTreamListActivity.class));
+                startActivity(new Intent(getActivity(), InfanentTreamListActivity.class));
             }
         });
         txt_antt_1_due.setOnClickListener(new View.OnClickListener() {

@@ -28,7 +28,7 @@ public class Apiconstants {
 
     public static final String LOG_IN_CHECK = "logincheck";
     //    http://192.168.100.235/thaimaiapp/api/vhn/Vhn/vVhnMothersList
-    public static final String MOTHER_DETAILS_LIST = "vVhnMothersList";
+    public static final String MOTHER_DETAILS_LIST = "vVhnMothersList";   //
     //    http://192.168.100.235/thaimaiapp/api/vhn/Vhn/vVhnMothersTracking
     public static final String MOTHER_DETAILS_TRACKING = "vVhnMothersTracking";
 

@@ -123,16 +123,21 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
                 type = pNMotherResponseModel.getMotherType();
                 if (type.equalsIgnoreCase("PN")) {
                     AppConstants.SELECTED_MID = pNMotherResponseModel.getMid();
+                    AppConstants.MOTHER_PICME_ID = pNMotherResponseModel.getMPicmeId();
 //                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherDetailsActivity.class));
                     applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherDetailsViewActivity.class));
 
                 } else if (type.equalsIgnoreCase("AN")) {
                     AppConstants.SELECTED_MID = pNMotherResponseModel.getMid();
+                    AppConstants.MOTHER_PICME_ID = pNMotherResponseModel.getMPicmeId();
+
 //                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MothersDetailsActivity.class));
                     applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), ANMotherDetailsViewActivcity.class));
 
                 } else if (type.equalsIgnoreCase("Risk")) {
                     AppConstants.SELECTED_MID = pNMotherResponseModel.getMid();
+                    AppConstants.MOTHER_PICME_ID = pNMotherResponseModel.getMPicmeId();
+
                     applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MothersDetailsActivity.class));
 
                 }

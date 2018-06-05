@@ -3,6 +3,7 @@ package com.unicef.vhn.Presenter;
 import android.app.Activity;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.FragmentActivity;
 import android.util.Base64;
 import android.util.Log;
 
@@ -12,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.unicef.vhn.constant.Apiconstants;
+import com.unicef.vhn.fragment.mothers;
 import com.unicef.vhn.interactor.MotherPrimaryRegisterInteractor;
 import com.unicef.vhn.view.PrimaryRegisterViews;
 import com.unicef.vhn.volleyservice.VolleySingleton;
@@ -34,9 +36,18 @@ public class MotherPrimaryRegisterPresenter implements MotherPrimaryRegisterInte
     }
 
 
+
+
     @Override
     public void getAllMotherPrimaryRegistration(final String picmeId) {
-        String url = Apiconstants.MOTHER_BASE_URL + Apiconstants.GET_MOTHER_PRIMARY_INFO;
+        String url = null;
+//        String url = Apiconstants.MOTHER_BASE_URL + Apiconstants.GET_MOTHER_PRIMARY_INFO;
+        if (Apiconstants.BASE_URL.equalsIgnoreCase("http://192.168.100.222/thaimaiapp/api/vhn/Vhn/")){
+                     url = "http://192.168.100.222/thaimaiapp/api/" + Apiconstants.GET_MOTHER_PRIMARY_INFO;
+        }else {
+            url = "http://218.248.44.77/thaimaiapp/api/" + Apiconstants.GET_MOTHER_PRIMARY_INFO;
+
+        }
         Log.d("Log in check Url--->", url);
         Log.d("picmeId--->", picmeId);
         primaryRegisterViews.showProgress();

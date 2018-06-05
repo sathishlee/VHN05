@@ -114,7 +114,8 @@ public class ImmunizationListActivity extends AppCompatActivity implements Mothe
 
 
         if (isoffline) {
-            showOfflineData();
+//            showOfflineData();
+            setValueToUI();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Record Not Found");
@@ -174,16 +175,22 @@ public class ImmunizationListActivity extends AppCompatActivity implements Mothe
                         immunization_lists.add(immunizationList);
                         immunizationListAdapter.notifyDataSetChanged();*/
 
-                        immuniationListRealmModel.setMName("sathish");
-                        immuniationListRealmModel.setMPicmeId("133300");
-                        immuniationListRealmModel.setImmDoseNumber("III");
-                        immuniationListRealmModel.setMid("3");
 
-                        /*immuniationListRealmModel.setMName(jsonObject.getString("mName"));
+
+                        immuniationListRealmModel.setMName(jsonObject.getString("mName"));
                         immuniationListRealmModel.setMPicmeId(jsonObject.getString("mPicmeId"));
                         immuniationListRealmModel.setImmDoseNumber(jsonObject.getString("immDoseNumber"));
                         immuniationListRealmModel.setMid(jsonObject.getString("mid"));
-*/
+                        immuniationListRealmModel.setDeleveryDate(jsonObject.getString("deleveryDate"));
+                        immuniationListRealmModel.setImmId(jsonObject.getString("immId"));
+                        immuniationListRealmModel.setImmDoseId(jsonObject.getString("immDoseId"));
+                        immuniationListRealmModel.setImmDoseNumber(jsonObject.getString("immDoseNumber"));
+                        immuniationListRealmModel.setImmActualDate(jsonObject.getString("immActualDate"));
+                        immuniationListRealmModel.setImmOpvStatus(jsonObject.getString("immOpvStatus"));
+                        immuniationListRealmModel.setImmPentanvalentStatus(jsonObject.getString("immPentanvalentStatus"));
+                        immuniationListRealmModel.setImmRotaStatus(jsonObject.getString("immRotaStatus"));
+                        immuniationListRealmModel.setImmIpvStatus(jsonObject.getString("immIpvStatus"));
+                        immuniationListRealmModel.setImmCarePovidedDate(jsonObject.getString("immCarePovidedDate"));
 
                     }
                     realm.commitTransaction();       //create or open
@@ -206,7 +213,6 @@ public class ImmunizationListActivity extends AppCompatActivity implements Mothe
     private void setValueToUI() {
 
 
-        Log.e(ANTT1MothersList.class.getSimpleName(),"ON LINE ");
 
         realm.beginTransaction();
         RealmResults<ImmuniationListRealmModel> immuniationListRealmModels = realm.where(ImmuniationListRealmModel.class).findAll();

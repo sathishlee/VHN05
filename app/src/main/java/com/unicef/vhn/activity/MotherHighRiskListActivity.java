@@ -18,29 +18,22 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 import com.unicef.vhn.Interface.MakeCallInterface;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.adapter.MotherListAdapter;
-import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.PNMotherListResponse;
 import com.unicef.vhn.realmDbModel.PNMMotherListRealmModel;
-import com.unicef.vhn.realmDbModel.VisitListRealmModel;
 import com.unicef.vhn.utiltiy.CheckNetwork;
-import com.unicef.vhn.utiltiy.RoundedTransformation;
 import com.unicef.vhn.view.MotherListsViews;
 
 import org.json.JSONArray;
@@ -53,7 +46,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class MotherListActivity extends AppCompatActivity implements MotherListsViews, MakeCallInterface {
+public class MotherHighRiskListActivity extends AppCompatActivity implements MotherListsViews, MakeCallInterface {
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
@@ -94,7 +87,7 @@ public class MotherListActivity extends AppCompatActivity implements MotherLists
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData =new PreferenceData(this);
-        pnMotherListPresenter = new MotherListPresenter(MotherListActivity.this,this);
+        pnMotherListPresenter = new MotherListPresenter(MotherHighRiskListActivity.this,this);
 
 if (checkNetwork.isNetworkAvailable()) {
     if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("mother_count")) {
@@ -116,7 +109,7 @@ if (checkNetwork.isNetworkAvailable()) {
 
         }*/
     else {
-        Log.e(MotherListActivity.class.getSimpleName(), "no url");
+        Log.e(MotherHighRiskListActivity.class.getSimpleName(), "no url");
     }
 }
 else{
@@ -128,14 +121,14 @@ else{
 //        txt_no_records_found.setVisibility(View.GONE);
 
         if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("an_mother_total_count")) {
-            mAdapter = new MotherListAdapter(mResult, MotherListActivity.this, "AN",this);
+            mAdapter = new MotherListAdapter(mResult, MotherHighRiskListActivity.this, "AN",this);
         }if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("high_risk_count")) {
-            mAdapter = new MotherListAdapter(mResult, MotherListActivity.this, "Risk",this);
+            mAdapter = new MotherListAdapter(mResult, MotherHighRiskListActivity.this, "Risk",this);
         }else{
-            mAdapter = new MotherListAdapter(mResult, MotherListActivity.this, "",this);
+            mAdapter = new MotherListAdapter(mResult, MotherHighRiskListActivity.this, "",this);
         }
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MotherListActivity.this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MotherHighRiskListActivity.this);
         mother_recycler_view.setLayoutManager(mLayoutManager);
         mother_recycler_view.setItemAnimator(new DefaultItemAnimator());
         mother_recycler_view.setAdapter(mAdapter);
@@ -192,7 +185,7 @@ else{
 
     @Override
     public void showLoginSuccess(String response) {
-        Log.e(MotherListActivity.class.getSimpleName(), "Response success" + response);
+        Log.e(MotherHighRiskListActivity.class.getSimpleName(), "Response success" + response);
 
         try {
             JSONObject mJsnobject = new JSONObject(response);
@@ -230,21 +223,6 @@ else{
                         pnmMotherListRealmModel.setmLongitude(jsonObject.getString("mLongitude"));
                         pnmMotherListRealmModel.setmPhoto(jsonObject.getString("mPhoto"));
 
-
-
-                        /*mresponseResult.setMid(jsonObject.getString("mid"));
-                        mresponseResult.setMName(jsonObject.getString("mName"));
-                        mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
-                        mresponseResult.setVhnId(jsonObject.getString("vhnId"));
-                        mresponseResult.setmMotherMobile(jsonObject.getString("mMotherMobile"));
-                        mresponseResult.setMotherType(jsonObject.getString("motherType"));
-                        mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
-                        mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
-                        mresponseResult.setmPhoto(jsonObject.getString("mPhoto"));
-
-
-                        mResult.add(mresponseResult);
-                        mAdapter.notifyDataSetChanged();*/
                     }
                     realm.commitTransaction();
                 }else{
@@ -264,7 +242,7 @@ else{
     }
 
     private void setValuetoUI() {
-        Log.e(MotherListActivity.class.getSimpleName(),"on line");
+        Log.e(MotherHighRiskListActivity.class.getSimpleName(),"on line");
         realm.beginTransaction();
         RealmResults<PNMMotherListRealmModel> motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).findAll();
 
@@ -290,40 +268,6 @@ else{
 
         realm.commitTransaction();
     }
-
-
-
-    private void showOffLineData() {
-
-        Log.e(MotherListActivity.class.getSimpleName(),"off line");
-        realm.beginTransaction();
-        mResult.clear();
-        RealmResults<PNMMotherListRealmModel> motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).findAll();
-Log.e(MotherListActivity.class.getSimpleName(),"offline size"+motherListAdapterRealmModel.size());
-        for (int i=0;i<motherListAdapterRealmModel.size();i++){
-            mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
-
-            PNMMotherListRealmModel model = motherListAdapterRealmModel.get(i);
-            mresponseResult.setMid(model.getMid());
-            mresponseResult.setMName(model.getmName());
-            mresponseResult.setMPicmeId(model.getmPicmeId());
-            mresponseResult.setVhnId(model.getVhnId());
-            mresponseResult.setmMotherMobile(model.getmMotherMobile());
-            mresponseResult.setMotherType(model.getMotherType());
-            mresponseResult.setMLatitude(model.getmLatitude());
-            mresponseResult.setMLongitude(model.getmLongitude());
-            mresponseResult.setmPhoto(model.getmPhoto());
-
-
-            mResult.add(mresponseResult);
-            mAdapter.notifyDataSetChanged();
-
-        }
-
-        realm.commitTransaction();
-
-    }
-
 
     @Override
     public void showLoginError(String string) {
