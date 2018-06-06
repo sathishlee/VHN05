@@ -333,8 +333,18 @@ public class home extends Fragment implements MotherListsViews {
                 txt_block.setText(mJsnobject_phcDetails.getString("block"));
                 txt_address.setText(mJsnobject_phcDetails.getString("District"));
 
-                str_mPhoto = mJsnobject_phcDetails.getString("vphoto");
+                if(mJsnobject_phcDetails.getString("vphoto").equalsIgnoreCase("null")) {
+                    str_mPhoto = "";
+                    preferenceData.setVhnPhoto("");
+                }else{
+                    str_mPhoto = mJsnobject_phcDetails.getString("vphoto");
+                    preferenceData.setVhnPhoto(mJsnobject_phcDetails.getString("vphoto"));
+
+
+                }
                 Log.d("vphoto-->",Apiconstants.PHOTO_URL+str_mPhoto);
+
+
 
                 if(!TextUtils.isEmpty(str_mPhoto)){
                     Picasso.with(context)

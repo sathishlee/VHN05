@@ -167,7 +167,7 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
                 JSONObject strVhnDetails = jObj.getJSONObject("VhnDetails");
                     Log.d("message---->", message);
                     preferenceData.storeUserInfo(strVhnDetails.getString("vhnName"), strVhnDetails.getString("vhnCode"),
-                            strVhnDetails.getString("vhnId"));
+                            strVhnDetails.getString("vhnId"), strVhnDetails.getString("vphoto"));
                     preferenceData.setLogin(true);
                     if (message.equalsIgnoreCase("Successfully Logined..!")) {
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));

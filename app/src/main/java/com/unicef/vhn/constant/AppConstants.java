@@ -28,6 +28,7 @@ public class AppConstants {
 
     public static final String VHN_NAME = "vhnName";
     public static final String VHN_CODE = "vhnCode";
+    public static final String VHN_PHOTO = "vphoto";
     public static String SELECTED_MID = "0";
     public static String MOTHER_PICME_ID = "0";
     public static String MOTHER_ID = "0";

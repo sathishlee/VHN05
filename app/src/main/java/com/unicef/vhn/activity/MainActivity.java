@@ -91,9 +91,12 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        ImageView imageView = (ImageView) findViewById(R.id.cardview_image);
-        TextView vhnName = (TextView) findViewById(R.id.txt_username);
-        TextView vhnId = (TextView) findViewById(R.id.vhn_id);
+        View headerView = navigationView.getHeaderView(0);
+        ImageView imageView = (ImageView) headerView.findViewById(R.id.cardview_image);
+        TextView vhnName = (TextView) headerView.findViewById(R.id.txt_username);
+        TextView vhnId = (TextView) headerView.findViewById(R.id.vhn_id);
+        vhnName.setText(preferenceData.getVhnName());
+        vhnId.setText(preferenceData.getVhnId());
 
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
