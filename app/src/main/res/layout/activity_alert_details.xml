@@ -31,7 +31,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Mother's Information"
+                        android:text="@string/mother_s_information"
                         android:textSize="@dimen/text_label"
                         android:textAlignment="textStart"
                         android:textColor="#2F80ED"
@@ -83,7 +83,7 @@
                 android:id="@+id/btn_view_location"
                 android:background="@color/colorPrimary"
                 android:textColor="#ffffff"
-                android:text="View Location"
+                android:text="@string/view_location"
                 android:layout_weight="1"
                 android:drawableStart="@drawable/ic_show_location"/>
 
@@ -95,7 +95,7 @@
                 android:id="@+id/btn_view_report"
                 android:background="@color/colorPrimary"
                 android:textColor="#ffffff"
-                android:text="View Report"
+                android:text="@string/view_report"
                 android:layout_weight="1"
                 android:drawableStart="@drawable/ic_view_report"/>
 

@@ -1,21 +1,27 @@
 package com.unicef.vhn.activity;
 
+import android.Manifest;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
@@ -45,11 +51,16 @@ import com.google.maps.errors.ApiException;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.TravelMode;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.LocationPresenter;
 import com.unicef.vhn.R;
+import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.LocationRequestModel;
+import com.unicef.vhn.utiltiy.RoundedTransformation;
 import com.unicef.vhn.view.LocationViews;
 
 import org.joda.time.DateTime;
@@ -88,20 +99,21 @@ public class MotherLocationActivity extends FragmentActivity implements Location
     private GoogleMap mMap;
     private String GOOGLE_PLACES_API_KEY = "AIzaSyD789ejb86QhaIBRPovLCtjW_XrrDAKdto";
     private List<Marker> markers;
-    TextView txt_username, txt_picme_id;
+    TextView txt_username, txt_picme_id, txt_call;
     String strLat,strLon, motherLatitude, motherLongitude, vhnLatitude, vhnLongitude, motherLocation, VhnLocation;
-    String strMotherloc, strVHNloc, strmAdd, strvAdd, motherName, motherID;
-
+    String strMotherloc, strVHNloc, strmAdd, strvAdd, motherName, motherID,str_mPhoto, strMotherNo;
+    Context context;
+    ImageView cardview_image;
+    private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         bindActivity();
+        onClickListner();
     }
     FloatingActionButton get_directions;
-
-
 
     private void bindActivity() {
 
@@ -113,6 +125,8 @@ public class MotherLocationActivity extends FragmentActivity implements Location
 
         txt_username = (TextView)findViewById(R.id.txt_username);
         txt_picme_id = (TextView)findViewById(R.id.txt_picme_id);
+        txt_call = (TextView) findViewById(R.id.txt_call);
+        cardview_image = (ImageView) findViewById(R.id.cardview_image);
 
         preferenceData = new PreferenceData(this);
 //        this.trackings = trackings;
@@ -132,9 +146,16 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MotherLocationActivity.this, MainActivity.class);
                 finish();
-                startActivity(intent);
+            }
+        });
+    }
+
+    private void onClickListner() {
+        txt_call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeCall(strMotherNo);
             }
         });
     }
@@ -517,6 +538,18 @@ public class MotherLocationActivity extends FragmentActivity implements Location
                 motherName =mJsnobject_tracking.getString("mName");
                 motherID =mJsnobject_tracking.getString("mPicmeId");
 
+                str_mPhoto = mJsnobject_tracking.getString("mPhoto");
+                Picasso.with(context)
+                        .load(Apiconstants.MOTHER_PHOTO_URL+str_mPhoto)
+                        .placeholder(R.drawable.girl)
+                        .fit()
+                        .centerCrop()
+                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+                        .networkPolicy(NetworkPolicy.NO_CACHE)
+                        .transform(new RoundedTransformation(90,4))
+                        .error(R.drawable.girl)
+                        .into(cardview_image);
+
                 motherLocation = mJsnobject_tracking.getString("mLocation");
                 VhnLocation = mJsnobject_tracking.getString("vLocation");
 
@@ -582,4 +615,46 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         Log.e(MotherLocationActivity.class.getSimpleName(), "Response success" + string);
 
     }
+
+    private void makeCall(String strMotherNo) {
+        Toast.makeText(getApplicationContext(),strMotherNo,Toast.LENGTH_SHORT).show();
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestCallPermission();
+        } else {
+            Log.i(MothersDetailsActivity.class.getSimpleName(),"CALL permission has already been granted. Displaying camera preview.");
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+"+strMotherNo)));
+
+        }
+    }
+
+    private void requestCallPermission() {
+        Log.i(MothersDetailsActivity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.CALL_PHONE)) {
+            Log.i(MothersDetailsActivity.class.getSimpleName(),            "Displaying camera permission rationale to provide additional context.");
+            Toast.makeText(this,"Displaying camera permission rationale to provide additional context.",Toast.LENGTH_SHORT).show();
+
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
+                    MAKE_CALL_PERMISSION_REQUEST_CODE);
+        }
+
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case MAKE_CALL_PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+//                    dial.setEnabled(true);
+                    Toast.makeText(this, "You can call the number by clicking on the button", Toast.LENGTH_SHORT).show();
+                }
+                return;
+        }
+    }
+
 }

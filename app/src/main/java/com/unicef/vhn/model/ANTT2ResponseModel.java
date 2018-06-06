@@ -44,6 +44,8 @@ public class ANTT2ResponseModel {
         private String mPicmeId;
         private String mName;
         private String vhnId;
+        private String mPhoto;
+
 
         public String getMMotherMobile() {
             return mMotherMobile;
@@ -92,6 +94,9 @@ public class ANTT2ResponseModel {
         public void setVhnId(String vhnId) {
             this.vhnId = vhnId;
         }
+
+        public String getmPhoto(){return mPhoto;}
+        public void setmPhoto(String mPhoto){this.mPhoto = mPhoto;}
     }
 }
 

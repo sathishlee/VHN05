@@ -126,10 +126,10 @@ pDialog.dismiss();
             JSONObject mJsnobject = new JSONObject(response);
             String status = mJsnobject.getString("status");
             String message = mJsnobject.getString("message");
-           /* if (status.equalsIgnoreCase("1")) {
+            if (status.equalsIgnoreCase("1")) {
                 txt_no_records_found.setVisibility(View.GONE);
                 viewPager.setVisibility(View.VISIBLE);
-                tabLayout.setVisibility(View.VISIBLE);*/
+                tabLayout.setVisibility(View.VISIBLE);
                 JSONArray jsonArray = mJsnobject.getJSONArray("pnMothersVisit");
                 if (jsonArray.length()!=0) {
                     for (int i = 0; i < jsonArray.length(); i++) {
@@ -186,11 +186,11 @@ pDialog.dismiss();
                     viewPager.setVisibility(View.GONE);
                     tabLayout.setVisibility(View.GONE);
                 }
-                /*}else{
+                }else{
                 txt_no_records_found.setVisibility(View.VISIBLE);
                 viewPager.setVisibility(View.GONE);
                 tabLayout.setVisibility(View.GONE);
-            }*/
+            }
             } catch(JSONException e){
                 e.printStackTrace();
             }

@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -49,6 +50,9 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
 
     GoogleApiClient googleApiClient = null;
 
+    int deviceApi = Build.VERSION.SDK_INT;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +61,7 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
         rel_splash_screen.setVisibility(View.GONE);
         locationUpdatePresenter = new LocationUpdatePresenter(this, this);
         preferenceData = new PreferenceData(this);
+        checkAPiVersion();
 
 
         startStep1();
@@ -85,6 +90,15 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
 
         }
 
+    }
+
+    private void checkAPiVersion() {
+        if(deviceApi<= Build.VERSION_CODES.KITKAT){
+            startActivity(new Intent(this, LowerVersionActivity.class));
+            finish();
+        }else{
+            startStep1();
+        }
     }
 
     @Override

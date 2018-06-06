@@ -31,7 +31,9 @@ public class LoginPresenter implements LoginInteractor{
     }
 
     @Override
-    public void login(final String strVhnId, final String strPassword, final String strdeviceId, final String mobileCheck, final String vLatitude, final String vLongitude, final String versionCode) {
+    public void login(final String strVhnId, final String strPassword, final String strdeviceId,
+                      final String mobileCheck, final String vLatitude, final String vLongitude,
+                      final String versionCode) {
         view.showProgress();
         String url = Apiconstants.BASE_URL + Apiconstants.LOG_IN_CHECK;
         Log.d("Log in check Url--->",url);

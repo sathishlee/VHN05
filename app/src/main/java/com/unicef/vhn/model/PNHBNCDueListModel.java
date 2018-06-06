@@ -47,6 +47,8 @@ public class PNHBNCDueListModel {
         private String visit3;
         private String visit2;
         private String visit1;
+        private String mPhoto;
+
 
         public String getMobile() {
             return mobile;
@@ -127,5 +129,8 @@ public class PNHBNCDueListModel {
         public void setVisit1(String visit1) {
             this.visit1 = visit1;
         }
+
+        public String getmPhoto(){return mPhoto;}
+        public void setmPhoto(String mPhoto){this.mPhoto = mPhoto;}
     }
 }

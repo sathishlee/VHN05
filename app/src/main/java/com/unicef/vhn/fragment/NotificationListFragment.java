@@ -167,9 +167,7 @@ public class NotificationListFragment extends Fragment implements NotificationVi
                     movie.setNoteStartDateTime(jsonObject1.getString("noteStartDateTime"));
                     movie.setMtype(jsonObject1.getString("mtype"));
                     Log.d(NotificationListFragment.class.getSimpleName(), "Notification details" + i + movie);
-
                     moviesList.add(movie);
-
                     mAdapter.notifyDataSetChanged();
                 }
             } else {

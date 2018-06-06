@@ -116,10 +116,6 @@
         android:layerType="software"
         android:visibility="gone"/>
 
-
-
-
-
     <LinearLayout
         android:id="@+id/ll_flash_notify_view"
         android:layout_width="match_parent"
