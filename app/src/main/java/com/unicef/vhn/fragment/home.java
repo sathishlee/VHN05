@@ -112,7 +112,16 @@ public class home extends Fragment implements MotherListsViews {
             public void onClick(View v) {
                 AppConstants.GET_MOTHER_LIST_TYPE = "mother_count";
                 AppConstants.MOTHER_LIST_TITLE = "All Mother List";
+                if (!preferenceData.getFilterStatus()) {
+//                    preferenceData.setFilterStatus(false);
+                    preferenceData.setTermister("All");
+                    preferenceData.setVillageName("All");
+                    preferenceData.setHighRiskStatus(false);
+                    preferenceData.setDescendingStatus(false);
+                }else{
+//                    preferenceData.setFilterStatus(true);
 
+                }
 //                startActivity(new Intent(getActivity(), MotherHighRiskListActivity.class));
                 startActivity(new Intent(getActivity(), AllMotherListActivity.class));
 

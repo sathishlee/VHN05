@@ -149,4 +149,12 @@ public class PreferenceData {
         return Integer.parseInt(sharedPreferences.getString(AppConstants.VILLAGENAME_POSITION,""));
 
     }
+    public void setFilterStatus(boolean isfillter) {
+        sharedPreferences.edit().putBoolean("isfillter", isfillter).commit();
+
+    }
+    public boolean getFilterStatus() {
+        return sharedPreferences.getBoolean("isfillter", Boolean.parseBoolean(""));
+
+    }
 }

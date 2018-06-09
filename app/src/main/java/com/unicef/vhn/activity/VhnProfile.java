@@ -404,7 +404,6 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
 
 
     private void showOfflineData() {
-
         realm.beginTransaction();
         RealmResults<VhnProfileRealmModel> vhnProfileRealmModelRealmResults = realm.where(VhnProfileRealmModel.class).findAll();
 

@@ -152,6 +152,7 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
         txt_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                preferenceData.setFilterStatus(true);
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.dialog_fragment);
                 CheckBox ch_highRisk, ch_desc, ch_anmother, ch_pnmother;
