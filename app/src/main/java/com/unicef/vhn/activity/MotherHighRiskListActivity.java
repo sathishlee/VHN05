@@ -46,7 +46,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class MotherHighRiskListActivity extends AppCompatActivity implements MotherListsViews, MakeCallInterface {
+public class MotherHighRiskListActivity extends AppCompatActivity implements MotherListsViews, MakeCallInterface, MotherListAdapter.ContactsAdapterListener {
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
@@ -121,11 +121,11 @@ else{
 //        txt_no_records_found.setVisibility(View.GONE);
 
         if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("an_mother_total_count")) {
-            mAdapter = new MotherListAdapter(mResult, MotherHighRiskListActivity.this, "AN",this);
+            mAdapter = new MotherListAdapter(mResult, MotherHighRiskListActivity.this, "AN",this,this);
         }if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("high_risk_count")) {
-            mAdapter = new MotherListAdapter(mResult, MotherHighRiskListActivity.this, "Risk",this);
+            mAdapter = new MotherListAdapter(mResult, MotherHighRiskListActivity.this, "Risk",this,this);
         }else{
-            mAdapter = new MotherListAdapter(mResult, MotherHighRiskListActivity.this, "",this);
+            mAdapter = new MotherListAdapter(mResult, MotherHighRiskListActivity.this, "",this,this);
         }
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MotherHighRiskListActivity.this);
@@ -315,6 +315,13 @@ else{
                 }
                 return;
         }
+    }
+
+
+
+    @Override
+    public void onContactSelected(PNMotherListResponse.VhnAN_Mothers_List contact) {
+
     }
 }
 

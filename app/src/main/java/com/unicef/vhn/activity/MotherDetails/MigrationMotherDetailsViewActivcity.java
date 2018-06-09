@@ -1,4 +1,4 @@
-package com.unicef.vhn.activity;
+package com.unicef.vhn.activity.MotherDetails;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -6,12 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,19 +25,30 @@ import com.squareup.picasso.Picasso;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
+import com.unicef.vhn.activity.ANViewReportsActivity;
+import com.unicef.vhn.activity.MotherLocationActivity;
+import com.unicef.vhn.activity.MotherTrackActivity;
+import com.unicef.vhn.activity.MotherVisitReport.ANMotherVisitReportActivity;
+import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
-
+import com.unicef.vhn.realmDbModel.MigrationMotherDetailsRealmModel;
+import com.unicef.vhn.realmDbModel.MotherListRealm;
+import com.unicef.vhn.realmDbModel.MotherMigrationRealmModel;
+import com.unicef.vhn.realmDbModel.PNMMotherListRealmModel;
+import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.utiltiy.RoundedTransformation;
 import com.unicef.vhn.view.MotherListsViews;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/*AN Mother Details  have api call working well is not use this project,
-use for ANMotherDetailsViewActivity */
-public class MothersDetailsActivity extends AppCompatActivity implements View.OnClickListener, MotherListsViews {
-    TextView txt_mother_name, txt_picme_id, txt_mage, txt_risk_status, txt_gest_week, txt_weight, txt_lmp_date, txt_edd_date, txt_next_visit;
+import io.realm.Realm;
+import io.realm.RealmResults;
+
+public class MigrationMotherDetailsViewActivcity extends AppCompatActivity implements View.OnClickListener, MotherListsViews {
+
+    TextView txt_mother_name, txt_picme_id, txt_mage, txt_risk_status, txt_gest_week, txt_weight, txt_lmp_date, txt_edd_date, txt_next_visit, txt_husb_name, txt_mother_name_call;
     String strMobileNo, strAltMobileNo;
     Context context;
     String strLatitude, strLongitude, str_mPhoto;
@@ -47,16 +57,22 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
-
     Button btn_view_location, btn_view_report;
+    Realm realm;
+    CheckNetwork checkNetwork;
+    boolean isoffline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mothers_details);
+        realm = RealmController.with(this).getRealm(); // opens "myrealm.realm"
+        setContentView(R.layout.activity_all_mother_details_view_activcity);
+        Log.w(MigrationMotherDetailsViewActivcity.class.getSimpleName(), "Activity created");
+
         initUI();
         showActionBar();
         onClickListner();
+
     }
 
     private void onClickListner() {
@@ -95,10 +111,13 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
-        pnMotherListPresenter = new MotherListPresenter(MothersDetailsActivity.this, this);
-
-        pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
-
+        checkNetwork = new CheckNetwork(this);
+        pnMotherListPresenter = new MotherListPresenter(MigrationMotherDetailsViewActivcity.this, this);
+        if (checkNetwork.isNetworkAvailable()) {
+            pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
+        } else {
+            isoffline = true;
+        }
         cardview_image = (ImageView) findViewById(R.id.cardview_image);
         txt_mother_name = (TextView) findViewById(R.id.txt_username);
         txt_picme_id = (TextView) findViewById(R.id.txt_picme_id);
@@ -109,10 +128,67 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
         txt_lmp_date = (TextView) findViewById(R.id.txt_lmp_date);
         txt_edd_date = (TextView) findViewById(R.id.txt_edd_date);
         txt_next_visit = (TextView) findViewById(R.id.txt_next_visit);
+        txt_husb_name = (TextView) findViewById(R.id.txt_husb_name);
+        txt_mother_name_call = (TextView) findViewById(R.id.txt_mother_name_call);
         img_call_1 = (ImageView) findViewById(R.id.img_call_1);
         img_call_2 = (ImageView) findViewById(R.id.img_call_2);
         btn_view_location = (Button) findViewById(R.id.btn_view_location);
         btn_view_report = (Button) findViewById(R.id.btn_view_report);
+
+        if (isoffline) {
+            getValuesFromRealm();
+        }
+    }
+
+    private void getValuesFromRealm() {
+
+        realm.beginTransaction();
+        RealmResults<MigrationMotherDetailsRealmModel> realmResults = realm.where(MigrationMotherDetailsRealmModel.class).equalTo("mid", AppConstants.SELECTED_MID).findAll();
+        Log.w(MigrationMotherDetailsRealmModel.class.getSimpleName(), realmResults.size() + "");
+        if (realmResults.size() == 0) {
+            finish();
+            Toast.makeText(getApplicationContext(), "Mother Details Not Available", Toast.LENGTH_LONG).show();
+        } else {
+            for (int i = 0; i < realmResults.size(); i++) {
+                MigrationMotherDetailsRealmModel model = realmResults.get(i);
+
+                Log.w(MigrationMotherDetailsViewActivcity.class.getSimpleName(), i + "MID" + model.getMid());
+                Log.w(MigrationMotherDetailsViewActivcity.class.getSimpleName(), i + "PICMEID" + model.getMPicmeId());
+                Log.w(MigrationMotherDetailsViewActivcity.class.getSimpleName(), i + "Name" + model.getMName());
+
+                txt_mother_name.setText(model.getMName());
+                txt_picme_id.setText(model.getMPicmeId());
+                strMobileNo = model.getMMotherMobile();
+                txt_husb_name.setText(model.getMHusbandName());
+                txt_mother_name_call.setText(model.getMMotherMobile());
+                strAltMobileNo = model.getMHusbandMobile();
+                txt_mage.setText(model.getMAge());
+                txt_risk_status.setText(model.getMRiskStatus());
+                txt_gest_week.setText(model.getGSTAge());
+                txt_weight.setText(model.getMWeight());
+                txt_next_visit.setText(model.getNextVisit());
+                txt_lmp_date.setText(model.getMLMP());
+                txt_edd_date.setText(model.getMEDD());
+                strLatitude = model.getMLatitude();
+                strLongitude = model.getMLongitude();
+
+                str_mPhoto = model.getmPhoto();
+
+                Picasso.with(context)
+                        .load(Apiconstants.MOTHER_PHOTO_URL + str_mPhoto)
+                        .placeholder(R.drawable.girl)
+                        .fit()
+                        .centerCrop()
+                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+                        .networkPolicy(NetworkPolicy.NO_CACHE)
+                        .transform(new RoundedTransformation(90, 4))
+                        .error(R.drawable.girl)
+                        .into(cardview_image);
+
+            }
+        }
+        realm.commitTransaction();
+
     }
 
 
@@ -123,17 +199,17 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
                 != PackageManager.PERMISSION_GRANTED) {
             requestCallPermission();
         } else {
-            Log.i(MothersDetailsActivity.class.getSimpleName(), "CALL permission has already been granted. Displaying camera preview.");
+            Log.i(MigrationMotherDetailsViewActivcity.class.getSimpleName(), "CALL permission has already been granted. Displaying camera preview.");
             startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+" + str_mobile_number)));
         }
     }
 
     private void requestCallPermission() {
-        Log.i(MothersDetailsActivity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
+        Log.i(MigrationMotherDetailsViewActivcity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CALL_PHONE)) {
-            Log.i(MothersDetailsActivity.class.getSimpleName(), "Displaying camera permission rationale to provide additional context.");
+            Log.i(MigrationMotherDetailsViewActivcity.class.getSimpleName(), "Displaying camera permission rationale to provide additional context.");
             Toast.makeText(this, "Displaying camera permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();
 
         } else {
@@ -148,10 +224,13 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_view_location:
+
+                Toast.makeText(getApplicationContext(), "you are in offline, check Internet connection", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(getApplicationContext(), MotherLocationActivity.class));
                 break;
             case R.id.btn_view_report:
                 startActivity(new Intent(getApplicationContext(), ANViewReportsActivity.class));
+//                startActivity(new Intent(getApplicationContext(), ANMotherVisitReportActivity.class));
                 break;
         }
     }
@@ -172,12 +251,10 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        Intent intent = new Intent(MothersDetailsActivity.this, MainActivity.class);
         finish();
-//        startActivity(intent);
-
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public void showProgress() {
@@ -186,11 +263,12 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
 
     @Override
     public void hideProgress() {
-        pDialog.dismiss();
+        pDialog.hide();
     }
 
     @Override
     public void showLoginSuccess(String response) {
+
 //        AppConstants.SELECTED_MID="0";
         Log.e(MotherTrackActivity.class.getSimpleName(), "Response success" + response);
 
@@ -200,8 +278,43 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
             String message = mJsnobject.getString("message");
             if (status.equalsIgnoreCase("1")) {
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+
+                RealmResults<MigrationMotherDetailsRealmModel> realmResults = realm.where(MigrationMotherDetailsRealmModel.class).findAll();
+                if (realmResults.size() != 0) {
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            realm.delete(MigrationMotherDetailsRealmModel.class);
+                        }
+                    });
+                }
+
                 JSONObject mJsnobject_tracking = mJsnobject.getJSONObject("tracking");
-                txt_mother_name.setText(mJsnobject_tracking.getString("mName"));
+                realm.beginTransaction();
+                MigrationMotherDetailsRealmModel model = realm.createObject(MigrationMotherDetailsRealmModel.class);
+
+                model.setMAge(mJsnobject_tracking.getString("mAge"));
+                model.setMid(mJsnobject_tracking.getString("mid"));
+                model.setMName(mJsnobject_tracking.getString("mName"));
+                model.setMPicmeId(mJsnobject_tracking.getString("mPicmeId"));
+                model.setMMotherMobile(mJsnobject_tracking.getString("mMotherMobile"));
+                model.setMHusbandMobile(mJsnobject_tracking.getString("mHusbandMobile"));
+                model.setMHusbandName(mJsnobject_tracking.getString("mHusbandName"));
+                model.setDeleveryDate(mJsnobject_tracking.getString("deleveryDate"));
+                model.setMRiskStatus(mJsnobject_tracking.getString("mRiskStatus"));
+                model.setGSTAge(Integer.parseInt(mJsnobject_tracking.getString("GSTAge")));
+                model.setMWeight(mJsnobject_tracking.getString("mWeight"));
+                model.setNextVisit(mJsnobject_tracking.getString("nextVisit"));
+                model.setMLMP(mJsnobject_tracking.getString("mLMP"));
+                model.setMEDD(mJsnobject_tracking.getString("mEDD"));
+                model.setMLatitude(mJsnobject_tracking.getString("mLatitude"));
+                model.setMLongitude(mJsnobject_tracking.getString("mLongitude"));
+                model.setVLongitude(mJsnobject_tracking.getString("VLongitude"));
+                model.setVLatitude(mJsnobject_tracking.getString("vLatitude"));
+                model.setmPhoto(mJsnobject_tracking.getString("mPhoto"));
+
+                realm.commitTransaction();
+                /*txt_mother_name.setText(mJsnobject_tracking.getString("mName"));
                 txt_picme_id.setText(mJsnobject_tracking.getString("mPicmeId"));
                 strMobileNo = mJsnobject_tracking.getString("mMotherMobile");
                 strAltMobileNo = mJsnobject_tracking.getString("mHusbandMobile");
@@ -215,7 +328,7 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
                 strLatitude = mJsnobject_tracking.getString("mLatitude");
                 strLongitude = mJsnobject_tracking.getString("mLongitude");
 
-                str_mPhoto = mJsnobject_tracking.getString("mPhoto");
+                str_mPhoto = mJsnobject_tracking.getString("mPhoto");*/
 
 
                 Picasso.with(context)
@@ -235,13 +348,11 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
-    public void showLoginError(String message) {
-//        AppConstants.SELECTED_MID="0";
-
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    public void showLoginError(String string) {
 
     }
 

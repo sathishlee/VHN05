@@ -32,6 +32,7 @@ import com.unicef.vhn.model.ANTT1ResponseModel;
 import com.unicef.vhn.model.PNMotherListResponse;
 import com.unicef.vhn.model.SOSListResponse;
 import com.unicef.vhn.realmDbModel.ANTT1RealmModel;
+import com.unicef.vhn.realmDbModel.DashBoardRealmModel;
 import com.unicef.vhn.realmDbModel.SosListRealmModel;
 import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.view.MotherListsViews;
@@ -102,7 +103,6 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
         preferenceData =new PreferenceData(this);
         pnMotherListPresenter = new MotherListPresenter(SosAlertListActivity.this,this);
         if (checkNetwork.isNetworkAvailable()) {
-
             pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_SOS_MOTHER_LIST, preferenceData.getVhnCode(), preferenceData.getVhnId());
         }
         else{
@@ -119,6 +119,8 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
         mother_recycler_view.setAdapter(mAdapter);
 
         if (isoffline) {
+
+
             showOfflineData();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -225,9 +227,13 @@ pDialog.dismiss();
         }
         Log.e("ANTT1 list size ->", antt1listRealmResult.size() + "");
         for (int i = 0; i < antt1listRealmResult.size(); i++) {
+
+
             mresponseResult = new SOSListResponse.VhnAN_Mothers_List();
 
             SosListRealmModel model = antt1listRealmResult.get(i);
+
+            Log.e("Sos Alert list ->", i+ model.getSosStatus());
 
 
             mresponseResult.setMid(model.getMid());

@@ -4,6 +4,8 @@ package com.unicef.vhn.fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -12,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +63,8 @@ import io.realm.RealmResults;
 public class home extends Fragment implements MotherListsViews {
     ImageView img_mother_count, img_high_risk_count, img_infant_count, userImageProfile;
     public TextView txt_mother_count, txt_high_risk_count, txt_infants_count, txt_sos_count;
-    Button but_an_mother_total_count, but_an_mother_high_risk_count, but_an_mother_pn_hbnc_totlal_count, but_an_mother_pn_hbnc_term_preterm_count;
+    Button but_an_mother_total_count, but_an_mother_high_risk_count, but_an_mother_pn_hbnc_totlal_count,
+            but_an_mother_pn_hbnc_term_preterm_count;
     TextView txt_antt_1_due, txt_antt_2_due, txt_pnhbnc_due;
 
     private ViewFlipper mFlipper;
@@ -112,7 +116,16 @@ public class home extends Fragment implements MotherListsViews {
             public void onClick(View v) {
                 AppConstants.GET_MOTHER_LIST_TYPE = "mother_count";
                 AppConstants.MOTHER_LIST_TITLE = "All Mother List";
+                if (!preferenceData.getFilterStatus()) {
+//                    preferenceData.setFilterStatus(false);
+                    preferenceData.setTermister("All");
+                    preferenceData.setVillageName("All");
+                    preferenceData.setHighRiskStatus(false);
+                    preferenceData.setDescendingStatus(false);
+                }else{
+//                    preferenceData.setFilterStatus(true);
 
+                }
 //                startActivity(new Intent(getActivity(), MotherHighRiskListActivity.class));
                 startActivity(new Intent(getActivity(), AllMotherListActivity.class));
 
@@ -349,6 +362,8 @@ public class home extends Fragment implements MotherListsViews {
                         .transform(new RoundedTransformation(90, 4))
                         .error(R.drawable.ic_nurse)
                         .into(userImageProfile);
+
+
             }
         }
 
@@ -418,7 +433,7 @@ public class home extends Fragment implements MotherListsViews {
                     dashBoardRealmModel.setVphoto("");
                 }
                 dashBoardRealmModel.setVphoto(jobj__phcDetails.getString("vphoto"));
-
+                preferenceData.setPhoto(jobj__phcDetails.getString("vphoto"));
 
                 realm.commitTransaction(); //close table
 
@@ -499,7 +514,7 @@ public class home extends Fragment implements MotherListsViews {
             str_mPhoto = model.getVphoto();
             Log.d("vphoto-->", Apiconstants.PHOTO_URL + str_mPhoto);
 
-            Picasso.with(context)
+            /*Picasso.with(context)
                     .load(Apiconstants.PHOTO_URL + str_mPhoto)
                     .placeholder(R.drawable.ic_nurse)
                     .fit()
@@ -508,7 +523,7 @@ public class home extends Fragment implements MotherListsViews {
                     .networkPolicy(NetworkPolicy.NO_CACHE)
                     .transform(new RoundedTransformation(90, 4))
                     .error(R.drawable.ic_nurse)
-                    .into(userImageProfile);
+                    .into(userImageProfile);*/
         }
 
         realm.commitTransaction();
@@ -526,4 +541,10 @@ public class home extends Fragment implements MotherListsViews {
         realm = RealmController.with(getActivity()).getRealm(); // opens "myrealm.realm"
 
     }*/
+  @Override
+  public void onResume() {
+      super.onResume();
+//      realm = RealmController.with(getActivity()).getRealm(); // opens "myrealm.realm"
+AppConstants.ISQUERYFILTER=false;
+  }
 }

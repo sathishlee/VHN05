@@ -5,6 +5,7 @@ package com.unicef.vhn.constant;
  */
 
 public class AppConstants {
+    public static boolean ISQUERYFILTER = false;
     public static String NEAR_LATITUDE = "";
     public static String NEAR_LONGITUDE = "";
     public static   int isfromhome=0;
@@ -30,6 +31,7 @@ public class AppConstants {
 
     public static final String VHN_NAME = "vhnName";
     public static final String VHN_CODE = "vhnCode";
+    public static final String VHN_PHOTO = "";
     public static String SELECTED_MID = "0";
     public static String MOTHER_PICME_ID = "0";
     public static String MOTHER_ID = "0";

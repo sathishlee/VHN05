@@ -28,9 +28,6 @@ import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.activity.MotherLocationActivity;
 import com.unicef.vhn.activity.MotherVisitReport.PNMotherVisitReportActivity;
-import com.unicef.vhn.activity.MothersDetailsActivity;
-import com.unicef.vhn.activity.PNMotherDetailsActivity;
-import com.unicef.vhn.activity.PNViewReportsActivity;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
@@ -194,7 +191,7 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
         } else {
 
             // Camera permissions is already available, show the camera preview.
-            Log.i(MothersDetailsActivity.class.getSimpleName(),"CALL permission has already been granted. Displaying camera preview.");
+            Log.i(PNMotherDetailsViewActivity.class.getSimpleName(),"CALL permission has already been granted. Displaying camera preview.");
 //            showCameraPreview();
             startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+"+str_mobile_number)));
 
@@ -205,7 +202,7 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
 
 
 
-        Log.i(MothersDetailsActivity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
+        Log.i(PNMotherDetailsViewActivity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
 
         // BEGIN_INCLUDE(camera_permission_request)
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
@@ -213,7 +210,7 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
             // Provide an additional rationale to the user if the permission was not granted
             // and the user would benefit from additional context for the use of the permission.
             // For example if the user has previously denied the permission.
-            Log.i(MothersDetailsActivity.class.getSimpleName(),            "Displaying camera permission rationale to provide additional context.");
+            Log.i(PNMotherDetailsViewActivity.class.getSimpleName(),            "Displaying camera permission rationale to provide additional context.");
             Toast.makeText(this,"Displaying camera permission rationale to provide additional context.",Toast.LENGTH_SHORT).show();
 
         } else {

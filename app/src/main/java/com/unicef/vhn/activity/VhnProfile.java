@@ -238,7 +238,8 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
         tvNumber1 = (TextView) findViewById(R.id.tvNumber1);
 
         if (isOffline) {
-            showOfflineData();
+//            showOfflineData();
+//            setValuesToUI();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Record Not Found");
@@ -316,16 +317,16 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
             JSONObject jsonObject = new JSONObject(response);
             String status = jsonObject.getString("status");
             String msg = jsonObject.getString("message");
-            RealmResults<VhnProfileRealmModel> motherListAdapterRealmModel = realm.where(VhnProfileRealmModel.class).findAll();
+        /*    RealmResults<VhnProfileRealmModel> motherListAdapterRealmModel = realm.where(VhnProfileRealmModel.class).findAll();
             Log.e("Realm size ---->", motherListAdapterRealmModel.size() + "");
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
                     realm.delete(VhnProfileRealmModel.class);
                 }
-            });
+            })*/;
             if (status.equalsIgnoreCase("1")) {
-                realm.beginTransaction();
+              /*  realm.beginTransaction();
                 vhnProfileRealmModel = realm.createObject(VhnProfileRealmModel.class);
 
                 JSONObject editprofile = jsonObject.getJSONObject("EditProfile");
@@ -341,7 +342,7 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
                 vhnProfileRealmModel.setVhnCode(editprofile.getString("vphoto"));
 
                 realm.commitTransaction();
-
+*/
                 /*user_name.setText(editprofile.getString("vhnName"));
                 txt_vhn_id.setText(editprofile.getString("vhnCode"));
                 address.setText(editprofile.getString("vhnAddress"));
@@ -369,10 +370,10 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        setValuesToUI();
+//        setValuesToUI();
     }
 
-    private void setValuesToUI() {
+    /*private void setValuesToUI() {
         realm.beginTransaction();
         RealmResults<VhnProfileRealmModel> vhnProfileRealmModelRealmResults = realm.where(VhnProfileRealmModel.class).findAll();
 
@@ -400,40 +401,41 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
                     .error(R.drawable.ln_logo)
                     .into(user_profile_photo);
         }
-    }
+        realm.commitTransaction();
+    }*/
 
 
-    private void showOfflineData() {
+    /* private void showOfflineData() {
 
-        realm.beginTransaction();
-        RealmResults<VhnProfileRealmModel> vhnProfileRealmModelRealmResults = realm.where(VhnProfileRealmModel.class).findAll();
+         realm.beginTransaction();
+         RealmResults<VhnProfileRealmModel> vhnProfileRealmModelRealmResults = realm.where(VhnProfileRealmModel.class).findAll();
 
-        for (int i = 0; i < vhnProfileRealmModelRealmResults.size(); i++) {
-            VhnProfileRealmModel model = vhnProfileRealmModelRealmResults.get(i);
-            user_name.setText(model.getVhnName());
-            txt_vhn_id.setText(model.getVhnId());
-            address.setText(model.getVhnAddress());
-            phc_name.setText(model.getHscName());
-            district_name.setText(model.getVhnDistrict());
-            tvNumber1.setText(model.getVhnMobile());
-            tvNumber5.setText(model.getVhnBlock());
+         for (int i = 0; i < vhnProfileRealmModelRealmResults.size(); i++) {
+             VhnProfileRealmModel model = vhnProfileRealmModelRealmResults.get(i);
+             user_name.setText(model.getVhnName());
+             txt_vhn_id.setText(model.getVhnId());
+             address.setText(model.getVhnAddress());
+             phc_name.setText(model.getHscName());
+             district_name.setText(model.getVhnDistrict());
+             tvNumber1.setText(model.getVhnMobile());
+             tvNumber5.setText(model.getVhnBlock());
 
-            str_mPhoto = model.getVphoto();
+             str_mPhoto = model.getVphoto();
 
-            Log.d("vphoto-->", Apiconstants.PHOTO_URL + str_mPhoto);
+             Log.d("vphoto-->", Apiconstants.PHOTO_URL + str_mPhoto);
 
-            Picasso.with(context)
-                    .load(Apiconstants.PHOTO_URL + str_mPhoto)
-                    .placeholder(R.drawable.ln_logo)
-                    .fit()
-                    .centerCrop()
-                    .memoryPolicy(MemoryPolicy.NO_CACHE)
-                    .networkPolicy(NetworkPolicy.NO_CACHE)
-                    .error(R.drawable.ln_logo)
-                    .into(user_profile_photo);
-        }
-    }
-
+             Picasso.with(context)
+                     .load(Apiconstants.PHOTO_URL + str_mPhoto)
+                     .placeholder(R.drawable.ln_logo)
+                     .fit()
+                     .centerCrop()
+                     .memoryPolicy(MemoryPolicy.NO_CACHE)
+                     .networkPolicy(NetworkPolicy.NO_CACHE)
+                     .error(R.drawable.ln_logo)
+                     .into(user_profile_photo);
+         }
+     }
+ */
     @Override
     public void errorViewProfile(String response) {
 

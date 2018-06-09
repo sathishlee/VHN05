@@ -48,7 +48,7 @@ import io.realm.RealmResults;
  * Created by priyan on 2/3/2018.
  */
 
-public class risk extends Fragment implements MotherListsViews, MakeCallInterface {
+public class risk extends Fragment implements MotherListsViews, MakeCallInterface, MotherListAdapter.ContactsAdapterListener {
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
@@ -103,7 +103,7 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
 //        pnMotherListPresenter.getPNMotherList("V10001","1");
         mResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView) view.findViewById(R.id.recycler_view);
-        mAdapter = new MotherListAdapter(mResult, getActivity(), "Risk", this);
+        mAdapter = new MotherListAdapter(mResult, getActivity(), "Risk", this,this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mother_recycler_view.setLayoutManager(mLayoutManager);
         mother_recycler_view.setItemAnimator(new DefaultItemAnimator());
@@ -328,5 +328,10 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
                 }
                 return;
         }
+    }
+
+    @Override
+    public void onContactSelected(PNMotherListResponse.VhnAN_Mothers_List contact) {
+
     }
 }

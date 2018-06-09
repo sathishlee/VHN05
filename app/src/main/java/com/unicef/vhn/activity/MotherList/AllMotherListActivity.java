@@ -39,7 +39,6 @@ import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.PNMotherListResponse;
-import com.unicef.vhn.realmDbModel.MotherListRealm;
 import com.unicef.vhn.realmDbModel.PNMMotherListRealmModel;
 import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.view.MotherListsViews;
@@ -55,7 +54,8 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
-public class AllMotherListActivity extends AppCompatActivity implements MotherListsViews, MakeCallInterface {
+public class AllMotherListActivity extends AppCompatActivity implements MotherListsViews,
+        MakeCallInterface, MotherListAdapter.ContactsAdapterListener {
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
@@ -86,6 +86,7 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
     ArrayList<String> vhnVillageList;
     ArrayList<String> termisterlist;
     LinearLayout ll_filter_block;
+    boolean isfillter = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,16 +106,17 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
     }
 
     private void initUI() {
-        ll_filter_block=(LinearLayout) findViewById(R.id.ll_filter_block);
+        ll_filter_block = (LinearLayout) findViewById(R.id.ll_filter_block);
         if (AppConstants.MOTHER_LIST_TITLE.equalsIgnoreCase("AN Mother List")) {
             ll_filter_block.setVisibility(View.GONE);
-                } else if (AppConstants.MOTHER_LIST_TITLE.equalsIgnoreCase("AN High Risk Mother List")) {
+        }
+        else if (AppConstants.MOTHER_LIST_TITLE.equalsIgnoreCase("AN High Risk Mother List")) {
             ll_filter_block.setVisibility(View.GONE);
         } else if (AppConstants.MOTHER_LIST_TITLE.equalsIgnoreCase("High Risk Mother List")) {
             ll_filter_block.setVisibility(View.GONE);
         } else if (AppConstants.MOTHER_LIST_TITLE.equalsIgnoreCase("PN/HBNC Mother List")) {
             ll_filter_block.setVisibility(View.GONE);
-        }else{
+        } else {
             ll_filter_block.setVisibility(View.VISIBLE);
 
         }
@@ -127,15 +129,17 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
+
         pnMotherListPresenter = new MotherListPresenter(AllMotherListActivity.this, this);
         if (checkNetwork.isNetworkAvailable()) {
-            pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_LIST, preferenceData.getVhnCode(), preferenceData.getVhnId());
+            pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_LIST,
+                    preferenceData.getVhnCode(), preferenceData.getVhnId());
         } else {
             isOffline = true;
         }
         mResult = new ArrayList<>();
 
-        mAdapter = new MotherListAdapter(mResult, AllMotherListActivity.this, "AN", this);
+        mAdapter = new MotherListAdapter(mResult,AllMotherListActivity.this,"AN", this,this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(AllMotherListActivity.this);
         mother_recycler_view.setLayoutManager(mLayoutManager);
@@ -152,6 +156,7 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
         txt_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                preferenceData.setFilterStatus(true);
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.dialog_fragment);
                 CheckBox ch_highRisk, ch_desc, ch_anmother, ch_pnmother;
@@ -195,7 +200,8 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
                 termisterlist.add("7-10");
 
                 realm.beginTransaction();
-                RealmResults<PNMMotherListRealmModel> getVillageList = realm.where(PNMMotherListRealmModel.class).findAll();
+                RealmResults<PNMMotherListRealmModel> getVillageList=null;
+               getVillageList = realm.where(PNMMotherListRealmModel.class).findAll();
                 vhnVillageList.add("All");
                 for (int i = 0; i < getVillageList.size(); i++) {
                     strVillageName = getVillageList.get(0).getmVillage();
@@ -295,7 +301,8 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
             String message = mJsnobject.getString("message");
             if (status.equalsIgnoreCase("1")) {
                 JSONArray jsonArray = mJsnobject.getJSONArray("vhnAN_Mothers_List");
-                RealmResults<PNMMotherListRealmModel> motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).findAll();
+                RealmResults<PNMMotherListRealmModel> motherListAdapterRealmModel =null;
+                motherListAdapterRealmModel= realm.where(PNMMotherListRealmModel.class).findAll();
                 Log.e("Realm size ---->", motherListAdapterRealmModel.size() + "");
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
@@ -347,6 +354,7 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
     }
 
     private void setValuetoUI() {
+//        preferenceData.getFilterStatus();
         RealmResults<PNMMotherListRealmModel> motherListAdapterRealmModel = null;
         Log.w(AllMotherListActivity.class.getSimpleName(), "setValuetoUI is Internet Conection-" + checkNetwork.isNetworkAvailable());
         realm.beginTransaction();
@@ -356,57 +364,64 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
             motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("motherType", "AN").findAll();
         } else if (AppConstants.MOTHER_LIST_TITLE.equalsIgnoreCase("AN High Risk Mother List")) {
             Log.w(AllMotherListActivity.class.getSimpleName(), AppConstants.MOTHER_LIST_TITLE);
-            motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("motherType", "AN").equalTo("mRiskStatus", "HIGH").findAll();
+            motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("motherType", "AN")
+                    .equalTo("mRiskStatus", "HIGH").findAll();
         } else if (AppConstants.MOTHER_LIST_TITLE.equalsIgnoreCase("High Risk Mother List")) {
             Log.w(AllMotherListActivity.class.getSimpleName(), AppConstants.MOTHER_LIST_TITLE);
-            motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("mRiskStatus", "HIGH").findAll();
+            motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class)
+                    .equalTo("mRiskStatus", "HIGH").findAll();
         } else if (AppConstants.MOTHER_LIST_TITLE.equalsIgnoreCase("PN/HBNC Mother List")) {
             Log.w(AllMotherListActivity.class.getSimpleName(), AppConstants.MOTHER_LIST_TITLE);
-            motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("motherType", "PN").findAll();
-        }
-      else if (AppConstants.MOTHER_LIST_TITLE.equalsIgnoreCase("All Mother List")){
-        if (preferenceData.getHighRiskStatus()) {
-            Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T");
+            motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class)
+                    .equalTo("motherType", "PN").findAll();
+        } else if (AppConstants.MOTHER_LIST_TITLE.equalsIgnoreCase("All Mother List")) {
+            if (preferenceData.getHighRiskStatus()) {
+                Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T");
 
-            if (preferenceData.getTermister().equalsIgnoreCase("1-3")) {
-                Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T    Termister -->1");
+                if (preferenceData.getTermister().equalsIgnoreCase("1-3")) {
+                    Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T    Termister -->1");
 
-                motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel, "HIGH", 1, 3, preferenceData.getDescendingStatus());
-            } else if (preferenceData.getTermister().equalsIgnoreCase("4-6")) {
-                Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T    Termister -->2");
-                motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel, "HIGH", 4, 6, preferenceData.getDescendingStatus());
+                    motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel,
+                            "HIGH", 1, 3, preferenceData.getDescendingStatus());
+                } else if (preferenceData.getTermister().equalsIgnoreCase("4-6")) {
+                    Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T    Termister -->2");
+                    motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel,
+                            "HIGH", 4, 6, preferenceData.getDescendingStatus());
 
-            } else if (preferenceData.getTermister().equalsIgnoreCase("7-10")) {
-                Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T    Termister -->3");
-                motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel, "HIGH", 7, 10, preferenceData.getDescendingStatus());
+                } else if (preferenceData.getTermister().equalsIgnoreCase("7-10")) {
+                    Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T    Termister -->3");
+                    motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel,
+                            "HIGH", 7, 10, preferenceData.getDescendingStatus());
 
-            } else if (preferenceData.getTermister().equalsIgnoreCase("All")){
-                Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T    Termister -->Null");
-                motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel, "HIGH", 0, 0, preferenceData.getDescendingStatus());
-            }
-        } else {
-
-            Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> F ");
-
-            if (preferenceData.getTermister().equalsIgnoreCase("1-3")) {
-                Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T    Termister -->1");
-
-                motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel, "", 1, 3, preferenceData.getDescendingStatus());
-            } else if (preferenceData.getTermister().equalsIgnoreCase("4-6")) {
-                Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T    Termister -->2");
-                motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel, "", 4, 6, preferenceData.getDescendingStatus());
-
-            } else if (preferenceData.getTermister().equalsIgnoreCase("7-10")) {
-                Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T    Termister -->3");
-                motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel, "", 7, 10, preferenceData.getDescendingStatus());
-
+                } else if (preferenceData.getTermister().equalsIgnoreCase("All")) {
+                    Log.w(AllMotherListActivity.class.getSimpleName(),
+                            "strHighRisk --> T strDescending -->T    Termister -->Null");
+                    motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel,
+                            "HIGH", 0, 0, preferenceData.getDescendingStatus());
+                }
             } else {
-                Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T    Termister -->Null");
-                motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel, "", 1, 10, preferenceData.getDescendingStatus());
 
+                Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> F ");
+
+                if (preferenceData.getTermister().equalsIgnoreCase("1-3")) {
+                    Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T    Termister -->1");
+
+                    motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel, "", 1, 3, preferenceData.getDescendingStatus());
+                } else if (preferenceData.getTermister().equalsIgnoreCase("4-6")) {
+                    Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T    Termister -->2");
+                    motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel, "", 4, 6, preferenceData.getDescendingStatus());
+
+                } else if (preferenceData.getTermister().equalsIgnoreCase("7-10")) {
+                    Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T    Termister -->3");
+                    motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel, "", 7, 10, preferenceData.getDescendingStatus());
+
+                } else {
+                    Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T    Termister -->Null");
+                    motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel, "", 1, 10, preferenceData.getDescendingStatus());
+
+                }
             }
         }
-    }
         if (motherListAdapterRealmModel.size() == 0) {
             mother_recycler_view.setVisibility(View.GONE);
             txt_no_records_found.setVisibility(View.VISIBLE);
@@ -438,13 +453,13 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
             if (preferenceData.getVillageName().equalsIgnoreCase("All")) {
                 if (!preferenceData.getTermister().equalsIgnoreCase("All")) {
                     motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("mRiskStatus", riskStatus).between("currentMonth", s, s1).findAll();
-                }else{
+                } else {
                     motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("mRiskStatus", riskStatus).findAll();
                 }
-            }else{
+            } else {
                 if (!preferenceData.getTermister().equalsIgnoreCase("All")) {
                     motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("mRiskStatus", riskStatus).between("currentMonth", s, s1).equalTo("mVillage", preferenceData.getVillageName()).findAll();
-                }else{
+                } else {
                     motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("mRiskStatus", riskStatus).findAll();
                 }
             }
@@ -452,15 +467,15 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
             if (preferenceData.getVillageName().equalsIgnoreCase("All")) {
                 if (!preferenceData.getTermister().equalsIgnoreCase("All")) {
                     motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).between("currentMonth", s, s1).findAll();
-                }else{
+                } else {
                     motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).findAll();
 
                 }
-            }else{
+            } else {
                 if (!preferenceData.getTermister().equalsIgnoreCase("All")) {
 
                     motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).between("currentMonth", s, s1).equalTo("mVillage", preferenceData.getVillageName()).findAll();
-                }else{
+                } else {
                     motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("mVillage", preferenceData.getVillageName()).findAll();
 
                 }
@@ -522,5 +537,12 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
                 }
                 return;
         }
+    }
+
+
+
+    @Override
+    public void onContactSelected(PNMotherListResponse.VhnAN_Mothers_List contact) {
+
     }
 }

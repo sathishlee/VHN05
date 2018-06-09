@@ -3,6 +3,8 @@ package com.unicef.vhn.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +16,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -96,21 +100,33 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        ImageView imageView = (ImageView) findViewById(R.id.  cardview_image);
-       /* Picasso.with(this)
-                .load(Apiconstants.MOTHER_PHOTO_URL + preferenceData.get)
-                .placeholder(R.drawable.girl)
-                .fit()
-                .centerCrop()
-                .memoryPolicy(MemoryPolicy.NO_CACHE)
-                .networkPolicy(NetworkPolicy.NO_CACHE)
-                .transform(new RoundedTransformation(90, 4))
-                .error(R.drawable.girl)
-                .into(cardview_image);*/
-        TextView vhnName = (TextView) findViewById(R.id.  txt_username);
-//        vhnName.setText(preferenceData.getVhnName());
-        TextView vhnId = (TextView) findViewById(R.id.  vhn_id);
-//        vhnId.setText(preferenceData.getVhnId());
+        View headerView = navigationView.getHeaderView(0);
+        ImageView imageView = (ImageView) headerView. findViewById(R.id.  cardview_image);
+      String  str_mPhoto = preferenceData.getphoto();
+
+        if(TextUtils.isEmpty(str_mPhoto)){
+            imageView.setImageResource(R.drawable.girl);
+        }else{
+            Log.d("mphoto-->", Apiconstants.PHOTO_URL+str_mPhoto);
+
+            Picasso.with(getApplicationContext())
+                    .load(Apiconstants.PHOTO_URL + str_mPhoto)
+                    .placeholder(R.drawable.girl)
+                    .fit()
+                    .centerCrop()
+                    .memoryPolicy(MemoryPolicy.NO_CACHE)
+                    .networkPolicy(NetworkPolicy.NO_CACHE)
+
+                    .error(R.drawable.girl)
+                    .into(imageView);
+
+
+//             .transform(new RoundedTransformation(90,4))
+        }
+        TextView vhnName = (TextView)headerView. findViewById(R.id.  txt_username);
+        vhnName.setText("VHN NAME : "+preferenceData.getVhnName().toUpperCase());
+        TextView vhnId = (TextView) headerView.findViewById(R.id.  vhn_id);
+        vhnId.setText("VHN ID : "+preferenceData.getVhnId());
                 navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
 
@@ -221,8 +237,8 @@ public class MainActivity extends AppCompatActivity
 
         }
         else if (id == R.id.migration_mother) {
-//            Intent i = new Intent(getApplicationContext(),MotherMigration.class);
-            Intent i = new Intent(getApplicationContext(),MigrationMotherListActivity.class);
+            Intent i = new Intent(getApplicationContext(),MotherMigration.class);
+//            Intent i = new Intent(getApplicationContext(),MigrationMotherListActivity.class);
             startActivity(i);
         }
         else if (id == R.id.change_language) {

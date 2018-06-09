@@ -2,6 +2,8 @@ package com.unicef.vhn.fragment;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -13,6 +15,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,17 +31,14 @@ import com.unicef.vhn.activity.ANTT1MothersList;
 import com.unicef.vhn.adapter.MotherListAdapter;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
+import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.PNMotherListResponse;
 import com.unicef.vhn.realmDbModel.ANMVisitRealmModel;
-import com.unicef.vhn.realmDbModel.DelevaryDetailsPnMotherRealmModel;
 import com.unicef.vhn.realmDbModel.MotherListRealm;
 import com.unicef.vhn.realmDbModel.PNMMotherListRealmModel;
 import com.unicef.vhn.realmDbModel.PNMVisitRealmModel;
-import com.unicef.vhn.realmDbModel.PrimaryMotherDetailsRealmModel;
 import com.unicef.vhn.utiltiy.CheckNetwork;
-import com.unicef.vhn.view.MotherDeliveryViews;
 import com.unicef.vhn.view.MotherListsViews;
-import com.unicef.vhn.view.PrimaryRegisterViews;
 import com.unicef.vhn.view.VisitANMotherViews;
 
 import org.json.JSONArray;
@@ -55,7 +55,7 @@ import io.realm.RealmResults;
  * Created by priyan on 2/3/2018.
  */
 
-public class mothers extends Fragment implements MotherListsViews, MakeCallInterface, VisitANMotherViews
+public class mothers extends Fragment implements MotherListsViews, MakeCallInterface, VisitANMotherViews,MotherListAdapter.ContactsAdapterListener
 //        , PrimaryRegisterViews, MotherDeliveryViews
 {
 
@@ -79,6 +79,9 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
 
     ANMVisitRealmModel mhealthRecordResponseModel;
     PNMVisitRealmModel pnmVisitRealmModel;
+
+
+    private SearchView searchView;
 
 
 //    MotherPrimaryRegisterPresenter motherPrimaryRegisterPresenter;
@@ -150,6 +153,9 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(getActivity());
 
+        searchView =(SearchView)view.findViewById(R.id.search_mother);
+
+
 //        motherPicmeIdList = new ArrayList<>();
 //        mothermidList = new ArrayList<>();
 //        mothertypeList = new ArrayList<>();
@@ -175,7 +181,7 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
 
         mResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView) view.findViewById(R.id.mother_recycler_view);
-        mAdapter = new MotherListAdapter(mResult, getActivity(), "", this);
+        mAdapter = new MotherListAdapter(mResult, getActivity(), "", this,mothers.this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mother_recycler_view.setLayoutManager(mLayoutManager);
         mother_recycler_view.setItemAnimator(new DefaultItemAnimator());
@@ -203,6 +209,29 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
             builder.setMessage("Record Not Found");
             builder.create();
         }
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // filter recycler view when query submitted
+                mAdapter.getFilter().filter(query);
+                AppConstants.ISQUERYFILTER=true;
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                // filter recycler view when text is changed
+                AppConstants.ISQUERYFILTER=true;
+
+                mAdapter.getFilter().filter(query);
+                return false;
+            }
+        });
+
     }
 
 
@@ -792,5 +821,11 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
                 }
                 return;
         }
+    }
+
+
+    @Override
+    public void onContactSelected(PNMotherListResponse.VhnAN_Mothers_List contact) {
+
     }
 }

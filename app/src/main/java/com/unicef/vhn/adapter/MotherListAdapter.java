@@ -21,14 +21,11 @@ import com.unicef.vhn.activity.MotherDetails.ANMotherDetailsViewActivcity;
 import com.unicef.vhn.activity.MotherDetails.PNMotherDetailsViewActivity;
 import com.unicef.vhn.activity.MotherLocationActivity;
 import com.unicef.vhn.activity.MothersDetailsActivity;
-import com.unicef.vhn.activity.PNMotherDeliveryReportActivity;
-import com.unicef.vhn.activity.PNMotherDetailsActivity;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.PNMotherListResponse;
 import com.unicef.vhn.utiltiy.RoundedTransformation;
 
-import java.nio.file.DirectoryStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,23 +33,26 @@ import java.util.List;
 import android.widget.Filter;
 import android.widget.Filterable;
 
+
 /**
  * Created by sathish on 3/20/2018.
  */
 
-public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.ViewHolder> {
+public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.ViewHolder>  implements Filterable{
     private List<PNMotherListResponse.VhnAN_Mothers_List> mResult;
     private List<PNMotherListResponse.VhnAN_Mothers_List> mResultfilter;
     Activity applicationContext;
     MakeCallInterface makeCallInterface;
     String strMid, str_mPhoto, type;
+    ContactsAdapterListener listener;
 
-
-    public MotherListAdapter(List<PNMotherListResponse.VhnAN_Mothers_List> mResult, Activity applicationContext, String type, MakeCallInterface makeCallInterface) {
+    public MotherListAdapter(List<PNMotherListResponse.VhnAN_Mothers_List> mResult, Activity applicationContext,
+                             String type, MakeCallInterface makeCallInterface, ContactsAdapterListener listener) {
         this.applicationContext = applicationContext;
         this.mResult = mResult;
         this.type = type;
         this.makeCallInterface = makeCallInterface;
+        this.listener = listener;
 
     }
 
@@ -156,10 +156,6 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
         });
     }
 
-    @Override
-    public int getItemCount() {
-        return mResult.size();
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txt_username, txt_picme_id, txt_list_type;
@@ -176,11 +172,31 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
             ll_track_location = itemView.findViewById(R.id.ll_track_location);
             ll_call = itemView.findViewById(R.id.ll_call);
             cardview_image = itemView.findViewById(R.id.cardview_image);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onContactSelected(mResultfilter.get(getAdapterPosition()));
+
+                }
+            });
         }
     }
 
-   /* @Override
-    public Filter getFilter(){
+    @Override
+    public int getItemCount() {
+        if (AppConstants.ISQUERYFILTER){
+                    return mResultfilter.size();
+        }else{
+            return  mResult.size();
+
+        }
+
+    }
+
+
+    @Override
+    public Filter getFilter() {
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
@@ -193,24 +209,30 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
 
                         // name match condition. this might differ depending on your requirement
                         // here we are looking for name or phone number match
-                        *//*if (row.getName().toLowerCase().contains(charString.toLowerCase()) || row.getPhone().contains(charSequence)) {
-                            filteredList.add(row);
-                        }*//*
-                    }
-                    mResultfilter = filteredList;
 
+                        if (row.getMName().toLowerCase().contains(charString.toLowerCase()) || row.getMPicmeId().contains(charSequence)) {
+                          Log.e("filter mother name",row.getMName());
+                          Log.e("filter mother picme id",row.getMPicmeId());
+                            filteredList.add(row);
+                        }
+                    }
+
+                    mResultfilter = filteredList;
                 }
-//                return null;
+
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = mResultfilter;
                 return filterResults;
             }
 
             @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
                 mResultfilter = (ArrayList<PNMotherListResponse.VhnAN_Mothers_List>) filterResults.values;
                 notifyDataSetChanged();
             }
         };
-    }*/
+    }
+    public interface ContactsAdapterListener {
+        void onContactSelected(PNMotherListResponse.VhnAN_Mothers_List contact);
+    }
 }

@@ -6,6 +6,8 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 
 
+import com.unicef.vhn.utiltiy.MyFirebaseMessagingService;
+
 import io.realm.Realm;
 
 
@@ -52,4 +54,11 @@ public class RealmController extends Application {
         return realm;
     }
 
+    public static RealmController with(MyFirebaseMessagingService myFirebaseMessagingService) {
+        if (instance == null) {
+            instance = new RealmController(myFirebaseMessagingService.getApplication());
+        }
+        return instance;
+
+    }
 }

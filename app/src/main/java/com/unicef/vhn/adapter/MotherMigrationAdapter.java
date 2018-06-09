@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.unicef.vhn.Interface.MakeCallInterface;
 import com.unicef.vhn.R;
+import com.unicef.vhn.activity.MotherDetails.MigrationMotherDetailsViewActivcity;
 import com.unicef.vhn.activity.MotherLocationActivity;
 import com.unicef.vhn.activity.MothersDetailsActivity;
 import com.unicef.vhn.activity.PNMotherDetailsActivity;
@@ -88,16 +89,22 @@ public class MotherMigrationAdapter extends RecyclerView.Adapter<MotherMigration
             public void onClick(View v) {
                 AppConstants.SELECTED_MID = vhn_migrated_mother.getMid();
                 if (type.equalsIgnoreCase("PN")) {
-                    activity.startActivity(new Intent(activity.getApplicationContext(), PNMotherDetailsActivity.class));
+//                    activity.startActivity(new Intent(activity.getApplicationContext(), PNMotherDetailsActivity.class));
+                    activity.startActivity(new Intent(activity.getApplicationContext(), MigrationMotherDetailsViewActivcity.class));
+
 
                 } else if (type.equalsIgnoreCase("AN")) {
-                    activity.startActivity(new Intent(activity.getApplicationContext(), MothersDetailsActivity.class));
+//                    activity.startActivity(new Intent(activity.getApplicationContext(), MothersDetailsActivity.class));
+                    activity.startActivity(new Intent(activity.getApplicationContext(), MigrationMotherDetailsViewActivcity.class));
 
                 } else if (type.equalsIgnoreCase("Risk")) {
-                    activity.startActivity(new Intent(activity.getApplicationContext(), MothersDetailsActivity.class));
+                    activity.startActivity(new Intent(activity.getApplicationContext(), MigrationMotherDetailsViewActivcity.class));
+
+//                    activity.startActivity(new Intent(activity.getApplicationContext(), MothersDetailsActivity.class));
 
                 } else {
-                    activity.startActivity(new Intent(activity.getApplicationContext(), MothersDetailsActivity.class));
+//                    activity.startActivity(new Intent(activity.getApplicationContext(), MothersDetailsActivity.class));
+                    activity.startActivity(new Intent(activity.getApplicationContext(), MigrationMotherDetailsViewActivcity.class));
 
                 }
             }

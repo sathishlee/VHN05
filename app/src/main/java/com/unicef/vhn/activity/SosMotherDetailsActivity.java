@@ -147,7 +147,7 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
 
     @Override
     public void showLoginError(String response) {
-        Log.e(MotherTrackActivity.class.getSimpleName(), "Response Error" + response);
+        Log.e(SosMotherDetailsActivity.class.getSimpleName(), "Response Error" + response);
 
     }
 
@@ -217,7 +217,7 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
         } else {
 
             // Camera permissions is already available, show the camera preview.
-            Log.i(MothersDetailsActivity.class.getSimpleName(), "CALL permission has already been granted. Displaying camera preview.");
+            Log.i(SosMotherDetailsActivity.class.getSimpleName(), "CALL permission has already been granted. Displaying camera preview.");
 //            showCameraPreview();
             startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+" + str_mobile_number)));
 
@@ -228,7 +228,7 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
     private void requestCallPermission() {
 
 
-        Log.i(MothersDetailsActivity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
+        Log.i(SosMotherDetailsActivity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
 
         // BEGIN_INCLUDE(camera_permission_request)
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
@@ -236,7 +236,7 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
             // Provide an additional rationale to the user if the permission was not granted
             // and the user would benefit from additional context for the use of the permission.
             // For example if the user has previously denied the permission.
-            Log.i(MothersDetailsActivity.class.getSimpleName(), "Displaying camera permission rationale to provide additional context.");
+            Log.i(SosMotherDetailsActivity.class.getSimpleName(), "Displaying camera permission rationale to provide additional context.");
             Toast.makeText(this, "Displaying camera permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();
 
         } else {

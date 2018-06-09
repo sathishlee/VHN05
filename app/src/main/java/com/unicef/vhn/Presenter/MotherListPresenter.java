@@ -290,10 +290,10 @@ public class MotherListPresenter implements MotherListInteractor {
 
         motherListsViews.showProgress();
         String url = Apiconstants.BASE_URL + Apiconstants.DASH_BOARD_SOS_DETAILS;
-        Log.d("Log in check Url--->", url);
-        Log.d("vhnId--->", vhnId);
-        Log.d("vhnCode--->", vhnCode);
-        Log.d("sosId--->", sosId);
+        Log.e("Log in check Url--->", url);
+        Log.e("vhnId--->", vhnId);
+        Log.e("vhnCode--->", vhnCode);
+        Log.e("sosId--->", sosId);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

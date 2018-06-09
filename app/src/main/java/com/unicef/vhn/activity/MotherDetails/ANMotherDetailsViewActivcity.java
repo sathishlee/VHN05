@@ -28,7 +28,6 @@ import com.unicef.vhn.R;
 import com.unicef.vhn.activity.ANViewReportsActivity;
 import com.unicef.vhn.activity.MotherLocationActivity;
 import com.unicef.vhn.activity.MotherVisitReport.ANMotherVisitReportActivity;
-import com.unicef.vhn.activity.MothersDetailsActivity;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
@@ -179,17 +178,17 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
                 != PackageManager.PERMISSION_GRANTED) {
             requestCallPermission();
         } else {
-            Log.i(MothersDetailsActivity.class.getSimpleName(), "CALL permission has already been granted. Displaying camera preview.");
+            Log.i(ANMotherDetailsViewActivcity.class.getSimpleName(), "CALL permission has already been granted. Displaying camera preview.");
             startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+" + str_mobile_number)));
         }
     }
 
     private void requestCallPermission() {
-        Log.i(MothersDetailsActivity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
+        Log.i(ANMotherDetailsViewActivcity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CALL_PHONE)) {
-            Log.i(MothersDetailsActivity.class.getSimpleName(), "Displaying camera permission rationale to provide additional context.");
+            Log.i(ANMotherDetailsViewActivcity.class.getSimpleName(), "Displaying camera permission rationale to provide additional context.");
             Toast.makeText(this, "Displaying camera permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();
 
         } else {

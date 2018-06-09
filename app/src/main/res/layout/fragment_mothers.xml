@@ -17,7 +17,17 @@
                     android:padding="7dp"
                     android:orientation="vertical">
 
+                    <android.support.v7.widget.SearchView
+                        android:id="@+id/search_mother"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"/>
+
+
+
+
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"

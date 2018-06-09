@@ -46,12 +46,14 @@ public class SOSListAdapter extends RecyclerView.Adapter<SOSListAdapter.ViewHold
         holder.txt_picme_id.setText(SosMotherResponseModel.getMPicmeId());
         holder.txt_mother_type.setText(SosMotherResponseModel.getMotherType());
         strSosId = SosMotherResponseModel.getSosId();
+
         strVHNID = SosMotherResponseModel.getVhnId();
         SosStatus = SosMotherResponseModel.getSosStatus();
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppConstants.SOS_ID = strSosId;
+//                AppConstants.SOS_ID = strSosId;
+                AppConstants.SOS_ID = SosMotherResponseModel.getSosId();
                 AppConstants.SELECTED_MID = SosMotherResponseModel.getMid();
                 applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), SosMotherDetailsActivity.class));
             }

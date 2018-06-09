@@ -1,6 +1,8 @@
 package com.unicef.vhn.application;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDexApplication;
 
 import com.unicef.vhn.broadcastReceiver.ConnectivityReceiver;
 
@@ -11,9 +13,11 @@ import io.realm.RealmConfiguration;
  * Created by sathish on 3/25/2018.
  */
 
-public class MyApplication extends Application {
+//public class MyApplication extends Application {
+public class MyApplication extends MultiDexApplication {
     private static MyApplication mInstance;
-
+//@Override
+//protected void attachBaseContext(Context base) { super.attachBaseContext(base); Multidex.install(this); }
     @Override
     public void onCreate() {
         super.onCreate();
