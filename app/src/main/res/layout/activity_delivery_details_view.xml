@@ -42,7 +42,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Delivery Details"
+                            android:text="@string/delivery_details"
                             android:textAlignment="textStart"
                             android:textColor="#2F80ED"
                             android:textSize="@dimen/text_label"
@@ -101,7 +101,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+<<<<<<< HEAD
                                 android:text="Date"
+=======
+                                android:text="@string/date"
+                                android:textSize="@dimen/text_primary"
+>>>>>>> origin/new
                                 android:textAlignment="textStart"
                                 android:textColor="#aaffffff"
                                 android:textSize="@dimen/text_primary"
@@ -145,9 +150,14 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+<<<<<<< HEAD
                                 android:layout_gravity="start"
                                 android:text="Time"
                                 android:textColor="#aaffffff"
+=======
+                                android:textColor="#aaffffff"
+                                android:text="@string/time"
+>>>>>>> origin/new
                                 android:textSize="@dimen/text_primary"
                                 android:textStyle="bold" />
 
@@ -185,7 +195,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Place"
+                            android:text="@string/place"
                             android:textAlignment="textStart"
                             android:textColor="@color/secondary"
                             android:textSize="@dimen/text_primary"
@@ -213,7 +223,13 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginStart="5dp"
+<<<<<<< HEAD
                             android:text="Type"
+=======
+                            android:text="@string/type"
+                            android:textSize="@dimen/text_primary"
+                            android:layout_gravity="start"
+>>>>>>> origin/new
                             android:textColor="@color/secondary"
                             android:textSize="@dimen/text_primary"
                             android:textStyle="bold" />
@@ -269,7 +285,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Delivery Outcome"
+                            android:text="@string/delivery_outcome"
                             android:textAlignment="textStart"
                             android:textColor="#2F80ED"
                             android:textSize="@dimen/text_label"
@@ -313,7 +329,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+<<<<<<< HEAD
                             android:text="Mother"
+=======
+                            android:text="@string/mother"
+                            android:textSize="@dimen/text_primary"
+>>>>>>> origin/new
                             android:textAlignment="textStart"
                             android:textColor="@color/secondary"
                             android:textSize="@dimen/text_primary"
@@ -341,7 +362,13 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginStart="5dp"
+<<<<<<< HEAD
                             android:text="New Born"
+=======
+                            android:text="@string/new_born"
+                            android:textSize="@dimen/text_primary"
+                            android:layout_gravity="start"
+>>>>>>> origin/new
                             android:textColor="@color/secondary"
                             android:textSize="@dimen/text_primary"
                             android:textStyle="bold" />
@@ -397,7 +424,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+<<<<<<< HEAD
                             android:text="Infant Details"
+=======
+                            android:text="@string/infant_details"
+                            android:textSize="@dimen/text_label"
+>>>>>>> origin/new
                             android:textAlignment="textStart"
                             android:textColor="#2F80ED"
                             android:textSize="@dimen/text_label"
@@ -457,7 +489,7 @@
                                 android:id="@+id/textView2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Height"
+                                android:text="@string/height"
                                 android:textAlignment="textStart"
                                 android:textColor="#aaffffff"
                                 android:textSize="@dimen/text_primary"
@@ -500,9 +532,14 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+<<<<<<< HEAD
                                 android:layout_gravity="start"
                                 android:text="Weight"
                                 android:textColor="#aaffffff"
+=======
+                                android:textColor="#aaffffff"
+                                android:text="@string/weight"
+>>>>>>> origin/new
                                 android:textSize="@dimen/text_primary"
                                 android:textStyle="bold" />
 
@@ -539,7 +576,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+<<<<<<< HEAD
                             android:text="Infant Id"
+=======
+                            android:text="@string/infant_id"
+                            android:textSize="@dimen/text_primary"
+>>>>>>> origin/new
                             android:textAlignment="textStart"
                             android:textColor="@color/secondary"
                             android:textSize="@dimen/text_primary"
@@ -567,7 +609,13 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginStart="5dp"
+<<<<<<< HEAD
                             android:text="Birth Type"
+=======
+                            android:text="@string/birth_type"
+                            android:textSize="@dimen/text_primary"
+                            android:layout_gravity="start"
+>>>>>>> origin/new
                             android:textColor="@color/secondary"
                             android:textSize="@dimen/text_primary"
                             android:textStyle="bold" />
@@ -604,7 +652,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+<<<<<<< HEAD
                             android:text="Breast Fedding Given"
+=======
+                            android:text="@string/breast_fedding_given"
+                            android:textSize="@dimen/text_primary"
+>>>>>>> origin/new
                             android:textAlignment="textStart"
                             android:textColor="@color/secondary"
                             android:textSize="@dimen/text_primary"
@@ -632,7 +685,13 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginStart="5dp"
+<<<<<<< HEAD
                             android:text="Admitted in SNCU"
+=======
+                            android:text="@string/admitted_in_sncu"
+                            android:textSize="@dimen/text_primary"
+                            android:layout_gravity="start"
+>>>>>>> origin/new
                             android:textColor="@color/secondary"
                             android:textSize="@dimen/text_primary"
                             android:textStyle="bold" />
@@ -688,7 +747,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+<<<<<<< HEAD
                             android:text="New Born Screening at Birth"
+=======
+                            android:text="@string/new_born_screening_at_birth"
+                            android:textSize="@dimen/text_label"
+>>>>>>> origin/new
                             android:textAlignment="textStart"
                             android:textColor="#2F80ED"
                             android:textSize="@dimen/text_label"
@@ -732,7 +796,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+<<<<<<< HEAD
                             android:text="Date"
+=======
+                            android:text="@string/date"
+                            android:textSize="@dimen/text_primary"
+>>>>>>> origin/new
                             android:textAlignment="textStart"
                             android:textColor="@color/secondary"
                             android:textSize="@dimen/text_primary"
@@ -760,7 +829,13 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginStart="5dp"
+<<<<<<< HEAD
                             android:text="Outcome"
+=======
+                            android:text="@string/outcome"
+                            android:textSize="@dimen/text_primary"
+                            android:layout_gravity="start"
+>>>>>>> origin/new
                             android:textColor="@color/secondary"
                             android:textSize="@dimen/text_primary"
                             android:textStyle="bold" />
@@ -816,7 +891,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+<<<<<<< HEAD
                             android:text="Zero Dose"
+=======
+                            android:text="@string/zero_dose"
+                            android:textSize="@dimen/text_label"
+>>>>>>> origin/new
                             android:textAlignment="textStart"
                             android:textColor="#2F80ED"
                             android:textSize="@dimen/text_label"
@@ -874,7 +954,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+<<<<<<< HEAD
                                 android:text="BCG Given Date"
+=======
+                                android:text="@string/bcg_given_date"
+                                android:textSize="@dimen/text_primary"
+>>>>>>> origin/new
                                 android:textAlignment="textStart"
                                 android:textColor="#aaffffff"
                                 android:textSize="@dimen/text_primary"
@@ -917,9 +1002,14 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+<<<<<<< HEAD
                                 android:layout_gravity="start"
                                 android:text="OPV Given Date"
                                 android:textColor="#aaffffff"
+=======
+                                android:textColor="#aaffffff"
+                                android:text="@string/opv_given_date"
+>>>>>>> origin/new
                                 android:textSize="@dimen/text_primary"
                                 android:textStyle="bold" />
 
@@ -971,7 +1061,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+<<<<<<< HEAD
                                 android:text="Hep B given date"
+=======
+                                android:text="@string/hep_b_given_date"
+                                android:textSize="@dimen/text_primary"
+>>>>>>> origin/new
                                 android:textAlignment="textStart"
                                 android:textColor="#aaffffff"
                                 android:textSize="@dimen/text_primary"

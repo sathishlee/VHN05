@@ -19,7 +19,7 @@
         android:id="@+id/txt_no_records_found"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="NO RECORDES FOUND"
+        android:text="@string/no_recordes_found"
         android:layout_gravity="center"
         android:gravity="center"
         android:visibility="gone"
@@ -51,8 +51,12 @@
                 android:layout_margin="2dp"
                 android:text="Picme Visit"
                 android:textColor="#FFFFFF"
+<<<<<<< HEAD
                 android:textSize="@dimen/text_primary"
                 android:textStyle="bold" />
+=======
+                android:text="@string/picme_visit"/>
+>>>>>>> origin/new
 
         </LinearLayout>
 
@@ -69,8 +73,12 @@
                 android:padding="2dp"
                 android:text="Other Visit"
                 android:textColor="#2F80ED"
+<<<<<<< HEAD
                 android:textSize="@dimen/text_primary"
                 android:textStyle="bold" />
+=======
+                android:text="@string/other_visit"/>
+>>>>>>> origin/new
 
         </LinearLayout>
 
@@ -106,7 +114,13 @@
             android:id="@+id/btn_primary_report"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+<<<<<<< HEAD
             android:layout_margin="5dp"
+=======
+            android:background="@color/colorPrimary"
+            android:text="@string/primary_records"
+            android:textColor="#ffffff"
+>>>>>>> origin/new
             android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:drawableEnd="@drawable/ic_file_view"
@@ -118,7 +132,13 @@
             android:id="@+id/btn_view_report"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+<<<<<<< HEAD
             android:layout_margin="5dp"
+=======
+            android:background="@color/colorPrimary"
+            android:text="@string/view_reports"
+            android:textColor="#ffffff"
+>>>>>>> origin/new
             android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:drawableEnd="@drawable/ic_file_view"

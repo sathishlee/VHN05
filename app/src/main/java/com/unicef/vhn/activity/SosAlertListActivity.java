@@ -133,12 +133,12 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
 
     @Override
     public void showProgress() {
-pDialog.show();
+    pDialog.show();
     }
 
     @Override
     public void hideProgress() {
-pDialog.dismiss();
+    pDialog.dismiss();
     }
 
     @Override

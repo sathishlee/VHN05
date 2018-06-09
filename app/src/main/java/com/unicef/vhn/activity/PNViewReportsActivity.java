@@ -42,6 +42,8 @@ public class PNViewReportsActivity extends AppCompatActivity implements VisitANM
     PnHbncVisitRecordsModel.PnMothersVisit mPnHbncVisitRecordsModel;
     ArrayList<   PnHbncVisitRecordsModel.PnMothersVisit> mPnHbncVisitRecordsList;
 
+    String strpnId, strPicmeId;
+
 
     PNHBNCVisitRecordsAdapter pnhbncVisitRecordsAdapter;
     TextView txt_no_records_found;
@@ -145,36 +147,50 @@ pDialog.dismiss();
                         mPnHbncVisitRecordsModel = new PnHbncVisitRecordsModel.PnMothersVisit();
 
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-
+                        mPnHbncVisitRecordsModel.setMPicmeId(jsonObject.getString("mPicmeId"));
                         mPnHbncVisitRecordsModel.setPnId(jsonObject.getString("pnId"));
-                        mPnHbncVisitRecordsModel.setMid(jsonObject.getString("mid"));
-                        mPnHbncVisitRecordsModel.setPicmeId(jsonObject.getString("picmeId"));
-                        mPnHbncVisitRecordsModel.setPnVisitNo(jsonObject.getString("pnVisitNo"));
-                        mPnHbncVisitRecordsModel.setPnDueDate(jsonObject.getString("pnDueDate"));
-                        mPnHbncVisitRecordsModel.setPnCareProvidedDate(jsonObject.getString("pnCareProvidedDate"));
-                        mPnHbncVisitRecordsModel.setPnPlace(jsonObject.getString("pnPlace"));
-                        mPnHbncVisitRecordsModel.setPnAnyComplaints(jsonObject.getString("pnAnyComplaints"));
-                        mPnHbncVisitRecordsModel.setPnBPSystolic(jsonObject.getString("pnBPSystolic"));
-                        mPnHbncVisitRecordsModel.setPnPulseRate(jsonObject.getString("pnPulseRate"));
-                        mPnHbncVisitRecordsModel.setPnTemp(jsonObject.getString("pnTemp"));
-                        mPnHbncVisitRecordsModel.setPnEpistomyTear(jsonObject.getString("pnEpistomyTear"));
-                        mPnHbncVisitRecordsModel.setPnPVDischarge(jsonObject.getString("pnPVDischarge"));
-                        mPnHbncVisitRecordsModel.setPnBreastFeedingReason(jsonObject.getString("pnBreastFeedingReason"));
-                        mPnHbncVisitRecordsModel.setPnBreastExamination(jsonObject.getString("pnBreastExamination"));
-                        mPnHbncVisitRecordsModel.setPnOutCome(jsonObject.getString("pnOutCome"));
-                        mPnHbncVisitRecordsModel.setCWeight(jsonObject.getString("cWeight"));
-                        mPnHbncVisitRecordsModel.setCTemp(jsonObject.getString("cTemp"));
-                        mPnHbncVisitRecordsModel.setCUmbilicalStump(jsonObject.getString("cUmbilicalStump"));
-                        mPnHbncVisitRecordsModel.setCCry(jsonObject.getString("cCry"));
-                        mPnHbncVisitRecordsModel.setCEyes(jsonObject.getString("cEyes"));
-                        mPnHbncVisitRecordsModel.setCSkin(jsonObject.getString("cSkin"));
-                        mPnHbncVisitRecordsModel.setCBreastFeeding(jsonObject.getString("cBreastFeeding"));
-                        mPnHbncVisitRecordsModel.setCBreastFeedingReason(jsonObject.getString("cBreastFeedingReason"));
-                        mPnHbncVisitRecordsModel.setCOutCome(jsonObject.getString("cOutCome"));
+                        strPicmeId = mPnHbncVisitRecordsModel.getMPicmeId();
+                        AppConstants.MOTHER_PICME_ID = strPicmeId;
+                        strpnId = mPnHbncVisitRecordsModel.getPnId();
+                        if (strpnId.equalsIgnoreCase("null")) {
+                            txt_no_records_found.setVisibility(View.VISIBLE);
+                            viewPager.setVisibility(View.GONE);
+                            tabLayout.setVisibility(View.GONE);
+                        } else {
+                            txt_no_records_found.setVisibility(View.GONE);
+                            viewPager.setVisibility(View.VISIBLE);
+                            tabLayout.setVisibility(View.VISIBLE);
 
+                            mPnHbncVisitRecordsModel.setMid(jsonObject.getString("mid"));
+                            mPnHbncVisitRecordsModel.setPicmeId(jsonObject.getString("picmeId"));
+                            mPnHbncVisitRecordsModel.setPnVisitNo(jsonObject.getString("pnVisitNo"));
+                            mPnHbncVisitRecordsModel.setPnDueDate(jsonObject.getString("pnDueDate"));
+                            mPnHbncVisitRecordsModel.setPnCareProvidedDate(jsonObject.getString("pnCareProvidedDate"));
+                            mPnHbncVisitRecordsModel.setPnPlace(jsonObject.getString("pnPlace"));
+                            mPnHbncVisitRecordsModel.setPnAnyComplaints(jsonObject.getString("pnAnyComplaints"));
+                            mPnHbncVisitRecordsModel.setPnBPSystolic(jsonObject.getString("pnBPSystolic"));
+                            mPnHbncVisitRecordsModel.setPnPulseRate(jsonObject.getString("pnPulseRate"));
+                            mPnHbncVisitRecordsModel.setPnTemp(jsonObject.getString("pnTemp"));
+                            mPnHbncVisitRecordsModel.setPnEpistomyTear(jsonObject.getString("pnEpistomyTear"));
+                            mPnHbncVisitRecordsModel.setPnPVDischarge(jsonObject.getString("pnPVDischarge"));
+                            mPnHbncVisitRecordsModel.setPnBreastFeedingReason(jsonObject.getString("pnBreastFeedingReason"));
+                            mPnHbncVisitRecordsModel.setPnBreastExamination(jsonObject.getString("pnBreastExamination"));
+                            mPnHbncVisitRecordsModel.setPnOutCome(jsonObject.getString("pnOutCome"));
+                            mPnHbncVisitRecordsModel.setCWeight(jsonObject.getString("cWeight"));
+                            mPnHbncVisitRecordsModel.setCTemp(jsonObject.getString("cTemp"));
+                            mPnHbncVisitRecordsModel.setCUmbilicalStump(jsonObject.getString("cUmbilicalStump"));
+                            mPnHbncVisitRecordsModel.setCCry(jsonObject.getString("cCry"));
+                            mPnHbncVisitRecordsModel.setCEyes(jsonObject.getString("cEyes"));
+                            mPnHbncVisitRecordsModel.setCSkin(jsonObject.getString("cSkin"));
+                            mPnHbncVisitRecordsModel.setCBreastFeeding(jsonObject.getString("cBreastFeeding"));
+                            mPnHbncVisitRecordsModel.setCBreastFeedingReason(jsonObject.getString("cBreastFeedingReason"));
+                            mPnHbncVisitRecordsModel.setCOutCome(jsonObject.getString("cOutCome"));
 
-                        mPnHbncVisitRecordsList.add(mPnHbncVisitRecordsModel);
-                        pnhbncVisitRecordsAdapter.notifyDataSetChanged();
+                            mPnHbncVisitRecordsList.add(mPnHbncVisitRecordsModel);
+                            pnhbncVisitRecordsAdapter.notifyDataSetChanged();
+
+                            AppConstants.SELECTED_MID = mPnHbncVisitRecordsModel.getMid();
+                        }
                     }
                 }else{
                     txt_no_records_found.setVisibility(View.VISIBLE);

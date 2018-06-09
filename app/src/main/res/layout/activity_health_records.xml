@@ -35,7 +35,13 @@
             android:id="@+id/btn_primary_report"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+<<<<<<< HEAD
             android:layout_margin="5dp"
+=======
+            android:background="@color/colorPrimary"
+            android:text="@string/primary_records"
+            android:textColor="#ffffff"
+>>>>>>> origin/new
             android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:drawableEnd="@drawable/ic_file_view"
@@ -47,7 +53,13 @@
             android:id="@+id/btn_view_report"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+<<<<<<< HEAD
             android:layout_margin="5dp"
+=======
+            android:background="@color/colorPrimary"
+            android:text="@string/view_reports"
+            android:textColor="#ffffff"
+>>>>>>> origin/new
             android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:drawableEnd="@drawable/ic_file_view"

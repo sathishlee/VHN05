@@ -49,6 +49,8 @@ public class MotherMigrationResponseModel {
         private String mid;
         private String mPicmeId;
         private String mName;
+        private String mPhoto;
+
 
         public String getMtype() {
             return mtype;
@@ -145,5 +147,8 @@ public class MotherMigrationResponseModel {
         public void setMName(String mName) {
             this.mName = mName;
         }
+
+        public String getmPhoto(){return mPhoto;}
+        public void setmPhoto(String mPhoto){this.mPhoto = mPhoto;}
     }
 }

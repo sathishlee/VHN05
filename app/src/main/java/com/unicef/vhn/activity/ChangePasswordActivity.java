@@ -44,6 +44,8 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         initUI();
         showActionBar();
         onClickListner();
+
+
     }
 
     private void initUI() {

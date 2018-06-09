@@ -262,12 +262,19 @@ public class NotificationListFragment extends Fragment implements NotificationVi
                     movie.setMigratedmId(jsonObject1.getString("migratedmId"));
                     movie.setNoteId(jsonObject1.getString("noteId"));
                     movie.setNoteStartDateTime(jsonObject1.getString("noteStartDateTime"));
+<<<<<<< HEAD
                     movie.setMtype(jsonObject1.getString("mtype"));*/
 //                    Log.d(NotificationListFragment.class.getSimpleName(), "Notification details" + i + movie);
 
 //                    moviesList.add(movie);
 
 //                    mAdapter.notifyDataSetChanged();
+=======
+                    movie.setMtype(jsonObject1.getString("mtype"));
+                    Log.d(NotificationListFragment.class.getSimpleName(), "Notification details" + i + movie);
+                    moviesList.add(movie);
+                    mAdapter.notifyDataSetChanged();
+>>>>>>> origin/new
                 }
                 realm.commitTransaction(); //close table
             } else {

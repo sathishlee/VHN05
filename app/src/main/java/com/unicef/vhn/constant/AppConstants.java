@@ -31,7 +31,11 @@ public class AppConstants {
 
     public static final String VHN_NAME = "vhnName";
     public static final String VHN_CODE = "vhnCode";
+<<<<<<< HEAD
     public static final String VHN_PHOTO = "";
+=======
+    public static final String VHN_PHOTO = "vphoto";
+>>>>>>> origin/new
     public static String SELECTED_MID = "0";
     public static String MOTHER_PICME_ID = "0";
     public static String MOTHER_ID = "0";
@@ -42,8 +46,8 @@ public class AppConstants {
 
     public static final int LOCATION_INTERVAL = 10000;
     public static final int FASTEST_LOCATION_INTERVAL = 1000;
-    public static final String EXTRA_LATITUDE = "";
-    public static final String EXTRA_LONGITUDE = "";
+    public static String EXTRA_LATITUDE = "";
+    public static String EXTRA_LONGITUDE = "";
 
     public static final String TODAY_VISIT_COUNT = "0";
     public static final String NOTIFICATION_COUNT = "0";

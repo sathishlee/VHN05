@@ -8,6 +8,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,13 +21,18 @@ import android.widget.Toast;
 
 
 import com.github.curioustechizen.ago.RelativeTimeTextView;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 import com.unicef.vhn.R;
 import com.unicef.vhn.activity.MapsActivity;
 import com.unicef.vhn.activity.MotherLocationActivity;
 import com.unicef.vhn.activity.MothersDetailsActivity;
 import com.unicef.vhn.activity.PNMotherDetailsActivity;
+import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.NotificationListResponseModel;
+import com.unicef.vhn.utiltiy.RoundedTransformation;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -41,6 +47,8 @@ import java.util.List;
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
     private List<NotificationListResponseModel.Vhn_migrated_mothers> moviesList;
     FragmentActivity activity;
+    String str_mPhoto;
+
 
     public NotificationAdapter(List<NotificationListResponseModel.Vhn_migrated_mothers> moviesList, FragmentActivity activity) {
         this.moviesList = moviesList;
@@ -76,6 +84,27 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         holder.txt_flash_notify_time.setText(timeago(movie.getNoteStartDateTime()));
         holder.txt_mig_notify_time.setText(timeago(movie.getNoteStartDateTime()));
+
+        /*str_mPhoto = movie.getmPhoto();
+        Log.d("mphoto-->", Apiconstants.MOTHER_PHOTO_URL + str_mPhoto);
+
+        if (!TextUtils.isEmpty(movie.getmPhoto())) {
+            Log.d("mphoto-->", Apiconstants.MOTHER_PHOTO_URL + str_mPhoto);
+
+            Picasso.with(activity)
+                    .load(!TextUtils.isEmpty(movie.getmPhoto()) ? Apiconstants.MOTHER_PHOTO_URL + movie.getmPhoto() : "")
+                    .placeholder(R.drawable.girl)
+                    .fit()
+                    .centerCrop()
+                    .memoryPolicy(MemoryPolicy.NO_CACHE)
+                    .networkPolicy(NetworkPolicy.NO_CACHE)
+                    .transform(new RoundedTransformation(90, 4))
+                    .error(R.drawable.girl)
+                    .into(holder.cardview_image);
+        } else {
+            holder.cardview_image.setImageResource(R.drawable.girl);
+        }*/
+
         Date date = null;
         //      String dtStart = "2010-10-15T09:27:37Z";
         String dtStart = movie.getNoteStartDateTime();   ////31-03-2018 14:35:54
@@ -166,6 +195,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         //        public ImageView imageView;
         public LinearLayout ll_mig_view, ll_flash_notify_view;
         RelativeTimeTextView txt_flash_notify_timestamp, txt_mig_notify_timestamp;
+//        ImageView cardview_image;
+
 
         @SuppressLint("WrongViewCast")
         public ViewHolder(View view) {
@@ -187,6 +218,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
             txt_mig_unread = view.findViewById(R.id.txt_mig_unread);
             txt_flash_unread = view.findViewById(R.id.txt_flash_unread);
+<<<<<<< HEAD
+=======
+//            cardview_image = view.findViewById(R.id.cardview_image);
+
+
+>>>>>>> origin/new
         }
     }
 }

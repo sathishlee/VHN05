@@ -77,7 +77,7 @@ public class home extends Fragment implements MotherListsViews {
     CheckNetwork checkNetwork;
     CardView profile;
     String str_mPhoto;
-
+    Ringtone ringtone;
     Context context;
     boolean isoffline = false;
     Realm realm;
@@ -137,6 +137,7 @@ public class home extends Fragment implements MotherListsViews {
             public void onClick(View v) {
                 AppConstants.GET_MOTHER_LIST_TYPE = "sos_count";
                 AppConstants.MOTHER_LIST_TITLE = "SOS List";
+                ringtone.stop();
                 startActivity(new Intent(getActivity(), SosAlertListActivity.class));
 
             }
@@ -391,6 +392,34 @@ public class home extends Fragment implements MotherListsViews {
             String message = mJsnobject.getString("message");
 
             if (status.equalsIgnoreCase("1")) {
+<<<<<<< HEAD
+=======
+                txt_mother_count.setText(mJsnobject.getString("mothersCount"));
+                txt_high_risk_count.setText(mJsnobject.getString("riskMothersCount"));
+                txt_infants_count.setText(mJsnobject.getString("infantCount"));
+                txt_sos_count.setText(mJsnobject.getString("sosCount"));
+
+                Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+                ringtone = RingtoneManager.getRingtone(getActivity(),uri);
+                if (mJsnobject.getString("sosCount").equalsIgnoreCase("0")){
+                        ringtone.stop();
+                }else {
+                    mFlipper.startFlipping();
+                    mFlipper.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+                    mFlipper.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
+                        ringtone.play();
+                }
+
+                txt_antt_1_due.setText(mJsnobject.getString("ANTT1"));
+                txt_antt_2_due.setText(mJsnobject.getString("ANTT2"));
+                txt_pnhbnc_due.setText(mJsnobject.getString("pnhbncCount"));
+
+
+                but_an_mother_total_count.setText("Total: " + mJsnobject.getString("ANMothersCount"));
+                but_an_mother_high_risk_count.setText("High Risk: " + mJsnobject.getString("ANMotherRiskCount"));
+                but_an_mother_pn_hbnc_totlal_count.setText("Total: " + mJsnobject.getString("PNMotherCount"));
+                but_an_mother_pn_hbnc_term_preterm_count.setText("Term/Preterm: " + mJsnobject.getString("termsCount"));
+>>>>>>> origin/new
 
                 RealmResults<DashBoardRealmModel> DashBoardRealmResult = realm.where(DashBoardRealmModel.class).findAll();
                 Log.e("Realm size ---->", DashBoardRealmResult.size() + "");
@@ -437,6 +466,44 @@ public class home extends Fragment implements MotherListsViews {
 
                 realm.commitTransaction(); //close table
 
+<<<<<<< HEAD
+=======
+                JSONObject mJsnobject_phcDetails = mJsnobject.getJSONObject("phcDetails");
+//                JSONObject mJsnobject_phcDetails = mJsnobject.getJSONObject("phcDetails");
+                txt_vhn_name.setText(mJsnobject_phcDetails.getString("vhnName"));
+                txt_phc.setText(mJsnobject_phcDetails.getString("phcName"));
+                txt_hsc.setText(mJsnobject_phcDetails.getString("facilityName"));
+                txt_block.setText(mJsnobject_phcDetails.getString("block"));
+                txt_address.setText(mJsnobject_phcDetails.getString("District"));
+
+                if(mJsnobject_phcDetails.getString("vphoto").equalsIgnoreCase("null")) {
+                    str_mPhoto = "";
+                    preferenceData.setVhnPhoto("");
+                }else{
+                    str_mPhoto = mJsnobject_phcDetails.getString("vphoto");
+                    preferenceData.setVhnPhoto(mJsnobject_phcDetails.getString("vphoto"));
+
+
+                }
+                Log.d("vphoto-->",Apiconstants.PHOTO_URL+str_mPhoto);
+
+
+
+                if(!TextUtils.isEmpty(str_mPhoto)){
+                    Picasso.with(context)
+                            .load(Apiconstants.PHOTO_URL+str_mPhoto)
+                            .placeholder(R.drawable.ic_nurse)
+                            .fit()
+                            .centerCrop()
+                            .memoryPolicy(MemoryPolicy.NO_CACHE)
+                            .networkPolicy(NetworkPolicy.NO_CACHE)
+                            .transform(new RoundedTransformation(90,4))
+                            .error(R.drawable.ic_nurse)
+                            .into(userImageProfile);
+                }else{
+                    userImageProfile.setImageResource(R.drawable.ic_nurse);
+                }
+>>>>>>> origin/new
 
             }
         } catch (JSONException e) {

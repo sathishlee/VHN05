@@ -36,8 +36,7 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
 
-    Button btn_view_location, btn_view_report, btn_alert_close;
-
+    Button btn_view_location, btn_view_report,btn_alert_close;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,9 +72,7 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(SosMotherDetailsActivity.this, MainActivity.class);
         finish();
-        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 
@@ -228,7 +225,12 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
     private void requestCallPermission() {
 
 
+<<<<<<< HEAD
         Log.i(SosMotherDetailsActivity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
+=======
+
+        Log.i(MothersDetailsActivity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
+>>>>>>> origin/new
 
         // BEGIN_INCLUDE(camera_permission_request)
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,

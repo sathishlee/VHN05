@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
+<<<<<<< HEAD
         ImageView imageView = (ImageView) headerView. findViewById(R.id.  cardview_image);
       String  str_mPhoto = preferenceData.getphoto();
 
@@ -128,8 +129,16 @@ public class MainActivity extends AppCompatActivity
         TextView vhnId = (TextView) headerView.findViewById(R.id.  vhn_id);
         vhnId.setText("VHN ID : "+preferenceData.getVhnId());
                 navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setItemIconTintList(null);
+=======
+        ImageView imageView = (ImageView) headerView.findViewById(R.id.cardview_image);
+        TextView vhnName = (TextView) headerView.findViewById(R.id.txt_username);
+        TextView vhnId = (TextView) headerView.findViewById(R.id.vhn_id);
+        vhnName.setText(preferenceData.getVhnName());
+        vhnId.setText(preferenceData.getVhnId());
 
+        navigationView.setNavigationItemSelectedListener(this);
+>>>>>>> origin/new
+        navigationView.setItemIconTintList(null);
         setupNavigationView();
 
     }
@@ -155,6 +164,7 @@ public class MainActivity extends AppCompatActivity
         MenuItemCompat.setActionView(menuItem, R.layout.notification_count);
         View view = MenuItemCompat.getActionView(menuItem);
         notification_count = (TextView) view.findViewById(R.id.notification_count);
+        notification_count.setVisibility(View.GONE);
         notification_count.setText(String.valueOf(strTodayVisitCount));
         setupNotiCount();
 
@@ -194,7 +204,9 @@ public class MainActivity extends AppCompatActivity
                         NotificationListFragment.newInstance()).commit();
                 return true;
             case R.id.action_help:
-                Toast.makeText(getApplicationContext(),"Help Menu",Toast.LENGTH_LONG).show();
+                preferenceData.setLogin(false);
+                finish();
+                Toast.makeText(getApplicationContext(), "Logged Out", Toast.LENGTH_LONG).show();
                 return true;
             default:
                 super.onOptionsItemSelected(item);
@@ -355,8 +367,10 @@ pDialog.dismiss();
             String status = jsonObject.getString("status");
             String msg = jsonObject.getString("message");
              if (status.equalsIgnoreCase("1")) {
-                 preferenceData.setNotificationCount(jsonObject.getString("notificationCount"));
-            }
+                 preferenceData.setTodayVisitCount(jsonObject.getString("visitCount"));
+            }else{
+                 preferenceData.setTodayVisitCount("0");
+             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -376,9 +390,15 @@ pDialog.dismiss();
             String status = jsonObject.getString("status");
             String msg = jsonObject.getString("message");
             if (status.equalsIgnoreCase("1")) {
-
+                notification_count.setVisibility(View.VISIBLE);
+                String strNotifyCount = jsonObject.getString("notificationCount");
+                preferenceData.setNotificationCount(strNotifyCount);
+                Log.d(MainActivity.class.getSimpleName(), "Notification Count-->" + strNotifyCount);
             } else {
-                Log.d(MainActivity.class.getSimpleName(), "Notification messsage-->" + msg);
+                if(msg.equalsIgnoreCase("No Notification")) {
+                    notification_count.setVisibility(View.GONE);
+                    Log.d(MainActivity.class.getSimpleName(), "Notification message-->" + msg);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();

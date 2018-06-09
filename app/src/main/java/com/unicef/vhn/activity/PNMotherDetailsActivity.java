@@ -218,7 +218,6 @@ public class PNMotherDetailsActivity extends AppCompatActivity implements View.O
                 strAltMobileNo = mJsnobject_tracking.getString("mHusbandMobile");
                 txt_mage.setText(mJsnobject_tracking.getString("mAge"));
                 txt_risk.setText(mJsnobject_tracking.getString("mRiskStatus"));
-
                 txt_date_of_delivery.setText(mJsnobject_tracking.getString("ddatetime"));
                 txt_type_of_delivery.setText(mJsnobject_tracking.getString("dtime"));
                 txt_weight.setText(mJsnobject_tracking.getString("mWeight"));

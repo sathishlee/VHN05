@@ -13,11 +13,15 @@ import android.widget.TextView;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherDeliveryPresenter;
 import com.unicef.vhn.R;
+<<<<<<< HEAD
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.realmDbModel.DelevaryDetailsPnMotherRealmModel;
 import com.unicef.vhn.realmDbModel.PrimaryMotherDetailsRealmModel;
 import com.unicef.vhn.utiltiy.CheckNetwork;
+=======
+import com.unicef.vhn.constant.AppConstants;
+>>>>>>> origin/new
 import com.unicef.vhn.view.MotherDeliveryViews;
 
 import org.json.JSONException;
@@ -60,12 +64,16 @@ boolean isOffline;
         progressDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
         motherDeliveryPresenter = new MotherDeliveryPresenter(PNMotherDeliveryReportActivity.this, this);
+<<<<<<< HEAD
 //        motherDeliveryPresenter.deliveryDetails(preferenceData.getPicmeId(), preferenceData.getMId());
         if (checkNetwork.isNetworkAvailable()){
             motherDeliveryPresenter.deliveryDetails(AppConstants.MOTHER_PICME_ID,AppConstants.SELECTED_MID);
         }else{
             isOffline=true;
         }
+=======
+        motherDeliveryPresenter.deliveryDetails(AppConstants.MOTHER_PICME_ID, AppConstants.SELECTED_MID);
+>>>>>>> origin/new
         txt_delivery_date = (TextView) findViewById(R.id.txt_delivery_date);
         txt_delivery_time = (TextView) findViewById(R.id.txt_delivery_time);
         txt_delivery_place = (TextView) findViewById(R.id.txt_delivery_place);
