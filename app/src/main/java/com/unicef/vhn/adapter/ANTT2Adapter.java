@@ -69,7 +69,11 @@ public class ANTT2Adapter extends RecyclerView.Adapter<ANTT2Adapter.ViewHolder> 
         } else {
             holder.cardview_image.setImageResource(R.drawable.girl);
         }
-
+        if (tt2_list.getMMotherMobile().equalsIgnoreCase("null")||tt2_list.getMMotherMobile().length()<10){
+            holder.img_call_mother.setVisibility(View.GONE);
+        }else{
+            holder.img_call_mother.setVisibility(View.VISIBLE);
+        }
         holder.img_call_mother.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -166,7 +166,6 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
                 alert.show();
             }else if(status.equalsIgnoreCase("1")) {
                 JSONObject strVhnDetails = jObj.getJSONObject("VhnDetails");
-<<<<<<< HEAD
                 Log.d("message---->", message);
                 preferenceData.storeUserInfo(strVhnDetails.getString("vhnName"), strVhnDetails.getString("vhnCode"),
                         strVhnDetails.getString("vhnId"),strVhnDetails.getString("vphoto"));
@@ -177,18 +176,6 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
                 } else {
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                 }
-=======
-                    Log.d("message---->", message);
-                    preferenceData.storeUserInfo(strVhnDetails.getString("vhnName"), strVhnDetails.getString("vhnCode"),
-                            strVhnDetails.getString("vhnId"), strVhnDetails.getString("vphoto"));
-                    preferenceData.setLogin(true);
-                    if (message.equalsIgnoreCase("Successfully Logined..!")) {
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        finish();
-                    } else {
-                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-                    }
->>>>>>> origin/new
             }else {
                 Log.d("message---->", message);
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();

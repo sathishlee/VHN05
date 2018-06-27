@@ -5,8 +5,6 @@ import java.util.List;
 import io.realm.RealmObject;
 
 public class PNMMotherListRealmModel extends RealmObject {
-
-
     private String mRiskStatus;
     private String mEDD;
     private String mHusbandName;
@@ -24,6 +22,7 @@ public class PNMMotherListRealmModel extends RealmObject {
     private String mPicmeId;
     private String mName;
     private String mPhoto;
+
 
     public String getmHusbandMobile() {
         return mHusbandMobile;

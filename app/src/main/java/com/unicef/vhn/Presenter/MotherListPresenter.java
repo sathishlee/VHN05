@@ -92,6 +92,8 @@ public class MotherListPresenter implements MotherListInteractor {
         };
         // Adding request to request queue
         VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
+        VolleySingleton.getInstance(activity).getRequestQueue().getCache().remove(url);
+
     }
 
     @Override
@@ -154,6 +156,7 @@ public class MotherListPresenter implements MotherListInteractor {
         };
         // Adding request to request queue
         VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
+        VolleySingleton.getInstance(activity).getRequestQueue().getCache().remove(url);
 
     }
 
@@ -220,6 +223,7 @@ public class MotherListPresenter implements MotherListInteractor {
         };
         // Adding request to request queue
         VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
+        VolleySingleton.getInstance(activity).getRequestQueue().getCache().remove(url);
 
     }
 
@@ -281,6 +285,7 @@ public class MotherListPresenter implements MotherListInteractor {
         };
         // Adding request to request queue
         VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
+        VolleySingleton.getInstance(activity).getRequestQueue().getCache().remove(url);
 
     }
 
@@ -346,6 +351,7 @@ public class MotherListPresenter implements MotherListInteractor {
         };
         // Adding request to request queue
         VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
+        VolleySingleton.getInstance(activity).getRequestQueue().getCache().remove(url);
 
     }
 
@@ -410,6 +416,7 @@ public class MotherListPresenter implements MotherListInteractor {
         };
         // Adding request to request queue
         VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
+        VolleySingleton.getInstance(activity).getRequestQueue().getCache().remove(url);
 
     }
 
@@ -470,6 +477,8 @@ public class MotherListPresenter implements MotherListInteractor {
         };
         // Adding request to request queue
         VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
+        VolleySingleton.getInstance(activity).getRequestQueue().getCache().remove(url);
+
     }
 
     @Override
@@ -532,7 +541,7 @@ public class MotherListPresenter implements MotherListInteractor {
         };
         // Adding request to request queue
         VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
-
+        VolleySingleton.getInstance(activity).getRequestQueue().getCache().remove(url);
     }
 
     @Override
@@ -584,6 +593,7 @@ public class MotherListPresenter implements MotherListInteractor {
             }
         };
         VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
+        VolleySingleton.getInstance(activity).getRequestQueue().getCache().remove(url);
     }
 
     @Override
@@ -638,12 +648,11 @@ public class MotherListPresenter implements MotherListInteractor {
             }
         };
         VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
-
+        VolleySingleton.getInstance(activity).getRequestQueue().getCache().remove(url);
     }
 
     @Override
     public void getPNHBNCDUEMotherList(final String vhnCode, final String vhnId, final String tempCount) {
-
 
         motherListsViews.showProgress();
         String url = Apiconstants.BASE_URL + Apiconstants.DASH_BOARD_MOTHERS_PN_HBNC_DUELIST;
@@ -696,6 +705,7 @@ public class MotherListPresenter implements MotherListInteractor {
             }
         };
         VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
+        VolleySingleton.getInstance(activity).getRequestQueue().getCache().remove(url);
     }
 
     @Override
@@ -748,11 +758,6 @@ public class MotherListPresenter implements MotherListInteractor {
             }
         };
         VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
-
+        VolleySingleton.getInstance(activity).getRequestQueue().getCache().remove(url);
     }
-
-
-
-
-
 }

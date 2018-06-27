@@ -1,12 +1,14 @@
 package com.unicef.vhn.adapter;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.TimeZone;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -24,8 +26,11 @@ import com.github.curioustechizen.ago.RelativeTimeTextView;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.unicef.vhn.Interface.MakeCallInterface;
 import com.unicef.vhn.R;
 import com.unicef.vhn.activity.MapsActivity;
+import com.unicef.vhn.activity.MotherDetails.ANMotherDetailsViewActivcity;
+import com.unicef.vhn.activity.MotherDetails.PNMotherDetailsViewActivity;
 import com.unicef.vhn.activity.MotherLocationActivity;
 import com.unicef.vhn.activity.MothersDetailsActivity;
 import com.unicef.vhn.activity.PNMotherDetailsActivity;
@@ -48,11 +53,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private List<NotificationListResponseModel.Vhn_migrated_mothers> moviesList;
     FragmentActivity activity;
     String str_mPhoto;
+    MakeCallInterface makeCallInterface;
 
-
-    public NotificationAdapter(List<NotificationListResponseModel.Vhn_migrated_mothers> moviesList, FragmentActivity activity) {
+    public NotificationAdapter(List<NotificationListResponseModel.Vhn_migrated_mothers> moviesList, FragmentActivity activity, MakeCallInterface makeCallInterface) {
         this.moviesList = moviesList;
         this.activity = activity;
+        this.makeCallInterface =makeCallInterface;
+
     }
 
     @Override
@@ -69,21 +76,33 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final NotificationListResponseModel.Vhn_migrated_mothers movie = moviesList.get(position);
-        if (movie.getClickHeremId().equalsIgnoreCase("1")) {
-            holder.ll_mig_view.setVisibility(View.GONE);
+//        if (movie.getClickHeremId().equalsIgnoreCase("1")) {
+        if (movie.getNoteType().equalsIgnoreCase("7")) {
+        holder.ll_mig_view.setVisibility(View.GONE);
             holder.ll_flash_notify_view.setVisibility(View.VISIBLE);
-        } else {
+            holder.ll_otp_view.setVisibility(View.GONE);
+
+        } else if (movie.getNoteType().equalsIgnoreCase("3")){
             holder.ll_mig_view.setVisibility(View.VISIBLE);
             holder.ll_flash_notify_view.setVisibility(View.GONE);
+            holder.ll_otp_view.setVisibility(View.GONE);
+
+        } else if (movie.getNoteType().equalsIgnoreCase("6")){
+            holder.ll_mig_view.setVisibility(View.GONE);
+            holder.ll_flash_notify_view.setVisibility(View.GONE);
+            holder.ll_otp_view.setVisibility(View.VISIBLE);
         }
         holder.txt_flash_name.setText(movie.getMName());
         holder.txt_mig_name.setText(movie.getMName());
+        holder.txt_otp_name.setText(movie.getMName());
 
         holder.txt_flash_message.setText(movie.getSubject());
         holder.txt_mig_message.setText(movie.getSubject());
+        holder.txt_otp_message.setText(movie.getSubject());
 
         holder.txt_flash_notify_time.setText(timeago(movie.getNoteStartDateTime()));
         holder.txt_mig_notify_time.setText(timeago(movie.getNoteStartDateTime()));
+        holder.txt_otp_notify_time.setText(timeago(movie.getNoteStartDateTime()));
 
         /*str_mPhoto = movie.getmPhoto();
         Log.d("mphoto-->", Apiconstants.MOTHER_PHOTO_URL + str_mPhoto);
@@ -112,17 +131,28 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         try {
             date = format.parse(dtStart);
-            System.out.println(date);
+            System.out.println("ReferenceTime-->"+date);
+            holder.txt_flash_notify_timestamp.setReferenceTime(date.getTime());
+            holder.txt_mig_notify_timestamp.setReferenceTime(date.getTime());
+            holder.txt_otp_notify_timestamp.setReferenceTime(date.getTime());
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        holder.txt_flash_notify_timestamp.setReferenceTime(date.getTime());
-        holder.txt_mig_notify_timestamp.setReferenceTime(date.getTime());
+//        holder.txt_flash_notify_timestamp.setReferenceTime(date.getTime());
+//        holder.txt_mig_notify_timestamp.setReferenceTime(date.getTime());
+        if (movie.getMMotherMobile().equalsIgnoreCase("")||movie.getMMotherMobile().length()<10){
+            holder.txt_flash_call.setVisibility(View.GONE);
+        }else{
+            holder.txt_flash_call.setVisibility(View.VISIBLE);
+
+        }
         holder.txt_flash_call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(activity.getApplicationContext(), "make call" + movie.getMMotherMobile(), Toast.LENGTH_SHORT).show();
+                makeCallInterface.makeCall(movie.getMMotherMobile());
+
             }
         });
 
@@ -135,19 +165,50 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             }
         });
 
+        holder.ll_otp_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                AppConstants.SELECTED_MID = movie.getMid();
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                builder.setTitle(movie.getMName() );
+                builder.setMessage(movie.getMessage());
+                // Add the buttons
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                        dialog.dismiss();
+                    }
+                });
+
+
+// Create the AlertDialog
+                AlertDialog dialog = builder.create();
+
+                dialog.show();
+
+            }
+        });
         holder.ll_flash_notify_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                AppConstants.SELECTED_MID = movie.getMid();
+//                AppConstants.SELECTED_MID = movie.getMid();
                 if (movie.getMtype().equalsIgnoreCase("PN")) {
-                    activity.startActivity(new Intent(activity.getApplicationContext(), PNMotherDetailsActivity.class));
+//                    activity.startActivity(new Intent(activity.getApplicationContext(), PNMotherDetailsActivity.class));
+
+                    AppConstants.SELECTED_MID = movie.getMid();
+                    AppConstants.MOTHER_PICME_ID = movie.getMPicmeId();
+                    activity.startActivity(new Intent(activity.getApplicationContext(), PNMotherDetailsViewActivity.class));
 
                 } else if (movie.getMtype().equalsIgnoreCase("AN")) {
-                    activity.startActivity(new Intent(activity.getApplicationContext(), MothersDetailsActivity.class));
+//                    activity.startActivity(new Intent(activity.getApplicationContext(), MothersDetailsActivity.class));
+                    AppConstants.SELECTED_MID = movie.getMid();
+                    AppConstants.MOTHER_PICME_ID = movie.getMPicmeId();
+
+                    activity.startActivity(new Intent(activity.getApplicationContext(), ANMotherDetailsViewActivcity.class));
 
                 } else {
-                    activity.startActivity(new Intent(activity.getApplicationContext(), MothersDetailsActivity.class));
+//                    activity.startActivity(new Intent(activity.getApplicationContext(), MothersDetailsActivity.class));
 
                 }
 
@@ -190,11 +251,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView txt_flash_notify_time, txt_flash_message, txt_flash_name, txt_mig_notify_time, txt_mig_message, txt_mig_name, txt_flash_call;
-        public ImageView txt_mig_unread, txt_flash_unread;
+        public TextView txt_flash_notify_time, txt_flash_message, txt_flash_name,
+                txt_mig_notify_time, txt_mig_message, txt_mig_name, txt_flash_call,
+                txt_otp_notify_time, txt_otp_message, txt_otp_name;
+        public ImageView txt_mig_unread, txt_flash_unread,txt_otp_unread;
         //        public ImageView imageView;
-        public LinearLayout ll_mig_view, ll_flash_notify_view;
-        RelativeTimeTextView txt_flash_notify_timestamp, txt_mig_notify_timestamp;
+        public LinearLayout ll_mig_view, ll_flash_notify_view,ll_otp_view;
+        RelativeTimeTextView txt_flash_notify_timestamp, txt_mig_notify_timestamp,txt_otp_notify_timestamp;
 //        ImageView cardview_image;
 
 
@@ -218,12 +281,15 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
             txt_mig_unread = view.findViewById(R.id.txt_mig_unread);
             txt_flash_unread = view.findViewById(R.id.txt_flash_unread);
-<<<<<<< HEAD
-=======
 //            cardview_image = view.findViewById(R.id.cardview_image);
 
+            txt_otp_notify_time = view.findViewById(R.id.txt_otp_notify_time);
+            txt_otp_message = view.findViewById(R.id.txt_otp_message);
+            txt_otp_name = view.findViewById(R.id.txt_otp_name);
+            txt_otp_unread = view.findViewById(R.id.txt_otp_unread);
+            txt_otp_notify_timestamp = view.findViewById(R.id.txt_otp_notify_timestamp);
+            ll_otp_view = view.findViewById(R.id.ll_otp_view);
 
->>>>>>> origin/new
         }
     }
 }

@@ -60,7 +60,7 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
     private List<ANTT2ResponseModel.TT2_List> tt2_lists;
     ANTT2ResponseModel.TT2_List tt2list;
 
-    boolean isDataUpdate=true;
+    boolean isDataUpdate = true;
     private RecyclerView recyclerView;
     private TextView textView;
     private ANTT2Adapter antt2Adapter;
@@ -84,7 +84,7 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
         initUI();
     }
 
-    public void showActionBar(){
+    public void showActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("AN TT 2 Due List");
         actionBar.setHomeButtonEnabled(true);
@@ -93,17 +93,15 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(ANTT2MothersList.this, MainActivity.class);
         finish();
+        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 
-<<<<<<< HEAD
     public void initUI() {
         checkNetwork = new CheckNetwork(this);
 
-=======
-    public void initUI(){
->>>>>>> origin/new
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
@@ -118,7 +116,7 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
         tt2_lists = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.antt2_mother_recycler_view);
         textView = (TextView) findViewById(R.id.txt_no_records_found);
-        antt2Adapter = new ANTT2Adapter(tt2_lists, ANTT2MothersList.this,this);
+        antt2Adapter = new ANTT2Adapter(tt2_lists, ANTT2MothersList.this, this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(ANTT2MothersList.this);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -167,7 +165,6 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
                 if (jsonArray.length() != 0) {
                     recyclerView.setVisibility(View.VISIBLE);
                     textView.setVisibility(View.GONE);
-<<<<<<< HEAD
 
                     realm.beginTransaction();       //create or open
 
@@ -188,22 +185,14 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
 
 //                        tt2_lists.add(tt2list);
 //                        antt2Adapter.notifyDataSetChanged();
-=======
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        tt2list = new ANTT2ResponseModel.TT2_List();
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        tt2list.setMName(jsonObject.getString("mName"));
-                        tt2list.setMPicmeId(jsonObject.getString("mPicmeId"));
-                        tt2list.setMMotherMobile(jsonObject.getString("mMotherMobile"));
-                        tt2_lists.add(tt2list);
-                        antt2Adapter.notifyDataSetChanged();
->>>>>>> origin/new
                     }
                     realm.commitTransaction();
                 } else {
                     recyclerView.setVisibility(View.GONE);
                     textView.setVisibility(View.VISIBLE);
                 }
+            }else{
+                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -234,7 +223,7 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
                 != PackageManager.PERMISSION_GRANTED) {
             requestCallPermission();
         } else {
-            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+" + mMotherMobile)));
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+91" + mMotherMobile)));
         }
     }
 

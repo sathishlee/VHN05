@@ -29,28 +29,21 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:weightSum="12">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-<<<<<<< HEAD
-                android:layout_weight="2"
-                android:orientation="vertical">
-=======
                 android:orientation="vertical"
                 android:layout_weight="2">
->>>>>>> origin/new
 
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-
                     <fragment
                         android:id="@+id/map"
                         android:name="com.google.android.gms.maps.SupportMapFragment"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        tools:context=".activity.MotherLocationActivity" />
+                        tools:context=".activity.MotherLocationActivity"/>
 
                     <android.support.design.widget.FloatingActionButton
                         android:id="@+id/get_directions"
@@ -62,78 +55,10 @@
                         android:src="@drawable/ic_view_directions"
                         app:fabSize="normal" />
 
-<<<<<<< HEAD
-                </FrameLayout>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="10"
-                android:gravity="bottom"
-                android:orientation="vertical">
-
-                <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:cardBackgroundColor="@android:color/white"
-                    app:cardElevation="2.0dip">
-=======
->>>>>>> origin/new
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
-<<<<<<< HEAD
-                        android:layout_height="wrap_content"
-                        android:baselineAligned="false"
-                        android:orientation="horizontal"
-                        android:padding="3dp"
-                        android:weightSum="4">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:baselineAligned="false"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:padding="5dp">
-
-                            <ImageView
-                                android:id="@+id/cardview_image"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:elevation="5dp"
-                                android:padding="5dp"
-                                android:scaleType="centerCrop"
-                                app:srcCompat="@drawable/girl" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="start"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/txt_username"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="5dp"
-                                android:layout_marginStart="3dp"
-                                android:layout_marginTop="10dp"
-                                android:gravity="start"
-                                android:text="Mrs. Tamil Selvi"
-                                android:textColor="#333333"
-                                android:textSize="15.0sp" />
-=======
                         android:orientation="vertical"
                         android:layout_weight="10"
                         android:padding="15dp"
@@ -149,22 +74,14 @@
                             xmlns:android="http://schemas.android.com/apk/res/android"
                             xmlns:app="http://schemas.android.com/apk/res-auto">
 
->>>>>>> origin/new
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-<<<<<<< HEAD
-                                android:layout_margin="3dp"
-                                android:baselineAligned="false"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
-=======
                                 android:baselineAligned="false"
                                 android:weightSum="4"
                                 android:padding="3dp"
                                 android:orientation="horizontal">
->>>>>>> origin/new
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -209,13 +126,6 @@
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-<<<<<<< HEAD
-                                        android:padding="1dp"
-                                        android:text="123456789101"
-                                        android:textAlignment="textStart"
-                                        android:textColor="#333333"
-                                        android:textSize="12.0sp" />
-=======
                                         android:orientation="horizontal"
                                         android:baselineAligned="false"
                                         android:layout_margin="3dp"
@@ -274,7 +184,6 @@
 
                                     </LinearLayout>
 
->>>>>>> origin/new
                                 </LinearLayout>
 
                             </LinearLayout>
@@ -285,6 +194,8 @@
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
+
+
 
 
 </android.support.design.widget.CoordinatorLayout>

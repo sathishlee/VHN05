@@ -30,16 +30,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-<<<<<<< HEAD
+
                         android:layout_margin="5dp"
-                        android:text="Risk Status"
-=======
+
+
                         android:text="@string/risk_status"
                         android:textSize="@dimen/text_label"
->>>>>>> origin/new
-                        android:textAlignment="textStart"
+                         android:textAlignment="textStart"
                         android:textColor="@color/startblue"
-                        android:textSize="@dimen/text_label"
                         android:textStyle="bold" />
 
                 </LinearLayout>

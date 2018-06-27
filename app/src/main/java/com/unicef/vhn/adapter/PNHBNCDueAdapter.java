@@ -98,6 +98,11 @@ public class PNHBNCDueAdapter extends RecyclerView.Adapter<PNHBNCDueAdapter.View
             strunvisit7 = "";
         }
         holder.txt_visit_list.setText(strunvisit1 + "," + strunvisit2 + "," + strunvisit3 + "," + strunvisit4 + "," + strunvisit5 + "," + strunvisit6 + "," + strunvisit7);
+        if (tt1_list.getMobile().equalsIgnoreCase("null")||tt1_list.getMobile().length()<10){
+            holder.img_call_mother.setVisibility(View.GONE);
+        }else{
+            holder.img_call_mother.setVisibility(View.VISIBLE);
+        }
         holder.img_call_mother.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

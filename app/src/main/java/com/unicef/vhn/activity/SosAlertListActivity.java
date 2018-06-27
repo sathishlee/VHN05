@@ -204,8 +204,8 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
                 realm.commitTransaction();
             }
             else{
-                mother_recycler_view .setVisibility(View.GONE);
-                txt_no_records_found  .setVisibility(View.VISIBLE);
+          /*      mother_recycler_view .setVisibility(View.GONE);
+                txt_no_records_found  .setVisibility(View.VISIBLE);*/
             }
         }catch (JSONException e) {
             e.printStackTrace();
@@ -315,7 +315,7 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
                 != PackageManager.PERMISSION_GRANTED) {
             requestCallPermission();
         } else {
-            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+"+mMotherMobile)));
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+91"+mMotherMobile)));
         }
     }
     private void requestCallPermission() {

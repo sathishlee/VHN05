@@ -161,7 +161,19 @@ public class MigrationMotherDetailsViewActivcity extends AppCompatActivity imple
                 strMobileNo = model.getMMotherMobile();
                 txt_husb_name.setText(model.getMHusbandName());
                 txt_mother_name_call.setText(model.getMMotherMobile());
+                if (strMobileNo.equalsIgnoreCase("null")||strMobileNo.length()<10){
+                    img_call_1.setVisibility(View.GONE);
+                }else{
+                    img_call_1.setVisibility(View.VISIBLE);
+
+                }
                 strAltMobileNo = model.getMHusbandMobile();
+                if (strAltMobileNo.equalsIgnoreCase("null")||strAltMobileNo.length()<10){
+                    img_call_2.setVisibility(View.GONE);
+                }else{
+                    img_call_2.setVisibility(View.VISIBLE);
+
+                }
                 txt_mage.setText(model.getMAge());
                 txt_risk_status.setText(model.getMRiskStatus());
                 txt_gest_week.setText(model.getGSTAge());
@@ -200,7 +212,7 @@ public class MigrationMotherDetailsViewActivcity extends AppCompatActivity imple
             requestCallPermission();
         } else {
             Log.i(MigrationMotherDetailsViewActivcity.class.getSimpleName(), "CALL permission has already been granted. Displaying camera preview.");
-            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+" + str_mobile_number)));
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+91" + str_mobile_number)));
         }
     }
 

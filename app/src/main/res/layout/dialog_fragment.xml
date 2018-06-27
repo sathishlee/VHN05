@@ -86,7 +86,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="7dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -214,7 +215,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <Spinner
+           <!-- <Spinner
                 android:id="@+id/sp_trimester"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -223,8 +224,39 @@
                 android:layout_weight="1"
                 android:drawSelectorOnTop="true"
                 android:entries="@array/array_trimester"
-                style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>-->
+<RadioGroup
+    android:id="@+id/rg_trim"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+    <RadioButton
+        android:id="@+id/rb_trim_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="All"
+        android:layout_weight="1"/>
+    <RadioButton
+        android:id="@+id/rb_trim_first"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1st"
+        android:layout_weight="1"/>
+    <RadioButton
+        android:id="@+id/rb_trim_second"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2nd"
+        android:layout_weight="1"/>
+    <RadioButton
+        android:id="@+id/rb_trim_thrid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3rd"
+        android:layout_weight="1"/>
 
+</RadioGroup>
         </LinearLayout>
 
     </LinearLayout>

@@ -20,6 +20,37 @@ public class NotificationListRealm extends RealmObject{
     private String mid;
     private String mPicmeId;
     private String mName;
+    private String mPhoto;
+    private String message;
+    private String noteType;
+
+    public String getNoteType() {
+        return noteType;
+    }
+
+    public void setNoteType(String noteType) {
+        this.noteType = noteType;
+    }
+
+
+    public String getmPhoto() {
+        return mPhoto;
+    }
+
+    public void setmPhoto(String mPhoto) {
+        this.mPhoto = mPhoto;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+
+
 
     public String getMtype() {
         return mtype;

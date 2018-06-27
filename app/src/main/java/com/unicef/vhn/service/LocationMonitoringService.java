@@ -142,15 +142,14 @@ public class LocationMonitoringService extends Service implements
 
 
         if (location != null) {
-<<<<<<< HEAD
-=======
+
             Log.d(TAG, "== location != null");
             Log.d(TAG, "== location != null");
             Log.d(TAG, "Latitude"+String.valueOf(location.getLatitude()));
             Log.d(TAG, "Longitude"+String.valueOf(location.getLongitude()));
 
             //Send result to activities
->>>>>>> origin/new
+
             sendMessageToUI(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
         }
 

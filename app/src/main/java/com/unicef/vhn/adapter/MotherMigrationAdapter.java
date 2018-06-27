@@ -95,6 +95,12 @@ public class MotherMigrationAdapter extends RecyclerView.Adapter<MotherMigration
 //            holder.txt_list_type.setText(type);
 //        }
 
+        if (vhn_migrated_mother.getMMotherMobile().equalsIgnoreCase("null")||
+             vhn_migrated_mother.getMMotherMobile().length()<10){
+            holder.ll_call.setVisibility(View.GONE);
+        }else{
+            holder.ll_call.setVisibility(View.VISIBLE);
+        }
         holder.ll_call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

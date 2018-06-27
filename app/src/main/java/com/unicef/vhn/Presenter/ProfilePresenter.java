@@ -106,6 +106,8 @@ public class ProfilePresenter implements ProfileInteractor {
         //adding the request to volley
 //        Volley.newRequestQueue(this).add(volleyMultipartRequest);
         VolleySingleton.getInstance(activity).addToRequestQueue(volleyMultipartRequest);
+        VolleySingleton.getInstance(activity).getRequestQueue().getCache().remove(Apiconstants.BASE_URL + Apiconstants.POST_UPLOAD_PROFILE_PHOTO);
+
     }
 
     @Override
@@ -170,6 +172,7 @@ public class ProfilePresenter implements ProfileInteractor {
         };
         // Adding request to request queue
         VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
+        VolleySingleton.getInstance(activity).getRequestQueue().getCache().remove(url);
     }
 
 }

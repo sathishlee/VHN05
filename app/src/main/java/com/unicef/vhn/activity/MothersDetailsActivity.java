@@ -93,16 +93,13 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
-<<<<<<< HEAD
         preferenceData = new PreferenceData(this);
         pnMotherListPresenter = new MotherListPresenter(MothersDetailsActivity.this, this);
 
         pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
-=======
         preferenceData =new PreferenceData(this);
         pnMotherListPresenter = new MotherListPresenter(MothersDetailsActivity.this,this);
         pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(),preferenceData.getVhnId(), AppConstants.SELECTED_MID);
->>>>>>> origin/new
 
         cardview_image = (ImageView) findViewById(R.id.cardview_image);
         txt_mother_name = (TextView) findViewById(R.id.txt_username);

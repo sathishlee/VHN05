@@ -225,12 +225,9 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
     private void requestCallPermission() {
 
 
-<<<<<<< HEAD
         Log.i(SosMotherDetailsActivity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
-=======
 
         Log.i(MothersDetailsActivity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
->>>>>>> origin/new
 
         // BEGIN_INCLUDE(camera_permission_request)
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,

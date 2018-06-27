@@ -171,9 +171,9 @@
     <string name="msg_location_service_started">Location Tracking Started</string>
     <string name="btn_label_refresh">Refresh</string>
     <string name="action_search">Search</string>
-<<<<<<< HEAD
+
     <string name="title_activity_all_moter_list">AllMoterListActivity</string>
-=======
+
     <string name="mother_s_information">Mother\'s Information</string>
     <string name="view_location">View Location</string>
     <string name="view_report">View Report</string>

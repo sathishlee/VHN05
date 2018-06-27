@@ -55,6 +55,25 @@ public class NotificationListResponseModel {
         private String mPicmeId;
         private String mName;
         private String mPhoto;
+        private String message;
+        private String noteType;
+
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public String getNoteType() {
+            return noteType;
+        }
+
+        public void setNoteType(String noteType) {
+            this.noteType = noteType;
+        }
 
 
         public String getMtype() {

@@ -8,20 +8,18 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherPrimaryRegisterPresenter;
 import com.unicef.vhn.R;
-<<<<<<< HEAD
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.realmDbModel.DelevaryDetailsPnMotherRealmModel;
 import com.unicef.vhn.realmDbModel.PrimaryMotherDetailsRealmModel;
 import com.unicef.vhn.utiltiy.CheckNetwork;
-=======
 import com.unicef.vhn.constant.AppConstants;
->>>>>>> origin/new
 import com.unicef.vhn.view.PrimaryRegisterViews;
 
 import org.json.JSONException;
@@ -52,7 +50,7 @@ public class MothersPrimaryRecordsActivity extends AppCompatActivity implements 
     boolean isoffline = false;
     Realm realm;
     PrimaryMotherDetailsRealmModel primaryMotherDetailsRealmModel;
-
+TextView txt_no_internet;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,16 +80,15 @@ public class MothersPrimaryRecordsActivity extends AppCompatActivity implements 
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
         motherPrimaryRegisterPresenter = new MotherPrimaryRegisterPresenter(MothersPrimaryRecordsActivity.this, this);
-<<<<<<< HEAD
 //        motherPrimaryRegisterPresenter.getAllMotherPrimaryRegistration(preferenceData.getPicmeId());
         if (checkNetwork.isNetworkAvailable()) {
             motherPrimaryRegisterPresenter.getAllMotherPrimaryRegistration(AppConstants.MOTHER_PICME_ID);
         }else{
             isoffline=true;
         }
-=======
         motherPrimaryRegisterPresenter.getAllMotherPrimaryRegistration(AppConstants.MOTHER_PICME_ID);
->>>>>>> origin/new
+        txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
+        txt_no_internet.setVisibility(View.GONE);
         txt_name = (TextView) findViewById(R.id.txt_name);
         txt_mother_age = (TextView) findViewById(R.id.txt_mother_age);
         txt_lmp_date = (TextView) findViewById(R.id.txt_lmp_date);
@@ -130,6 +127,7 @@ public class MothersPrimaryRecordsActivity extends AppCompatActivity implements 
         txt_hus_vdrl = (TextView) findViewById(R.id.txt_hus_vdrl);
         txt_hus_Hepatitis = (TextView) findViewById(R.id.txt_hus_Hepatitis);
         if (isoffline) {
+            txt_no_internet.setVisibility(View.VISIBLE);
             getValuefromRealm();
         }else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);

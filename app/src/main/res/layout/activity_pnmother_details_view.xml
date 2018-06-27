@@ -3,7 +3,17 @@
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <TextView
+        android:id="@+id/txt_no_internet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="You are in offline"
+        android:background="@color/red"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_label"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:visibility="visible"/>
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/user_profile_photo"
@@ -279,15 +289,15 @@
         android:weightSum="2">
 
         <Button
-            android:id="@+id/btn_view_location"
+            android:id="@+id/btn_view_an_report"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="@color/colorPrimary"
-            android:drawableStart="@drawable/ic_show_location"
+            android:drawableStart="@drawable/ic_view_report"
             android:padding="5dp"
-            android:text="View Location"
+            android:text="AN Report"
             android:textColor="#ffffff" />
 
         <Button
@@ -299,8 +309,43 @@
             android:background="@color/colorPrimary"
             android:drawableStart="@drawable/ic_view_report"
             android:padding="5dp"
-            android:text="Mother Report"
+            android:text="PN Report"
             android:textColor="#ffffff" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/rel_bottom1"
+        android:weightSum="1"
+        android:padding="5dp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:id="@+id/btn_view_location1"
+            android:background="@color/colorPrimary"
+            android:textColor="#ffffff"
+            android:text="View Location"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_show_location"
+            android:visibility="gone"/>
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:id="@+id/btn_view_location"
+            android:background="@color/colorPrimary"
+            android:textColor="#ffffff"
+            android:text="View Location"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_show_location" />
 
     </LinearLayout>
 </LinearLayout>

@@ -102,5 +102,7 @@ public class MotherPrimaryRegisterPresenter implements MotherPrimaryRegisterInte
             }
         };
         VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
+        VolleySingleton.getInstance(activity).getRequestQueue().getCache().remove(url);
+
     }
 }

@@ -194,6 +194,8 @@ checkNetwork = new CheckNetwork(this);
                     motherMigrationRealmModel.setMPicmeId(jsonObject.getString("mPicmeId"));
                     motherMigrationRealmModel.setMtype(jsonObject.getString("mtype"));
                     motherMigrationRealmModel.setSubject(jsonObject.getString("subject"));
+                    motherMigrationRealmModel.setMMotherMobile(jsonObject.getString("mMotherMobile"));
+
 //                    mresponseResult.setMotherType(jsonObject.getString("motherType"));
 //                mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
 //                mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
@@ -233,6 +235,7 @@ checkNetwork = new CheckNetwork(this);
                     getVhn_migrated_mothers.setMPicmeId(model.getMPicmeId());
                     getVhn_migrated_mothers.setMtype(model.getMtype());
                     getVhn_migrated_mothers.setSubject(model.getSubject());
+                    getVhn_migrated_mothers.setMMotherMobile(model.getMMotherMobile());
 //                    mresponseResult.setMotherType(jsonObject.getString("motherType"));
 //                mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
 //                mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
@@ -262,6 +265,7 @@ checkNetwork = new CheckNetwork(this);
             getVhn_migrated_mothers.setMPicmeId(model.getMPicmeId());
             getVhn_migrated_mothers.setMtype(model.getMtype());
             getVhn_migrated_mothers.setSubject(model.getSubject());
+            getVhn_migrated_mothers.setMMotherMobile(model.getMMotherMobile());
 //                    mresponseResult.setMotherType(jsonObject.getString("motherType"));
 //                mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
 //                mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
@@ -297,7 +301,7 @@ checkNetwork = new CheckNetwork(this);
                 != PackageManager.PERMISSION_GRANTED) {
             requestCallPermission();
         } else {
-            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+" + mMotherMobile)));
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+91" + mMotherMobile)));
         }
     }
 

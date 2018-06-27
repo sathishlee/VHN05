@@ -8,20 +8,18 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherDeliveryPresenter;
 import com.unicef.vhn.R;
-<<<<<<< HEAD
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.realmDbModel.DelevaryDetailsPnMotherRealmModel;
 import com.unicef.vhn.realmDbModel.PrimaryMotherDetailsRealmModel;
 import com.unicef.vhn.utiltiy.CheckNetwork;
-=======
 import com.unicef.vhn.constant.AppConstants;
->>>>>>> origin/new
 import com.unicef.vhn.view.MotherDeliveryViews;
 
 import org.json.JSONException;
@@ -46,6 +44,7 @@ public class PNMotherDeliveryReportActivity extends AppCompatActivity implements
     PreferenceData preferenceData;
 Realm realm;
 CheckNetwork checkNetwork;
+TextView txt_no_internet;
 boolean isOffline;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,16 +63,15 @@ boolean isOffline;
         progressDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
         motherDeliveryPresenter = new MotherDeliveryPresenter(PNMotherDeliveryReportActivity.this, this);
-<<<<<<< HEAD
 //        motherDeliveryPresenter.deliveryDetails(preferenceData.getPicmeId(), preferenceData.getMId());
         if (checkNetwork.isNetworkAvailable()){
             motherDeliveryPresenter.deliveryDetails(AppConstants.MOTHER_PICME_ID,AppConstants.SELECTED_MID);
         }else{
             isOffline=true;
         }
-=======
         motherDeliveryPresenter.deliveryDetails(AppConstants.MOTHER_PICME_ID, AppConstants.SELECTED_MID);
->>>>>>> origin/new
+        txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
+        txt_no_internet.setVisibility(View.GONE);
         txt_delivery_date = (TextView) findViewById(R.id.txt_delivery_date);
         txt_delivery_time = (TextView) findViewById(R.id.txt_delivery_time);
         txt_delivery_place = (TextView) findViewById(R.id.txt_delivery_place);
@@ -92,6 +90,7 @@ boolean isOffline;
         txt_opv_given_date = (TextView) findViewById(R.id.txt_opv_given_date);
         txt_hepb_given_date = (TextView) findViewById(R.id.txt_hepb_given_date);
 if (isOffline) {
+    txt_no_internet.setVisibility(View.VISIBLE);
     getValuefromRealm();
 }else{
     AlertDialog.Builder builder = new AlertDialog.Builder(this);

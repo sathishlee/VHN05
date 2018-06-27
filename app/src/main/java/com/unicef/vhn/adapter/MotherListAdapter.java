@@ -66,7 +66,12 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
     /*new*/
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final PNMotherListResponse.VhnAN_Mothers_List pNMotherResponseModel = mResult.get(position);
+        PNMotherListResponse.VhnAN_Mothers_List pNMotherResponseModel =null;
+        if (AppConstants.ISQUERYFILTER){
+            pNMotherResponseModel = mResultfilter.get(position);}
+            else {
+         pNMotherResponseModel = mResult.get(position);
+        }
         holder.txt_username.setText(pNMotherResponseModel.getMName());
         holder.txt_picme_id.setText(pNMotherResponseModel.getMPicmeId());
         holder.txt_list_type.setText(pNMotherResponseModel.getMotherType());
@@ -100,17 +105,24 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
             holder.txt_list_type.setText(type);
         }
 
+
+        final PNMotherListResponse.VhnAN_Mothers_List finalPNMotherResponseModel = pNMotherResponseModel;
+        if (finalPNMotherResponseModel.getmMotherMobile().equalsIgnoreCase("null")||finalPNMotherResponseModel.getmMotherMobile().length()<10){
+            holder.ll_call.setVisibility(View.GONE);
+        }else{
+            holder.ll_call.setVisibility(View.VISIBLE);
+        }
         holder.ll_call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeCallInterface.makeCall(pNMotherResponseModel.getmMotherMobile());
+                makeCallInterface.makeCall(finalPNMotherResponseModel.getmMotherMobile());
             }
         });
 
         holder.ll_track_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppConstants.SELECTED_MID = pNMotherResponseModel.getMid();
+                AppConstants.SELECTED_MID = finalPNMotherResponseModel.getMid();
                 applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MotherLocationActivity.class));
             }
         });
@@ -120,23 +132,23 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
             @Override
             public void onClick(View v) {
 //                AppConstants.SELECTED_MID=pNMotherResponseModel.getMid();
-                type = pNMotherResponseModel.getMotherType();
+                type = finalPNMotherResponseModel.getMotherType();
                 if (type.equalsIgnoreCase("PN")) {
-                    AppConstants.SELECTED_MID = pNMotherResponseModel.getMid();
-                    AppConstants.MOTHER_PICME_ID = pNMotherResponseModel.getMPicmeId();
+                    AppConstants.SELECTED_MID = finalPNMotherResponseModel.getMid();
+                    AppConstants.MOTHER_PICME_ID = finalPNMotherResponseModel.getMPicmeId();
 //                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherDetailsActivity.class));
                     applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherDetailsViewActivity.class));
 
                 } else if (type.equalsIgnoreCase("AN")) {
-                    AppConstants.SELECTED_MID = pNMotherResponseModel.getMid();
-                    AppConstants.MOTHER_PICME_ID = pNMotherResponseModel.getMPicmeId();
+                    AppConstants.SELECTED_MID = finalPNMotherResponseModel.getMid();
+                    AppConstants.MOTHER_PICME_ID = finalPNMotherResponseModel.getMPicmeId();
 
 //                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MothersDetailsActivity.class));
                     applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), ANMotherDetailsViewActivcity.class));
 
                 } else if (type.equalsIgnoreCase("Risk")) {
-                    AppConstants.SELECTED_MID = pNMotherResponseModel.getMid();
-                    AppConstants.MOTHER_PICME_ID = pNMotherResponseModel.getMPicmeId();
+                    AppConstants.SELECTED_MID = finalPNMotherResponseModel.getMid();
+                    AppConstants.MOTHER_PICME_ID = finalPNMotherResponseModel.getMPicmeId();
 
                     applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MothersDetailsActivity.class));
 
@@ -146,12 +158,6 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
 //
 //                }
 
-               /* Uri gmmIntentUri = Uri.parse("google.navigation:q="+pNMotherResponseModel.getMLatitude()+","+pNMotherResponseModel.getMLongitude());
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                mapIntent.setPackage("com.google.android.apps.maps");
-                if (mapIntent.resolveActivity(applicationContext.getPackageManager()) != null) {
-                    applicationContext. startActivity(mapIntent);
-                }*/
             }
         });
     }
@@ -186,7 +192,9 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
     @Override
     public int getItemCount() {
         if (AppConstants.ISQUERYFILTER){
+            AppConstants.ISQUERYFILTER=true;
                     return mResultfilter.size();
+
         }else{
             return  mResult.size();
 
