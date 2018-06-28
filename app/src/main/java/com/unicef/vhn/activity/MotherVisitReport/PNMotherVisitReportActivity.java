@@ -23,11 +23,13 @@ import com.unicef.vhn.adapter.PNHBNCVisitRecordsAdapter;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.model.PnHbncVisitRecordsModel;
 import com.unicef.vhn.realmDbModel.PNMVisitRealmModel;
+import com.unicef.vhn.utiltiy.CheckNetwork;
 
 import java.util.ArrayList;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+
 /*This screen values form realm DB, Api call in mother list*/
 public class PNMotherVisitReportActivity extends AppCompatActivity implements View.OnClickListener {
     private TabLayout tabLayout;
@@ -39,7 +41,8 @@ public class PNMotherVisitReportActivity extends AppCompatActivity implements Vi
     PnHbncVisitRecordsModel.PnMothersVisit mPnHbncVisitRecordsModel;
     ArrayList<PnHbncVisitRecordsModel.PnMothersVisit> mPnHbncVisitRecordsList;
     PNHBNCVisitRecordsAdapter pnhbncVisitRecordsAdapter;
-    TextView txt_no_records_found;
+    TextView txt_no_records_found, txt_no_internet;
+    CheckNetwork checkNetwork;
     Realm realm;
 
     @Override
@@ -59,7 +62,15 @@ public class PNMotherVisitReportActivity extends AppCompatActivity implements Vi
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
         mPnHbncVisitRecordsList = new ArrayList<>();
+        checkNetwork = new CheckNetwork(this);
         txt_no_records_found = (TextView) findViewById(R.id.txt_no_records_found);
+        txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
+        txt_no_internet.setVisibility(View.GONE);
+        if (checkNetwork.isNetworkAvailable()) {
+            txt_no_internet.setVisibility(View.GONE);
+        } else {
+            txt_no_internet.setVisibility(View.VISIBLE);
+        }
         viewPager = (ViewPager) findViewById(R.id.pn_viewpager);
         tabLayout = (TabLayout) findViewById(R.id.pn_tabs);
 

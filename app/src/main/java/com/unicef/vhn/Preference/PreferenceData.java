@@ -32,10 +32,13 @@ public class PreferenceData {
         return sharedPreferences.getBoolean(AppConstants.IS_LOGIN, Boolean.parseBoolean(""));
     }
 
-    public void storeUserInfo(String vhnName, String vhnCode, String vhnId) {
-        sharedPreferences.edit().putString(AppConstants.VHN_ID, vhnId).commit();
-        sharedPreferences.edit().putString(AppConstants.VHN_NAME, vhnName).commit();
-        sharedPreferences.edit().putString(AppConstants.VHN_CODE, vhnCode).commit();
+    public void storeUserInfo(String vhnName, String vhnCode, String vhnId, String vphoto) {
+
+        sharedPreferences.edit().putString(AppConstants.VHN_ID,vhnId).commit();
+        sharedPreferences.edit().putString(AppConstants.VHN_NAME,vhnName).commit();
+        sharedPreferences.edit().putString(AppConstants.VHN_CODE,vhnCode).commit();
+        sharedPreferences.edit().putString(AppConstants.VHN_PHOTO,vphoto).commit();
+
 
         Log.e("VHN_ID", sharedPreferences.getString(AppConstants.VHN_ID, ""));
         Log.e("VHN_NAME", sharedPreferences.getString(AppConstants.VHN_NAME, ""));
@@ -67,6 +70,12 @@ public class PreferenceData {
         return sharedPreferences.getString(AppConstants.DEVICE_ID, "");
     }
 
+    public String getVhnPhoto(){
+        return sharedPreferences.getString(AppConstants.VHN_PHOTO,"");
+    }
+    public void setVhnPhoto(String vPhoto){
+        sharedPreferences.edit().putString(AppConstants.VHN_PHOTO, vPhoto).commit();
+    }
 
     public String getVhnId() {
         return sharedPreferences.getString(AppConstants.VHN_ID, "");
@@ -149,12 +158,22 @@ public class PreferenceData {
         return Integer.parseInt(sharedPreferences.getString(AppConstants.VILLAGENAME_POSITION,""));
 
     }
+
+    public String getphoto() {
+        return sharedPreferences.getString(AppConstants.VHN_PHOTO, "");
+
+    }
+
+    public void setPhoto(String vphoto) {
+        sharedPreferences.edit().putString(AppConstants.VHN_PHOTO, vphoto).commit();
+    }
+
     public void setFilterStatus(boolean isfillter) {
         sharedPreferences.edit().putBoolean("isfillter", isfillter).commit();
 
     }
     public boolean getFilterStatus() {
-        return sharedPreferences.getBoolean("isfillter", Boolean.parseBoolean(""));
+                return sharedPreferences.getBoolean("isfillter", Boolean.parseBoolean(""));
 
     }
 }

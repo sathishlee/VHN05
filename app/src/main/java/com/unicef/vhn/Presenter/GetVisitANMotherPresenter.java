@@ -90,7 +90,7 @@ public class GetVisitANMotherPresenter implements VisitANMotherInteractor {
             }
         };
         VolleySingleton.getInstance(activity).addToRequestQueue(strReq);
-
+        VolleySingleton.getInstance(activity).getRequestQueue().getCache().remove(url);
     }
 
     @Override
@@ -123,9 +123,10 @@ public class GetVisitANMotherPresenter implements VisitANMotherInteractor {
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-//                params.put("vhnCode",vhnCode);
-//                params.put("vhnId",vhnId);
-                params.put("mid", mid);
+
+                params.put("vhnCode",vhnCode);
+                params.put("vhnId",vhnId);
+                params.put("mid",mid);
 
                 Log.d("params--->", params.toString());
 
@@ -153,7 +154,7 @@ public class GetVisitANMotherPresenter implements VisitANMotherInteractor {
             }
         };
         VolleySingleton.getInstance(activity).addToRequestQueue(strReq);
-
+        VolleySingleton.getInstance(activity).getRequestQueue().getCache().remove(url);
 
     }
 }

@@ -129,9 +129,7 @@ Realm realm;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(ImmunizationActivity.this, ImmunizationListActivity.class);
         finish();
-        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 

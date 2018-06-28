@@ -15,16 +15,21 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.unicef.vhn.R;
 import com.unicef.vhn.activity.MainActivity;
+import com.unicef.vhn.activity.MotherList.PushNotificationListActivity;
+import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
+import com.unicef.vhn.realmDbModel.PushNotificationListRealmModel;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import io.realm.Realm;
+
 import static com.google.android.gms.wearable.DataMap.TAG;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-
+//    Realm realm;
     private static final String TAG = "FirebaseMessageService";
     Bitmap bitmap;
 
@@ -58,39 +63,48 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //
 //        sendNotification(message, bitmap, TrueOrFlase);
 
+       /* realm = RealmController.with(this).getRealm();
+        realm.beginTransaction();
+        PushNotificationListRealmModel model = realm.createObject(PushNotificationListRealmModel.class);
+        model.setTitle(remoteMessage.getNotification().getTitle().toUpperCase());
+        model.setTitle(remoteMessage.getNotification().getBody().toUpperCase());
+        model.setIntime(String.valueOf(System.currentTimeMillis()));
+        realm.commitTransaction();*/
+
         sendNotification(remoteMessage.getNotification().getBody());
 
 
     }
 
-        private void sendNotification(String message){
-            Intent i = new Intent(this, MainActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    private void sendNotification(String message) {
+        Log.e("FirebaseMessaging", "recived push notofication message >>>>>>>>>" + message);
+        Intent i = new Intent(this, PushNotificationListActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //            i.putExtra("AnotherActivity", TrueOrFalse);
 
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_ONE_SHOT);
 
-            Uri u = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Uri u = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
-            builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_launcher));
-            builder.setSmallIcon(R.drawable.ic_launcher);
+        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
+        builder.setSmallIcon(R.drawable.ic_launcher);
 
 //            builder.setStyle(new NotificationCompat.BigPictureStyle()
 //                    .bigPicture(image))/*Notification with Image*/
 //                    .setAutoCancel(true);
 
-            builder.setContentTitle("VHN");
+        builder.setContentTitle("VHN");
 //            builder.setLargeIcon(R.drawable.mother);
-            builder.setContentText(message);
-            builder.setAutoCancel(true);
-            builder.setSound(u);
-            builder.setContentIntent(pendingIntent);
+        builder.setContentText(message);
+        builder.setAutoCancel(true);
+        builder.setSound(u);
+        builder.setContentIntent(pendingIntent);
 
-            NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-            manager.notify(0, builder.build());
-        }
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.notify(0, builder.build());
+    }
 
 //    public Bitmap getBitmapfromUrl(String imageUrl) {
 //        try {

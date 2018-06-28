@@ -96,8 +96,7 @@ public class LocationUpdatePresenter implements LocationUpdateIntractor {
         };
         // Adding request to request queue
         VolleySingleton.getInstance(activity).addToRequestQueue(strReq);
-
-
+        VolleySingleton.getInstance(activity).getRequestQueue().getCache().remove(url);
     }
 
 

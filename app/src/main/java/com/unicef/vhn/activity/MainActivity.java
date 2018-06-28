@@ -2,7 +2,10 @@ package com.unicef.vhn.activity;
 
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,8 +15,11 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,8 +60,9 @@ public class MainActivity extends AppCompatActivity
     ProgressDialog pDialog;
     PreferenceData preferenceData;
     NotificationPresenter notificationPresenter;
-   public static TextView notification_count;
-    String strTodayVisitCount="0";
+    public static TextView notification_count;
+    //   public static TextView txt_no_internet;
+    String strTodayVisitCount = "0";
     int mCartItemCount = 10;
 
     @Override
@@ -64,31 +71,37 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        checkNetwork =new CheckNetwork(this);
-
+//        txt_no_internet = (TextView)findViewById(R.id.txt_no_internet);
+//        txt_no_internet.setVisibility(View.GONE);
+        checkNetwork = new CheckNetwork(this);
+        if (checkNetwork.isNetworkAvailable()) {
+//            txt_no_internet.setVisibility(View.GONE);
+        } else {
+//            txt_no_internet.setVisibility(View.VISIBLE);
+        }
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
-        preferenceData =new PreferenceData(this);
+        preferenceData = new PreferenceData(this);
         preferenceData.setNotificationCount(strTodayVisitCount);
-        notificationPresenter =new NotificationPresenter(this,this);
-        notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(),preferenceData.getVhnId());
+        notificationPresenter = new NotificationPresenter(this, this);
+        notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(), preferenceData.getVhnId());
 
         // every 10 minut notification count api call
-        Timer timer = new Timer ();
-        TimerTask hourlyTask = new TimerTask () {
+        Timer timer = new Timer();
+        TimerTask hourlyTask = new TimerTask() {
             @Override
-            public void run () {
-                if (checkNetwork.isNetworkAvailable()){
+            public void run() {
+                if (checkNetwork.isNetworkAvailable()) {
                     notificationPresenter.getNotificationCount(preferenceData.getVhnId());
-                }else{
+                } else {
                     strTodayVisitCount = preferenceData.getNotificationCount();
                 }
             }
         };
 
 // schedule the task to run starting now and then every hour...
-        timer.schedule (hourlyTask, 0l, 500*60*60);   // 1000*10*60 every 10 minut
+        timer.schedule(hourlyTask, 0l, 500 * 60 * 60);   // 1000*10*60 every 10 minut
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -96,28 +109,41 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        ImageView imageView = (ImageView) findViewById(R.id.  cardview_image);
-       /* Picasso.with(this)
-                .load(Apiconstants.MOTHER_PHOTO_URL + preferenceData.get)
-                .placeholder(R.drawable.girl)
-                .fit()
-                .centerCrop()
-                .memoryPolicy(MemoryPolicy.NO_CACHE)
-                .networkPolicy(NetworkPolicy.NO_CACHE)
-                .transform(new RoundedTransformation(90, 4))
-                .error(R.drawable.girl)
-                .into(cardview_image);*/
-        TextView vhnName = (TextView) findViewById(R.id.  txt_username);
-//        vhnName.setText(preferenceData.getVhnName());
-        TextView vhnId = (TextView) findViewById(R.id.  vhn_id);
-//        vhnId.setText(preferenceData.getVhnId());
-                navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setItemIconTintList(null);
+        View headerView = navigationView.getHeaderView(0);
+        ImageView imageView = (ImageView) headerView.findViewById(R.id.userImageProfile);
+        String str_mPhoto = preferenceData.getphoto();
 
+        if (TextUtils.isEmpty(str_mPhoto)) {
+            imageView.setImageResource(R.drawable.girl);
+        } else {
+            Log.d("mphoto-->", Apiconstants.PHOTO_URL + str_mPhoto);
+
+            Picasso.with(getApplicationContext())
+                    .load(Apiconstants.PHOTO_URL + str_mPhoto)
+                    .placeholder(R.drawable.girl)
+                    .fit()
+                    .centerCrop()
+                    .memoryPolicy(MemoryPolicy.NO_CACHE)
+                    .networkPolicy(NetworkPolicy.NO_CACHE)
+                    .transform(new RoundedTransformation(90, 4))
+                    .error(R.drawable.girl)
+                    .into(imageView);
+
+
+        }
+        TextView vhnName = (TextView) headerView.findViewById(R.id.txt_username);
+        vhnName.setText("VHN NAME : " + preferenceData.getVhnName().toUpperCase());
+        TextView vhnId = (TextView) headerView.findViewById(R.id.vhn_id);
+        vhnId.setText("VHN ID : " + preferenceData.getVhnId());
+        navigationView.setNavigationItemSelectedListener(this);
+        vhnName.setText(preferenceData.getVhnName());
+        vhnId.setText(preferenceData.getVhnId());
+
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemIconTintList(null);
         setupNavigationView();
 
     }
-
 
 
     @Override
@@ -138,8 +164,9 @@ public class MainActivity extends AppCompatActivity
         final MenuItem menuItem = menu.findItem(R.id.action_notification);
         MenuItemCompat.setActionView(menuItem, R.layout.notification_count);
         View view = MenuItemCompat.getActionView(menuItem);
-        notification_count = (TextView) view.findViewById(R.id.notification_count);
-        notification_count.setText(String.valueOf(strTodayVisitCount));
+//        notification_count = (TextView) view.findViewById(R.id.notification_count);
+//        notification_count.setVisibility(View.GONE);
+//        notification_count.setText(String.valueOf(strTodayVisitCount));
         setupNotiCount();
 
         view.setOnClickListener(new View.OnClickListener() {
@@ -153,18 +180,18 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setupNotiCount() {
-        if(notification_count != null){
+    /*    if(notification_count != null){
             if(mCartItemCount == 0){
-                if (notification_count.getVisibility() != View.GONE){
-                    notification_count.setVisibility(View.GONE);
-                }
+//                if (notification_count.getVisibility() != View.GONE){
+//                    notification_count.setVisibility(View.GONE);
+//                }
             }else{
 //                notification_count.setText(String.valueOf(strTodayVisitCount));
-                if (notification_count.getVisibility() != View.VISIBLE){
-                    notification_count.setVisibility(View.VISIBLE);
-                }
+                *//*if (notification_count.getVisibility() != View.VISIBLE){
+//                    notification_count.setVisibility(View.VISIBLE);
+                }*//*
             }
-        }
+        }*/
     }
 
     @Override
@@ -172,19 +199,20 @@ public class MainActivity extends AppCompatActivity
 
         switch (item.getItemId()) {
             case R.id.action_notification:
-                notificationPresenter.getNotificationList(preferenceData.getVhnCode(),preferenceData.getVhnId());
+                notificationPresenter.getNotificationList(preferenceData.getVhnCode(), preferenceData.getVhnId());
                 android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content,
                         NotificationListFragment.newInstance()).commit();
                 return true;
             case R.id.action_help:
-                Toast.makeText(getApplicationContext(),"Help Menu",Toast.LENGTH_LONG).show();
+                preferenceData.setLogin(false);
+                finish();
+                Toast.makeText(getApplicationContext(), "Logged Out", Toast.LENGTH_LONG).show();
                 return true;
             default:
                 super.onOptionsItemSelected(item);
-        }return true;
-
-
+        }
+        return true;
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -194,44 +222,53 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.an_mothers) {
-            AppConstants.GET_MOTHER_LIST_TYPE="an_mother_total_count";
-            AppConstants.MOTHER_LIST_TITLE="AN Mother List";
+            AppConstants.GET_MOTHER_LIST_TYPE = "an_mother_total_count";
+            AppConstants.MOTHER_LIST_TITLE = "AN Mother List";
 
             startActivity(new Intent(getApplicationContext(), AllMotherListActivity.class));
         }
         if (id == R.id.pn_hbnc_mothers) {
-            AppConstants.GET_MOTHER_LIST_TYPE="pn_hbnc_totlal_coun";
-            AppConstants.MOTHER_LIST_TITLE="PN/HBNC Mother List";
+            AppConstants.GET_MOTHER_LIST_TYPE = "pn_hbnc_totlal_coun";
+            AppConstants.MOTHER_LIST_TITLE = "PN/HBNC Mother List";
 
-            startActivity(new Intent(getApplicationContext(), PNHBNCListActivity.class));
-        }
-        else if (id == R.id.immunization) {
+//            startActivity(new Intent(getApplicationContext(), PNHBNCListActivity.class));
+            startActivity(new Intent(getApplicationContext(), AllMotherListActivity.class));
+
+        } else if (id == R.id.immunization) {
             Intent i = new Intent(getApplicationContext(), ImmunizationListActivity.class);
             startActivity(i);
-        }
-
-        else if (id == R.id.alert) {
+        } else if (id == R.id.alert) {
             Intent i = new Intent(getApplicationContext(), AlertActivity.class);
             startActivity(i);
-        }
-
-        else if (id == R.id.today_visit) {
-            Intent i = new Intent(getApplicationContext(),VisitActivity.class);
+        } else if (id == R.id.today_visit) {
+            Intent i = new Intent(getApplicationContext(), VisitActivity.class);
             startActivity(i);
 
-        }
-        else if (id == R.id.migration_mother) {
-//            Intent i = new Intent(getApplicationContext(),MotherMigration.class);
-            Intent i = new Intent(getApplicationContext(),MigrationMotherListActivity.class);
+        } else if (id == R.id.migration_mother) {
+            Intent i = new Intent(getApplicationContext(), MotherMigration.class);
+//            Intent i = new Intent(getApplicationContext(),MigrationMotherListActivity.class);
             startActivity(i);
-        }
-        else if (id == R.id.change_language) {
-            Intent i = new Intent(getApplicationContext(),ChangeLanguageActivity.class);
+        } else if (id == R.id.change_language) {
+            Intent i = new Intent(getApplicationContext(), ChangeLanguageActivity.class);
             startActivity(i);
-        }
-        else if (id == R.id.change_password) {
-            Intent i = new Intent(getApplicationContext(),ChangePasswordActivity.class);
-            startActivity(i);
+        } else if (id == R.id.change_password) {
+            if (checkNetwork.isNetworkAvailable()) {
+                Intent i = new Intent(getApplicationContext(), ChangePasswordActivity.class);
+                startActivity(i);
+            } else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("You can't change your password!");
+                builder.setMessage("Please check internet connection.");
+                // Add the buttons
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
+            }
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -268,6 +305,7 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
 
             case R.id.home:
+                AppConstants.ISQUERYFILTER=false;
                 // Action to perform when Home Menu item is selected.
                 selectedFragment = home.newInstance();
                 break;
@@ -275,13 +313,14 @@ public class MainActivity extends AppCompatActivity
             case R.id.mothers:
                 // Action to perform when Bag Menu item is selected.
 //                AppConstants.isfromhome=0;
-                selectedFragment =  mothers.newInstance();
+                selectedFragment = mothers.newInstance();
                 break;
 
             case R.id.risk:
                 // Action to perform when Bag Menu item is selected.
 //                AppConstants.isfromhome=0;
-                selectedFragment =  risk.newInstance();
+                AppConstants.ISQUERYFILTER=false;
+                selectedFragment = risk.newInstance();
                 break;
         }
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -302,8 +341,7 @@ public class MainActivity extends AppCompatActivity
 
 
     @Override
-    public void onNetworkConnectionChanged(boolean isConnected)
-    {
+    public void onNetworkConnectionChanged(boolean isConnected) {
 
     }
 
@@ -315,16 +353,17 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void showProgress() {
-pDialog.show();
+        pDialog.show();
     }
 
     @Override
     public void hideProgress() {
-pDialog.dismiss();
+        pDialog.dismiss();
     }
 
     @Override
-    public void NotificationResponseSuccess(String response) { }
+    public void NotificationResponseSuccess(String response) {
+    }
 
     @Override
     public void NotificationResponseError(String response) {
@@ -338,8 +377,10 @@ pDialog.dismiss();
             JSONObject jsonObject = new JSONObject(response);
             String status = jsonObject.getString("status");
             String msg = jsonObject.getString("message");
-             if (status.equalsIgnoreCase("1")) {
-                 preferenceData.setNotificationCount(jsonObject.getString("notificationCount"));
+            if (status.equalsIgnoreCase("1")) {
+                preferenceData.setTodayVisitCount(jsonObject.getString("visitCount"));
+            } else {
+                preferenceData.setTodayVisitCount("0");
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -360,9 +401,15 @@ pDialog.dismiss();
             String status = jsonObject.getString("status");
             String msg = jsonObject.getString("message");
             if (status.equalsIgnoreCase("1")) {
-
+//                notification_count.setVisibility(View.VISIBLE);
+                String strNotifyCount = jsonObject.getString("notificationCount");
+                preferenceData.setNotificationCount(strNotifyCount);
+                Log.d(MainActivity.class.getSimpleName(), "Notification Count-->" + strNotifyCount);
             } else {
-                Log.d(MainActivity.class.getSimpleName(), "Notification messsage-->" + msg);
+                if (msg.equalsIgnoreCase("No Notification")) {
+//                    notification_count.setVisibility(View.GONE);
+                    Log.d(MainActivity.class.getSimpleName(), "Notification message-->" + msg);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();

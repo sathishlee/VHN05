@@ -1,10 +1,14 @@
 package com.unicef.vhn.fragment;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +19,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.unicef.vhn.Interface.MakeCallInterface;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.NotificationPresenter;
 import com.unicef.vhn.R;
@@ -24,10 +30,7 @@ import com.unicef.vhn.activity.VisitActivity;
 import com.unicef.vhn.adapter.NotificationAdapter;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.model.NotificationListResponseModel;
-import com.unicef.vhn.constant.AppConstants;
-import com.unicef.vhn.model.PNMotherListResponse;
-import com.unicef.vhn.realmDbModel.MotherListRealm;
-import com.unicef.vhn.realmDbModel.MotherRiskListRealm;
+
 import com.unicef.vhn.realmDbModel.NotificationListRealm;
 import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.view.NotificationViews;
@@ -42,7 +45,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 
-public class NotificationListFragment extends Fragment implements NotificationViews {
+public class NotificationListFragment extends Fragment implements NotificationViews, MakeCallInterface {
     TextView txt_today_visit_count, txt_count_today_visit;
     LinearLayout ll_go_visit_list;
     NotificationAdapter mAdapter;
@@ -57,10 +60,11 @@ public class NotificationListFragment extends Fragment implements NotificationVi
 
     NotificationPresenter notificationPresenter;
 
-
+    private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
 
     CheckNetwork checkNetwork;
     boolean isoffline = false;
+    TextView txt_no_internet;
     Realm realm;
     NotificationListRealm notificationListRealm;
 
@@ -102,6 +106,8 @@ public class NotificationListFragment extends Fragment implements NotificationVi
         }
         notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(), preferenceData.getVhnId());
 
+        txt_no_internet = view.findViewById(R.id.txt_no_internet);
+        txt_no_internet.setVisibility(View.GONE);
         txt_today_visit_count = view.findViewById(R.id.txt_today_visit_count);
         txt_count_today_visit = view.findViewById(R.id.txt_count_today_visit);
         ll_go_visit_list = view.findViewById(R.id.ll_go_visit_list);
@@ -127,9 +133,10 @@ public class NotificationListFragment extends Fragment implements NotificationVi
         mRecyclerView.setLayoutManager(mLayoutManager);
         moviesList = new ArrayList<>();
         // specify an adapter (see also next example)
-        mAdapter = new NotificationAdapter(moviesList, getActivity());
+        mAdapter = new NotificationAdapter(moviesList, getActivity(),this);
         mRecyclerView.setAdapter(mAdapter);
         if (isoffline) {
+            txt_no_internet.setVisibility(View.VISIBLE);
             showOfflineData();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -173,6 +180,9 @@ public class NotificationListFragment extends Fragment implements NotificationVi
             mresponseResult.setNoteId(model.getNoteId());
             mresponseResult.setNoteStartDateTime(model.getNoteStartDateTime());
             mresponseResult.setMtype(model.getMtype());
+            mresponseResult.setMessage(model.getMessage());
+            mresponseResult.setmPhoto(model.getmPhoto());
+            mresponseResult.setNoteType(model.getNoteType());
 
 
 
@@ -251,8 +261,10 @@ public class NotificationListFragment extends Fragment implements NotificationVi
                     notificationListRealm.setNoteId(jsonObject1.getString("noteId"));
                     notificationListRealm.setNoteStartDateTime(jsonObject1.getString("noteStartDateTime"));
                     notificationListRealm.setMtype(jsonObject1.getString("mtype"));
+                    notificationListRealm.setMessage(jsonObject1.getString("message"));
+                    notificationListRealm.setNoteType(jsonObject1.getString("noteType"));
 
-                    /*ovie.setMPicmeId(jsonObject1.getString("mPicmeId"));
+                    /*movie.setMPicmeId(jsonObject1.getString("mPicmeId"));
                     movie.setMName(jsonObject1.getString("mName"));
                     movie.setMid(jsonObject1.getString("mid"));
                     movie.setVhnId(jsonObject1.getString("vhnId"));
@@ -262,12 +274,17 @@ public class NotificationListFragment extends Fragment implements NotificationVi
                     movie.setMigratedmId(jsonObject1.getString("migratedmId"));
                     movie.setNoteId(jsonObject1.getString("noteId"));
                     movie.setNoteStartDateTime(jsonObject1.getString("noteStartDateTime"));
+<<<<<<< HEAD
                     movie.setMtype(jsonObject1.getString("mtype"));*/
 //                    Log.d(NotificationListFragment.class.getSimpleName(), "Notification details" + i + movie);
 
 //                    moviesList.add(movie);
 
 //                    mAdapter.notifyDataSetChanged();
+                   /* movie.setMtype(jsonObject1.getString("mtype"));
+                    Log.d(NotificationListFragment.class.getSimpleName(), "Notification details" + i + movie);
+                    moviesList.add(movie);*/
+                    mAdapter.notifyDataSetChanged();
                 }
                 realm.commitTransaction(); //close table
             } else {
@@ -304,6 +321,9 @@ public class NotificationListFragment extends Fragment implements NotificationVi
             mresponseResult.setNoteId(model.getNoteId());
             mresponseResult.setNoteStartDateTime(model.getNoteStartDateTime());
             mresponseResult.setMtype(model.getMtype());
+            mresponseResult.setMessage(model.getMessage());
+            mresponseResult.setmPhoto(model.getmPhoto());
+            mresponseResult.setNoteType(model.getNoteType());
             moviesList.add(mresponseResult);
         }
         mAdapter.notifyDataSetChanged();
@@ -360,6 +380,46 @@ public class NotificationListFragment extends Fragment implements NotificationVi
 
     }
 
+    @Override
+    public void makeCall(String mMotherMobile) {
+//        isDataUpdate = false;
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestCallPermission();
+        } else {
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+91" + mMotherMobile)));
+        }
+
+    }
+
+    private void requestCallPermission() {
+
+//        Log.i(ANTT1MothersList.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
+        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                getActivity(), Manifest.permission.CALL_PHONE)) {
+//            Toast.makeText(getActivity(), "Displaying Call permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();
+        } else {
+            ActivityCompat.requestPermissions(
+                    getActivity(), new String[]{Manifest.permission.CALL_PHONE},
+                    MAKE_CALL_PERMISSION_REQUEST_CODE);
+        }
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case MAKE_CALL_PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 &&
+                        (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    Toast.makeText(getActivity(), "You can call the number by clicking on the button", Toast.LENGTH_SHORT).show();
+                }
+                return;
+        }
+    }
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name

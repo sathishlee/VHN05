@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.unicef.vhn.Preference.PreferenceData;
@@ -18,6 +19,7 @@ import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.realmDbModel.DelevaryDetailsPnMotherRealmModel;
 import com.unicef.vhn.realmDbModel.PrimaryMotherDetailsRealmModel;
 import com.unicef.vhn.utiltiy.CheckNetwork;
+import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.view.PrimaryRegisterViews;
 
 import org.json.JSONException;
@@ -33,7 +35,7 @@ import io.realm.RealmResults;
 public class MothersPrimaryRecordsActivity extends AppCompatActivity implements PrimaryRegisterViews {
 
     TextView txt_name, txt_mother_age, txt_lmp_date, txt_edd_date, txt_pry_mobile_no,
-            txt_alter_mobile_no, txt_mother_occupation, txt_hus_occupation, txt_age_at_marriage, txt_consanguineous_marraige,
+            txt_alter_mobile_no,txt_mother_occupation, txt_hus_occupation, txt_age_at_marriage,txt_consanguineous_marraige,
             txt_history_of_illness, txt_history_of_illness_family, txt_any_surgery_done, txt_tobacco, txt_alcohol,
             txt_on_any_medication, txt_allergic_to_any_drug, txt_history_of_previous_pregnancy, txt_lscs_done,
             txt_any_complication, txt_g, txt_p, txt_a, txt_l, txt_registration_week, txt_an_tt_1st, txt_an_tt_2nd,
@@ -48,7 +50,7 @@ public class MothersPrimaryRecordsActivity extends AppCompatActivity implements 
     boolean isoffline = false;
     Realm realm;
     PrimaryMotherDetailsRealmModel primaryMotherDetailsRealmModel;
-
+TextView txt_no_internet;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +86,9 @@ public class MothersPrimaryRecordsActivity extends AppCompatActivity implements 
         }else{
             isoffline=true;
         }
+        motherPrimaryRegisterPresenter.getAllMotherPrimaryRegistration(AppConstants.MOTHER_PICME_ID);
+        txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
+        txt_no_internet.setVisibility(View.GONE);
         txt_name = (TextView) findViewById(R.id.txt_name);
         txt_mother_age = (TextView) findViewById(R.id.txt_mother_age);
         txt_lmp_date = (TextView) findViewById(R.id.txt_lmp_date);
@@ -122,6 +127,7 @@ public class MothersPrimaryRecordsActivity extends AppCompatActivity implements 
         txt_hus_vdrl = (TextView) findViewById(R.id.txt_hus_vdrl);
         txt_hus_Hepatitis = (TextView) findViewById(R.id.txt_hus_Hepatitis);
         if (isoffline) {
+            txt_no_internet.setVisibility(View.VISIBLE);
             getValuefromRealm();
         }else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);

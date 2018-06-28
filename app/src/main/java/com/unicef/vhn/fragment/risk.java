@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.unicef.vhn.Interface.MakeCallInterface;
@@ -48,7 +49,7 @@ import io.realm.RealmResults;
  * Created by priyan on 2/3/2018.
  */
 
-public class risk extends Fragment implements MotherListsViews, MakeCallInterface {
+public class risk extends Fragment implements MotherListsViews, MakeCallInterface, MotherListAdapter.ContactsAdapterListener {
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
@@ -62,6 +63,7 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
     boolean isDataUpdate = true;
 
 
+    TextView txt_no_internet;
     CheckNetwork checkNetwork;
     boolean isoffline = false;
     Realm realm;
@@ -94,6 +96,9 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(getActivity());
         pnMotherListPresenter = new MotherListPresenter(getActivity(), this);
+
+        txt_no_internet = view.findViewById(R.id.txt_no_internet);
+        txt_no_internet.setVisibility(View.GONE);
         if (checkNetwork.isNetworkAvailable()) {
 
             pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_MOTHERS_RISK, preferenceData.getVhnCode(), preferenceData.getVhnId());
@@ -103,7 +108,7 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
 //        pnMotherListPresenter.getPNMotherList("V10001","1");
         mResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView) view.findViewById(R.id.recycler_view);
-        mAdapter = new MotherListAdapter(mResult, getActivity(), "Risk", this);
+        mAdapter = new MotherListAdapter(mResult, getActivity(), "Risk", this,this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mother_recycler_view.setLayoutManager(mLayoutManager);
         mother_recycler_view.setItemAnimator(new DefaultItemAnimator());
@@ -111,6 +116,7 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
 
 
         if (isoffline) {
+            txt_no_internet.setVisibility(View.GONE);
             showOfflineData();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -125,6 +131,14 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
 
         realm.beginTransaction();
         RealmResults<MotherRiskListRealm> realmResults = realm.where(MotherRiskListRealm.class).findAll();
+        if (realmResults.size()!=0){
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realm.delete(MotherRiskListRealm.class);
+                }
+            });
+        }
         Log.e("Mother list size ->", realmResults.size() + "");
         for (int i = 0; i < realmResults.size(); i++) {
             mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
@@ -304,7 +318,7 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
                 != PackageManager.PERMISSION_GRANTED) {
             requestCallPermission();
         } else {
-            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+" + mMotherMobile)));
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+91" + mMotherMobile)));
         }
     }
 
@@ -328,5 +342,10 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
                 }
                 return;
         }
+    }
+
+    @Override
+    public void onContactSelected(PNMotherListResponse.VhnAN_Mothers_List contact) {
+
     }
 }

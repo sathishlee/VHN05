@@ -49,7 +49,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class ANMotherListActivity extends AppCompatActivity implements MotherListsViews, MakeCallInterface {
+public class ANMotherListActivity extends AppCompatActivity implements MotherListsViews, MakeCallInterface, MotherListAdapter.ContactsAdapterListener {
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
@@ -118,7 +118,7 @@ public class ANMotherListActivity extends AppCompatActivity implements MotherLis
 //        txt_no_records_found.setVisibility(View.GONE);
         Log.w(AllMotherListActivity.class.getSimpleName(), "Adapter list size :-" + mResult.size());
 
-        mAdapter = new MotherListAdapter(mResult, ANMotherListActivity.this, "AN", this);
+        mAdapter = new MotherListAdapter(mResult, ANMotherListActivity.this, "AN", this,this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(ANMotherListActivity.this);
         mother_recycler_view.setLayoutManager(mLayoutManager);
@@ -338,7 +338,7 @@ public class ANMotherListActivity extends AppCompatActivity implements MotherLis
                 != PackageManager.PERMISSION_GRANTED) {
             requestCallPermission();
         } else {
-            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+" + mMotherMobile)));
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+91" + mMotherMobile)));
         }
     }
 
@@ -367,6 +367,13 @@ public class ANMotherListActivity extends AppCompatActivity implements MotherLis
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+
+
+    @Override
+    public void onContactSelected(PNMotherListResponse.VhnAN_Mothers_List contact) {
 
     }
 }

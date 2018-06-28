@@ -26,7 +26,6 @@ import com.unicef.vhn.R;
 import com.unicef.vhn.adapter.MotherListAdapter;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.model.PNMotherListResponse;
-import com.unicef.vhn.realmDbModel.PNHBNCDueListRealmModel;
 import com.unicef.vhn.realmDbModel.PNHBNCMotherListRealmModel;
 import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.view.MotherListsViews;
@@ -46,7 +45,7 @@ import io.realm.RealmResults;
  * Created by Suthishan on 20/1/2018.
  */
 
-public class PNHBNCListActivity extends AppCompatActivity implements MotherListsViews, MakeCallInterface {
+public class PNHBNCListActivity extends AppCompatActivity implements MotherListsViews, MakeCallInterface, MotherListAdapter.ContactsAdapterListener {
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
@@ -104,7 +103,7 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
 
         textView = (TextView) findViewById(R.id.txt_no_records_found);
 
-        mAdapter = new MotherListAdapter(mResult, PNHBNCListActivity.this, "PN", this);
+        mAdapter = new MotherListAdapter(mResult, PNHBNCListActivity.this, "PN", this,this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(PNHBNCListActivity.this);
         mother_recycler_view.setLayoutManager(mLayoutManager);
@@ -270,7 +269,7 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
                 != PackageManager.PERMISSION_GRANTED) {
             requestCallPermission();
         } else {
-            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+" + mMotherMobile)));
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+91" + mMotherMobile)));
         }
     }
 
@@ -295,5 +294,12 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
                 }
                 return;
         }
+    }
+
+
+
+    @Override
+    public void onContactSelected(PNMotherListResponse.VhnAN_Mothers_List contact) {
+
     }
 }

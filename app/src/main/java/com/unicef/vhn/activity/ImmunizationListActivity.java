@@ -67,9 +67,7 @@ public class ImmunizationListActivity extends AppCompatActivity implements Immun
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         realm = RealmController.with(this).getRealm(); // opens "myrealm.realm"
-
         setContentView(R.layout.activity_immunization_list);
         showActionBar();
         initUI();
@@ -84,9 +82,7 @@ public class ImmunizationListActivity extends AppCompatActivity implements Immun
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(ImmunizationListActivity.this, MainActivity.class);
         finish();
-        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 

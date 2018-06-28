@@ -22,6 +22,7 @@ import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.ANMotherVisitResponseModel;
 import com.unicef.vhn.realmDbModel.ANMVisitRealmModel;
+import com.unicef.vhn.utiltiy.CheckNetwork;
 
 import java.util.ArrayList;
 
@@ -47,6 +48,9 @@ public class ANMotherVisitReportActivity extends AppCompatActivity implements Vi
 
     Realm realm;
 
+    CheckNetwork checkNetwork;
+    TextView txt_no_internet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +71,16 @@ public class ANMotherVisitReportActivity extends AppCompatActivity implements Vi
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
         txt_no_records_found = (TextView) findViewById(R.id.txt_no_records_found);
+        txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
+        checkNetwork =new CheckNetwork(this);
+        txt_no_internet.setVisibility(View.GONE);
+        if (checkNetwork.isNetworkAvailable())
+        {
+            txt_no_internet.setVisibility(View.GONE);
+        }else{
+            txt_no_internet.setVisibility(View.VISIBLE);
+
+        }
         mhealthRecordList = new ArrayList<>();
         tabLayout = (TabLayout) findViewById(R.id.hre_tabs);
         viewPager = (ViewPager) findViewById(R.id.hre_viewpager);
@@ -128,8 +142,9 @@ public class ANMotherVisitReportActivity extends AppCompatActivity implements Vi
         Log.d(ANMotherVisitReportActivity.class.getSimpleName(), "getValue formRealm");
 
         realm.beginTransaction();
-        RealmResults<ANMVisitRealmModel> userInfoRealmResult = realm.where(ANMVisitRealmModel.class).equalTo("mid", AppConstants.SELECTED_MID).findAll();
-        Log.e(ANMotherVisitReportActivity.class.getSimpleName(), userInfoRealmResult.size() + "");
+        RealmResults<ANMVisitRealmModel> userInfoRealmResult = realm.where(ANMVisitRealmModel.class)
+                .equalTo("mid", AppConstants.SELECTED_MID).findAll();
+        Log.e(ANMotherVisitReportActivity.class.getSimpleName(), userInfoRealmResult.size()+"");
         if (!(userInfoRealmResult.size() == 0)) {
             for (int i = 0; i < userInfoRealmResult.size(); i++) {
                 mhealthRecordResponseModel = new ANMotherVisitResponseModel.VhnAN_Mothers_List();

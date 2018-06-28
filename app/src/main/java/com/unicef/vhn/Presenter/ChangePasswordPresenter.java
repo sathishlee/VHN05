@@ -90,6 +90,6 @@ public class ChangePasswordPresenter implements ChangePasswordInteractor {
         };
         // Adding request to request queue
         VolleySingleton.getInstance(activity).addToRequestQueue(request);
-
+        VolleySingleton.getInstance(activity).getRequestQueue().getCache().remove(url);
     }
 }

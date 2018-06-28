@@ -90,6 +90,6 @@ public class MotherDeliveryPresenter implements MotherDeliveryInteractor {
 
         // Adding request to request queue
         VolleySingleton.getInstance(context).addToRequestQueue(strReq);
-
+        VolleySingleton.getInstance(context).getRequestQueue().getCache().remove(url);
     }
 }

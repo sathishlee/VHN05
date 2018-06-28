@@ -8,6 +8,8 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -32,15 +34,11 @@ import com.unicef.vhn.R;
 //import com.unicef.vhn.activity.HighRiskListActivity;
 import com.unicef.vhn.activity.ANTT1MothersList;
 import com.unicef.vhn.activity.ANTT2MothersList;
-import com.unicef.vhn.activity.MotherHighRiskListActivity;
-import com.unicef.vhn.activity.MotherList.ANMotherListActivity;
 import com.unicef.vhn.activity.MotherList.AllMotherListActivity;
 import com.unicef.vhn.activity.MotherList.InfanentTreamListActivity;
 import com.unicef.vhn.activity.NoInternetConnectionActivity;
 import com.unicef.vhn.activity.PNHBNCDueListActivity;
-import com.unicef.vhn.activity.PNHBNCListActivity;
 import com.unicef.vhn.activity.SosAlertListActivity;
-import com.unicef.vhn.activity.TreamPreTreamListActivity;
 import com.unicef.vhn.activity.VhnProfile;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
@@ -60,7 +58,8 @@ import io.realm.RealmResults;
 public class home extends Fragment implements MotherListsViews {
     ImageView img_mother_count, img_high_risk_count, img_infant_count, userImageProfile;
     public TextView txt_mother_count, txt_high_risk_count, txt_infants_count, txt_sos_count;
-    Button but_an_mother_total_count, but_an_mother_high_risk_count, but_an_mother_pn_hbnc_totlal_count, but_an_mother_pn_hbnc_term_preterm_count;
+    Button but_an_mother_total_count, but_an_mother_high_risk_count, but_an_mother_pn_hbnc_totlal_count,
+            but_an_mother_pn_hbnc_term_preterm_count;
     TextView txt_antt_1_due, txt_antt_2_due, txt_pnhbnc_due;
 
     private ViewFlipper mFlipper;
@@ -73,9 +72,10 @@ public class home extends Fragment implements MotherListsViews {
     CheckNetwork checkNetwork;
     CardView profile;
     String str_mPhoto;
-
+    Ringtone ringtone;
     Context context;
     boolean isoffline = false;
+//    TextView txt_no_internet;
     Realm realm;
 
     public static home newInstance() {
@@ -113,12 +113,21 @@ public class home extends Fragment implements MotherListsViews {
                 AppConstants.GET_MOTHER_LIST_TYPE = "mother_count";
                 AppConstants.MOTHER_LIST_TITLE = "All Mother List";
                 if (!preferenceData.getFilterStatus()) {
-//                    preferenceData.setFilterStatus(false);
+//                if (preferenceData.getFilterStatus()) {
+                    preferenceData.setFilterStatus(false);
                     preferenceData.setTermister("All");
                     preferenceData.setVillageName("All");
                     preferenceData.setHighRiskStatus(false);
                     preferenceData.setDescendingStatus(false);
-                }else{
+                    preferenceData.setTermisterPosition(0);
+                } else {
+                    preferenceData.setFilterStatus(false);
+                    preferenceData.setTermister("All");
+                    preferenceData.setVillageName("All");
+                    preferenceData.setHighRiskStatus(false);
+                    preferenceData.setDescendingStatus(false);
+                    preferenceData.setTermisterPosition(0);
+
 //                    preferenceData.setFilterStatus(true);
 
                 }
@@ -133,6 +142,7 @@ public class home extends Fragment implements MotherListsViews {
             public void onClick(View v) {
                 AppConstants.GET_MOTHER_LIST_TYPE = "sos_count";
                 AppConstants.MOTHER_LIST_TITLE = "SOS List";
+//                ringtone.stop();
                 startActivity(new Intent(getActivity(), SosAlertListActivity.class));
 
             }
@@ -206,8 +216,8 @@ public class home extends Fragment implements MotherListsViews {
         txt_antt_1_due.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppConstants.ANTT_1_LIST="TT1_List";
-                AppConstants.ANTT_1_TITLE="AN TT 1 Due List";
+                AppConstants.ANTT_1_LIST = "TT1_List";
+                AppConstants.ANTT_1_TITLE = "AN TT 1 Due List";
 
                 startActivity(new Intent(getActivity(), ANTT1MothersList.class));
             }
@@ -263,6 +273,9 @@ public class home extends Fragment implements MotherListsViews {
 
         img_mother_count = (ImageView) view.findViewById(R.id.img_mother_count);
 
+//        txt_no_internet = view.findViewById(R.id.txt_no_internet);
+//        txt_no_internet.setVisibility(View.GONE);
+
         ll_sos_view = view.findViewById(R.id.ll_sos_view);
         txt_vhn_name = view.findViewById(R.id.txt_vhn_name);
         txt_hsc = view.findViewById(R.id.txt_hsc);
@@ -297,6 +310,7 @@ public class home extends Fragment implements MotherListsViews {
         }
         mFlipper = ((ViewFlipper) view.findViewById(R.id.flipper));
         if (isoffline) {
+//            txt_no_internet.setVisibility(View.GONE);
             showOfflineData();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -306,7 +320,7 @@ public class home extends Fragment implements MotherListsViews {
     }
 
     private void showOfflineData() {
-        Log.e(home.class.getSimpleName(),"your app is now OFF LINE");
+        Log.e(home.class.getSimpleName(), "your app is now OFF LINE");
         realm.beginTransaction();
         RealmResults<DashBoardRealmModel> userInfoRealmResult = realm.where(DashBoardRealmModel.class).findAll();
         for (int i = 0; i < userInfoRealmResult.size(); i++) {
@@ -358,6 +372,8 @@ public class home extends Fragment implements MotherListsViews {
                         .transform(new RoundedTransformation(90, 4))
                         .error(R.drawable.ic_nurse)
                         .into(userImageProfile);
+
+
             }
         }
 
@@ -385,6 +401,35 @@ public class home extends Fragment implements MotherListsViews {
             String message = mJsnobject.getString("message");
 
             if (status.equalsIgnoreCase("1")) {
+                txt_mother_count.setText(mJsnobject.getString("mothersCount"));
+                txt_high_risk_count.setText(mJsnobject.getString("riskMothersCount"));
+                txt_infants_count.setText(mJsnobject.getString("infantCount"));
+                txt_sos_count.setText(mJsnobject.getString("sosCount"));
+
+                Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+                ringtone = RingtoneManager.getRingtone(getActivity(), uri);
+                if (mJsnobject.getString("sosCount").equalsIgnoreCase("0")) {
+
+                    ringtone.stop();
+                } else if (ringtone.isPlaying())
+                {
+                    ringtone.stop();
+                } else{
+                    mFlipper.startFlipping();
+                    mFlipper.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+                    mFlipper.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
+                    ringtone.play();
+                }
+
+                txt_antt_1_due.setText(mJsnobject.getString("ANTT1"));
+                txt_antt_2_due.setText(mJsnobject.getString("ANTT2"));
+                txt_pnhbnc_due.setText(mJsnobject.getString("pnhbncCount"));
+
+
+                but_an_mother_total_count.setText("Total: " + mJsnobject.getString("ANMothersCount"));
+                but_an_mother_high_risk_count.setText("High Risk: " + mJsnobject.getString("ANMotherRiskCount"));
+                but_an_mother_pn_hbnc_totlal_count.setText("Total: " + mJsnobject.getString("PNMotherCount"));
+                but_an_mother_pn_hbnc_term_preterm_count.setText("Term/Preterm: " + mJsnobject.getString("termsCount"));
 
                 RealmResults<DashBoardRealmModel> DashBoardRealmResult = realm.where(DashBoardRealmModel.class).findAll();
                 Log.e("Realm size ---->", DashBoardRealmResult.size() + "");
@@ -427,10 +472,44 @@ public class home extends Fragment implements MotherListsViews {
                     dashBoardRealmModel.setVphoto("");
                 }
                 dashBoardRealmModel.setVphoto(jobj__phcDetails.getString("vphoto"));
-
+                preferenceData.setPhoto(jobj__phcDetails.getString("vphoto"));
 
                 realm.commitTransaction(); //close table
 
+                JSONObject mJsnobject_phcDetails = mJsnobject.getJSONObject("phcDetails");
+//                JSONObject mJsnobject_phcDetails = mJsnobject.getJSONObject("phcDetails");
+                txt_vhn_name.setText(mJsnobject_phcDetails.getString("vhnName"));
+                txt_phc.setText(mJsnobject_phcDetails.getString("phcName"));
+                txt_hsc.setText(mJsnobject_phcDetails.getString("facilityName"));
+                txt_block.setText(mJsnobject_phcDetails.getString("block"));
+                txt_address.setText(mJsnobject_phcDetails.getString("District"));
+
+                if (mJsnobject_phcDetails.getString("vphoto").equalsIgnoreCase("null")) {
+                    str_mPhoto = "";
+                    preferenceData.setVhnPhoto("");
+                } else {
+                    str_mPhoto = mJsnobject_phcDetails.getString("vphoto");
+                    preferenceData.setVhnPhoto(mJsnobject_phcDetails.getString("vphoto"));
+
+
+                }
+                Log.d("vphoto-->", Apiconstants.PHOTO_URL + str_mPhoto);
+
+
+                if (!TextUtils.isEmpty(str_mPhoto)) {
+                    Picasso.with(context)
+                            .load(Apiconstants.PHOTO_URL + str_mPhoto)
+                            .placeholder(R.drawable.ic_nurse)
+                            .fit()
+                            .centerCrop()
+                            .memoryPolicy(MemoryPolicy.NO_CACHE)
+                            .networkPolicy(NetworkPolicy.NO_CACHE)
+                            .transform(new RoundedTransformation(90, 4))
+                            .error(R.drawable.ic_nurse)
+                            .into(userImageProfile);
+                } else {
+                    userImageProfile.setImageResource(R.drawable.ic_nurse);
+                }
 
             }
         } catch (JSONException e) {
@@ -462,7 +541,7 @@ public class home extends Fragment implements MotherListsViews {
     }
 
     private void setValueToUI() {
-        Log.e(home.class.getSimpleName(),"your app is now ON LINE");
+        Log.e(home.class.getSimpleName(), "your app is now ON LINE");
 
         realm.beginTransaction();
         RealmResults<DashBoardRealmModel> userInfoRealmResult = realm.where(DashBoardRealmModel.class).findAll();
@@ -508,7 +587,7 @@ public class home extends Fragment implements MotherListsViews {
             str_mPhoto = model.getVphoto();
             Log.d("vphoto-->", Apiconstants.PHOTO_URL + str_mPhoto);
 
-            Picasso.with(context)
+            /*Picasso.with(context)
                     .load(Apiconstants.PHOTO_URL + str_mPhoto)
                     .placeholder(R.drawable.ic_nurse)
                     .fit()
@@ -517,22 +596,35 @@ public class home extends Fragment implements MotherListsViews {
                     .networkPolicy(NetworkPolicy.NO_CACHE)
                     .transform(new RoundedTransformation(90, 4))
                     .error(R.drawable.ic_nurse)
-                    .into(userImageProfile);
+                    .into(userImageProfile);*/
         }
 
         realm.commitTransaction();
     }
 
-  /*  @Override
-    public void onDestroy() {
-        super.onDestroy();
-        realm.close();
-    }
+    /*  @Override
+      public void onDestroy() {
+          super.onDestroy();
+          realm.close();
+      }
 
+      @Override
+      public void onResume() {
+          super.onResume();
+          realm = RealmController.with(getActivity()).getRealm(); // opens "myrealm.realm"
+
+      }*/
     @Override
     public void onResume() {
         super.onResume();
-        realm = RealmController.with(getActivity()).getRealm(); // opens "myrealm.realm"
+//      realm = RealmController.with(getActivity()).getRealm(); // opens "myrealm.realm"
+//        AppConstants.ISQUERYFILTER=false;
+    }
 
-    }*/
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        AppConstants.ISHOMEALREDYCLICKED=true;
+
+    }
 }

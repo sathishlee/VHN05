@@ -23,6 +23,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.unicef.vhn.constant.AppConstants;
 
 import java.util.Map;
 
@@ -141,6 +142,14 @@ public class LocationMonitoringService extends Service implements
 
 
         if (location != null) {
+
+            Log.d(TAG, "== location != null");
+            Log.d(TAG, "== location != null");
+            Log.d(TAG, "Latitude"+String.valueOf(location.getLatitude()));
+            Log.d(TAG, "Longitude"+String.valueOf(location.getLongitude()));
+
+            //Send result to activities
+
             sendMessageToUI(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
         }
 
@@ -150,6 +159,11 @@ public class LocationMonitoringService extends Service implements
         Intent intent = new Intent(ACTION_LOCATION_BROADCAST);
         intent.putExtra(EXTRA_LATITUDE, lat);
         intent.putExtra(EXTRA_LONGITUDE, lng);
+        Log.d("Latitude",lat);
+        Log.d("Longitude",lng);
+
+        AppConstants.EXTRA_LATITUDE=lat;
+        AppConstants.EXTRA_LONGITUDE=lng;
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 

@@ -12,7 +12,7 @@
         android:layout_margin="5dp"
         android:orientation="vertical">
 
-        <TextView
+        <!--<TextView
             android:text="M.TamilSelvi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
             android:textSize="8sp"
             android:layout_margin="4dp"
             android:textColor="@color/text_main"
-            android:id="@+id/name" />
+            android:id="@+id/name" />-->
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_dp"

@@ -5,22 +5,30 @@ import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,6 +68,7 @@ import com.unicef.vhn.R;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.LocationRequestModel;
+import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.utiltiy.RoundedTransformation;
 import com.unicef.vhn.view.LocationViews;
 
@@ -73,9 +82,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static android.R.attr.fraction;
 
-public class MotherLocationActivity extends FragmentActivity implements LocationViews, OnMapReadyCallback, View.OnClickListener {
+public class MotherLocationActivity extends FragmentActivity
+        implements LocationViews, OnMapReadyCallback, View.OnClickListener {
 
     List<LocationRequestModel.Tracking> trackings;
 
@@ -105,6 +117,7 @@ public class MotherLocationActivity extends FragmentActivity implements Location
     Context context;
     ImageView cardview_image;
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
+    CheckNetwork checkNetwork;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,9 +133,29 @@ public class MotherLocationActivity extends FragmentActivity implements Location
         applicationContext = this;
 
         progressDialog = new ProgressDialog(this);
+        checkNetwork = new CheckNetwork(this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Please Wait ...");
 
+        if (!checkNetwork.isNetworkAvailable()){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("You can't see this mother location!");
+            builder.setMessage("Please check internet connection");
+            // Add the buttons
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User clicked OK button
+                    dialog.dismiss();
+                    finish();
+                }
+            });
+
+
+// Create the AlertDialog
+            AlertDialog dialog = builder.create();
+
+            dialog.show();
+        }
         txt_username = (TextView)findViewById(R.id.txt_username);
         txt_picme_id = (TextView)findViewById(R.id.txt_picme_id);
         txt_call = (TextView) findViewById(R.id.txt_call);
@@ -226,8 +259,9 @@ public class MotherLocationActivity extends FragmentActivity implements Location
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        boolean x=   super.onOptionsItemSelected(item);
         finish();
-        return super.onOptionsItemSelected(item);
+        return x;
     }
 
     public void getDirections(){
@@ -278,26 +312,72 @@ public class MotherLocationActivity extends FragmentActivity implements Location
     }
 
     private void addMarkersToMap(DirectionsResult directionsResult, GoogleMap mMap) {
-        final Marker markerSrc = mMap.addMarker(new MarkerOptions().position(new LatLng(directionsResult.routes[overview].legs[overview].startLocation.lat, directionsResult.routes[overview].legs[overview].startLocation.lng)).title(directionsResult.routes[overview].legs[overview].startAddress));
+       /* final Marker markerSrc = mMap.addMarker(new MarkerOptions().position(new LatLng(directionsResult.routes[overview].legs[overview].startLocation.lat, directionsResult.routes[overview].legs[overview].startLocation.lng)).title(directionsResult.routes[overview].legs[overview].startAddress));
         final Marker markerDes = mMap.addMarker(new MarkerOptions().position(new LatLng(directionsResult.routes[overview].legs[overview].endLocation.lat, directionsResult.routes[overview].legs[overview].endLocation.lng)).title(directionsResult.routes[overview].legs[overview].endAddress).snippet(getEndLocationTitle(directionsResult)));
         markers = new ArrayList<>();
         markers.add(markerSrc);
+        markers.add(markerDes);*/
+
+        final Marker markerSrc = mMap.addMarker(new MarkerOptions().position(
+                new LatLng(directionsResult.routes[overview].legs[overview].startLocation.lat,
+                        directionsResult.routes[overview].legs[overview].startLocation.lng))
+                .title(directionsResult.routes[overview].legs[overview].startAddress)
+                .icon(BitmapDescriptorFactory.fromBitmap(createCustomMarker(MotherLocationActivity.this,R.drawable.girl))));
+        final Marker markerDes = mMap.addMarker(new MarkerOptions().position(new LatLng(directionsResult.routes[overview]
+                .legs[overview].endLocation.lat, directionsResult.routes[overview].legs[overview].endLocation.lng))
+                .title(directionsResult.routes[overview].legs[overview].endAddress)
+                .icon(BitmapDescriptorFactory.fromBitmap(createCustomMarker(MotherLocationActivity.this,R.drawable.ic_nurse)))
+                .snippet(getEndLocationTitle(directionsResult)));
+        markers = new ArrayList<>();
+        markers.add(markerSrc);
         markers.add(markerDes);
+
     }
+
+    public static Bitmap createCustomMarker(Context context, @DrawableRes int resource) {
+
+        View marker = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.map_marker, null);
+
+        CircleImageView markerImage = (CircleImageView) marker.findViewById(R.id.user_dp);
+        markerImage.setImageResource(resource);
+//        TextView txt_name = (TextView)marker.findViewById(R.id.name);
+//        txt_name.setText(_name);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        marker.setLayoutParams(new ViewGroup.LayoutParams(52, ViewGroup.LayoutParams.WRAP_CONTENT));
+        marker.measure(displayMetrics.widthPixels, displayMetrics.heightPixels);
+        marker.layout(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels);
+        marker.buildDrawingCache();
+        Bitmap bitmap = Bitmap.createBitmap(marker.getMeasuredWidth(), marker.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        marker.draw(canvas);
+
+        return bitmap;
+    }
+
     private void addMotherLocation(String motherLatitude, String motherLongitude) {
         double mlat = Double.parseDouble(motherLatitude);
         double mlong = Double.parseDouble(motherLongitude);
 
         final LatLng mlatlng = new LatLng(mlat,mlong);
-        MarkerOptions mothermarker = new MarkerOptions().position(new LatLng(mlat,mlong)).title(motherName + ","+motherID + ","+strmAdd);
+
+        strmAdd = getCompleteAddressString(motherLatitude,motherLongitude);
+
+        MarkerOptions mothermarker = new MarkerOptions().position(new LatLng(mlat,mlong))
+                .title("Mother Name : "+motherName)
+                .snippet("Piceme Id : "+motherID)
+                .snippet("Address : "+strmAdd);
 
         strMotherloc = String.valueOf(mothermarker);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mlatlng, 12));
-        mothermarker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+//        mothermarker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+        mothermarker.icon(BitmapDescriptorFactory.fromBitmap(createCustomMarker(MotherLocationActivity.this,R.drawable.girl)));
         mMap.addMarker(mothermarker);
     }
 
-    private void addMarkersToMaplatlng(String motherLatitude, String motherLongitude, String vhnLatitude, String vhnLongitude) {
+    private void addMarkersToMaplatlng(String motherLatitude, String motherLongitude,
+                                       String vhnLatitude, String vhnLongitude) {
         double mlat = Double.parseDouble(motherLatitude);
         double mlong = Double.parseDouble(motherLongitude);
         double vlat = Double.parseDouble(vhnLatitude);
@@ -656,5 +736,49 @@ public class MotherLocationActivity extends FragmentActivity implements Location
                 return;
         }
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        locationPresenter.getMotherLocatin(preferenceData.getVhnCode(),preferenceData.getVhnId(), AppConstants.SELECTED_MID);
 
+    }
+    private String getCompleteAddressString(String latitude, String longitude) {
+        String strAdd = "";
+        double dlatitude= Double.parseDouble(latitude);
+        double dlongitude= Double.parseDouble(longitude);
+        Log.w("dlatitude",dlatitude+"");
+        Log.w("dlongitude",dlongitude+"");
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            if(checkNetwork.isNetworkAvailable()) {
+                List<Address> addresses = geocoder.getFromLocation(dlatitude, dlongitude, 1);
+
+                if (addresses != null) {
+//                Address returnedAddress = addresses.get(0);
+                    String maddress = addresses.get(0).getAddressLine(0);
+                    StringBuilder strReturnedAddress = new StringBuilder("");
+
+                /*for (int i = 0; i <= returnedAddress.getMaxAddressLineIndex(); i++) {
+                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+                }*/
+                    strAdd = String.valueOf(maddress);
+//                strAdd = strReturnedAddress.toString();
+//                Log.w(TAG, "My Current loction address"+strReturnedAddress.toString());
+//                Log.w(TAG, "My Current loction address--->"+returnedAddress.getSubAdminArea().toString());
+                } else {
+                    Log.w(TAG,"My Current loction address--->"+"No Address returned!");
+                }
+            }else{
+                strAdd = String.valueOf("null");
+
+
+                }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+//            Log.w(TAG,"My Current loction address--->"+ "Canont get Address!");
+        }
+        return strAdd;
+    }
 }

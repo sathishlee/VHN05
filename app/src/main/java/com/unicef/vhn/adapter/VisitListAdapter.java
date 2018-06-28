@@ -50,7 +50,11 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.View
         holder.txt_picme_id.setText(current_visits.getPicmeId());
         holder.txt_list_type.setText(current_visits.getMtype());
         holder.txt_current_visit.setText(current_visits.getNextVisit());
-
+        if (current_visits.getMMotherMobile().equalsIgnoreCase("null")||current_visits.getMMotherMobile().length()<10){
+            holder.txt_call.setVisibility(View.GONE);
+        }else{
+            holder.txt_call.setVisibility(View.VISIBLE);
+        }
         holder.txt_call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

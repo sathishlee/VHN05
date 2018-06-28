@@ -26,15 +26,14 @@ import com.squareup.picasso.Picasso;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
+import com.unicef.vhn.activity.ANViewReportsActivity;
 import com.unicef.vhn.activity.MotherLocationActivity;
 import com.unicef.vhn.activity.MotherVisitReport.PNMotherVisitReportActivity;
-import com.unicef.vhn.activity.MothersDetailsActivity;
-import com.unicef.vhn.activity.PNMotherDetailsActivity;
-import com.unicef.vhn.activity.PNViewReportsActivity;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.realmDbModel.PNMMotherListRealmModel;
+import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.utiltiy.RoundedTransformation;
 
 import io.realm.Realm;
@@ -46,7 +45,7 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
             txt_date_of_delivery, txt_weight, txt_type_of_delivery, txt_maturity, txt_next_visit,
             txt_husb_name, txt_aww_name, txt_relationship, txt_aww_relationship, txt_mother_name_call;
     ImageView img_call_1, img_call_2, cardview_image;
-    Button btn_view_location, btn_view_report;
+    Button btn_view_location, btn_view_report,btn_view_an_report;
     Context context;
     String strMobileNo,strAltMobileNo;
     String strLatitude,strLongitude, str_mPhoto;
@@ -54,6 +53,9 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
     ProgressDialog pDialog;
 //    MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
+
+    CheckNetwork checkNetwork;
+TextView txt_no_internet;
 
     Realm realm;
     @Override
@@ -81,18 +83,27 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
         img_call_2.setOnClickListener(this);
         btn_view_location.setOnClickListener(this);
         btn_view_report.setOnClickListener(this);
+        btn_view_an_report.setOnClickListener(this);
+
 
     }
 
     private void intUI() {
-//        ll_pn_mother_details = (LinearLayout) findViewById(R.id.ll_pn_mother_details);
-//        ll_pn_mother_details.setVisibility(View.GONE);
+        ll_pn_mother_details = (LinearLayout) findViewById(R.id.ll_pn_mother_details);
+        ll_pn_mother_details.setVisibility(View.GONE);
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData =new PreferenceData(this);
 //        pnMotherListPresenter = new MotherListPresenter(PNMotherDetailsActivity.this,this);
 //        pnMotherListPresenter.getSelectedPNMother(AppConstants.SELECTED_MID);
+        checkNetwork =new CheckNetwork(this);
+        txt_no_internet = (TextView)findViewById(R.id.txt_no_internet);
+        if (checkNetwork.isNetworkAvailable()){
+            txt_no_internet.setVisibility(View.GONE);
+        }else{
+            txt_no_internet.setVisibility(View.VISIBLE);
+        }
 
         txt_username = (TextView) findViewById(R.id.txt_username);
         txt_picme_id = (TextView) findViewById(R.id.txt_picme_id);
@@ -111,6 +122,7 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
         img_call_2 = (ImageView) findViewById(R.id.img_call_2);
         btn_view_location = (Button) findViewById(R.id.btn_view_location);
         btn_view_report = (Button) findViewById(R.id.btn_view_report);
+        btn_view_an_report = (Button) findViewById(R.id.btn_view_an_report);
         cardview_image = (ImageView) findViewById(R.id.cardview_image);
         txt_mother_name_call = (TextView) findViewById(R.id.txt_mother_name_call);
 
@@ -123,16 +135,36 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
         realm.beginTransaction();
         RealmResults<PNMMotherListRealmModel> realmResults =realm.where(PNMMotherListRealmModel.class).equalTo("mid", AppConstants.SELECTED_MID).findAll();
         Log.w(ANMotherDetailsViewActivcity.class.getSimpleName(),realmResults.size()+"");
+        if (realmResults.size()!=0){
+            ll_pn_mother_details.setVisibility(View.VISIBLE);
+
+        }else{
+            ll_pn_mother_details.setVisibility(View.GONE);
+        }
         for (int i=0; i<realmResults.size();i++){
             PNMMotherListRealmModel model = realmResults.get(i);
 
             txt_username.setText(model.getmName());
             txt_picme_id.setText(model.getmPicmeId());
-            strMobileNo = model.getmMotherMobile();
+
             txt_husb_name.setText(model.getmHusbandName());
-            txt_mother_name_call.setText(model.getmMotherMobile());
+            strMobileNo = model.getmMotherMobile();
+            if (strMobileNo.equalsIgnoreCase("null")||strMobileNo.length()<10){
+                img_call_1.setVisibility(View.GONE);
+            }else{
+                img_call_1.setVisibility(View.VISIBLE);
+
+            }
+            txt_mother_name_call.setText(model.getmName());
             strAltMobileNo = model.getmHusbandMobile();
-//            txt_mage.setText(mJsnobject_tracking.);
+            if (strAltMobileNo.equalsIgnoreCase("null")||strAltMobileNo.length()<10){
+                img_call_2.setVisibility(View.GONE);
+
+            }else{
+                img_call_2.setVisibility(View.VISIBLE);
+
+            }
+//            txt_mage.setText(model.getMA);
             txt_risk.setText(model.getmRiskStatus());
 //            txt_gest_week.setText(mJsnobject_tracking.getCurrentMonth());
 //            txt_weight.setText(mJsnobject_tracking.);
@@ -171,6 +203,8 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
 //                startActivity(new Intent(getApplicationContext(),PNViewReportsActivity.class));
                 startActivity(new Intent(getApplicationContext(),PNMotherVisitReportActivity.class));
                 break;
+            case R.id.btn_view_an_report: startActivity(new Intent(getApplicationContext(),ANViewReportsActivity.class));
+                break;
             case R.id.img_call_1:
                 makeCall(strMobileNo);
                 break;
@@ -194,9 +228,9 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
         } else {
 
             // Camera permissions is already available, show the camera preview.
-            Log.i(MothersDetailsActivity.class.getSimpleName(),"CALL permission has already been granted. Displaying camera preview.");
+            Log.i(PNMotherDetailsViewActivity.class.getSimpleName(),"CALL permission has already been granted. Displaying camera preview.");
 //            showCameraPreview();
-            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+"+str_mobile_number)));
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+91"+str_mobile_number)));
 
         }
 
@@ -205,7 +239,7 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
 
 
 
-        Log.i(MothersDetailsActivity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
+        Log.i(PNMotherDetailsViewActivity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
 
         // BEGIN_INCLUDE(camera_permission_request)
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
@@ -213,7 +247,7 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
             // Provide an additional rationale to the user if the permission was not granted
             // and the user would benefit from additional context for the use of the permission.
             // For example if the user has previously denied the permission.
-            Log.i(MothersDetailsActivity.class.getSimpleName(),            "Displaying camera permission rationale to provide additional context.");
+            Log.i(PNMotherDetailsViewActivity.class.getSimpleName(),            "Displaying camera permission rationale to provide additional context.");
             Toast.makeText(this,"Displaying camera permission rationale to provide additional context.",Toast.LENGTH_SHORT).show();
 
         } else {

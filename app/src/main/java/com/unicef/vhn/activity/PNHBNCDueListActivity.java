@@ -270,7 +270,7 @@ realm.beginTransaction();
                 != PackageManager.PERMISSION_GRANTED) {
             requestCallPermission();
         } else {
-            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+" + response)));
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+91" + response)));
         }
     }
 

@@ -38,18 +38,18 @@ import org.json.JSONObject;
 /*AN Mother Details  have api call working well is not use this project,
 use for ANMotherDetailsViewActivity */
 public class MothersDetailsActivity extends AppCompatActivity implements View.OnClickListener, MotherListsViews {
-    TextView txt_mother_name, txt_picme_id, txt_mage, txt_risk_status, txt_gest_week, txt_weight, txt_lmp_date, txt_edd_date, txt_next_visit;
-    String strMobileNo, strAltMobileNo;
+    TextView txt_mother_name,txt_picme_id,txt_mage,txt_risk_status,txt_gest_week,txt_weight,
+            txt_lmp_date,txt_edd_date,txt_next_visit, txt_husb_name, txt_mother_name_call;
+    String strMobileNo,strAltMobileNo;
     Context context;
-    String strLatitude, strLongitude, str_mPhoto;
-    ImageView img_call_1, img_call_2, cardview_image;
+    String strLatitude,strLongitude, str_mPhoto;
+    ImageView img_call_1,img_call_2, cardview_image;
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
 
     Button btn_view_location, btn_view_report;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +63,7 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
         btn_view_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), MotherLocationActivity.class));
+                startActivity(new Intent(getApplicationContext(),MotherLocationActivity.class));
             }
         });
         btn_view_report.setOnClickListener(this);
@@ -72,11 +72,10 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
             public void onClick(View v) {
                 makeCall(strMobileNo);
             }
-        });
-        img_call_2.setOnClickListener(new View.OnClickListener() {
+        });img_call_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeCall(strAltMobileNo);
+               makeCall(strAltMobileNo);
             }
         });
     }
@@ -90,13 +89,17 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
 
     }
 
-    public void initUI() {
+    public void initUI(){
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
         pnMotherListPresenter = new MotherListPresenter(MothersDetailsActivity.this, this);
+
         pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
+        preferenceData =new PreferenceData(this);
+        pnMotherListPresenter = new MotherListPresenter(MothersDetailsActivity.this,this);
+        pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(),preferenceData.getVhnId(), AppConstants.SELECTED_MID);
 
         cardview_image = (ImageView) findViewById(R.id.cardview_image);
         txt_mother_name = (TextView) findViewById(R.id.txt_username);
@@ -108,22 +111,26 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
         txt_lmp_date = (TextView) findViewById(R.id.txt_lmp_date);
         txt_edd_date = (TextView) findViewById(R.id.txt_edd_date);
         txt_next_visit = (TextView) findViewById(R.id.txt_next_visit);
-        img_call_1 = (ImageView) findViewById(R.id.img_call_1);
-        img_call_2 = (ImageView) findViewById(R.id.img_call_2);
+        img_call_1 =(ImageView)findViewById(R.id.img_call_1);
+        img_call_2 =(ImageView)findViewById(R.id.img_call_2);
+        txt_husb_name = (TextView) findViewById(R.id.txt_husb_name);
+        txt_mother_name_call = (TextView) findViewById(R.id.txt_mother_name_call);
+
         btn_view_location = (Button) findViewById(R.id.btn_view_location);
         btn_view_report = (Button) findViewById(R.id.btn_view_report);
     }
 
 
     private void makeCall(String str_mobile_number) {
-        Toast.makeText(getApplicationContext(), str_mobile_number, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),str_mobile_number,Toast.LENGTH_SHORT).show();
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
+        if (ActivityCompat.checkSelfPermission(this,Manifest.permission.CALL_PHONE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestCallPermission();
         } else {
-            Log.i(MothersDetailsActivity.class.getSimpleName(), "CALL permission has already been granted. Displaying camera preview.");
-            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+" + str_mobile_number)));
+            Log.i(MothersDetailsActivity.class.getSimpleName(),"CALL permission has already been granted. Displaying camera preview.");
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+"+str_mobile_number)));
+
         }
     }
 
@@ -132,8 +139,8 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CALL_PHONE)) {
-            Log.i(MothersDetailsActivity.class.getSimpleName(), "Displaying camera permission rationale to provide additional context.");
-            Toast.makeText(this, "Displaying camera permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();
+            Log.i(MothersDetailsActivity.class.getSimpleName(),            "Displaying camera permission rationale to provide additional context.");
+            Toast.makeText(this,"Displaying camera permission rationale to provide additional context.",Toast.LENGTH_SHORT).show();
 
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
@@ -143,14 +150,15 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
     }
 
 
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        switch (v.getId()){
             case R.id.btn_view_location:
-                startActivity(new Intent(getApplicationContext(), MotherLocationActivity.class));
+                startActivity(new Intent(getApplicationContext(),MotherLocationActivity.class));
                 break;
-            case R.id.btn_view_report:
-                startActivity(new Intent(getApplicationContext(), ANViewReportsActivity.class));
+            case  R.id.btn_view_report:
+                startActivity(new Intent(getApplicationContext(),ANViewReportsActivity.class));
                 break;
         }
     }
@@ -171,10 +179,7 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        Intent intent = new Intent(MothersDetailsActivity.this, MainActivity.class);
         finish();
-//        startActivity(intent);
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -198,7 +203,7 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
             String status = mJsnobject.getString("status");
             String message = mJsnobject.getString("message");
             if (status.equalsIgnoreCase("1")) {
-                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
                 JSONObject mJsnobject_tracking = mJsnobject.getJSONObject("tracking");
                 txt_mother_name.setText(mJsnobject_tracking.getString("mName"));
                 txt_picme_id.setText(mJsnobject_tracking.getString("mPicmeId"));
@@ -211,27 +216,29 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
                 txt_next_visit.setText(mJsnobject_tracking.getString("nextVisit"));
                 txt_lmp_date.setText(mJsnobject_tracking.getString("mLMP"));
                 txt_edd_date.setText(mJsnobject_tracking.getString("mEDD"));
+                txt_husb_name.setText(mJsnobject_tracking.getString("mHusbandName"));
+                txt_mother_name_call.setText(mJsnobject_tracking.getString("mName"));
                 strLatitude = mJsnobject_tracking.getString("mLatitude");
-                strLongitude = mJsnobject_tracking.getString("mLongitude");
+                strLongitude =mJsnobject_tracking.getString("mLongitude");
+
+                AppConstants.MOTHER_PICME_ID = mJsnobject_tracking.getString("mPicmeId");
 
                 str_mPhoto = mJsnobject_tracking.getString("mPhoto");
-
-
                 Picasso.with(context)
-                        .load(Apiconstants.MOTHER_PHOTO_URL + str_mPhoto)
+                        .load(Apiconstants.MOTHER_PHOTO_URL+str_mPhoto)
                         .placeholder(R.drawable.girl)
                         .fit()
                         .centerCrop()
                         .memoryPolicy(MemoryPolicy.NO_CACHE)
                         .networkPolicy(NetworkPolicy.NO_CACHE)
-                        .transform(new RoundedTransformation(90, 4))
+                        .transform(new RoundedTransformation(90,4))
                         .error(R.drawable.girl)
                         .into(cardview_image);
-            } else {
-                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
 
             }
-        } catch (JSONException e) {
+        }catch (JSONException e) {
             e.printStackTrace();
         }
     }
@@ -240,7 +247,7 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
     public void showLoginError(String message) {
 //        AppConstants.SELECTED_MID="0";
 
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
 
     }
 

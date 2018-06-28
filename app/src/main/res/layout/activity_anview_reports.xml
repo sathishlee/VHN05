@@ -19,7 +19,7 @@
         android:id="@+id/txt_no_records_found"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="NO RECORDES FOUND"
+        android:text="@string/no_recordes_found"
         android:layout_gravity="center"
         android:gravity="center"
         android:visibility="gone"
@@ -49,8 +49,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_margin="2dp"
-                android:text="Picme Visit"
+                android:text="@string/picme_visit"
                 android:textColor="#FFFFFF"
+
                 android:textSize="@dimen/text_primary"
                 android:textStyle="bold" />
 
@@ -69,8 +70,10 @@
                 android:padding="2dp"
                 android:text="Other Visit"
                 android:textColor="#2F80ED"
+
                 android:textSize="@dimen/text_primary"
                 android:textStyle="bold" />
+
 
         </LinearLayout>
 
@@ -107,24 +110,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:layout_weight="1"
             android:background="@color/colorPrimary"
+            android:text="@string/primary_records"
+            android:textColor="#ffffff"
+            android:layout_weight="1"
             android:drawableEnd="@drawable/ic_file_view"
-            android:padding="5dp"
-            android:text="PRIMARY RECORDS"
-            android:textColor="#ffffff" />
+            android:padding="5dp" />
 
         <Button
             android:id="@+id/btn_view_report"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:layout_margin="5dp"
-            android:layout_weight="1"
+
             android:background="@color/colorPrimary"
+            android:text="@string/view_reports"
+            android:textColor="#ffffff"
+
+            android:layout_weight="1"
             android:drawableEnd="@drawable/ic_file_view"
             android:padding="5dp"
-            android:text="View Reports"
-            android:textColor="#ffffff" />
+            />
 
     </LinearLayout>
 
