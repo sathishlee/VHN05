@@ -89,17 +89,26 @@
             </android.support.design.widget.TextInputLayout>
 
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/btnLogin"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="15dp"
-                android:fitsSystemWindows="true"
-                android:onClick="login"
-                android:src="@drawable/ic_chevron_right"
-                android:background="@drawable/buttonstyle"
-                tools:ignore="OnClick" />
+                android:layout_margin="10dp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/button_backgroumd"
+                    android:text="@string/submit"
+                    android:textColor="#ffffff"
+                    android:id="@+id/btnlogin"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="24dp"
+                    android:padding="10dp"/>
+
+            </LinearLayout>
 
 
         </LinearLayout>

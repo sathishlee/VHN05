@@ -59,9 +59,9 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
     Realm realm;
     PNMMotherListRealmModel pnmMotherListRealmModel;
     MotherListRealm dashBoardRealmModel;
-TextView txt_no_internet;
-CheckNetwork checkNetwork;
-LinearLayout view_block;
+    TextView txt_no_internet;
+    CheckNetwork checkNetwork;
+    LinearLayout view_block;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,19 +112,18 @@ LinearLayout view_block;
         preferenceData = new PreferenceData(this);
 //        pnMotherListPresenter = new MotherListPresenter(ANMotherDetailsViewActivcity.this, this);
 //        pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
-checkNetwork =new CheckNetwork(this);
+        checkNetwork =new CheckNetwork(this);
         txt_no_internet =(TextView)findViewById(R.id.txt_no_internet);
         txt_no_internet.setVisibility(View.GONE);
-if (checkNetwork.isNetworkAvailable()){
-    txt_no_internet.setVisibility(View.GONE);
-}
-else{
-    txt_no_internet.setVisibility(View.VISIBLE);
-
-}
+        if (checkNetwork.isNetworkAvailable()){
+            txt_no_internet.setVisibility(View.GONE);
+        }
+        else{
+            txt_no_internet.setVisibility(View.VISIBLE);
+        }
         view_block =(LinearLayout)findViewById(R.id.view_block);
         view_block.setVisibility(View.GONE);
-cardview_image = (ImageView) findViewById(R.id.cardview_image);
+        cardview_image = (ImageView) findViewById(R.id.cardview_image);
         txt_mother_name = (TextView) findViewById(R.id.txt_username);
         txt_picme_id = (TextView) findViewById(R.id.txt_picme_id);
         txt_mage = (TextView) findViewById(R.id.txt_age);
@@ -150,14 +149,16 @@ cardview_image = (ImageView) findViewById(R.id.cardview_image);
     realm.beginTransaction();
     RealmResults<PNMMotherListRealmModel> realmResults =realm.where(PNMMotherListRealmModel.class)
             .equalTo("mid", AppConstants.SELECTED_MID).findAll();
-if (realmResults.size()!=0){
-    view_block.setVisibility(View.VISIBLE);
+    if (realmResults.size()!=0){
+        view_block.setVisibility(View.VISIBLE);
 
     for (int i=0; i<realmResults.size();i++){
         PNMMotherListRealmModel model = realmResults.get(i);
 
         txt_mother_name.setText(model.getmName());
         txt_picme_id.setText(model.getmPicmeId());
+        txt_gest_week.setText(model.getGestAge());
+        txt_weight.setText(model.getmWeight());
         strMobileNo = model.getmMotherMobile();
         if (strMobileNo.equalsIgnoreCase("null")||strMobileNo.length()<10){
             img_call_1.setVisibility(View.GONE);

@@ -184,8 +184,6 @@ public class NotificationListFragment extends Fragment implements NotificationVi
             mresponseResult.setmPhoto(model.getmPhoto());
             mresponseResult.setNoteType(model.getNoteType());
 
-
-
             moviesList.add(mresponseResult);
 
         }

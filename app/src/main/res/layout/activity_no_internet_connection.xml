@@ -22,7 +22,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:contentDescription="No Internet"
+                android:contentDescription="@string/no_internet"
                 appCompact:src="@drawable/wifi" />
 
             <TextView
@@ -30,7 +30,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="20dp"
                 android:gravity="center"
-                android:text="Internet Unavailable."
+                android:text="@string/internet_unavailable"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp" />
 
@@ -39,7 +39,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:gravity="center"
-                android:text="Please Check Your Internet Connectivity."
+                android:text="@string/please_check_your_internet_connectivity"
                 android:textColor="@color/text_secondary"
                 android:textSize="@dimen/text_label" />
 

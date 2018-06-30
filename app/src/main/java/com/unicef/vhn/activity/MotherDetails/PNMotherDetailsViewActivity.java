@@ -43,7 +43,10 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
     LinearLayout ll_pn_mother_details;
     TextView txt_username, txt_picme_id, txt_mage, txt_risk,
             txt_date_of_delivery, txt_weight, txt_type_of_delivery, txt_maturity, txt_next_visit,
-            txt_husb_name, txt_aww_name, txt_relationship, txt_aww_relationship, txt_mother_name_call;
+            txt_husb_name, txt_aww_name, txt_relationship, txt_aww_relationship, txt_mother_name_call,
+            txt_gest_week, txt_lmp_date, txt_edd_date, txt_delivery_date,txt_birth_weight,txt_type_delivery
+            , txt_pn_next_visit;
+
     ImageView img_call_1, img_call_2, cardview_image;
     Button btn_view_location, btn_view_report,btn_view_an_report;
     Context context;
@@ -55,7 +58,7 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
     PreferenceData preferenceData;
 
     CheckNetwork checkNetwork;
-TextView txt_no_internet;
+    TextView txt_no_internet;
 
     Realm realm;
     @Override
@@ -125,6 +128,10 @@ TextView txt_no_internet;
         btn_view_an_report = (Button) findViewById(R.id.btn_view_an_report);
         cardview_image = (ImageView) findViewById(R.id.cardview_image);
         txt_mother_name_call = (TextView) findViewById(R.id.txt_mother_name_call);
+        txt_gest_week = (TextView) findViewById(R.id.txt_gest_week);
+        txt_lmp_date = (TextView) findViewById(R.id.txt_lmp_date);
+        txt_edd_date = (TextView) findViewById(R.id.txt_edd_date);
+        txt_pn_next_visit = (TextView) findViewById(R.id.txt_pn_next_visit);
 
 
         getValuesFromRealm();
@@ -146,6 +153,16 @@ TextView txt_no_internet;
 
             txt_username.setText(model.getmName());
             txt_picme_id.setText(model.getmPicmeId());
+            txt_gest_week.setText(model.getGestAge());
+            txt_lmp_date.setText(model.getmLMP());
+            txt_edd_date.setText(model.getmEDD());
+            txt_next_visit.setText(model.getNextVisit());
+            txt_delivery_date.setText(model.getDeleveryDate());
+            txt_birth_weight.setText(model.getdBirthWeight());
+            txt_type_delivery.setText(model.getdBirthDetails());
+            txt_maturity.setText(model.getMeturityWeek());
+            txt_pn_next_visit.setText(model.getPnVisit());
+
 
             txt_husb_name.setText(model.getmHusbandName());
             strMobileNo = model.getmMotherMobile();
@@ -168,7 +185,6 @@ TextView txt_no_internet;
             txt_risk.setText(model.getmRiskStatus());
 //            txt_gest_week.setText(mJsnobject_tracking.getCurrentMonth());
 //            txt_weight.setText(mJsnobject_tracking.);
-            txt_next_visit.setText(model.getNextVisit());
 //            txt_lmp_date.setText(model.getmLMP());
 //            txt_edd_date.setText(model.getmEDD());
             strLatitude = model.getmLatitude();

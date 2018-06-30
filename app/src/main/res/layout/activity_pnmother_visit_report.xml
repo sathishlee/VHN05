@@ -8,7 +8,7 @@
         android:id="@+id/txt_no_internet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="You are in offline"
+        android:text="@string/you_are_in_offline"
         android:background="@color/red"
         android:textColor="@color/white"
         android:textSize="@dimen/text_label"
@@ -63,7 +63,7 @@
             android:background="@color/colorPrimary"
             android:drawableEnd="@drawable/ic_file_view"
             android:padding="5dp"
-            android:text="Delivery Details"
+            android:text="@string/delivery_details"
             android:textColor="#ffffff" />
 
         <Button
@@ -75,7 +75,7 @@
             android:background="@color/colorPrimary"
             android:drawableEnd="@drawable/ic_file_view"
             android:padding="5dp"
-            android:text="Visit Reports"
+            android:text="@string/visit_reports"
             android:textColor="#ffffff" />
 
     </LinearLayout>

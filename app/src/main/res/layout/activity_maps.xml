@@ -143,7 +143,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:gravity="start"
                                                 android:padding="1dp"
-                                                android:text="Picme Id"
+                                                android:text="@string/picme_id"
                                                 android:textColor="#000"
                                                 android:textSize="15.0sp" />
 
@@ -175,7 +175,7 @@
                                                 android:background="@drawable/call_background"
                                                 android:gravity="end"
                                                 android:padding="9dp"
-                                                android:text=" Call Now"
+                                                android:text="@string/call_now"
                                                 android:drawableStart="@drawable/phone_call_blue"
                                                 android:textColor="@color/secondary"
                                                 android:textSize="@dimen/text_primary" />

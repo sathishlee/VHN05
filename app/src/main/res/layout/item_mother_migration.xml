@@ -78,7 +78,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="start"
                         android:padding="1dp"
-                        android:text="Picme Id"
+                        android:text="@string/picme_id"
                         android:textColor="@color/secondary"
                         android:textSize="@dimen/text_primary" />
 
@@ -115,7 +115,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="start"
                             android:padding="1dp"
-                            android:text="AN"
+                            android:text="@string/an"
                             android:textColor="@color/secondary"
                             android:textSize="@dimen/text_label" />
 
@@ -182,7 +182,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="textStart"
                     android:padding="1dp"
-                    android:text="Migrated From Place"
+                    android:text="@string/migrated_from_place"
                     android:textColor="#333333"
                     android:textSize="@dimen/text_secondary" />
 

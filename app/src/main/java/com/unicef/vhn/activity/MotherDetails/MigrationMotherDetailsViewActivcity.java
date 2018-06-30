@@ -27,15 +27,10 @@ import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.activity.ANViewReportsActivity;
 import com.unicef.vhn.activity.MotherLocationActivity;
-import com.unicef.vhn.activity.MotherTrackActivity;
-import com.unicef.vhn.activity.MotherVisitReport.ANMotherVisitReportActivity;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.realmDbModel.MigrationMotherDetailsRealmModel;
-import com.unicef.vhn.realmDbModel.MotherListRealm;
-import com.unicef.vhn.realmDbModel.MotherMigrationRealmModel;
-import com.unicef.vhn.realmDbModel.PNMMotherListRealmModel;
 import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.utiltiy.RoundedTransformation;
 import com.unicef.vhn.view.MotherListsViews;
@@ -282,7 +277,7 @@ public class MigrationMotherDetailsViewActivcity extends AppCompatActivity imple
     public void showLoginSuccess(String response) {
 
 //        AppConstants.SELECTED_MID="0";
-        Log.e(MotherTrackActivity.class.getSimpleName(), "Response success" + response);
+        Log.e(MigrationMotherDetailsViewActivcity.class.getSimpleName(), "Response success" + response);
 
         try {
             JSONObject mJsnobject = new JSONObject(response);

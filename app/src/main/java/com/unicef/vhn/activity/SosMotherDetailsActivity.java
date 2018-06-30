@@ -108,7 +108,7 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
 
     @Override
     public void showLoginSuccess(String response) {
-        Log.e(MotherTrackActivity.class.getSimpleName(), "Response success" + response);
+        Log.e(SosMotherDetailsActivity.class.getSimpleName(), "Response success" + response);
         try {
             JSONObject mJsnobject = new JSONObject(response);
             String status = mJsnobject.getString("status");
@@ -150,7 +150,7 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
 
     @Override
     public void showAlertClosedSuccess(String response) {
-        Log.e(MotherTrackActivity.class.getSimpleName(), "Response Alert Closed success" + response);
+        Log.e(SosMotherDetailsActivity.class.getSimpleName(), "Response Alert Closed success" + response);
         try {
             JSONObject mJsnobject = new JSONObject(response);
             String status = mJsnobject.getString("status");
@@ -169,7 +169,7 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
 
     @Override
     public void showAlertClosedError(String response) {
-        Log.e(MotherTrackActivity.class.getSimpleName(), "Response Alert Closed success" + response);
+        Log.e(SosMotherDetailsActivity.class.getSimpleName(), "Response Alert Closed success" + response);
 
     }
 

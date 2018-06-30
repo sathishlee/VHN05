@@ -19,6 +19,7 @@ import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -41,7 +42,7 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
 
     private EditText edtVhnId, edtPassword;
     String strVhnId, strPassword,mobileCheck, ipAddress;
-    FloatingActionButton fabLogin;
+    Button btnlogin;
 
     ProgressDialog pDialog;
     PreferenceData preferenceData;
@@ -71,7 +72,7 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
     }
 
     private void onClickListner() {
-        fabLogin.setOnClickListener(new OnClickListener() {
+        btnlogin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
@@ -125,7 +126,7 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
 
         edtVhnId = (EditText) findViewById(R.id.edt_vhn_id);
         edtPassword = (EditText) findViewById(R.id.edt_password);
-        fabLogin = (FloatingActionButton) findViewById(R.id.btnLogin);
+        btnlogin = (Button) findViewById(R.id.btnlogin);
     }
 
     @Override

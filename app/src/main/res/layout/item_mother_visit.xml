@@ -78,7 +78,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="start"
                         android:padding="1dp"
-                        android:text="Picme Id"
+                        android:text="@string/picme_id"
                         android:textColor="@color/secondary"
                         android:textSize="@dimen/text_primary" />
 
@@ -181,7 +181,7 @@
                     android:layout_weight="10"
                     android:textAlignment="textStart"
                     android:padding="1dp"
-                    android:text="Current Visit : "
+                    android:text="@string/current_visit"
                     android:textColor="@color/secondary"
                     android:textSize="@dimen/text_primary" />
 
