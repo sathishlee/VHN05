@@ -63,8 +63,8 @@
                 android:id="@+id/txt_mig_unread"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_view_dot"
-                android:layout_gravity="right"
+                app:srcCompat="@drawable/ic_view_dot"
+                android:layout_gravity="end"
                 android:visibility="gone"/>
             <TextView
                 android:id="@+id/txt_mig_name"

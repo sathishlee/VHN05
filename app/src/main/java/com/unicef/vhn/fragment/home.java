@@ -38,7 +38,7 @@ import com.unicef.vhn.R;
 import com.unicef.vhn.activity.ANTT1MothersList;
 import com.unicef.vhn.activity.ANTT2MothersList;
 import com.unicef.vhn.activity.MotherList.AllMotherListActivity;
-import com.unicef.vhn.activity.MotherList.InfanentTreamListActivity;
+import com.unicef.vhn.activity.MotherList.InfantTermListActivity;
 import com.unicef.vhn.activity.NoInternetConnectionActivity;
 import com.unicef.vhn.activity.PNHBNCDueListActivity;
 import com.unicef.vhn.activity.SosAlertListActivity;
@@ -172,7 +172,7 @@ public class home extends Fragment implements MotherListsViews {
                 AppConstants.MOTHER_LIST_TITLE = "Infant List";
 
 //                startActivity(new Intent(getActivity(), TreamPreTreamListActivity.class));
-                startActivity(new Intent(getActivity(), InfanentTreamListActivity.class));
+                startActivity(new Intent(getActivity(), InfantTermListActivity.class));
             }
         });
 
@@ -215,7 +215,7 @@ public class home extends Fragment implements MotherListsViews {
                 AppConstants.MOTHER_LIST_TITLE = "TERM/PRE TERM List";
 
 //                startActivity(new Intent(getActivity(), TreamPreTreamListActivity.class));
-                startActivity(new Intent(getActivity(), InfanentTreamListActivity.class));
+                startActivity(new Intent(getActivity(), InfantTermListActivity.class));
             }
         });
         txt_antt_1_due.setOnClickListener(new View.OnClickListener() {
@@ -526,8 +526,6 @@ public class home extends Fragment implements MotherListsViews {
         }
 
         setValueToUI();
-
-
     }
 
     @Override

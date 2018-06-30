@@ -264,7 +264,7 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
         Log.e("ANTT1 list size ->", antt1listRealmResult.size() + "");
         if (antt1listRealmResult.size()==0){
             mother_recycler_view .setVisibility(View.VISIBLE);
-            txt_no_records_found  .setVisibility(View.VISIBLE);
+            txt_no_records_found  .setVisibility(View.GONE);
         }
         for (int i = 0; i < antt1listRealmResult.size(); i++) {
             mresponseResult = new SOSListResponse.VhnAN_Mothers_List();

@@ -41,7 +41,9 @@ public class PNMotherDetailsActivity extends AppCompatActivity implements View.O
     LinearLayout ll_pn_mother_details;
     TextView txt_username, txt_picme_id, txt_mage, txt_risk,
             txt_date_of_delivery, txt_weight, txt_type_of_delivery, txt_maturity, txt_next_visit,
-            txt_husb_name, txt_aww_name, txt_relationship, txt_aww_relationship, txt_mother_name_call;
+            txt_husb_name, txt_aww_name, txt_relationship, txt_aww_relationship, txt_mother_name_call,
+            txt_gest_week, txt_lmp_date, txt_edd_date, txt_delivery_date, txt_birth_weight, txt_type_delivery
+            , txt_pn_next_visit;
     ImageView img_call_1, img_call_2, cardview_image;
     Button btn_view_location, btn_view_report;
     Context context;
@@ -111,6 +113,17 @@ public class PNMotherDetailsActivity extends AppCompatActivity implements View.O
         btn_view_report = (Button) findViewById(R.id.btn_view_report);
         cardview_image = (ImageView) findViewById(R.id.cardview_image);
         txt_mother_name_call = (TextView) findViewById(R.id.txt_mother_name_call);
+
+        txt_gest_week = (TextView) findViewById(R.id.txt_gest_week);
+        txt_lmp_date = (TextView) findViewById(R.id.txt_lmp_date);
+        txt_edd_date = (TextView) findViewById(R.id.txt_edd_date);
+        txt_delivery_date = (TextView) findViewById(R.id.txt_delivery_date);
+        txt_birth_weight = (TextView) findViewById(R.id.txt_birth_weight);
+        txt_type_delivery = (TextView) findViewById(R.id.txt_type_delivery);
+        txt_pn_next_visit = (TextView) findViewById(R.id.txt_pn_next_visit);
+
+
+
     }
 
     @Override
@@ -126,7 +139,6 @@ public class PNMotherDetailsActivity extends AppCompatActivity implements View.O
                 break;
             case R.id.img_call_2:
                 makeCall(strAltMobileNo);
-
                 break;
         }
     }
@@ -217,12 +229,25 @@ public class PNMotherDetailsActivity extends AppCompatActivity implements View.O
                 strMobileNo = mJsnobject_tracking.getString("mMotherMobile");
                 strAltMobileNo = mJsnobject_tracking.getString("mHusbandMobile");
                 txt_mage.setText(mJsnobject_tracking.getString("mAge"));
+                txt_lmp_date.setText(mJsnobject_tracking.getString("mLMP"));
+                txt_edd_date.setText(mJsnobject_tracking.getString("mEDD"));
+                txt_delivery_date.setText(mJsnobject_tracking.getString("ddatetime"));
+                txt_birth_weight.setText(mJsnobject_tracking.getString("dBirthWeight"));
+                txt_type_delivery.setText(mJsnobject_tracking.getString("dBirthDetails"));
+                if(mJsnobject_tracking.getString("NextVisit").equalsIgnoreCase("Visits Closed")){
+                    txt_pn_next_visit.setText(mJsnobject_tracking.getString("PN"+"NextVisit"));
+                }else {
+                    txt_pn_next_visit.setText(mJsnobject_tracking.getString("NextVisit"));
+                }
+
                 txt_risk.setText(mJsnobject_tracking.getString("mRiskStatus"));
                 txt_date_of_delivery.setText(mJsnobject_tracking.getString("ddatetime"));
                 txt_type_of_delivery.setText(mJsnobject_tracking.getString("dtime"));
                 txt_weight.setText(mJsnobject_tracking.getString("mWeight"));
-                txt_maturity.setText(mJsnobject_tracking.getString("meaturityDate"));
-                txt_next_visit.setText(mJsnobject_tracking.getString("NextVisit"));
+                txt_maturity.setText(mJsnobject_tracking.getString("meaturityDate")+"Weeks");
+                if(mJsnobject_tracking.getString("NextVisit").equalsIgnoreCase("Visits Closed")){
+                    txt_next_visit.setText(mJsnobject_tracking.getString("AN"+"NextVisit"));
+                }
                 strLatitude = mJsnobject_tracking.getString("mLatitude");
                 strLongitude =mJsnobject_tracking.getString("mLongitude");
                 txt_mother_name_call.setText(mJsnobject_tracking.getString("mName"));

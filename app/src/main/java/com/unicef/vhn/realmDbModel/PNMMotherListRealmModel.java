@@ -22,6 +22,13 @@ public class PNMMotherListRealmModel extends RealmObject {
     private String mPicmeId;
     private String mName;
     private String mPhoto;
+    private String deleveryDate;
+    private String dBirthDetails;
+    private String pnVisit;
+    private String dBirthWeight;
+    private String meturityWeek;
+    private String gestAge;
+    private String mWeight;
 
 
     public String getmHusbandMobile() {
@@ -181,4 +188,59 @@ public class PNMMotherListRealmModel extends RealmObject {
     }
 
 
+    public String getDeleveryDate() {
+        return deleveryDate;
+    }
+
+    public void setDeleveryDate(String deleveryDate) {
+        this.deleveryDate = deleveryDate;
+    }
+
+    public String getdBirthDetails() {
+        return dBirthDetails;
+    }
+
+    public void setdBirthDetails(String dBirthDetails) {
+        this.dBirthDetails = dBirthDetails;
+    }
+
+    public String getPnVisit() {
+        return pnVisit;
+    }
+
+    public void setPnVisit(String pnVisit) {
+        this.pnVisit = pnVisit;
+    }
+
+    public String getdBirthWeight() {
+        return dBirthWeight;
+    }
+
+    public void setdBirthWeight(String dBirthWeight) {
+        this.dBirthWeight = dBirthWeight;
+    }
+
+    public String getMeturityWeek() {
+        return meturityWeek;
+    }
+
+    public void setMeturityWeek(String meturityWeek) {
+        this.meturityWeek = meturityWeek;
+    }
+
+    public String getGestAge() {
+        return gestAge;
+    }
+
+    public void setGestAge(String gestAge) {
+        this.gestAge = gestAge;
+    }
+
+    public String getmWeight() {
+        return mWeight;
+    }
+
+    public void setmWeight(String mWeight) {
+        this.mWeight = mWeight;
+    }
 }

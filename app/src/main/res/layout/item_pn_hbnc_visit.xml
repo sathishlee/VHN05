@@ -149,7 +149,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Due Date"
+                                android:text="@string/due_date"
                                 android:textSize="14sp"
                                 android:textAlignment="textStart"
                                 android:textColor="#aaffffff"
@@ -191,7 +191,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="#aaffffff"
-                                android:text="Provided Date"
+                                android:text="@string/provided_date"
                                 android:textSize="14sp"
                                 android:layout_gravity="start"
                                 android:textStyle="bold" />
@@ -228,7 +228,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="HBNC"
+                        android:text="@string/hbnc"
                         android:textAlignment="textStart"
                         android:textColor="@color/secondary"
                         android:textStyle="bold" />
@@ -253,7 +253,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="Place"
+                        android:text="@string/place"
                         android:layout_gravity="start"
                         android:textColor="@color/secondary"
                         android:textStyle="bold" />
@@ -287,7 +287,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Weight"
+                            android:text="@string/weight"
                             android:textAlignment="textStart"
                             android:textColor="@color/secondary"
                             android:textStyle="bold" />
@@ -312,7 +312,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="Temp"
+                            android:text="@string/temp"
                             android:layout_gravity="start"
                             android:textColor="@color/secondary"
                             android:textStyle="bold" />
@@ -347,7 +347,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Umbilical Stump"
+                            android:text="@string/umbilical_stump"
                             android:textAlignment="textStart"
                             android:textColor="@color/secondary"
                             android:textStyle="bold" />
@@ -373,7 +373,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="Cry"
+                            android:text="@string/cry"
                             android:layout_gravity="start"
                             android:textColor="@color/secondary"
                             android:textStyle="bold" />
@@ -408,7 +408,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Eyes"
+                            android:text="@string/eyes"
                             android:textAlignment="textStart"
                             android:textColor="@color/secondary"
                             android:textStyle="bold" />
@@ -434,7 +434,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="Skin"
+                            android:text="@string/skin"
                             android:layout_gravity="start"
                             android:textColor="@color/secondary"
                             android:textStyle="bold" />
@@ -469,7 +469,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Breat Feeding"
+                            android:text="@string/breast_feeding"
                             android:textAlignment="textStart"
                             android:textColor="@color/secondary"
                             android:textStyle="bold" />
@@ -811,7 +811,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Any C/O"
+                            android:text="@string/any_c_o"
                             android:textAlignment="textStart"
                             android:textColor="@color/secondary"
                             android:textStyle="bold" />
@@ -836,7 +836,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="Blood Pressure"
+                            android:text="@string/blood_pressure"
                             android:layout_gravity="start"
                             android:textColor="@color/secondary"
                             android:textStyle="bold" />
@@ -871,7 +871,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Pluse Rate"
+                            android:text="@string/pluse_rate"
                             android:textAlignment="textStart"
                             android:textColor="@color/secondary"
                             android:textStyle="bold" />
@@ -897,7 +897,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="Temp"
+                            android:text="@string/temp"
                             android:layout_gravity="start"
                             android:textColor="@color/secondary"
                             android:textStyle="bold" />
@@ -933,7 +933,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Epistomy / Tear suture"
+                            android:text="@string/epistomy_tear_suture"
                             android:textAlignment="textStart"
                             android:textColor="@color/secondary"
                             android:textStyle="bold" />
@@ -959,7 +959,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="PV Discharge"
+                            android:text="@string/pv_discharge"
                             android:layout_gravity="start"
                             android:textColor="@color/secondary"
                             android:textStyle="bold" />
@@ -994,7 +994,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Breast Feeding"
+                            android:text="@string/breast_feeding"
                             android:textAlignment="textStart"
                             android:textColor="@color/secondary"
                             android:textStyle="bold" />
@@ -1020,7 +1020,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="Reasons"
+                            android:text="@string/reasons"
                             android:layout_gravity="start"
                             android:textColor="@color/secondary"
                             android:textStyle="bold" />
@@ -1055,7 +1055,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Breast Examination"
+                            android:text="@string/breast_examination"
                             android:textAlignment="textStart"
                             android:textColor="@color/secondary"
                             android:textStyle="bold" />
@@ -1081,7 +1081,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="Out Come"
+                            android:text="@string/out_come"
                             android:layout_gravity="start"
                             android:textColor="@color/secondary"
                             android:textStyle="bold" />

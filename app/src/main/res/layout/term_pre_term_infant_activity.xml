@@ -270,7 +270,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="start"
                         android:padding="1dp"
-                        android:text="Infant Id"
+                        android:text="@string/infant_id"
                         android:textColor="@color/secondary"
                         android:textSize="@dimen/text_primary" />
 
@@ -326,7 +326,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="start"
                         android:padding="1dp"
-                        android:text="Birth Type"
+                        android:text="@string/birth_type"
                         android:textColor="@color/secondary"
                         android:textSize="@dimen/text_primary" />
 

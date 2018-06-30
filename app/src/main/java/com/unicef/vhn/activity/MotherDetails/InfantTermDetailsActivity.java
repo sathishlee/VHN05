@@ -17,7 +17,7 @@ import com.unicef.vhn.view.MotherListsViews;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class InfanentTreamDetailsActivity extends AppCompatActivity implements MotherListsViews {
+public class InfantTermDetailsActivity extends AppCompatActivity implements MotherListsViews {
     ProgressDialog progressDialog;
 
     PreferenceData preferenceData;
@@ -93,7 +93,7 @@ public class InfanentTreamDetailsActivity extends AppCompatActivity implements M
 
     @Override
     public void showLoginSuccess(String response) {
-        Log.d(InfanentTreamDetailsActivity.class.getSimpleName(), "Success Response" + response);
+        Log.d(InfantTermDetailsActivity.class.getSimpleName(), "Success Response" + response);
         deliveryValues(response);
     }
 
@@ -127,10 +127,10 @@ public class InfanentTreamDetailsActivity extends AppCompatActivity implements M
 //                if (jsonObject.getString("dBirthDetails")!="")
                 txt_infant_birth_type.setText(jsonObject.getString("dBirthDetails"));
 //                if (jsonObject.getString("dBirthWeight")!="")
-                txt_infant_weight.setText(jsonObject.getString("dBirthWeight"));
+                txt_infant_weight.setText(jsonObject.getString("dBirthWeight") + "gm");
 
 //                if (jsonObject.getString("dBirthHeight")!="")
-                txt_infant_height.setText(jsonObject.getString("dBirthHeight"));
+                txt_infant_height.setText(jsonObject.getString("dBirthHeight") + "cm");
 //                if (jsonObject.getString("dBreastFeedingGiven")!="")
                 txt_breast_feeding_given.setText(jsonObject.getString("dBreastFeedingGiven"));
 //                if (jsonObject.getString("dAdmittedSNCU")!="")
@@ -159,7 +159,7 @@ public class InfanentTreamDetailsActivity extends AppCompatActivity implements M
 
     @Override
     public void showLoginError(String response) {
-        Log.d(InfanentTreamDetailsActivity.class.getSimpleName(), "Error Response" + response);
+        Log.d(InfantTermDetailsActivity.class.getSimpleName(), "Error Response" + response);
 
     }
 

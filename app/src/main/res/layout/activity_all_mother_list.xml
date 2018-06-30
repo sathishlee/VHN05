@@ -11,8 +11,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,7 +21,7 @@
             android:id="@+id/txt_no_internet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="You are in offline"
+            android:text="@string/you_are_in_offline"
             android:background="@color/red"
             android:textColor="@color/white"
             android:textSize="@dimen/text_label"
@@ -53,7 +51,7 @@
                         android:layout_margin="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Mother's LIST"
+                        android:text="@string/mother_s_list"
                         android:textSize="@dimen/text_label"
                         android:textAlignment="textStart"
                         android:textColor="@color/startblue"
@@ -91,7 +89,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_marginEnd="5dp"
-                                android:text="Filter"
+                                android:text="@string/filter"
                                 android:textSize="@dimen/text_secondary"
                                 android:layout_gravity="end"
                                 android:textColor="@color/startblue"
@@ -132,13 +130,14 @@
             android:scrollbars="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
         <TextView
             android:id="@+id/txt_no_records_found"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="NO RECORDES FOUND"
             android:layout_gravity="center"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:text="@string/no_recordes_found" />
 
 
         <!--  </LinearLayout>-->

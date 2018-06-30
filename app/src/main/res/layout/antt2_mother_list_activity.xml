@@ -32,7 +32,7 @@
                         android:layout_margin="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="AN TT 2 Due's LIST"
+                        android:text="@string/an_tt_2_due_s_list"
                         android:textSize="@dimen/text_label"
                         android:textAlignment="textStart"
                         android:textColor="@color/startblue"
@@ -77,7 +77,7 @@
                 android:id="@+id/txt_no_records_found"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="NO RECORDES FOUND"
+                android:text="@string/no_recordes_found"
                 android:layout_gravity="center"
                 android:gravity="center"/>
 

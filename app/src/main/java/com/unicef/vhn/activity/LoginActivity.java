@@ -19,6 +19,7 @@ import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -41,7 +42,7 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
 
     private EditText edtVhnId, edtPassword;
     String strVhnId, strPassword,mobileCheck, ipAddress;
-    FloatingActionButton fabLogin;
+    Button btnlogin;
 
     ProgressDialog pDialog;
     PreferenceData preferenceData;
@@ -71,44 +72,29 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
     }
 
     private void onClickListner() {
-        fabLogin.setOnClickListener(new OnClickListener() {
+        btnlogin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e(LoginActivity.class.getSimpleName(),"Butoon clicked");
                 attemptLogin();
             }
         });
     }
 
     private void attemptLogin() {
-        Log.e(LoginActivity.class.getSimpleName(),"attemptLogin called");;
-
         strVhnId = edtVhnId.getText().toString();
         strPassword = edtPassword.getText().toString();
         preferenceData.getDeviceId();
-
-        Log.e(LoginActivity.class.getSimpleName(),"strVhnId --"+strVhnId);
-        Log.e(LoginActivity.class.getSimpleName(),"strPassword --"+strPassword);
-        Log.e(LoginActivity.class.getSimpleName()," DeviceId --"+ preferenceData.getDeviceId());
         if (strVhnId.equalsIgnoreCase("")) {
-            Log.e(LoginActivity.class.getSimpleName(),"strVhnId is empty");
-
             edtVhnId.setError("VHN ID is Empty");
         } else if (strPassword.equalsIgnoreCase("")) {
-            Log.e(LoginActivity.class.getSimpleName(),"strVhnId is empty");
-
             edtPassword.setError("Password is Empty");
         } else {
             WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
             ipAddress = Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());
-            Log.e(LoginActivity.class.getSimpleName(),"ipAddress --"+ipAddress);
 
 
             mobileCheck = "Mobile:"+ Build.MANUFACTURER +","+ "Model:" +Build.MODEL + "," + "Api Version:"
                     + Build.VERSION.RELEASE + "," + "SDK Version:" + Build.VERSION.SDK_INT + "," + "IP Address:"+ ipAddress;
-
-            Log.e(LoginActivity.class.getSimpleName(),"mobileCheck --"+mobileCheck);
-
 
             Log.d("Mobile Check Version-->", mobileCheck);
 
@@ -124,7 +110,6 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
-
             loginPresenter.login(strVhnId, strPassword, preferenceData.getDeviceId(),mobileCheck, AppConstants.EXTRA_LATITUDE, AppConstants.EXTRA_LONGITUDE, appversion);
 
         }
@@ -141,7 +126,7 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
 
         edtVhnId = (EditText) findViewById(R.id.edt_vhn_id);
         edtPassword = (EditText) findViewById(R.id.edt_password);
-        fabLogin = (FloatingActionButton) findViewById(R.id.btnLogin);
+        btnlogin = (Button) findViewById(R.id.btnlogin);
     }
 
     @Override
@@ -216,5 +201,27 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
         Long reference = downloadManager.enqueue(request);
     }
 
+    @Override
+    public void onBackPressed() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+        builder.setTitle(R.string.app_name);
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setMessage("Are you Sure do you want to exit?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
 }
 

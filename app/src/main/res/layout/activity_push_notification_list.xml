@@ -6,19 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".activity.MotherList.PushNotificationListActivity">
     <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp">
 
     </android.support.design.widget.AppBarLayout>
 
 
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="368dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="visible"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,7 +47,7 @@
                         android:layout_margin="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Notification List"
+                        android:text="@string/notification_list"
                         android:textSize="@dimen/text_label"
                         android:textAlignment="textStart"
                         android:textColor="@color/startblue"
@@ -88,7 +92,7 @@
             android:id="@+id/txt_no_records_found"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="NO RECORDES FOUND"
+            android:text="@string/no_recordes_found"
             android:layout_gravity="center"
             android:gravity="center"/>
         <!--  </LinearLayout>-->

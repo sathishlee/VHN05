@@ -35,7 +35,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class InfanentTreamListActivity extends AppCompatActivity implements MotherListsViews {
+public class InfantTermListActivity extends AppCompatActivity implements MotherListsViews {
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
@@ -65,7 +65,7 @@ checkNetwork =new CheckNetwork(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
-        pnMotherListPresenter = new MotherListPresenter(InfanentTreamListActivity.this, this);
+        pnMotherListPresenter = new MotherListPresenter(InfantTermListActivity.this, this);
 //        pnMotherListPresenter.getPNMotherList("V10001","1");
         if (checkNetwork.isNetworkAvailable()) {
             pnMotherListPresenter.getTremAndPreTremMothersList(preferenceData.getVhnCode(), preferenceData.getVhnId());
@@ -75,9 +75,9 @@ checkNetwork =new CheckNetwork(this);
         mResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView) findViewById(R.id.mother_recycler_view);
         txt_no_records_found = (TextView) findViewById(R.id.txt_no_records_found);
-        mAdapter = new TremAndPreTremAdapter(mResult, InfanentTreamListActivity.this);
+        mAdapter = new TremAndPreTremAdapter(mResult, InfantTermListActivity.this);
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(InfanentTreamListActivity.this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(InfantTermListActivity.this);
         mother_recycler_view.setLayoutManager(mLayoutManager);
         mother_recycler_view.setItemAnimator(new DefaultItemAnimator());
         mother_recycler_view.setAdapter(mAdapter);
@@ -121,7 +121,7 @@ checkNetwork =new CheckNetwork(this);
     @Override
     public void showLoginSuccess(String response) {
 
-        Log.e(InfanentTreamListActivity.class.getSimpleName(), "Response success" + response);
+        Log.e(InfantTermListActivity.class.getSimpleName(), "Response success" + response);
         try {
             JSONObject mJsnobject = new JSONObject(response);
             String status = mJsnobject.getString("status");
@@ -183,7 +183,7 @@ checkNetwork =new CheckNetwork(this);
 
     private void setValueToUI() {
 
-        Log.e(InfanentTreamListActivity.class.getSimpleName(), "ON LINE ");
+        Log.e(InfantTermListActivity.class.getSimpleName(), "ON LINE ");
 
         realm.beginTransaction();
         RealmResults<TreamPreTreamListRealmModel> antt1listRealmResult = realm.where(TreamPreTreamListRealmModel.class).findAll();
@@ -209,7 +209,7 @@ checkNetwork =new CheckNetwork(this);
 
 
     private void showOfflineData() {
-        Log.e(InfanentTreamListActivity.class.getSimpleName(), "ON LINE ");
+        Log.e(InfantTermListActivity.class.getSimpleName(), "ON LINE ");
 
         realm.beginTransaction();
         RealmResults<TreamPreTreamListRealmModel> antt1listRealmResult = realm.where(TreamPreTreamListRealmModel.class).findAll();
@@ -235,7 +235,7 @@ checkNetwork =new CheckNetwork(this);
 
     @Override
     public void showLoginError(String response) {
-        Log.e(InfanentTreamListActivity.class.getSimpleName(), "Response Error" + response);
+        Log.e(InfantTermListActivity.class.getSimpleName(), "Response Error" + response);
 
     }
 

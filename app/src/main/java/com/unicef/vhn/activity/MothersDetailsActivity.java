@@ -196,7 +196,7 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
     @Override
     public void showLoginSuccess(String response) {
 //        AppConstants.SELECTED_MID="0";
-        Log.e(MotherTrackActivity.class.getSimpleName(), "Response success" + response);
+        Log.e(MothersDetailsActivity.class.getSimpleName(), "Response success" + response);
 
         try {
             JSONObject mJsnobject = new JSONObject(response);

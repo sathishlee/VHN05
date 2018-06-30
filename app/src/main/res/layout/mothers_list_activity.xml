@@ -42,7 +42,7 @@
                         android:layout_margin="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Mother's LIST"
+                        android:text="@string/mother_s_list"
                         android:textSize="@dimen/text_label"
                         android:textAlignment="textStart"
                         android:textColor="@color/startblue"
@@ -79,7 +79,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_marginEnd="5dp"
-                                android:text="Filter"
+                                android:text="@string/filter"
                                 android:textSize="@dimen/text_secondary"
                                 android:layout_gravity="end"
                                 android:textColor="@color/startblue"
@@ -124,7 +124,7 @@
             android:id="@+id/txt_no_records_found"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="NO RECORDES FOUND"
+            android:text="@string/no_recordes_found"
             android:layout_gravity="center"
             android:gravity="center"/>
       <!--  </LinearLayout>-->

@@ -33,7 +33,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Mother's Information"
+                        android:text="@string/mother_s_information"
                         android:textAlignment="textStart"
                         android:textColor="#2F80ED"
                         android:textSize="@dimen/text_label"
@@ -137,7 +137,7 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="start"
                                     android:padding="1dp"
-                                    android:text="Picme Id"
+                                    android:text="@string/picme_id"
                                     android:textColor="@color/secondary"
                                     android:textSize="@dimen/text_primary" />
 
@@ -164,7 +164,7 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="start"
                                     android:padding="1dp"
-                                    android:text="Age"
+                                    android:text="@string/age"
                                     android:textColor="@color/secondary"
                                     android:textSize="@dimen/text_primary" />
 
@@ -282,7 +282,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Alert Message"
+                                android:text="@string/alert_message"
                                 android:textAlignment="textStart"
                                 android:textColor="#2F80ED"
                                 android:textSize="@dimen/text_label"
@@ -555,7 +555,7 @@
                 android:background="@color/colorPrimary"
                 android:drawableStart="@drawable/ic_show_location"
                 android:padding="5dp"
-                android:text="View Location"
+                android:text="@string/view_location"
                 android:textColor="#ffffff" />
 
             <Button
@@ -567,7 +567,7 @@
                 android:background="@color/colorPrimary"
                 android:drawableStart="@drawable/ic_view_report"
                 android:padding="5dp"
-                android:text="Mother Report"
+                android:text="@string/mother_report"
                 android:textColor="#ffffff" />
 
         </LinearLayout>
@@ -580,7 +580,7 @@
             android:layout_weight="1"
             android:background="@color/red"
             android:padding="5dp"
-            android:text="Close This Alert"
+            android:text="@string/close_this_alert"
             android:textColor="#ffffff" />
 
     </LinearLayout>
