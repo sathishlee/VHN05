@@ -1,49 +1,48 @@
 package com.unicef.vhn.fragment;
 
-import android.Manifest;
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
+        import android.Manifest;
+        import android.app.ProgressDialog;
+        import android.content.Intent;
+        import android.content.pm.PackageManager;
+        import android.net.Uri;
+        import android.os.Bundle;
+        import android.support.annotation.NonNull;
+        import android.support.v4.app.ActivityCompat;
+        import android.support.v4.app.Fragment;
+        import android.support.v7.app.AlertDialog;
+        import android.support.v7.widget.DefaultItemAnimator;
+        import android.support.v7.widget.LinearLayoutManager;
+        import android.support.v7.widget.RecyclerView;
+        import android.util.Log;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.TextView;
+        import android.widget.Toast;
 
-import com.unicef.vhn.Interface.MakeCallInterface;
-import com.unicef.vhn.Preference.PreferenceData;
-import com.unicef.vhn.Presenter.MotherListPresenter;
-import com.unicef.vhn.R;
-//import com.unicef.vhn.adapter.MoviesAdapter;
-import com.unicef.vhn.activity.ANTT1MothersList;
-import com.unicef.vhn.adapter.MotherListAdapter;
-import com.unicef.vhn.application.RealmController;
-import com.unicef.vhn.constant.Apiconstants;
-import com.unicef.vhn.model.PNMotherListResponse;
-import com.unicef.vhn.realmDbModel.MotherListRealm;
-import com.unicef.vhn.realmDbModel.MotherRiskListRealm;
-import com.unicef.vhn.utiltiy.CheckNetwork;
-import com.unicef.vhn.view.MotherListsViews;
+        import com.unicef.vhn.Interface.MakeCallInterface;
+        import com.unicef.vhn.Preference.PreferenceData;
+        import com.unicef.vhn.Presenter.MotherListPresenter;
+        import com.unicef.vhn.R;
+        import com.unicef.vhn.activity.ANTT1MothersList;
+        import com.unicef.vhn.adapter.MotherListAdapter;
+        import com.unicef.vhn.application.RealmController;
+        import com.unicef.vhn.constant.Apiconstants;
+        import com.unicef.vhn.model.PNMotherListResponse;
+        import com.unicef.vhn.realmDbModel.MotherListRealm;
+        import com.unicef.vhn.realmDbModel.MotherRiskListRealm;
+        import com.unicef.vhn.utiltiy.CheckNetwork;
+        import com.unicef.vhn.view.MotherListsViews;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+        import org.json.JSONArray;
+        import org.json.JSONException;
+        import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+        import java.util.ArrayList;
+        import java.util.List;
 
-import io.realm.Realm;
-import io.realm.RealmResults;
+        import io.realm.Realm;
+        import io.realm.RealmResults;
 
 /**
  * Created by priyan on 2/3/2018.
@@ -63,7 +62,7 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
     boolean isDataUpdate = true;
 
 
-    TextView txt_no_internet;
+    TextView txt_no_internet, txt_no_records_found;
     CheckNetwork checkNetwork;
     boolean isoffline = false;
     Realm realm;
@@ -98,17 +97,19 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
         pnMotherListPresenter = new MotherListPresenter(getActivity(), this);
 
         txt_no_internet = view.findViewById(R.id.txt_no_internet);
+        txt_no_records_found = view.findViewById(R.id.txt_no_records_found);
         txt_no_internet.setVisibility(View.GONE);
+        txt_no_records_found.setVisibility(View.GONE);
         if (checkNetwork.isNetworkAvailable()) {
 
             pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_MOTHERS_RISK, preferenceData.getVhnCode(), preferenceData.getVhnId());
-        }else {
+        } else {
             isoffline = true;
         }
 //        pnMotherListPresenter.getPNMotherList("V10001","1");
         mResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView) view.findViewById(R.id.recycler_view);
-        mAdapter = new MotherListAdapter(mResult, getActivity(), "Risk", this,this);
+        mAdapter = new MotherListAdapter(mResult, getActivity(), "Risk", this, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mother_recycler_view.setLayoutManager(mLayoutManager);
         mother_recycler_view.setItemAnimator(new DefaultItemAnimator());
@@ -127,45 +128,26 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
 
     private void showOfflineData() {
 
-        Log.e("off ->",  "offline");
-
         realm.beginTransaction();
         RealmResults<MotherRiskListRealm> realmResults = realm.where(MotherRiskListRealm.class).findAll();
-        if (realmResults.size()!=0){
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    realm.delete(MotherRiskListRealm.class);
-                }
-            });
-        }
-        Log.e("Mother list size ->", realmResults.size() + "");
-        for (int i = 0; i < realmResults.size(); i++) {
-            mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
-
-            MotherRiskListRealm model = realmResults.get(i);
-            Log.e("off list size ->", model+ "");
-            Log.e("offline  getMid", model.getMid() + "");
-            Log.e("offlinegetMName", model.getMName() + "");
-            Log.e("offlinegetMPicmeId", model.getMPicmeId() + "");
-            Log.e("offlinegetmMotherMobile", model.getmMotherMobile() + "");
-            Log.e("offlinegetVhnId", model.getVhnId() + "");
-            Log.e("offlinegetvLatitude", model.getvLatitude() + "");
-            Log.e("offlinegetvLongitude", model.getvLongitude() + "");
-            Log.e("offlinegetMotherType", model.getMotherType() + "");
-            Log.e("offlinegetmPhoto", model.getmPhoto() + "");
-
-
-            mresponseResult.setMid(model.getMid());
-            mresponseResult.setMName(model.getMName());
-            mresponseResult.setMPicmeId(model.getMPicmeId());
-            mresponseResult.setmMotherMobile(model.getmMotherMobile());
-            mresponseResult.setVhnId(model.getVhnId());
-            mresponseResult.setMLatitude(model.getvLongitude());
-            mresponseResult.setMLongitude(model.getvLongitude());
-            mresponseResult.setMotherType(model.getMotherType());
-            mresponseResult.setmPhoto(model.getmPhoto());
-            mResult.add(mresponseResult);
+        if (realmResults.size() != 0) {
+            for (int i = 0; i < realmResults.size(); i++) {
+                mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
+                MotherRiskListRealm model = realmResults.get(i);
+                mresponseResult.setMid(model.getMid());
+                mresponseResult.setMName(model.getMName());
+                mresponseResult.setMPicmeId(model.getMPicmeId());
+                mresponseResult.setmMotherMobile(model.getmMotherMobile());
+                mresponseResult.setVhnId(model.getVhnId());
+                mresponseResult.setMLatitude(model.getvLongitude());
+                mresponseResult.setMLongitude(model.getvLongitude());
+                mresponseResult.setMotherType(model.getMotherType());
+                mresponseResult.setmPhoto(model.getmPhoto());
+                mResult.add(mresponseResult);
+            }
+        } else {
+            txt_no_records_found.setVisibility(View.VISIBLE);
+            mother_recycler_view.setVisibility(View.GONE);
         }
         mAdapter.notifyDataSetChanged();
 
@@ -206,30 +188,8 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
 
                 realm.beginTransaction();       //create or open
                 for (int i = 0; i < jsonArray.length(); i++) {
-                 /*   mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    mresponseResult.setMid(jsonObject.getString("mid"));
-                    mresponseResult.setMName(jsonObject.getString("mName"));
-                    mresponseResult.setMPicmeId(jsonObject.getString("mPicmeId"));
-                    mresponseResult.setVhnId(jsonObject.getString("vhnId"));
-                    mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
-                    mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
-                    mresponseResult.setmPhoto(jsonObject.getString("mPhoto"));
-                    mresponseResult.setMotherType(jsonObject.getString("motherType"));
-                    mResult.add(mresponseResult);
-                    mAdapter.notifyDataSetChanged();*/
-
-
                     motherRiskListRealm = realm.createObject(MotherRiskListRealm.class);  //this will create a UserInfoRealmModel object which will be inserted in database
-
                     JSONObject mJsnobject = jsonArray.getJSONObject(i);
-            /*        Log.e("position", i+"");
-                    Log.e("mName", mJsnobject.getString("mName"));
-                    Log.e("PICMEID", mJsnobject.getString("mPicmeId"));
-                    Log.e("PICMEID", mJsnobject.getString("mid"));
-                    Log.e("mMotherMobile", mJsnobject.getString("mMotherMobile"));
-                    Log.e("vhnId", mJsnobject.getString("vhnId"));*/
-
                     motherRiskListRealm.setMName(mJsnobject.getString("mName"));
                     motherRiskListRealm.setMPicmeId(mJsnobject.getString("mPicmeId"));
                     motherRiskListRealm.setMid(mJsnobject.getString("mid"));
@@ -239,7 +199,6 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
                     motherRiskListRealm.setMLongitude(mJsnobject.getString("mLongitude"));
                     motherRiskListRealm.setMotherType(mJsnobject.getString("motherType"));
                     motherRiskListRealm.setmPhoto(mJsnobject.getString("mPhoto"));
-
                 }
 
                 realm.commitTransaction(); //close table
@@ -256,38 +215,28 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
     }
 
     private void setValueToUI() {
-
-        Log.e("ON LINE ->",  "on line");
-
         realm.beginTransaction();
         RealmResults<MotherRiskListRealm> userInfoRealmResult = realm.where(MotherRiskListRealm.class).findAll();
-        Log.e("Mother list size ->", userInfoRealmResult.size() + "");
-        for (int i = 0; i < userInfoRealmResult.size(); i++) {
-            mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
+        if (userInfoRealmResult.size() != 0) {
 
-            MotherRiskListRealm model = userInfoRealmResult.get(i);
-           /* Log.e("Mother list size ->", model+ "");
-            Log.e("getMid", model.getMid() + "");
-            Log.e("getMName", model.getMName() + "");
-            Log.e("getMPicmeId", model.getMPicmeId() + "");
-            Log.e("getmMotherMobile", model.getmMotherMobile() + "");
-            Log.e("getVhnId", model.getVhnId() + "");
-            Log.e("getvLatitude", model.getvLatitude() + "");
-            Log.e("getvLongitude", model.getvLongitude() + "");
-            Log.e("getMotherType", model.getMotherType() + "");
-            Log.e("getmPhoto", model.getmPhoto() + "");*/
+            for (int i = 0; i < userInfoRealmResult.size(); i++) {
+                mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
 
-
-            mresponseResult.setMid(model.getMid());
-            mresponseResult.setMName(model.getMName());
-            mresponseResult.setMPicmeId(model.getMPicmeId());
-            mresponseResult.setmMotherMobile(model.getmMotherMobile());
-            mresponseResult.setVhnId(model.getVhnId());
-            mresponseResult.setMLatitude(model.getvLongitude());
-            mresponseResult.setMLongitude(model.getvLongitude());
-            mresponseResult.setMotherType(model.getMotherType());
-            mresponseResult.setmPhoto(model.getmPhoto());
-            mResult.add(mresponseResult);
+                MotherRiskListRealm model = userInfoRealmResult.get(i);
+                mresponseResult.setMid(model.getMid());
+                mresponseResult.setMName(model.getMName());
+                mresponseResult.setMPicmeId(model.getMPicmeId());
+                mresponseResult.setmMotherMobile(model.getmMotherMobile());
+                mresponseResult.setVhnId(model.getVhnId());
+                mresponseResult.setMLatitude(model.getvLongitude());
+                mresponseResult.setMLongitude(model.getvLongitude());
+                mresponseResult.setMotherType(model.getMotherType());
+                mresponseResult.setmPhoto(model.getmPhoto());
+                mResult.add(mresponseResult);
+            }
+        } else {
+            txt_no_records_found.setVisibility(View.VISIBLE);
+            mother_recycler_view.setVisibility(View.GONE);
         }
         mAdapter.notifyDataSetChanged();
 

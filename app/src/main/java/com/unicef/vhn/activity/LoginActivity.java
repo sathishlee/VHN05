@@ -74,27 +74,40 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
         fabLogin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.e(LoginActivity.class.getSimpleName(),"Butoon clicked");
                 attemptLogin();
             }
         });
     }
 
     private void attemptLogin() {
+        Log.e(LoginActivity.class.getSimpleName(),"attemptLogin called");;
+
         strVhnId = edtVhnId.getText().toString();
         strPassword = edtPassword.getText().toString();
         preferenceData.getDeviceId();
+
+        Log.e(LoginActivity.class.getSimpleName(),"strVhnId --"+strVhnId);
+        Log.e(LoginActivity.class.getSimpleName(),"strPassword --"+strPassword);
+        Log.e(LoginActivity.class.getSimpleName()," DeviceId --"+ preferenceData.getDeviceId());
         if (strVhnId.equalsIgnoreCase("")) {
+            Log.e(LoginActivity.class.getSimpleName(),"strVhnId is empty");
+
             edtVhnId.setError("VHN ID is Empty");
         } else if (strPassword.equalsIgnoreCase("")) {
+            Log.e(LoginActivity.class.getSimpleName(),"strVhnId is empty");
+
             edtPassword.setError("Password is Empty");
         } else {
             WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
             ipAddress = Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());
+            Log.e(LoginActivity.class.getSimpleName(),"ipAddress --"+ipAddress);
 
 
             mobileCheck = "Mobile:"+ Build.MANUFACTURER +","+ "Model:" +Build.MODEL + "," + "Api Version:"
                     + Build.VERSION.RELEASE + "," + "SDK Version:" + Build.VERSION.SDK_INT + "," + "IP Address:"+ ipAddress;
 
+            Log.e(LoginActivity.class.getSimpleName(),"mobileCheck --"+mobileCheck);
 
 
             Log.d("Mobile Check Version-->", mobileCheck);

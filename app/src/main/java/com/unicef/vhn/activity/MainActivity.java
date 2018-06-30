@@ -267,6 +267,7 @@ public class MainActivity extends AppCompatActivity
                         finish();
                     }
                 });
+                builder.show();
             }
 
         }

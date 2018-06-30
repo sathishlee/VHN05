@@ -155,8 +155,8 @@ public class ImmunizationListActivity extends AppCompatActivity implements Immun
                 });
 
                 if (jsonArray.length() != 0) {
-                    recyclerView.setVisibility(View.VISIBLE);
-                    textView.setVisibility(View.GONE);
+//                    recyclerView.setVisibility(View.VISIBLE);
+//                    textView.setVisibility(View.GONE);
 
                     realm.beginTransaction();       //create or open
 
@@ -287,18 +287,23 @@ public class ImmunizationListActivity extends AppCompatActivity implements Immun
         realm.beginTransaction();
         RealmResults<ImmuniationListRealmModel> immuniationListRealmModels = realm.where(ImmuniationListRealmModel.class).findAll();
         Log.e("ANTT1 list size ->", immuniationListRealmModels.size() + "");
-        for (int i = 0; i < immuniationListRealmModels.size(); i++) {
-            immunizationList = new ImmunizationListResponseModel.Immunization_list();
+        if (immuniationListRealmModels.size()!=0) {
+            for (int i = 0; i < immuniationListRealmModels.size(); i++) {
+                immunizationList = new ImmunizationListResponseModel.Immunization_list();
 
-            ImmuniationListRealmModel model = immuniationListRealmModels.get(i);
+                ImmuniationListRealmModel model = immuniationListRealmModels.get(i);
 
-            immunizationList.setMName(model.getMName());
-            immunizationList.setMPicmeId(model.getMPicmeId());
-            immunizationList.setImmDoseNumber(model.getImmDoseNumber());
-            immunizationList.setMid(model.getMid());
+                immunizationList.setMName(model.getMName());
+                immunizationList.setMPicmeId(model.getMPicmeId());
+                immunizationList.setImmDoseNumber(model.getImmDoseNumber());
+                immunizationList.setMid(model.getMid());
 
-            immunization_lists.add(immunizationList);
-            immunizationListAdapter.notifyDataSetChanged();
+                immunization_lists.add(immunizationList);
+                immunizationListAdapter.notifyDataSetChanged();
+            }
+        }else{
+            recyclerView.setVisibility(View.GONE);
+            textView.setVisibility(View.VISIBLE);
         }
 
         realm.commitTransaction();

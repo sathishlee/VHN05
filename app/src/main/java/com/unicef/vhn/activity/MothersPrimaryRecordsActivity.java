@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.unicef.vhn.Preference.PreferenceData;
@@ -35,7 +36,7 @@ import io.realm.RealmResults;
 public class MothersPrimaryRecordsActivity extends AppCompatActivity implements PrimaryRegisterViews {
 
     TextView txt_name, txt_mother_age, txt_lmp_date, txt_edd_date, txt_pry_mobile_no,
-            txt_alter_mobile_no,txt_mother_occupation, txt_hus_occupation, txt_age_at_marriage,txt_consanguineous_marraige,
+            txt_alter_mobile_no, txt_mother_occupation, txt_hus_occupation, txt_age_at_marriage, txt_consanguineous_marraige,
             txt_history_of_illness, txt_history_of_illness_family, txt_any_surgery_done, txt_tobacco, txt_alcohol,
             txt_on_any_medication, txt_allergic_to_any_drug, txt_history_of_previous_pregnancy, txt_lscs_done,
             txt_any_complication, txt_g, txt_p, txt_a, txt_l, txt_registration_week, txt_an_tt_1st, txt_an_tt_2nd,
@@ -50,7 +51,8 @@ public class MothersPrimaryRecordsActivity extends AppCompatActivity implements 
     boolean isoffline = false;
     Realm realm;
     PrimaryMotherDetailsRealmModel primaryMotherDetailsRealmModel;
-TextView txt_no_internet;
+    TextView txt_no_internet,txt_no_records_found;
+    LinearLayout ll_primary_view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +76,7 @@ TextView txt_no_internet;
     }
 
     public void initUI() {
-        checkNetwork =new CheckNetwork(this);
+        checkNetwork = new CheckNetwork(this);
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
@@ -83,11 +85,15 @@ TextView txt_no_internet;
 //        motherPrimaryRegisterPresenter.getAllMotherPrimaryRegistration(preferenceData.getPicmeId());
         if (checkNetwork.isNetworkAvailable()) {
             motherPrimaryRegisterPresenter.getAllMotherPrimaryRegistration(AppConstants.MOTHER_PICME_ID);
-        }else{
-            isoffline=true;
+        } else {
+            isoffline = true;
         }
         motherPrimaryRegisterPresenter.getAllMotherPrimaryRegistration(AppConstants.MOTHER_PICME_ID);
+        ll_primary_view =(LinearLayout) findViewById(R.id.ll_primary_view);
+        ll_primary_view.setVisibility(View.GONE);
         txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
+        txt_no_records_found = (TextView) findViewById(R.id.txt_no_records_found);
+        txt_no_records_found.setVisibility(View.GONE);
         txt_no_internet.setVisibility(View.GONE);
         txt_name = (TextView) findViewById(R.id.txt_name);
         txt_mother_age = (TextView) findViewById(R.id.txt_mother_age);
@@ -129,7 +135,7 @@ TextView txt_no_internet;
         if (isoffline) {
             txt_no_internet.setVisibility(View.VISIBLE);
             getValuefromRealm();
-        }else{
+        } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Record Not Found");
             builder.create();
@@ -139,52 +145,58 @@ TextView txt_no_internet;
     private void getValuefromRealm() {
 //        pDialog.show();
         RealmResults<PrimaryMotherDetailsRealmModel> primaryMotherDetailsRealmModelRealmResults;
-realm.beginTransaction();
-         primaryMotherDetailsRealmModelRealmResults = realm.where(PrimaryMotherDetailsRealmModel.class).equalTo("picmeId", AppConstants.MOTHER_PICME_ID).findAll();
+        realm.beginTransaction();
+        primaryMotherDetailsRealmModelRealmResults = realm.where(PrimaryMotherDetailsRealmModel.class).equalTo("picmeId", AppConstants.MOTHER_PICME_ID).findAll();
 //       primaryMotherDetailsRealmModelRealmResults = realm.where(PrimaryMotherDetailsRealmModel.class).findAll();
-        Log.e(String.valueOf(MothersPrimaryRecordsActivity.class),primaryMotherDetailsRealmModelRealmResults.size()+"");
-        Log.e(MothersPrimaryRecordsActivity.class.getSimpleName(),"primaryMotherDetailsRealmModelRealmResults  -->"+primaryMotherDetailsRealmModelRealmResults);
-        for(int i=0;i<primaryMotherDetailsRealmModelRealmResults.size();i++) {
-            PrimaryMotherDetailsRealmModel model =primaryMotherDetailsRealmModelRealmResults.get(i);
-            txt_name.setText(model.getmName());
-            txt_mother_age.setText(model.getmAge());
-            txt_lmp_date.setText(model.getmLMP());
-            txt_edd_date.setText(model.getmEDD());
-            txt_pry_mobile_no.setText(model.getmMotherMobile());
-            txt_alter_mobile_no.setText(model.getmHusbandMobile());
-            txt_mother_occupation.setText(model.getmMotherOccupation());
-            txt_hus_occupation.setText(model.getmHusbandOccupation());
-            txt_age_at_marriage.setText(model.getmAgeatMarriage());
-            txt_consanguineous_marraige.setText(model.getmConsanguineousMarraige());
-            txt_history_of_illness.setText(model.getmHistoryIllness());
-            txt_history_of_illness_family.setText(model.getmHistoryIllnessFamily());
-            txt_any_surgery_done.setText(model.getmAnySurgeryBefore());
-            txt_tobacco.setText(model.getmUseTobacco());
-            txt_alcohol.setText(model.getmUseAlcohol());
-            txt_on_any_medication.setText(model.getmAnyMeditation());
-            txt_allergic_to_any_drug.setText(model.getmAllergicToanyDrug());
-            txt_history_of_previous_pregnancy.setText(model.getmHistroyPreviousPreganancy());
-            txt_lscs_done.setText(model.getmLscsDone());
-            txt_any_complication.setText(model.getmAnyComplecationDuringPreganancy());
-            txt_g.setText(model.getmPresentPreganancyG());
-            txt_p.setText(model.getmPresentPreganancyP());
-            txt_a.setText(model.getmPresentPreganancyA());
-            txt_l.setText(model.getmPresentPreganancyL());
-            txt_registration_week.setText(model.getmRegistrationWeek());
-            txt_an_tt_1st.setText(model.getmANTT1());
-            txt_an_tt_2nd.setText(model.getmANTT2());
-            txt_ifa_start_date.setText(model.getmIFAStateDate());
-            txt_height.setText(model.getmHeight());
-            txt_blood_group.setText(model.getmBloodGroup());
-            txt_hiv.setText(model.getmHIV());
-            txt_vdrl.setText(model.getmVDRL());
-            txt_Hepatitis.setText(model.getmHepatitis());
-            txt_hus_blood_group.setText(model.gethBloodGroup());
-            txt_hus_hiv.setText(model.gethHIV());
-            txt_hus_vdrl.setText(model.gethVDRL());
-            txt_hus_Hepatitis.setText(model.gethHepatitis());
+        Log.e(String.valueOf(MothersPrimaryRecordsActivity.class), primaryMotherDetailsRealmModelRealmResults.size() + "");
+        Log.e(MothersPrimaryRecordsActivity.class.getSimpleName(), "primaryMotherDetailsRealmModelRealmResults  -->" + primaryMotherDetailsRealmModelRealmResults);
+        if (primaryMotherDetailsRealmModelRealmResults.size() != 0) {
+            for (int i = 0; i < primaryMotherDetailsRealmModelRealmResults.size(); i++) {
+                PrimaryMotherDetailsRealmModel model = primaryMotherDetailsRealmModelRealmResults.get(i);
+                txt_name.setText(model.getmName());
+                txt_mother_age.setText(model.getmAge());
+                txt_lmp_date.setText(model.getmLMP());
+                txt_edd_date.setText(model.getmEDD());
+                txt_pry_mobile_no.setText(model.getmMotherMobile());
+                txt_alter_mobile_no.setText(model.getmHusbandMobile());
+                txt_mother_occupation.setText(model.getmMotherOccupation());
+                txt_hus_occupation.setText(model.getmHusbandOccupation());
+                txt_age_at_marriage.setText(model.getmAgeatMarriage());
+                txt_consanguineous_marraige.setText(model.getmConsanguineousMarraige());
+                txt_history_of_illness.setText(model.getmHistoryIllness());
+                txt_history_of_illness_family.setText(model.getmHistoryIllnessFamily());
+                txt_any_surgery_done.setText(model.getmAnySurgeryBefore());
+                txt_tobacco.setText(model.getmUseTobacco());
+                txt_alcohol.setText(model.getmUseAlcohol());
+                txt_on_any_medication.setText(model.getmAnyMeditation());
+                txt_allergic_to_any_drug.setText(model.getmAllergicToanyDrug());
+                txt_history_of_previous_pregnancy.setText(model.getmHistroyPreviousPreganancy());
+                txt_lscs_done.setText(model.getmLscsDone());
+                txt_any_complication.setText(model.getmAnyComplecationDuringPreganancy());
+                txt_g.setText(model.getmPresentPreganancyG());
+                txt_p.setText(model.getmPresentPreganancyP());
+                txt_a.setText(model.getmPresentPreganancyA());
+                txt_l.setText(model.getmPresentPreganancyL());
+                txt_registration_week.setText(model.getmRegistrationWeek());
+                txt_an_tt_1st.setText(model.getmANTT1());
+                txt_an_tt_2nd.setText(model.getmANTT2());
+                txt_ifa_start_date.setText(model.getmIFAStateDate());
+                txt_height.setText(model.getmHeight());
+                txt_blood_group.setText(model.getmBloodGroup());
+                txt_hiv.setText(model.getmHIV());
+                txt_vdrl.setText(model.getmVDRL());
+                txt_Hepatitis.setText(model.getmHepatitis());
+                txt_hus_blood_group.setText(model.gethBloodGroup());
+                txt_hus_hiv.setText(model.gethHIV());
+                txt_hus_vdrl.setText(model.gethVDRL());
+                txt_hus_Hepatitis.setText(model.gethHepatitis());
+            }
+        }else{
+            txt_no_records_found.setVisibility(View.VISIBLE);
+            ll_primary_view.setVisibility(View.GONE);
         }
-realm.commitTransaction();
+
+        realm.commitTransaction();
         pDialog.dismiss();
     }
 
@@ -290,10 +302,8 @@ realm.commitTransaction();
                     txt_hus_Hepatitis.setText(jObj.getString("hHepatitis"));
 
 
-
-
                 RealmResults<PrimaryMotherDetailsRealmModel> delevaryDetailsPnMotherRealmModels = realm.where(PrimaryMotherDetailsRealmModel.class).findAll();
-                if (delevaryDetailsPnMotherRealmModels.size()!=0) {
+                if (delevaryDetailsPnMotherRealmModels.size() != 0) {
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {

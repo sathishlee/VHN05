@@ -110,7 +110,8 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
         realm = RealmController.with(this).getRealm();
         setContentView(R.layout.layout_profile);
         if (CheckingPermissionIsEnabledOrNot()) {
-            Toast.makeText(VhnProfile.this, "All Permissions Granted Successfully", Toast.LENGTH_LONG).show();
+            Toast.makeText(VhnProfile.this, "All Permissions Granted Successfully",
+                    Toast.LENGTH_LONG).show();
         }
 
         // If, If permission is not enabled then else condition will execute.
@@ -324,7 +325,8 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
                 public void execute(Realm realm) {
                     realm.delete(VhnProfileRealmModel.class);
                 }
-            })*/;
+            })*/
+            ;
             if (status.equalsIgnoreCase("1")) {
               /*  realm.beginTransaction();
                 vhnProfileRealmModel = realm.createObject(VhnProfileRealmModel.class);
