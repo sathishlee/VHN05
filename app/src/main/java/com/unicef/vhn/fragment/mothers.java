@@ -392,9 +392,26 @@ realm.commitTransaction();
                     pnmMotherListRealmModel.setmVillage(jsonObject.getString("mVillage"));
                     pnmMotherListRealmModel.setNextVisit(jsonObject.getString("nextVisit"));
 
+                    pnmMotherListRealmModel.setDeleveryDate(jsonObject.getString("deleveryDate"));
+                    pnmMotherListRealmModel.setdBirthDetails(jsonObject.getString("dBirthDetails"));
+                    pnmMotherListRealmModel.setdBirthWeight(jsonObject.getString("dBirthWeight"));
+                    pnmMotherListRealmModel.setMeturityWeek(jsonObject.getString("meturityWeek"));
+                    pnmMotherListRealmModel.setPnVisit(jsonObject.getString("pnVisit"));
+
+                    pnmMotherListRealmModel.setGestAge(jsonObject.getString("gestAge"));
+                    pnmMotherListRealmModel.setmWeight(jsonObject.getString("mWeight"));
+
+
                     if (jsonObject.getString("motherType").equalsIgnoreCase("AN")) {
+//                        pnmMotherListRealmModel.setGestAge(jsonObject.getString("gestAge"));
+//                        pnmMotherListRealmModel.setmWeight(jsonObject.getString("mWeight"));
                        getVisitANMotherPresenter.getVisitANMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), jsonObject.getString("mid"));
                     } else if (jsonObject.getString("motherType").equalsIgnoreCase("PN")) {
+                       /* pnmMotherListRealmModel.setDeleveryDate(jsonObject.getString("deleveryDate"));
+                        pnmMotherListRealmModel.setdBirthDetails(jsonObject.getString("dBirthDetails"));
+                        pnmMotherListRealmModel.setdBirthWeight(jsonObject.getString("dBirthWeight"));
+                        pnmMotherListRealmModel.setMeturityWeek(jsonObject.getString("meturityWeek"));
+                        pnmMotherListRealmModel.setPnVisit(jsonObject.getString("pnVisit"));*/
                         getVisitANMotherPresenter.getVisitPNMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), jsonObject.getString("mid"));
                     }
                 }

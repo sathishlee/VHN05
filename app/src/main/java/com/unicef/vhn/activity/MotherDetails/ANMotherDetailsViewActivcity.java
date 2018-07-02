@@ -157,8 +157,8 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
 
         txt_mother_name.setText(model.getmName());
         txt_picme_id.setText(model.getmPicmeId());
-        txt_gest_week.setText(model.getGestAge());
-        txt_weight.setText(model.getmWeight());
+        txt_gest_week.setText(model.getGestAge()+" Wks");
+        txt_weight.setText(model.getmWeight()+" Kg");
         strMobileNo = model.getmMotherMobile();
         if (strMobileNo.equalsIgnoreCase("null")||strMobileNo.length()<10){
             img_call_1.setVisibility(View.GONE);

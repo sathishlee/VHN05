@@ -45,8 +45,7 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
             txt_date_of_delivery, txt_weight, txt_type_of_delivery, txt_maturity, txt_next_visit,
             txt_husb_name, txt_aww_name, txt_relationship, txt_aww_relationship, txt_mother_name_call,
             txt_gest_week, txt_lmp_date, txt_edd_date, txt_delivery_date,txt_birth_weight,txt_type_delivery
-            , txt_pn_next_visit;
-
+            , txt_pn_next_visit,txt_pn_risk;
     ImageView img_call_1, img_call_2, cardview_image;
     Button btn_view_location, btn_view_report,btn_view_an_report;
     Context context;
@@ -115,7 +114,6 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
         txt_date_of_delivery = (TextView) findViewById(R.id.txt_date_of_delivery);
         txt_weight = (TextView) findViewById(R.id.txt_weight);
         txt_type_of_delivery = (TextView) findViewById(R.id.txt_type_of_delivery);
-        txt_maturity = (TextView) findViewById(R.id.txt_maturity);
         txt_next_visit = (TextView) findViewById(R.id.txt_next_visit);
         txt_husb_name = (TextView) findViewById(R.id.txt_husb_name);
         txt_husb_name = (TextView) findViewById(R.id.txt_husb_name);
@@ -131,7 +129,12 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
         txt_gest_week = (TextView) findViewById(R.id.txt_gest_week);
         txt_lmp_date = (TextView) findViewById(R.id.txt_lmp_date);
         txt_edd_date = (TextView) findViewById(R.id.txt_edd_date);
-        txt_pn_next_visit = (TextView) findViewById(R.id.txt_pn_next_visit);
+                txt_delivery_date = (TextView) findViewById(R.id.    txt_delivery_date);
+        txt_birth_weight = (TextView) findViewById(R.id.    txt_birth_weight);
+        txt_type_delivery = (TextView) findViewById(R.id.    txt_type_delivery);
+        txt_maturity = (TextView) findViewById(R.id.    txt_maturity);
+        txt_pn_next_visit = (TextView) findViewById(R.id.    txt_pn_next_visit);
+        txt_pn_risk = (TextView) findViewById(R.id.    txt_pn_risk);
 
 
         getValuesFromRealm();
@@ -153,14 +156,15 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
 
             txt_username.setText(model.getmName());
             txt_picme_id.setText(model.getmPicmeId());
-            txt_gest_week.setText(model.getGestAge());
+            txt_gest_week.setText(model.getGestAge()+" Wks");
+            txt_weight.setText(model.getmWeight()+" Kg");
             txt_lmp_date.setText(model.getmLMP());
             txt_edd_date.setText(model.getmEDD());
             txt_next_visit.setText(model.getNextVisit());
             txt_delivery_date.setText(model.getDeleveryDate());
-            txt_birth_weight.setText(model.getdBirthWeight());
+            txt_birth_weight.setText(model.getdBirthWeight()+" kg");
             txt_type_delivery.setText(model.getdBirthDetails());
-            txt_maturity.setText(model.getMeturityWeek());
+            txt_maturity.setText(model.getMeturityWeek()+ " Wks");
             txt_pn_next_visit.setText(model.getPnVisit());
 
 
@@ -183,6 +187,7 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
             }
 //            txt_mage.setText(model.getMA);
             txt_risk.setText(model.getmRiskStatus());
+            txt_pn_risk.setText(model.getmRiskStatus());
 //            txt_gest_week.setText(mJsnobject_tracking.getCurrentMonth());
 //            txt_weight.setText(mJsnobject_tracking.);
 //            txt_lmp_date.setText(model.getmLMP());
