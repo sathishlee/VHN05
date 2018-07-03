@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.unicef.vhn.Preference.PreferenceData;
@@ -36,7 +35,7 @@ import io.realm.RealmResults;
 public class MothersPrimaryRecordsActivity extends AppCompatActivity implements PrimaryRegisterViews {
 
     TextView txt_name, txt_mother_age, txt_lmp_date, txt_edd_date, txt_pry_mobile_no,
-            txt_alter_mobile_no, txt_mother_occupation, txt_hus_occupation, txt_age_at_marriage, txt_consanguineous_marraige,
+            txt_alter_mobile_no,txt_mother_occupation, txt_hus_occupation, txt_age_at_marriage,txt_consanguineous_marraige,
             txt_history_of_illness, txt_history_of_illness_family, txt_any_surgery_done, txt_tobacco, txt_alcohol,
             txt_on_any_medication, txt_allergic_to_any_drug, txt_history_of_previous_pregnancy, txt_lscs_done,
             txt_any_complication, txt_g, txt_p, txt_a, txt_l, txt_registration_week, txt_an_tt_1st, txt_an_tt_2nd,
@@ -51,8 +50,7 @@ public class MothersPrimaryRecordsActivity extends AppCompatActivity implements 
     boolean isoffline = false;
     Realm realm;
     PrimaryMotherDetailsRealmModel primaryMotherDetailsRealmModel;
-    TextView txt_no_internet,txt_no_records_found;
-    LinearLayout ll_primary_view;
+TextView txt_no_internet,txt_no_records_found;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +74,7 @@ public class MothersPrimaryRecordsActivity extends AppCompatActivity implements 
     }
 
     public void initUI() {
-        checkNetwork = new CheckNetwork(this);
+        checkNetwork =new CheckNetwork(this);
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
@@ -85,15 +83,12 @@ public class MothersPrimaryRecordsActivity extends AppCompatActivity implements 
 //        motherPrimaryRegisterPresenter.getAllMotherPrimaryRegistration(preferenceData.getPicmeId());
         if (checkNetwork.isNetworkAvailable()) {
             motherPrimaryRegisterPresenter.getAllMotherPrimaryRegistration(AppConstants.MOTHER_PICME_ID);
-        } else {
-            isoffline = true;
+        }else{
+            isoffline=true;
         }
         motherPrimaryRegisterPresenter.getAllMotherPrimaryRegistration(AppConstants.MOTHER_PICME_ID);
-        ll_primary_view =(LinearLayout) findViewById(R.id.ll_primary_view);
-        ll_primary_view.setVisibility(View.GONE);
         txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
         txt_no_records_found = (TextView) findViewById(R.id.txt_no_records_found);
-        txt_no_records_found.setVisibility(View.GONE);
         txt_no_internet.setVisibility(View.GONE);
         txt_name = (TextView) findViewById(R.id.txt_name);
         txt_mother_age = (TextView) findViewById(R.id.txt_mother_age);
@@ -135,7 +130,7 @@ public class MothersPrimaryRecordsActivity extends AppCompatActivity implements 
         if (isoffline) {
             txt_no_internet.setVisibility(View.VISIBLE);
             getValuefromRealm();
-        } else {
+        }else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Record Not Found");
             builder.create();
@@ -145,58 +140,200 @@ public class MothersPrimaryRecordsActivity extends AppCompatActivity implements 
     private void getValuefromRealm() {
 //        pDialog.show();
         RealmResults<PrimaryMotherDetailsRealmModel> primaryMotherDetailsRealmModelRealmResults;
-        realm.beginTransaction();
-        primaryMotherDetailsRealmModelRealmResults = realm.where(PrimaryMotherDetailsRealmModel.class).equalTo("picmeId", AppConstants.MOTHER_PICME_ID).findAll();
+realm.beginTransaction();
+         primaryMotherDetailsRealmModelRealmResults = realm.where(PrimaryMotherDetailsRealmModel.class).equalTo("picmeId", AppConstants.MOTHER_PICME_ID).findAll();
 //       primaryMotherDetailsRealmModelRealmResults = realm.where(PrimaryMotherDetailsRealmModel.class).findAll();
-        Log.e(String.valueOf(MothersPrimaryRecordsActivity.class), primaryMotherDetailsRealmModelRealmResults.size() + "");
-        Log.e(MothersPrimaryRecordsActivity.class.getSimpleName(), "primaryMotherDetailsRealmModelRealmResults  -->" + primaryMotherDetailsRealmModelRealmResults);
-        if (primaryMotherDetailsRealmModelRealmResults.size() != 0) {
-            for (int i = 0; i < primaryMotherDetailsRealmModelRealmResults.size(); i++) {
-                PrimaryMotherDetailsRealmModel model = primaryMotherDetailsRealmModelRealmResults.get(i);
+        Log.e(String.valueOf(MothersPrimaryRecordsActivity.class),primaryMotherDetailsRealmModelRealmResults.size()+"");
+        Log.e(MothersPrimaryRecordsActivity.class.getSimpleName(),"primaryMotherDetailsRealmModelRealmResults  -->"+primaryMotherDetailsRealmModelRealmResults);
+        for(int i=0;i<primaryMotherDetailsRealmModelRealmResults.size();i++) {
+            PrimaryMotherDetailsRealmModel model =primaryMotherDetailsRealmModelRealmResults.get(i);
+
+            if(model.getmName().equalsIgnoreCase("null")){
+                txt_name.setText("-");
+            }else {
                 txt_name.setText(model.getmName());
+            }
+            if(model.getmAge().equalsIgnoreCase("null")){
+                txt_mother_age.setText("-");
+            }else {
                 txt_mother_age.setText(model.getmAge());
+            }
+            if(model.getmLMP().equalsIgnoreCase("-")){
+                txt_lmp_date.setText("-");
+            }else {
                 txt_lmp_date.setText(model.getmLMP());
+            }
+            if(model.getmEDD().equalsIgnoreCase("null")){
+                txt_edd_date.setText("-");
+            }else {
                 txt_edd_date.setText(model.getmEDD());
+            }
+            if(model.getmMotherMobile().equalsIgnoreCase("null")){
+                txt_pry_mobile_no.setText("-");
+            }else {
                 txt_pry_mobile_no.setText(model.getmMotherMobile());
+            }
+            if(model.getmHusbandMobile().equalsIgnoreCase("null")){
+                txt_alter_mobile_no.setText("-");
+            }else {
                 txt_alter_mobile_no.setText(model.getmHusbandMobile());
+            }
+            if(model.getmMotherOccupation().equalsIgnoreCase("null")){
+                txt_mother_occupation.setText("-");
+            }else {
                 txt_mother_occupation.setText(model.getmMotherOccupation());
+            }
+            if(model.getmHusbandOccupation().equalsIgnoreCase("null")){
+                txt_hus_occupation.setText("-");
+            }else {
                 txt_hus_occupation.setText(model.getmHusbandOccupation());
+            }
+            if(model.getmAgeatMarriage().equalsIgnoreCase("null")){
+                txt_age_at_marriage.setText("-");
+            }else {
                 txt_age_at_marriage.setText(model.getmAgeatMarriage());
+            }
+            if(model.getmConsanguineousMarraige().equalsIgnoreCase("null")){
+                txt_consanguineous_marraige.setText("-");
+            }else {
                 txt_consanguineous_marraige.setText(model.getmConsanguineousMarraige());
+            }
+            if(model.getmHistoryIllness().equalsIgnoreCase("null")){
+                txt_history_of_illness.setText("-");
+            }else {
                 txt_history_of_illness.setText(model.getmHistoryIllness());
+            }
+            if(model.getmHistoryIllnessFamily().equalsIgnoreCase("null")){
+                txt_history_of_illness_family.setText("-");
+            }else {
                 txt_history_of_illness_family.setText(model.getmHistoryIllnessFamily());
+            }
+            if(model.getmAnySurgeryBefore().equalsIgnoreCase("null")){
+                txt_any_surgery_done.setText("-");
+            }else {
                 txt_any_surgery_done.setText(model.getmAnySurgeryBefore());
+            }
+            if(model.getmUseTobacco().equalsIgnoreCase("null")){
+                txt_tobacco.setText("-");
+            }else {
                 txt_tobacco.setText(model.getmUseTobacco());
+            }
+            if(model.getmUseAlcohol().equalsIgnoreCase("-")){
+                txt_alcohol.setText("-");
+            }else {
                 txt_alcohol.setText(model.getmUseAlcohol());
+            }
+            if(model.getmAnyMeditation().equalsIgnoreCase("null")){
+                txt_on_any_medication.setText("-");
+            }else {
                 txt_on_any_medication.setText(model.getmAnyMeditation());
+            }
+            if(model.getmAllergicToanyDrug().equalsIgnoreCase("null")){
+                txt_allergic_to_any_drug.setText("-");
+            }else {
                 txt_allergic_to_any_drug.setText(model.getmAllergicToanyDrug());
+            }
+            if(model.getmHistroyPreviousPreganancy().equalsIgnoreCase("null")){
+                txt_history_of_previous_pregnancy.setText("-");
+            }else {
                 txt_history_of_previous_pregnancy.setText(model.getmHistroyPreviousPreganancy());
+            }
+            if(model.getmLscsDone().equalsIgnoreCase("null")){
+                txt_lscs_done.setText("-");
+            }else {
                 txt_lscs_done.setText(model.getmLscsDone());
+            }
+            if(model.getmAnyComplecationDuringPreganancy().equalsIgnoreCase("null")){
+                txt_any_complication.setText("-");
+            }else {
                 txt_any_complication.setText(model.getmAnyComplecationDuringPreganancy());
+            }
+            if(model.getmPresentPreganancyG().equalsIgnoreCase("null")){
+                txt_g.setText("-");
+            }else {
                 txt_g.setText(model.getmPresentPreganancyG());
+            }
+            if(model.getmPresentPreganancyP().equalsIgnoreCase("null")){
+                txt_p.setText("-");
+            }else {
                 txt_p.setText(model.getmPresentPreganancyP());
+            }
+            if(model.getmPresentPreganancyA().equalsIgnoreCase("null")){
+                txt_a.setText("-");
+            }else {
                 txt_a.setText(model.getmPresentPreganancyA());
+            }
+            if(model.getmPresentPreganancyL().equalsIgnoreCase("null")){
+                txt_l.setText("-");
+            }else {
                 txt_l.setText(model.getmPresentPreganancyL());
+            }
+            if(model.getmRegistrationWeek().equalsIgnoreCase("null")){
+                txt_registration_week.setText("-");
+            }else {
                 txt_registration_week.setText(model.getmRegistrationWeek());
+            }
+            if(model.getmANTT1().equalsIgnoreCase("null")){
+                txt_an_tt_1st.setText("-");
+            }else {
                 txt_an_tt_1st.setText(model.getmANTT1());
+            }
+            if(model.getmANTT2().equalsIgnoreCase("null")){
+                txt_an_tt_2nd.setText("-");
+            }else {
                 txt_an_tt_2nd.setText(model.getmANTT2());
+            }
+            if(model.getmIFAStateDate().equalsIgnoreCase("null")){
+                txt_ifa_start_date.setText("-");
+            }else {
                 txt_ifa_start_date.setText(model.getmIFAStateDate());
+            }
+            if(model.getmHeight().equalsIgnoreCase("null")){
+                txt_height.setText("-");
+            }else{
                 txt_height.setText(model.getmHeight());
+            }
+            if(model.getmBloodGroup().equalsIgnoreCase("null")){
+                txt_blood_group.setText("-");
+            }else {
                 txt_blood_group.setText(model.getmBloodGroup());
+            }
+            if(model.getmHIV().equalsIgnoreCase("null")){
+                txt_hiv.setText("-");
+            }else {
                 txt_hiv.setText(model.getmHIV());
+            }
+            if(model.getmVDRL().equalsIgnoreCase("null")){
+                txt_vdrl.setText("-");
+            }else {
                 txt_vdrl.setText(model.getmVDRL());
+            }
+            if(model.getmHepatitis().equalsIgnoreCase("null")){
                 txt_Hepatitis.setText(model.getmHepatitis());
+            }
+            if(model.gethBloodGroup().equalsIgnoreCase("null")){
+                txt_hus_blood_group.setText("-");
+            }else {
                 txt_hus_blood_group.setText(model.gethBloodGroup());
+            }
+            if(model.gethHIV().equalsIgnoreCase("null")){
+                txt_hus_hiv.setText("-");
+            }else {
                 txt_hus_hiv.setText(model.gethHIV());
+            }
+            if(model.gethVDRL().equalsIgnoreCase("null")){
+                txt_hus_vdrl.setText("-");
+            }else {
                 txt_hus_vdrl.setText(model.gethVDRL());
+            }
+            if(model.gethHepatitis().equalsIgnoreCase("null")){
+                txt_hus_Hepatitis.setText("-");
+            }else {
                 txt_hus_Hepatitis.setText(model.gethHepatitis());
             }
-        }else{
-            txt_no_records_found.setVisibility(View.VISIBLE);
-            ll_primary_view.setVisibility(View.GONE);
-        }
 
-        realm.commitTransaction();
+        }
+realm.commitTransaction();
         pDialog.dismiss();
     }
 
@@ -226,84 +363,195 @@ public class MothersPrimaryRecordsActivity extends AppCompatActivity implements 
             String message = jObj.getString("message");
             if (status == 1) {
                 Log.d("message---->", message);
-                if (jObj.getString("mName") != "")
+                if (jObj.getString("mName").equalsIgnoreCase("null")){
+                    txt_name.setText("-");
+                }else{
                     txt_name.setText(jObj.getString("mName"));
-                if (jObj.getString("mAge") != "")
+                }
+                if (jObj.getString("mAge").equalsIgnoreCase("null")){
+                    txt_mother_age.setText("-");
+                }else {
                     txt_mother_age.setText(jObj.getString("mAge"));
-                if (jObj.getString("mLMP") != "")
+                }
+                if (jObj.getString("mLMP").equalsIgnoreCase("null")){
+                    txt_lmp_date.setText("-");
+                }else {
                     txt_lmp_date.setText(jObj.getString("mLMP"));
-                if (jObj.getString("mEDD") != "")
+                }
+                if (jObj.getString("mEDD").equalsIgnoreCase("null")){
+                    txt_edd_date.setText("-");
+                }else {
                     txt_edd_date.setText(jObj.getString("mEDD"));
-                if (jObj.getString("mMotherMobile") != "")
+                }
+                if (jObj.getString("mMotherMobile").equalsIgnoreCase("null")){
+                    txt_pry_mobile_no.setText("-");
+                }else {
                     txt_pry_mobile_no.setText(jObj.getString("mMotherMobile"));
-                if (jObj.getString("mHusbandMobile") != "")
+                }
+                if (jObj.getString("mHusbandMobile").equalsIgnoreCase("null")){
+                    txt_alter_mobile_no.setText("-");
+                }else {
                     txt_alter_mobile_no.setText(jObj.getString("mHusbandMobile"));
-                if (jObj.getString("mMotherOccupation") != "")
+                }
+                if (jObj.getString("mMotherOccupation").equalsIgnoreCase("null")){
+                    txt_mother_occupation.setText("-");
+                }else {
                     txt_mother_occupation.setText(jObj.getString("mMotherOccupation"));
-                if (jObj.getString("mHusbandOccupation") != "")
+                }
+                if (jObj.getString("mHusbandOccupation").equalsIgnoreCase("null")){
+                    txt_hus_occupation.setText("-");
+                }else {
                     txt_hus_occupation.setText(jObj.getString("mHusbandOccupation"));
-                if (jObj.getString("mAgeatMarriage") != "")
-                    txt_age_at_marriage.setText(jObj.getString("mAgeatMarriage"));
-                if (jObj.getString("mConsanguineousMarraige") != "")
-                    txt_consanguineous_marraige.setText(jObj.getString("mConsanguineousMarraige"));
-                if (jObj.getString("mHistoryIllness") != "")
-                    txt_history_of_illness.setText(jObj.getString("mHistoryIllness"));
-                if (jObj.getString("mHistoryIllnessFamily") != "")
-                    txt_history_of_illness_family.setText(jObj.getString("mHistoryIllnessFamily"));
-                if (jObj.getString("mAnySurgeryBefore") != "")
-                    txt_any_surgery_done.setText(jObj.getString("mAnySurgeryBefore"));
-                if (jObj.getString("mUseTobacco") != "")
-                    txt_tobacco.setText(jObj.getString("mUseTobacco"));
-                if (jObj.getString("mUseAlcohol") != "")
-                    txt_alcohol.setText(jObj.getString("mUseAlcohol"));
-                if (jObj.getString("mAnyMeditation") != "")
-                    txt_on_any_medication.setText(jObj.getString("mAnyMeditation"));
-                if (jObj.getString("mAllergicToanyDrug") != "")
-                    txt_allergic_to_any_drug.setText(jObj.getString("mAllergicToanyDrug"));
-                if (jObj.getString("mHistroyPreviousPreganancy") != "")
-                    txt_history_of_previous_pregnancy.setText(jObj.getString("mHistroyPreviousPreganancy"));
-                if (jObj.getString("mLscsDone") != "")
-                    txt_lscs_done.setText(jObj.getString("mLscsDone"));
-                if (jObj.getString("mAnyComplecationDuringPreganancy") != "")
-                    txt_any_complication.setText(jObj.getString("mAnyComplecationDuringPreganancy"));
-                if (jObj.getString("mPresentPreganancyG") != "")
-                    txt_g.setText(jObj.getString("mPresentPreganancyG"));
-                if (jObj.getString("mPresentPreganancyP") != "")
-                    txt_p.setText(jObj.getString("mPresentPreganancyP"));
-                if (jObj.getString("mPresentPreganancyA") != "")
-                    txt_a.setText(jObj.getString("mPresentPreganancyA"));
-                if (jObj.getString("mPresentPreganancyL") != "")
-                    txt_l.setText(jObj.getString("mPresentPreganancyL"));
-                if (jObj.getString("mRegistrationWeek") != "")
-                    txt_registration_week.setText(jObj.getString("mRegistrationWeek"));
-                if (jObj.getString("mANTT1") != "")
-                    txt_an_tt_1st.setText(jObj.getString("mANTT1"));
-                if (jObj.getString("mANTT2") != "")
-                    txt_an_tt_2nd.setText(jObj.getString("mANTT2"));
-                if (jObj.getString("mIFAStateDate") != "")
-                    txt_ifa_start_date.setText(jObj.getString("mIFAStateDate"));
-                if (jObj.getString("mHeight") != "")
-                    txt_height.setText(jObj.getString("mHeight"));
-                if (jObj.getString("mBloodGroup") != "")
-                    txt_blood_group.setText(jObj.getString("mBloodGroup"));
-                if (jObj.getString("mHIV") != "")
-                    txt_hiv.setText(jObj.getString("mHIV"));
-                if (jObj.getString("mVDRL") != "")
-                    txt_vdrl.setText(jObj.getString("mVDRL"));
-                if (jObj.getString("mHepatitis") != "")
-                    txt_Hepatitis.setText(jObj.getString("mHepatitis"));
-                if (jObj.getString("hBloodGroup") != "")
-                    txt_hus_blood_group.setText(jObj.getString("hBloodGroup"));
-                if (jObj.getString("hVDRL") != "")
-                    txt_hus_hiv.setText(jObj.getString("hVDRL"));
-                if (jObj.getString("hHIV") != "")
-                    txt_hus_vdrl.setText(jObj.getString("hHIV"));
-                if (jObj.getString("hHepatitis") != "")
-                    txt_hus_Hepatitis.setText(jObj.getString("hHepatitis"));
+                }
 
+                if (jObj.getString("mAgeatMarriage").equalsIgnoreCase("null")){
+                    txt_age_at_marriage.setText("-");
+                }else {
+                    txt_age_at_marriage.setText(jObj.getString("mAgeatMarriage"));
+                }
+                if (jObj.getString("mConsanguineousMarraige").equalsIgnoreCase("null")){
+                    txt_consanguineous_marraige.setText("-");
+                }else {
+                    txt_consanguineous_marraige.setText(jObj.getString("mConsanguineousMarraige"));
+                }
+                if (jObj.getString("mHistoryIllness").equalsIgnoreCase("null")){
+                    txt_history_of_illness.setText("-");
+                }else {
+                    txt_history_of_illness.setText(jObj.getString("mHistoryIllness"));
+                }
+                if (jObj.getString("mHistoryIllnessFamily").equalsIgnoreCase("null")){
+                    txt_history_of_illness_family.setText("-");
+                }else {
+                    txt_history_of_illness_family.setText(jObj.getString("mHistoryIllnessFamily"));
+                }
+                if (jObj.getString("mAnySurgeryBefore").equalsIgnoreCase("null")){
+                    txt_any_surgery_done.setText("-");
+                }else {
+                    txt_any_surgery_done.setText(jObj.getString("mAnySurgeryBefore"));
+                }
+                if (jObj.getString("mUseTobacco").equalsIgnoreCase("null")){
+                    txt_tobacco.setText("-");
+                }else {
+                    txt_tobacco.setText(jObj.getString("mUseTobacco"));
+                }
+                if (jObj.getString("mUseAlcohol").equalsIgnoreCase("null")){
+                    txt_alcohol.setText("-");
+                }else {
+                    txt_alcohol.setText(jObj.getString("mUseAlcohol"));
+                }
+                if (jObj.getString("mAnyMeditation").equalsIgnoreCase("null")){
+                    txt_on_any_medication.setText("-");
+                }else {
+                    txt_on_any_medication.setText(jObj.getString("mAnyMeditation"));
+                }
+                if (jObj.getString("mAllergicToanyDrug").equalsIgnoreCase("null")){
+                    txt_allergic_to_any_drug.setText("-");
+                }else {
+                    txt_allergic_to_any_drug.setText(jObj.getString("mAllergicToanyDrug"));
+                }
+                if (jObj.getString("mHistroyPreviousPreganancy").equalsIgnoreCase("null")){
+                    txt_history_of_previous_pregnancy.setText("-");
+                }else {
+                    txt_history_of_previous_pregnancy.setText(jObj.getString("mHistroyPreviousPreganancy"));
+                }
+                if (jObj.getString("mLscsDone").equalsIgnoreCase("null")){
+                    txt_lscs_done.setText("-");
+                }else {
+                    txt_lscs_done.setText(jObj.getString("mLscsDone"));
+                }
+                if (jObj.getString("mAnyComplecationDuringPreganancy").equalsIgnoreCase("null")){
+                    txt_any_complication.setText("-");
+                }else {
+                    txt_any_complication.setText(jObj.getString("mAnyComplecationDuringPreganancy"));
+                }
+                if (jObj.getString("mPresentPreganancyG").equalsIgnoreCase("null")){
+                    txt_g.setText("-");
+                }else {
+                    txt_g.setText(jObj.getString("mPresentPreganancyG"));
+                }
+                if (jObj.getString("mPresentPreganancyP").equalsIgnoreCase("null")){
+                    txt_p.setText("-");
+                }else {
+                    txt_p.setText(jObj.getString("mPresentPreganancyP"));
+                }
+                if (jObj.getString("mPresentPreganancyA").equalsIgnoreCase("null")){
+                    txt_a.setText("-");
+                }else {
+                    txt_a.setText(jObj.getString("mPresentPreganancyA"));
+                }
+                if (jObj.getString("mPresentPreganancyL").equalsIgnoreCase("null")){
+                    txt_l.setText("-");
+                }else {
+                    txt_l.setText(jObj.getString("mPresentPreganancyL"));
+                }
+                if (jObj.getString("mRegistrationWeek").equalsIgnoreCase("null")){
+                    txt_registration_week.setText("-");
+                }else {
+                    txt_registration_week.setText(jObj.getString("mRegistrationWeek"));
+                }
+                if (jObj.getString("mANTT1").equalsIgnoreCase("null")){
+                    txt_an_tt_1st.setText("-");
+                }else {
+                    txt_an_tt_1st.setText(jObj.getString("mANTT1"));
+                }
+                if (jObj.getString("mANTT2").equalsIgnoreCase("null")){
+                    txt_an_tt_2nd.setText("-");
+                }else {
+                    txt_an_tt_2nd.setText(jObj.getString("mANTT2"));
+                }
+                if (jObj.getString("mIFAStateDate").equalsIgnoreCase("null")){
+                    txt_ifa_start_date.setText("-");
+                }else {
+                    txt_ifa_start_date.setText(jObj.getString("mIFAStateDate"));
+                }
+                if (jObj.getString("mHeight").equalsIgnoreCase("null")){
+                    txt_height.setText("-");
+                }else {
+                    txt_height.setText(jObj.getString("mHeight"));
+                }
+                if (jObj.getString("mBloodGroup").equalsIgnoreCase("null")){
+                    txt_blood_group.setText("-");
+                }else {
+                    txt_blood_group.setText(jObj.getString("mBloodGroup"));
+                }
+                if (jObj.getString("mHIV").equalsIgnoreCase("null")){
+                    txt_hiv.setText("-");
+                }else {
+                    txt_hiv.setText(jObj.getString("mHIV"));
+                }
+                if (jObj.getString("mVDRL").equalsIgnoreCase("null")){
+                    txt_vdrl.setText("-");
+                }else {
+                    txt_vdrl.setText(jObj.getString("mVDRL"));
+                }
+                if (jObj.getString("mHepatitis").equalsIgnoreCase("null")){
+                    txt_Hepatitis.setText("-");
+                }else {
+                    txt_Hepatitis.setText(jObj.getString("mHepatitis"));
+                }
+                if (jObj.getString("hBloodGroup").equalsIgnoreCase("null")){
+                    txt_hus_blood_group.setText("-");
+                }else {
+                    txt_hus_blood_group.setText(jObj.getString("hBloodGroup"));
+                }
+                if (jObj.getString("hVDRL").equalsIgnoreCase("-")){
+                    txt_hus_hiv.setText("-");
+                }else {
+                    txt_hus_hiv.setText(jObj.getString("hVDRL"));
+                }
+                if (jObj.getString("hHIV").equalsIgnoreCase("null")){
+                    txt_hus_vdrl.setText("-");
+                }else {
+                    txt_hus_vdrl.setText(jObj.getString("hHIV"));
+                }
+                if (jObj.getString("hHepatitis").equalsIgnoreCase("null")){
+                    txt_hus_Hepatitis.setText("-");
+                }else {
+                    txt_hus_Hepatitis.setText(jObj.getString("hHepatitis"));
+                }
 
                 RealmResults<PrimaryMotherDetailsRealmModel> delevaryDetailsPnMotherRealmModels = realm.where(PrimaryMotherDetailsRealmModel.class).findAll();
-                if (delevaryDetailsPnMotherRealmModels.size() != 0) {
+                if (delevaryDetailsPnMotherRealmModels.size()!=0) {
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {

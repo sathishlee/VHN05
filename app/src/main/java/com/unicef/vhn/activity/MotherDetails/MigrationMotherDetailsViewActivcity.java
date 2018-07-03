@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.activity.ANViewReportsActivity;
 import com.unicef.vhn.activity.MotherLocationActivity;
+import com.unicef.vhn.adapter.MotherMigrationAdapter;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
@@ -57,13 +59,15 @@ public class MigrationMotherDetailsViewActivcity extends AppCompatActivity imple
     CheckNetwork checkNetwork;
     boolean isoffline;
 
+    LinearLayout view_norecords,view_block;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         realm = RealmController.with(this).getRealm(); // opens "myrealm.realm"
         setContentView(R.layout.activity_all_mother_details_view_activcity);
         Log.w(MigrationMotherDetailsViewActivcity.class.getSimpleName(), "Activity created");
-
+        Log.w(MotherMigrationAdapter.class.getSimpleName(),"MID  ----"+AppConstants.SELECTED_MID);
         initUI();
         showActionBar();
         onClickListner();
@@ -109,10 +113,17 @@ public class MigrationMotherDetailsViewActivcity extends AppCompatActivity imple
         checkNetwork = new CheckNetwork(this);
         pnMotherListPresenter = new MotherListPresenter(MigrationMotherDetailsViewActivcity.this, this);
         if (checkNetwork.isNetworkAvailable()) {
-            pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
+            Log.w(MotherMigrationAdapter.class.getSimpleName(),"MID  ----"+AppConstants.SELECTED_MID);
+            Log.w(MotherMigrationAdapter.class.getSimpleName(),"vhn code  ----"+preferenceData.getVhnCode());
+            Log.w(MotherMigrationAdapter.class.getSimpleName(),"vhn id  ----"+preferenceData.getVhnId());
+                      pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
         } else {
             isoffline = true;
         }
+        view_norecords = (LinearLayout) findViewById(R.id.view_no_records);
+        view_block = (LinearLayout) findViewById(R.id.view_block);
+        view_norecords.setVisibility(View.GONE);
+        view_block.setVisibility(View.GONE);
         cardview_image = (ImageView) findViewById(R.id.cardview_image);
         txt_mother_name = (TextView) findViewById(R.id.txt_username);
         txt_picme_id = (TextView) findViewById(R.id.txt_picme_id);
@@ -141,9 +152,15 @@ public class MigrationMotherDetailsViewActivcity extends AppCompatActivity imple
         RealmResults<MigrationMotherDetailsRealmModel> realmResults = realm.where(MigrationMotherDetailsRealmModel.class).equalTo("mid", AppConstants.SELECTED_MID).findAll();
         Log.w(MigrationMotherDetailsRealmModel.class.getSimpleName(), realmResults.size() + "");
         if (realmResults.size() == 0) {
-            finish();
-            Toast.makeText(getApplicationContext(), "Mother Details Not Available", Toast.LENGTH_LONG).show();
+//            finish();
+//            Toast.makeText(getApplicationContext(), "Mother Details Not Available", Toast.LENGTH_LONG).show();
+            view_norecords.setVisibility(View.VISIBLE);
+            view_block.setVisibility(View.GONE);
+
         } else {
+            view_norecords.setVisibility(View.GONE);
+            view_block.setVisibility(View.VISIBLE);
+
             for (int i = 0; i < realmResults.size(); i++) {
                 MigrationMotherDetailsRealmModel model = realmResults.get(i);
 
@@ -284,6 +301,8 @@ public class MigrationMotherDetailsViewActivcity extends AppCompatActivity imple
             String status = mJsnobject.getString("status");
             String message = mJsnobject.getString("message");
             if (status.equalsIgnoreCase("1")) {
+                view_norecords.setVisibility(View.GONE);
+                view_block.setVisibility(View.VISIBLE);
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 
                 RealmResults<MigrationMotherDetailsRealmModel> realmResults = realm.where(MigrationMotherDetailsRealmModel.class).findAll();
@@ -349,6 +368,8 @@ public class MigrationMotherDetailsViewActivcity extends AppCompatActivity imple
                         .error(R.drawable.girl)
                         .into(cardview_image);
             } else {
+                view_norecords.setVisibility(View.VISIBLE);
+                view_block.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 
             }
@@ -360,7 +381,8 @@ public class MigrationMotherDetailsViewActivcity extends AppCompatActivity imple
 
     @Override
     public void showLoginError(String string) {
-
+        view_norecords.setVisibility(View.VISIBLE);
+        view_block.setVisibility(View.GONE);
     }
 
     @Override

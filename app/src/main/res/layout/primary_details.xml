@@ -25,7 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="MOTHER PRIMARY RECORDES NOT FOUND" />
+            android:text="MOTHER PRIMARY RECORDES NOT FOUND"
+            android:visibility="gone"/>
     <LinearLayout
         android:id="@+id/ll_primary_view"
         android:layout_width="match_parent"
@@ -201,7 +202,7 @@
                     android:layout_margin="4dp"
                     android:orientation="vertical">
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#aaffffff"
                         android:text="EDD Date"
