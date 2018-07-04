@@ -24,7 +24,7 @@
             android:textSize="@dimen/text_label"
             android:layout_gravity="center"
             android:gravity="center"
-            android:visibility="visible"/>
+            android:visibility="gone"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/view_block"
@@ -41,7 +41,7 @@
             android:textSize="@dimen/text_label"
             android:layout_gravity="center"
             android:gravity="center"
-            android:visibility="visible"/>
+            android:visibility="gone"/>
 
         <LinearLayout
             android:layout_width="match_parent"

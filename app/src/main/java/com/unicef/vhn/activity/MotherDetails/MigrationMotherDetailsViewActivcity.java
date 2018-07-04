@@ -59,15 +59,15 @@ public class MigrationMotherDetailsViewActivcity extends AppCompatActivity imple
     CheckNetwork checkNetwork;
     boolean isoffline;
 
-    LinearLayout view_norecords,view_block;
-
+    LinearLayout view_norecords, view_block;
+TextView txt_no_internet;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         realm = RealmController.with(this).getRealm(); // opens "myrealm.realm"
         setContentView(R.layout.activity_all_mother_details_view_activcity);
         Log.w(MigrationMotherDetailsViewActivcity.class.getSimpleName(), "Activity created");
-        Log.w(MotherMigrationAdapter.class.getSimpleName(),"MID  ----"+AppConstants.SELECTED_MID);
+        Log.w(MotherMigrationAdapter.class.getSimpleName(), "MID  ----" + AppConstants.SELECTED_MID);
         initUI();
         showActionBar();
         onClickListner();
@@ -99,7 +99,7 @@ public class MigrationMotherDetailsViewActivcity extends AppCompatActivity imple
     private void showActionBar() {
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("AN Mother Detail");
+        actionBar.setTitle("Migration Mother Detail");
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -112,12 +112,17 @@ public class MigrationMotherDetailsViewActivcity extends AppCompatActivity imple
         preferenceData = new PreferenceData(this);
         checkNetwork = new CheckNetwork(this);
         pnMotherListPresenter = new MotherListPresenter(MigrationMotherDetailsViewActivcity.this, this);
+        txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
+
         if (checkNetwork.isNetworkAvailable()) {
-            Log.w(MotherMigrationAdapter.class.getSimpleName(),"MID  ----"+AppConstants.SELECTED_MID);
-            Log.w(MotherMigrationAdapter.class.getSimpleName(),"vhn code  ----"+preferenceData.getVhnCode());
-            Log.w(MotherMigrationAdapter.class.getSimpleName(),"vhn id  ----"+preferenceData.getVhnId());
-                      pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
+            txt_no_internet.setVisibility(View.GONE);
+
+            Log.w(MotherMigrationAdapter.class.getSimpleName(), "MID  ----" + AppConstants.SELECTED_MID);
+            Log.w(MotherMigrationAdapter.class.getSimpleName(), "vhn code  ----" + preferenceData.getVhnCode());
+            Log.w(MotherMigrationAdapter.class.getSimpleName(), "vhn id  ----" + preferenceData.getVhnId());
+            pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
         } else {
+            txt_no_internet.setVisibility(View.VISIBLE);
             isoffline = true;
         }
         view_norecords = (LinearLayout) findViewById(R.id.view_no_records);
@@ -172,24 +177,24 @@ public class MigrationMotherDetailsViewActivcity extends AppCompatActivity imple
                 txt_picme_id.setText(model.getMPicmeId());
                 strMobileNo = model.getMMotherMobile();
                 txt_husb_name.setText(model.getMHusbandName());
-                txt_mother_name_call.setText(model.getMMotherMobile());
-                if (strMobileNo.equalsIgnoreCase("null")||strMobileNo.length()<10){
+                txt_mother_name_call.setText(model.getMName());
+                if (strMobileNo.equalsIgnoreCase("null") || strMobileNo.length() < 10) {
                     img_call_1.setVisibility(View.GONE);
-                }else{
+                } else {
                     img_call_1.setVisibility(View.VISIBLE);
 
                 }
                 strAltMobileNo = model.getMHusbandMobile();
-                if (strAltMobileNo.equalsIgnoreCase("null")||strAltMobileNo.length()<10){
+                if (strAltMobileNo.equalsIgnoreCase("null") || strAltMobileNo.length() < 10) {
                     img_call_2.setVisibility(View.GONE);
-                }else{
+                } else {
                     img_call_2.setVisibility(View.VISIBLE);
 
                 }
                 txt_mage.setText(model.getMAge());
                 txt_risk_status.setText(model.getMRiskStatus());
-                txt_gest_week.setText(model.getGSTAge());
-                txt_weight.setText(model.getMWeight());
+                txt_gest_week.setText(model.getGSTAge()+" Wks");
+                txt_weight.setText(model.getMWeight()+" Kg");
                 txt_next_visit.setText(model.getNextVisit());
                 txt_lmp_date.setText(model.getMLMP());
                 txt_edd_date.setText(model.getMEDD());
@@ -198,7 +203,7 @@ public class MigrationMotherDetailsViewActivcity extends AppCompatActivity imple
 
                 str_mPhoto = model.getmPhoto();
 
-                Picasso.with(context)
+                /*Picasso.with(context)
                         .load(Apiconstants.MOTHER_PHOTO_URL + str_mPhoto)
                         .placeholder(R.drawable.girl)
                         .fit()
@@ -207,7 +212,7 @@ public class MigrationMotherDetailsViewActivcity extends AppCompatActivity imple
                         .networkPolicy(NetworkPolicy.NO_CACHE)
                         .transform(new RoundedTransformation(90, 4))
                         .error(R.drawable.girl)
-                        .into(cardview_image);
+                        .into(cardview_image);*/
 
             }
         }
@@ -335,10 +340,10 @@ public class MigrationMotherDetailsViewActivcity extends AppCompatActivity imple
                 model.setMEDD(mJsnobject_tracking.getString("mEDD"));
                 model.setMLatitude(mJsnobject_tracking.getString("mLatitude"));
                 model.setMLongitude(mJsnobject_tracking.getString("mLongitude"));
-                model.setVLongitude(mJsnobject_tracking.getString("VLongitude"));
+                model.setVLongitude(mJsnobject_tracking.getString("vLongitude"));
                 model.setVLatitude(mJsnobject_tracking.getString("vLatitude"));
                 model.setmPhoto(mJsnobject_tracking.getString("mPhoto"));
-
+                str_mPhoto = mJsnobject_tracking.getString("mPhoto");
                 realm.commitTransaction();
                 /*txt_mother_name.setText(mJsnobject_tracking.getString("mName"));
                 txt_picme_id.setText(mJsnobject_tracking.getString("mPicmeId"));
@@ -357,7 +362,7 @@ public class MigrationMotherDetailsViewActivcity extends AppCompatActivity imple
                 str_mPhoto = mJsnobject_tracking.getString("mPhoto");*/
 
 
-                Picasso.with(context)
+                /*Picasso.with(context)
                         .load(Apiconstants.MOTHER_PHOTO_URL + str_mPhoto)
                         .placeholder(R.drawable.girl)
                         .fit()
@@ -366,7 +371,9 @@ public class MigrationMotherDetailsViewActivcity extends AppCompatActivity imple
                         .networkPolicy(NetworkPolicy.NO_CACHE)
                         .transform(new RoundedTransformation(90, 4))
                         .error(R.drawable.girl)
-                        .into(cardview_image);
+                        .into(cardview_image);*/
+
+                getValuesFromRealm();
             } else {
                 view_norecords.setVisibility(View.VISIBLE);
                 view_block.setVisibility(View.GONE);
