@@ -495,33 +495,33 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
 
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                        pnmVisitRealmModel.setMAge(jsonObject.getString("mAge"));
-                        pnmVisitRealmModel.setMWeight(jsonObject.getString("mWeight"));
-                        pnmVisitRealmModel.setPnId(jsonObject.getString("pnId"));
-                        pnmVisitRealmModel.setMid(jsonObject.getString("mid"));
-                        pnmVisitRealmModel.setPicmeId(jsonObject.getString("picmeId"));
-                        pnmVisitRealmModel.setPnVisitNo(jsonObject.getString("pnVisitNo"));
-                        pnmVisitRealmModel.setPnDueDate(jsonObject.getString("pnDueDate"));
-                        pnmVisitRealmModel.setPnCareProvidedDate(jsonObject.getString("pnCareProvidedDate"));
-                        pnmVisitRealmModel.setPnPlace(jsonObject.getString("pnPlace"));
-                        pnmVisitRealmModel.setPnAnyComplaints(jsonObject.getString("pnAnyComplaints"));
-                        pnmVisitRealmModel.setPnBPSystolic(jsonObject.getString("pnBPSystolic"));
-                        pnmVisitRealmModel.setPnPulseRate(jsonObject.getString("pnPulseRate"));
-                        pnmVisitRealmModel.setPnTemp(jsonObject.getString("pnTemp"));
-                        pnmVisitRealmModel.setPnEpistomyTear(jsonObject.getString("pnEpistomyTear"));
-                        pnmVisitRealmModel.setPnPVDischarge(jsonObject.getString("pnPVDischarge"));
-                        pnmVisitRealmModel.setPnBreastFeedingReason(jsonObject.getString("pnBreastFeedingReason"));
-                        pnmVisitRealmModel.setPnBreastExamination(jsonObject.getString("pnBreastExamination"));
-                        pnmVisitRealmModel.setPnOutCome(jsonObject.getString("pnOutCome"));
-                        pnmVisitRealmModel.setCWeight(jsonObject.getString("cWeight"));
-                        pnmVisitRealmModel.setCTemp(jsonObject.getString("cTemp"));
-                        pnmVisitRealmModel.setCUmbilicalStump(jsonObject.getString("cUmbilicalStump"));
-                        pnmVisitRealmModel.setCCry(jsonObject.getString("cCry"));
-                        pnmVisitRealmModel.setCEyes(jsonObject.getString("cEyes"));
-                        pnmVisitRealmModel.setCSkin(jsonObject.getString("cSkin"));
-                        pnmVisitRealmModel.setCBreastFeeding(jsonObject.getString("cBreastFeeding"));
-                        pnmVisitRealmModel.setCBreastFeedingReason(jsonObject.getString("cBreastFeedingReason"));
-                        pnmVisitRealmModel.setCOutCome(jsonObject.getString("cOutCome"));
+    pnmVisitRealmModel.setMAge(jsonObject.getString("mAge"));
+    pnmVisitRealmModel.setMWeight(jsonObject.getString("mWeight"));
+    pnmVisitRealmModel.setPnId(jsonObject.getString("pnId"));
+    pnmVisitRealmModel.setMid(jsonObject.getString("mid"));
+    pnmVisitRealmModel.setPicmeId(jsonObject.getString("picmeId"));
+    pnmVisitRealmModel.setPnVisitNo(jsonObject.getString("pnVisitNo"));
+    pnmVisitRealmModel.setPnDueDate(jsonObject.getString("pnDueDate"));
+    pnmVisitRealmModel.setPnCareProvidedDate(jsonObject.getString("pnCareProvidedDate"));
+    pnmVisitRealmModel.setPnPlace(jsonObject.getString("pnPlace"));
+    pnmVisitRealmModel.setPnAnyComplaints(jsonObject.getString("pnAnyComplaints"));
+    pnmVisitRealmModel.setPnBPSystolic(jsonObject.getString("pnBPSystolic"));
+    pnmVisitRealmModel.setPnPulseRate(jsonObject.getString("pnPulseRate"));
+    pnmVisitRealmModel.setPnTemp(jsonObject.getString("pnTemp"));
+    pnmVisitRealmModel.setPnEpistomyTear(jsonObject.getString("pnEpistomyTear"));
+    pnmVisitRealmModel.setPnPVDischarge(jsonObject.getString("pnPVDischarge"));
+    pnmVisitRealmModel.setPnBreastFeedingReason(jsonObject.getString("pnBreastFeedingReason"));
+    pnmVisitRealmModel.setPnBreastExamination(jsonObject.getString("pnBreastExamination"));
+    pnmVisitRealmModel.setPnOutCome(jsonObject.getString("pnOutCome"));
+    pnmVisitRealmModel.setCWeight(jsonObject.getString("cWeight"));
+    pnmVisitRealmModel.setCTemp(jsonObject.getString("cTemp"));
+    pnmVisitRealmModel.setCUmbilicalStump(jsonObject.getString("cUmbilicalStump"));
+    pnmVisitRealmModel.setCCry(jsonObject.getString("cCry"));
+    pnmVisitRealmModel.setCEyes(jsonObject.getString("cEyes"));
+    pnmVisitRealmModel.setCSkin(jsonObject.getString("cSkin"));
+    pnmVisitRealmModel.setCBreastFeeding(jsonObject.getString("cBreastFeeding"));
+    pnmVisitRealmModel.setCBreastFeedingReason(jsonObject.getString("cBreastFeedingReason"));
+    pnmVisitRealmModel.setCOutCome(jsonObject.getString("cOutCome"));
 
 //                        motherDeliveryPresenter.deliveryDetails(jsonObject.getString("picmeId"),jsonObject.getString("mid"));
 
@@ -635,7 +635,9 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
                     }
                     realm.commitTransaction();
 //                    pDialog.dismiss();
-                } else {
+                }
+
+                else {
                 }
             } else {
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
@@ -649,9 +651,9 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
 
     private void setValuetoUI() {
 //        preferenceData.getFilterStatus();
-        RealmResults<PNMMotherListRealmModel> motherListAdapterRealmModel = null;
         Log.w(AllMotherListActivity.class.getSimpleName(), "setValuetoUI is Internet Conection-" + checkNetwork.isNetworkAvailable());
         realm.beginTransaction();
+        RealmResults<PNMMotherListRealmModel> motherListAdapterRealmModel = null;
 
         if (AppConstants.MOTHER_LIST_TITLE.equalsIgnoreCase("AN Mother List")) {
             Log.w(AllMotherListActivity.class.getSimpleName(), AppConstants.MOTHER_LIST_TITLE);

@@ -149,6 +149,7 @@ public class ANMotherVisitReportActivity extends AppCompatActivity implements Vi
             for (int i = 0; i < userInfoRealmResult.size(); i++) {
                 mhealthRecordResponseModel = new ANMotherVisitResponseModel.VhnAN_Mothers_List();
                 ANMVisitRealmModel model = userInfoRealmResult.get(i);
+
                 mhealthRecordResponseModel.setVDate(model.getVDate());
                 mhealthRecordResponseModel.setVFacility(model.getVFacility());
 //                mhealthRecordResponseModel.setMLongitude(jsonObject.getString("mLongitude"));

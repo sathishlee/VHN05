@@ -34,7 +34,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="NO RECORDES FOUND"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
 
 

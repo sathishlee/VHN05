@@ -65,7 +65,6 @@ public class PNHBNCVisitRecordsAdapter extends PagerAdapter {
         txt_mother_reasons.setText(mhealthRecordResponseModel.getPnBreastFeedingReason());
         txt_mother_breast_examination.setText(mhealthRecordResponseModel.getPnBreastExamination());
         txt_mother_out_come.setText(mhealthRecordResponseModel.getPnOutCome());
-
         txt_weight.setText(mhealthRecordResponseModel.getCWeight());
         txt_umbilical_tump.setText(mhealthRecordResponseModel.getCUmbilicalStump());
         txt_cry.setText(mhealthRecordResponseModel.getCCry());

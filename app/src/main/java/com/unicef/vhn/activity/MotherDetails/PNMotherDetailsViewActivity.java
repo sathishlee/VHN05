@@ -59,6 +59,7 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
     CheckNetwork checkNetwork;
     TextView txt_no_internet;
 
+    LinearLayout anLowRisk,anHighRisk,pnLowRisk,pnHighRisk;
     Realm realm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,11 +107,15 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
         }else{
             txt_no_internet.setVisibility(View.VISIBLE);
         }
+        anLowRisk= (LinearLayout) findViewById(R.id.ll_low_an_risk_status);
+        anHighRisk= (LinearLayout) findViewById(R.id.ll_high_an_risk_status);
+        pnLowRisk= (LinearLayout) findViewById(R.id.ll_low_pn_risk_status);
+        pnHighRisk= (LinearLayout) findViewById(R.id.ll_high_pn_risk_status);
 
         txt_username = (TextView) findViewById(R.id.txt_username);
         txt_picme_id = (TextView) findViewById(R.id.txt_picme_id);
         txt_mage = (TextView) findViewById(R.id.txt_age);
-        txt_risk = (TextView) findViewById(R.id.txt_risk);
+//        txt_risk = (TextView) findViewById(R.id.txt_risk);
         txt_date_of_delivery = (TextView) findViewById(R.id.txt_date_of_delivery);
         txt_weight = (TextView) findViewById(R.id.txt_weight);
         txt_type_of_delivery = (TextView) findViewById(R.id.txt_type_of_delivery);
@@ -134,7 +139,7 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
         txt_type_delivery = (TextView) findViewById(R.id.    txt_type_delivery);
         txt_maturity = (TextView) findViewById(R.id.    txt_maturity);
         txt_pn_next_visit = (TextView) findViewById(R.id.    txt_pn_next_visit);
-        txt_pn_risk = (TextView) findViewById(R.id.    txt_pn_risk);
+//        txt_pn_risk = (TextView) findViewById(R.id.    txt_pn_risk);
 
 
         getValuesFromRealm();
@@ -186,8 +191,22 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
 
             }
 //            txt_mage.setText(model.getMA);
-            txt_risk.setText(model.getmRiskStatus());
-            txt_pn_risk.setText(model.getmRiskStatus());
+//            txt_risk.setText(model.getmRiskStatus());
+            if (model.getmRiskStatus().equalsIgnoreCase("HIGH")){
+                anLowRisk.setVisibility(View.GONE);
+                anHighRisk.setVisibility(View.VISIBLE);
+            }else{
+                anLowRisk.setVisibility(View.VISIBLE);
+                anHighRisk.setVisibility(View.GONE);
+            }
+//            txt_pn_risk.setText(model.getmRiskStatus());
+            if (model.getmRiskStatus().equalsIgnoreCase("HIGH")){
+                pnLowRisk.setVisibility(View.GONE);
+                pnHighRisk.setVisibility(View.VISIBLE);
+            }else{
+                pnLowRisk.setVisibility(View.VISIBLE);
+                pnHighRisk.setVisibility(View.GONE);
+            }
 //            txt_gest_week.setText(mJsnobject_tracking.getCurrentMonth());
 //            txt_weight.setText(mJsnobject_tracking.);
 //            txt_lmp_date.setText(model.getmLMP());

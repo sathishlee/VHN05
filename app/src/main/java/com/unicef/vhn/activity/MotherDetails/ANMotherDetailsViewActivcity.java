@@ -61,7 +61,7 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
     MotherListRealm dashBoardRealmModel;
     TextView txt_no_internet;
     CheckNetwork checkNetwork;
-    LinearLayout view_block;
+    LinearLayout view_block,viewLowrisk,viewHighRisk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,13 +121,16 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
         else{
             txt_no_internet.setVisibility(View.VISIBLE);
         }
+        viewHighRisk =(LinearLayout)findViewById(R.id.ll_high_risk);
+        viewLowrisk =(LinearLayout)findViewById(R.id.ll_low_risk);
+
         view_block =(LinearLayout)findViewById(R.id.view_block);
         view_block.setVisibility(View.GONE);
         cardview_image = (ImageView) findViewById(R.id.cardview_image);
         txt_mother_name = (TextView) findViewById(R.id.txt_username);
         txt_picme_id = (TextView) findViewById(R.id.txt_picme_id);
         txt_mage = (TextView) findViewById(R.id.txt_age);
-        txt_risk_status = (TextView) findViewById(R.id.txt_risk);
+//        txt_risk_status = (TextView) findViewById(R.id.txt_risk);
         txt_gest_week = (TextView) findViewById(R.id.txt_gest_week);
         txt_weight = (TextView) findViewById(R.id.txt_weight);
         txt_lmp_date = (TextView) findViewById(R.id.txt_lmp_date);
@@ -175,7 +178,14 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
 
         }
 //            txt_mage.setText(mJsnobject_tracking.);
-        txt_risk_status.setText(model.getmRiskStatus());
+//        txt_risk_status.setText(model.getmRiskStatus());
+        if (model.getmRiskStatus().equalsIgnoreCase("HIGH")){
+            viewLowrisk.setVisibility(View.GONE);
+            viewHighRisk.setVisibility(View.VISIBLE);
+        }else{
+            viewLowrisk.setVisibility(View.VISIBLE);
+            viewHighRisk.setVisibility(View.GONE);
+        }
 //            txt_gest_week.setText(mJsnobject_tracking.getCurrentMonth());
 //            txt_weight.setText(mJsnobject_tracking.);
         txt_next_visit.setText(model.getNextVisit());

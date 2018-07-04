@@ -151,6 +151,8 @@ public class NotificationListFragment extends Fragment implements NotificationVi
     private void showOfflineData() {
         realm.beginTransaction();
         RealmResults<NotificationListRealm> userInfoRealmResult = realm.where(NotificationListRealm.class).findAll();
+
+
         if (userInfoRealmResult.size()!=0) {
             for (int i = 0; i < userInfoRealmResult.size(); i++) {
                 mresponseResult = new NotificationListResponseModel.Vhn_migrated_mothers();

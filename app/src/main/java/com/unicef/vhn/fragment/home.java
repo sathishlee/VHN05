@@ -148,7 +148,12 @@ public class home extends Fragment implements MotherListsViews {
                 AppConstants.GET_MOTHER_LIST_TYPE = "sos_count";
                 AppConstants.MOTHER_LIST_TITLE = "SOS List";
 //                ringtone.stop();
-                startActivity(new Intent(getActivity(), SosAlertListActivity.class));
+//                if (!txt_sos_count.getText().toString().equalsIgnoreCase("0")) {
+                    startActivity(new Intent(getActivity(), SosAlertListActivity.class));
+//                }
+//                else{
+//                    Toast.makeText(getContext(),"SOS Alert not found.",Toast.LENGTH_LONG).show();
+//                }
 
             }
         });

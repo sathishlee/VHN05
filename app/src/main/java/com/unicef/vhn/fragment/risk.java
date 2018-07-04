@@ -177,14 +177,16 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
             String message = jsonObject.getString("message");
             if (status.equalsIgnoreCase("1")) {
                 JSONArray jsonArray = jsonObject.getJSONArray("vhnAN_Mothers_List");
-                RealmResults<MotherListRealm> motherListAdapterRealmModel = realm.where(MotherListRealm.class).findAll();
-                Log.e("Realm size ---->", motherListAdapterRealmModel.size() + "");
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        realm.delete(MotherListRealm.class);
-                    }
-                });
+                RealmResults<MotherRiskListRealm> motherListAdapterRealmModel = realm.where(MotherRiskListRealm.class).findAll();
+                Log.e("risk Realm size ---->", motherListAdapterRealmModel.size() + "");
+                if (motherListAdapterRealmModel.size() !=0) {
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            realm.delete(MotherRiskListRealm.class);
+                        }
+                    });
+                }
 
                 realm.beginTransaction();       //create or open
                 for (int i = 0; i < jsonArray.length(); i++) {
