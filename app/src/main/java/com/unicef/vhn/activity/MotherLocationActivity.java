@@ -188,7 +188,13 @@ public class MotherLocationActivity extends FragmentActivity
         txt_call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeCall(strMotherNo);
+                if (strMotherNo.equalsIgnoreCase("null")||strMotherNo.length()<10){
+//                    img_call_1.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(),"Invalid Mobile Number",Toast.LENGTH_LONG).show();
+                }else{
+                    makeCall(strMotherNo);
+                }
+
             }
         });
     }
@@ -505,8 +511,8 @@ public class MotherLocationActivity extends FragmentActivity
 
     private DirectionsResult getDirectionsDetails(String origin, String destination, TravelMode mode) {
 
-        Log.d("Origin",origin);
-        Log.d("Destination", destination);
+//        Log.d("Origin",origin);
+//        Log.d("Destination", destination);
 
         DateTime now = new DateTime();
         try {
@@ -601,7 +607,7 @@ public class MotherLocationActivity extends FragmentActivity
 
     @Override
     public void showLocationSuccess(String response) {
-        AppConstants.SELECTED_MID="0";
+//        AppConstants.SELECTED_MID="0";
 
         Log.e(MotherLocationActivity.class.getSimpleName(), "Response success" + response);
 
@@ -617,6 +623,7 @@ public class MotherLocationActivity extends FragmentActivity
                 txt_picme_id.setText(mJsnobject_tracking.getString("mPicmeId"));
                 motherName =mJsnobject_tracking.getString("mName");
                 motherID =mJsnobject_tracking.getString("mPicmeId");
+                strMotherNo =mJsnobject_tracking.getString("mMotherMobile");
 
                 str_mPhoto = mJsnobject_tracking.getString("mPhoto");
                 Picasso.with(context)
@@ -704,7 +711,8 @@ public class MotherLocationActivity extends FragmentActivity
             requestCallPermission();
         } else {
             Log.i(MothersDetailsActivity.class.getSimpleName(),"CALL permission has already been granted. Displaying camera preview.");
-            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+"+strMotherNo)));
+
+                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+91" + strMotherNo)));
 
         }
     }
@@ -742,6 +750,15 @@ public class MotherLocationActivity extends FragmentActivity
         locationPresenter.getMotherLocatin(preferenceData.getVhnCode(),preferenceData.getVhnId(), AppConstants.SELECTED_MID);
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+//        Intent intent = new Intent(MotherLocationActivity.this, MainActivity.class);
+        finish();
+//        startActivity(intent);
+    }
+
     private String getCompleteAddressString(String latitude, String longitude) {
         String strAdd = "";
         double dlatitude= Double.parseDouble(latitude);

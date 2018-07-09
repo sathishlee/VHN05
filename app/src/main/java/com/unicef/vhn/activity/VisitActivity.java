@@ -177,7 +177,7 @@ public class VisitActivity extends AppCompatActivity implements MotherListsViews
                     visitListRealmMode.setMMotherMobile(jsonObject.getString("mMotherMobile"));
                     visitListRealmMode.setMtype(jsonObject.getString("mtype"));
                     visitListRealmMode.setNextVisit(jsonObject.getString("nextVisit"));
-                    visitListRealmMode.setMotherType(jsonObject.getString("motherType"));
+
                     visitListRealmMode.setMLatitude(jsonObject.getString("mLatitude"));
                     visitListRealmMode.setMLongitude(jsonObject.getString("mLongitude"));
 
@@ -224,7 +224,7 @@ public class VisitActivity extends AppCompatActivity implements MotherListsViews
             mresponseResult.setMMotherMobile(model.getMMotherMobile());
             mresponseResult.setMtype(model.getMtype());
             mresponseResult.setNextVisit(model.getNextVisit());
-            mresponseResult.setMotherType(model.getMotherType());
+
             mresponseResult.setMLatitude(model.getMLatitude());
             mresponseResult.setMLongitude(model.getMLongitude());
             mResult.add(mresponseResult);
@@ -254,7 +254,7 @@ public class VisitActivity extends AppCompatActivity implements MotherListsViews
             mresponseResult.setMMotherMobile(model.getMMotherMobile());
             mresponseResult.setMtype(model.getMtype());
             mresponseResult.setNextVisit(model.getNextVisit());
-            mresponseResult.setMotherType(model.getMotherType());
+
             mresponseResult.setMLatitude(model.getMLatitude());
             mresponseResult.setMLongitude(model.getMLongitude());
             mResult.add(mresponseResult);

@@ -37,18 +37,22 @@ public class MotherListPresenter implements MotherListInteractor {
     public void getPNMotherList(String callurl, final String vhnCode, final String vhnId) {
         motherListsViews.showProgress();
         String url = Apiconstants.BASE_URL + callurl;
-        Log.d("Log in check Url--->", url);
-        Log.d("vhnCode--->", vhnCode);
-        Log.d("vhnId--->", vhnId);
+        Log.e("Log in check Url--->", url);
+        Log.e("vhnCode--->", vhnCode);
+        Log.e("vhnId--->", vhnId);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 motherListsViews.hideProgress();
+                Log.e("today visit success--->", response);
+
                 motherListsViews.showLoginSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.e("today visit error--->", error.toString());
+
                 motherListsViews.hideProgress();
                 motherListsViews.showLoginError(error.toString());
             }

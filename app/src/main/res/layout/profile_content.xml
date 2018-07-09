@@ -10,6 +10,7 @@
     tools:showIn="@layout/layout_profile">
 
     <LinearLayout
+        android:id="@+id/ll_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -40,6 +41,18 @@
                 android:text="VHN Name"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="#212121" />
+            <EditText
+                android:id="@+id/eduser_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_toEndOf="@id/user_icon"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="VHN Name"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#212121"
+                android:visibility="gone"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -83,6 +96,18 @@
                 android:text="V10001"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="#212121" />
+            <EditText
+                android:id="@+id/ed_vhn_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_toEndOf="@id/vhn_icon"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="V10001"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#212121"
+                android:visibility="gone"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -113,24 +138,42 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                app:srcCompat="@drawable/house" />
-
+                app:srcCompat="@drawable/house"
+                />
+            <LinearLayout
+                android:id="@+id/ll_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_toEndOf="@id/address_icon">
             <TextView
                 android:id="@+id/address"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_toEndOf="@id/address_icon"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="No.105, Bharathi Nagar,"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="#212121" />
-
+                android:textColor="#212121"
+               />
+            <EditText
+                android:id="@+id/edaddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/address_icon"
+                android:maxLines="3"
+                android:text=" "
+                android:textColor="#212121"
+                android:cursorVisible="true"
+                android:background="@color/accent_translucent"
+                android:visibility="gone"/>
+            </LinearLayout>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/address"
+                android:layout_below="@id/ll_address"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="8dp"
                 android:layout_toEndOf="@id/address_icon"
@@ -169,6 +212,19 @@
                 android:text="Saligramam"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="#212121" />
+            <EditText
+                android:id="@+id/edphc_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_toEndOf="@id/village_icon"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Saligramam"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#212121"
+                android:visibility="gone"/>
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -214,6 +270,19 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="#212121" />
 
+            <EditText
+                android:id="@+id/edNumber5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_toEndOf="@id/block_icon"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="A"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#212121"
+                android:visibility="gone"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -257,6 +326,19 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="#212121" />
 
+            <EditText
+                android:id="@+id/eddistrict_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_toEndOf="@id/district_icon"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Chennai"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#212121"
+                android:visibility="gone"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -287,7 +369,11 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 app:srcCompat="@drawable/ic_phone_black" />
-
+<LinearLayout
+    android:id="@+id/ll_mobile_number"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
             <TextView
                 android:id="@+id/tvNumber1"
                 android:layout_width="wrap_content"
@@ -298,10 +384,23 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="#212121" />
 
+            <EditText
+                android:id="@+id/edNumber1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_toEndOf="@id/ivContactItem1"
+                android:text=" "
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#212121"
+                android:background="@color/accent_translucent"
+
+                android:visibility="gone"/>
+</LinearLayout>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tvNumber1"
+                android:layout_below="@id/ll_mobile_number"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="8dp"
                 android:layout_toEndOf="@id/ivContactItem1"
@@ -313,7 +412,32 @@
         </RelativeLayout>
 
         <include layout="@layout/item_divider" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="2">
+    <Button
+        android:id="@+id/but_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:layout_gravity="bottom"
+        android:visibility="gone"/>
+    <Button
+        android:id="@+id/but_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/submit"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:layout_gravity="bottom"
+        android:visibility="gone"/>
+</LinearLayout>
 
     </LinearLayout>
+
 
 </android.support.v4.widget.NestedScrollView>

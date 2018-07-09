@@ -180,6 +180,7 @@
         <activity android:name=".activity.MotherVisitReport.ANMotherVisitReportActivity" />
         <activity android:name=".activity.MotherVisitReport.PNMotherVisitReportActivity" />
         <activity android:name=".activity.MotherList.PushNotificationListActivity"></activity>
+        <activity android:name=".activity.visitMotherDetails.PNMotherVisitDetailsActivity"></activity>
 
         <service android:name=".service.PlayAudio"  android:enabled="true"></service>
 

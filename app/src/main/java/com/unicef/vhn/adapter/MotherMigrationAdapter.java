@@ -122,7 +122,7 @@ public class MotherMigrationAdapter extends RecyclerView.Adapter<MotherMigration
             public void onClick(View v) {
                 AppConstants.SELECTED_MID = vhn_migrated_mother.getMid();
                 if (type.equalsIgnoreCase("PN")) {
-//                    activity.startActivity(new Intent(activity.getApplicationContext(), PNMotherDetailsActivity.class));
+//                    activity.startActivity(new Intent(activity.getApplicationContext(), PNMotherVisitDetailsActivity.class));
                     activity.startActivity(new Intent(activity.getApplicationContext(), MigrationMotherDetailsViewActivcity.class));
 
 

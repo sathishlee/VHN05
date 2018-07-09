@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
 
             PackageInfo packageInfo = null;
             String version_name = "Latest";
-            int version_code = 4;
+            int version_code = 5;
             String appversion = String.valueOf(version_code);
 
             try {

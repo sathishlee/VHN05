@@ -104,7 +104,7 @@ public class SOSListAdapter extends RecyclerView.Adapter<SOSListAdapter.ViewHold
                             if (type.equalsIgnoreCase("PN")) {
                                 AppConstants.SELECTED_MID = SosMotherResponseModel.getMid();
                                 AppConstants.MOTHER_PICME_ID = SosMotherResponseModel.getMPicmeId();
-//                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherDetailsActivity.class));
+//                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherVisitDetailsActivity.class));
                                 applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherDetailsViewActivity.class));
 
                             } else if (type.equalsIgnoreCase("AN")) {

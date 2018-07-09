@@ -14,6 +14,7 @@ import com.unicef.vhn.R;
 import com.unicef.vhn.activity.MotherLocationActivity;
 import com.unicef.vhn.activity.MothersDetailsActivity;
 import com.unicef.vhn.activity.PNMotherDetailsActivity;
+import com.unicef.vhn.activity.visitMotherDetails.PNMotherVisitDetailsActivity;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.VisitListResponseModel;
 
@@ -75,10 +76,10 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.View
             public void onClick(View v) {
                 AppConstants.SELECTED_MID = current_visits.getMid();
                 if (current_visits.getMtype().equalsIgnoreCase("PN")) {
-                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherDetailsActivity.class));
+                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherVisitDetailsActivity.class));
 
                 } else if (current_visits.getMtype().equalsIgnoreCase("AN")) {
-                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MothersDetailsActivity.class));
+                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherVisitDetailsActivity.class));
 
                 }
 

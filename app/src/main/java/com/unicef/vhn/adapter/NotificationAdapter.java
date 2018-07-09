@@ -194,7 +194,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
 //                AppConstants.SELECTED_MID = movie.getMid();
                 if (movie.getMtype().equalsIgnoreCase("PN")) {
-//                    activity.startActivity(new Intent(activity.getApplicationContext(), PNMotherDetailsActivity.class));
+//                    activity.startActivity(new Intent(activity.getApplicationContext(), PNMotherVisitDetailsActivity.class));
 
                     AppConstants.SELECTED_MID = movie.getMid();
                     AppConstants.MOTHER_PICME_ID = movie.getMPicmeId();

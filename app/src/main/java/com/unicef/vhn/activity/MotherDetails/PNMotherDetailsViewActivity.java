@@ -98,7 +98,7 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData =new PreferenceData(this);
-//        pnMotherListPresenter = new MotherListPresenter(PNMotherDetailsActivity.this,this);
+//        pnMotherListPresenter = new MotherListPresenter(PNMotherVisitDetailsActivity.this,this);
 //        pnMotherListPresenter.getSelectedPNMother(AppConstants.SELECTED_MID);
         checkNetwork =new CheckNetwork(this);
         txt_no_internet = (TextView)findViewById(R.id.txt_no_internet);

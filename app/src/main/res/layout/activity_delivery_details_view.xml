@@ -519,7 +519,7 @@
 
                             <TextView
                                 android:id="@+id/txt_infant_weight"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start"
                                 android:text="2000 gms"
@@ -647,7 +647,8 @@
             android:orientation="vertical"
             android:padding="16.0dip"
             app:cardBackgroundColor="@android:color/white"
-            app:cardElevation="2.0dip">
+            app:cardElevation="2.0dip"
+            android:visibility="gone">
             <!--welcome-->
             <LinearLayout
                 android:layout_width="match_parent"
