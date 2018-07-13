@@ -596,23 +596,23 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
                         pnmMotherListRealmModel.setmLMP(jsonObject.getString("mLMP"));
                         pnmMotherListRealmModel.setmVillage(jsonObject.getString("mVillage"));
                         pnmMotherListRealmModel.setNextVisit(jsonObject.getString("nextVisit"));
+                        pnmMotherListRealmModel.setGestAge(jsonObject.getString("gestAge"));
+                        pnmMotherListRealmModel.setmWeight(jsonObject.getString("mWeight"));
+                        pnmMotherListRealmModel.setDeleveryDate(jsonObject.getString("deleveryDate"));
+                        pnmMotherListRealmModel.setdBirthDetails(jsonObject.getString("dBirthDetails"));
+                        pnmMotherListRealmModel.setdBirthWeight(jsonObject.getString("dBirthWeight"));
+                        pnmMotherListRealmModel.setMeturityWeek(jsonObject.getString("meturityWeek"));
+                        pnmMotherListRealmModel.setPnVisit(jsonObject.getString("pnVisit"));
 
                         if (jsonObject.getString("motherType").equalsIgnoreCase("AN")) {
                             Log.e(mothers.class.getSimpleName(),i+jsonObject.getString("motherType"));
                             Log.e(mothers.class.getSimpleName(),i+"VisitANMotherRecords api call start");
 
-                            pnmMotherListRealmModel.setGestAge(jsonObject.getString("gestAge"));
-                            pnmMotherListRealmModel.setmWeight(jsonObject.getString("mWeight"));
+
                             getVisitANMotherPresenter.getVisitANMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), jsonObject.getString("mid"));
                         } else if (jsonObject.getString("motherType").equalsIgnoreCase("PN")) {
                             Log.e(mothers.class.getSimpleName(),i+jsonObject.getString("motherType"));
                             Log.e(mothers.class.getSimpleName(),i+"VisitPNMotherRecords api call start");
-
-                            pnmMotherListRealmModel.setDeleveryDate(jsonObject.getString("deleveryDate"));
-                            pnmMotherListRealmModel.setdBirthDetails(jsonObject.getString("dBirthDetails"));
-                            pnmMotherListRealmModel.setdBirthWeight(jsonObject.getString("dBirthWeight"));
-                            pnmMotherListRealmModel.setMeturityWeek(jsonObject.getString("meturityWeek"));
-                            pnmMotherListRealmModel.setPnVisit(jsonObject.getString("pnVisit"));
 
                             getVisitANMotherPresenter.getVisitPNMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), jsonObject.getString("mid"));
                         }

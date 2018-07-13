@@ -310,6 +310,8 @@
     <string name="out_come">Out Come</string>
     <string name="current_visit">Current Visit :</string>
     <string name="profile_image">profile_image</string>
+    <string name="native_mother">Native Mother</string>
+    <string name="migrated_mothers">Migrated Mothers</string>
     >>>>>>> origin/new
 
 </resources>

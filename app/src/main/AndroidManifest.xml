@@ -180,6 +180,8 @@
         <activity android:name=".activity.MotherVisitReport.ANMotherVisitReportActivity" />
         <activity android:name=".activity.MotherVisitReport.PNMotherVisitReportActivity" />
         <activity android:name=".activity.MotherList.PushNotificationListActivity"></activity>
+        <activity android:name=".activity.MotherMigrationNew"
+            android:theme="@style/AppTheme1"></activity>
     </application>
 
 </manifest>

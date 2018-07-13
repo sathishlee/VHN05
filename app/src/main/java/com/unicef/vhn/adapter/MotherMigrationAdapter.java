@@ -87,14 +87,6 @@ public class MotherMigrationAdapter extends RecyclerView.Adapter<MotherMigration
 
         strMid = vhn_migrated_mother.getMid();
 
-//        if (type.equalsIgnoreCase("PN")) {
-//            holder.txt_list_type.setText(type);
-//        }else if (type.equalsIgnoreCase("AN")) {
-//            holder.txt_list_type.setText(type);
-//        }else if (type.equalsIgnoreCase("Risk")) {
-//            holder.txt_list_type.setText(type);
-//        }
-
         if (vhn_migrated_mother.getMMotherMobile().equalsIgnoreCase("null")||
              vhn_migrated_mother.getMMotherMobile().length()<10){
             holder.ll_call.setVisibility(View.GONE);

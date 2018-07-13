@@ -285,8 +285,8 @@ public class MigrationMotherDetailsViewActivcity extends AppCompatActivity imple
             String message = mJsnobject.getString("message");
             if (status.equalsIgnoreCase("1")) {
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-
-                RealmResults<MigrationMotherDetailsRealmModel> realmResults = realm.where(MigrationMotherDetailsRealmModel.class).findAll();
+                RealmResults<MigrationMotherDetailsRealmModel> realmResults = null;
+                realmResults = realm.where(MigrationMotherDetailsRealmModel.class).findAll();
                 if (realmResults.size() != 0) {
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
