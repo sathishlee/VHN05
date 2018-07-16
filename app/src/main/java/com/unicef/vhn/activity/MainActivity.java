@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(i);
 
         } else if (id == R.id.migration_mother) {
-            Intent i = new Intent(getApplicationContext(), MotherMigration.class);
+            Intent i = new Intent(getApplicationContext(), MotherMigrationNew.class);
 //            Intent i = new Intent(getApplicationContext(),MigrationMotherListActivity.class);
             startActivity(i);
         } else if (id == R.id.change_language) {
@@ -358,11 +358,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-
-
         MyApplication.getInstance().setConnectivityListener(this);
-
-
     }
 
 

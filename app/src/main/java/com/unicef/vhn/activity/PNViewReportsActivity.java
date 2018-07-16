@@ -40,7 +40,7 @@ public class PNViewReportsActivity extends AppCompatActivity implements VisitANM
 
     //    HealthRecordResponseModel.Visit_Records mhealthRecordResponseModel;
     PnHbncVisitRecordsModel.PnMothersVisit mPnHbncVisitRecordsModel;
-    ArrayList<   PnHbncVisitRecordsModel.PnMothersVisit> mPnHbncVisitRecordsList;
+    ArrayList<PnHbncVisitRecordsModel.PnMothersVisit> mPnHbncVisitRecordsList;
 
     String strpnId, strPicmeId;
 

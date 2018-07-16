@@ -40,12 +40,36 @@ public class ImmunizationAdapter extends RecyclerView.Adapter<ImmunizationAdapte
         Log.e(ImmunizationAdapter.class.getSimpleName(),immunization_list.getImmCarePovidedDate());
         Log.e(ImmunizationAdapter.class.getSimpleName(),immunization_list.getImmOpvStatus());
 
-        holder.txt_due_date.setText(immunization_list.getImmDueDate());
-        holder.txt_provided_date.setText(immunization_list.getImmCarePovidedDate());
-        holder.txt_opv_given.setText(immunization_list.getImmOpvStatus());
-        holder.txt_prentavalent_given.setText(immunization_list.getImmPentanvalentStatus());
-        holder.txt_rota_given.setText(immunization_list.getImmRotaStatus());
-        holder.txt_imm_dose_number.setText(immunization_list.getImmDoseNumber());
+        if(immunization_list.getImmDueDate().equalsIgnoreCase("null")){
+            holder.txt_due_date.setText("-");
+        }else {
+            holder.txt_due_date.setText(immunization_list.getImmDueDate());
+        }
+        if(immunization_list.getImmCarePovidedDate().equalsIgnoreCase("null")){
+            holder.txt_provided_date.setText("-");
+        }else {
+            holder.txt_provided_date.setText(immunization_list.getImmCarePovidedDate());
+        }
+        if(immunization_list.getImmOpvStatus().equalsIgnoreCase("null")){
+            holder.txt_opv_given.setText("-");
+        }else {
+            holder.txt_opv_given.setText(immunization_list.getImmOpvStatus());
+        }
+        if(immunization_list.getImmPentanvalentStatus().equalsIgnoreCase("null")){
+            holder.txt_prentavalent_given.setText("-");
+        }else {
+            holder.txt_prentavalent_given.setText(immunization_list.getImmPentanvalentStatus());
+        }
+        if(immunization_list.getImmRotaStatus().equalsIgnoreCase("null")){
+            holder.txt_rota_given.setText("-");
+        }else {
+            holder.txt_rota_given.setText(immunization_list.getImmRotaStatus());
+        }
+        if(immunization_list.getImmDoseNumber().equalsIgnoreCase("null")){
+            holder.txt_imm_dose_number.setText("-");
+        }else {
+            holder.txt_imm_dose_number.setText(immunization_list.getImmDoseNumber());
+        }
 
 
     }

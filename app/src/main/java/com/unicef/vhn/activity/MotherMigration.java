@@ -83,7 +83,7 @@ public class MotherMigration extends AppCompatActivity implements MotherListsVie
     }
 
     public void initUI() {
-checkNetwork = new CheckNetwork(this);
+        checkNetwork = new CheckNetwork(this);
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
@@ -115,8 +115,6 @@ checkNetwork = new CheckNetwork(this);
             builder.create();
         }
     }
-
-
 
 
     public void showActionBar() {

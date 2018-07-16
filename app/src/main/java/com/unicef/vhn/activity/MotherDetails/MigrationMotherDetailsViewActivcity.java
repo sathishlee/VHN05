@@ -318,8 +318,8 @@ TextView txt_no_internet;
                 view_norecords.setVisibility(View.GONE);
                 view_block.setVisibility(View.VISIBLE);
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-
-                RealmResults<MigrationMotherDetailsRealmModel> realmResults = realm.where(MigrationMotherDetailsRealmModel.class).findAll();
+                RealmResults<MigrationMotherDetailsRealmModel> realmResults = null;
+                realmResults = realm.where(MigrationMotherDetailsRealmModel.class).findAll();
                 if (realmResults.size() != 0) {
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override

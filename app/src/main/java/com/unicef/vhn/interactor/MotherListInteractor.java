@@ -33,4 +33,6 @@ public interface MotherListInteractor {
 
     void getMigratedMothersList(String vhnCode, String vhnId);
 
+    void getMigratedMothersList1(String vhnCode, String vhnId);
+
 }
