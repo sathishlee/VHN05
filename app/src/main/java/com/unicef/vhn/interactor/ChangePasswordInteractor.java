@@ -11,4 +11,8 @@ public interface ChangePasswordInteractor {
             String vhnNewPassword,
             String vhnConPassword
     );
+    void forgetPassword(
+            String vhnCode,
+            String vhnMobileNumber
+    );
 }

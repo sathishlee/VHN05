@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.unicef.vhn.Preference.PreferenceData;
@@ -49,7 +50,7 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
 
     LoginPresenter loginPresenter;
     ConnectivityManager conMgr;
-
+private TextView txtForgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,12 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
             @Override
             public void onClick(View view) {
                 attemptLogin();
+            }
+        });
+        txtForgotPassword.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),ForgetPasswordActivity.class));
             }
         });
     }
@@ -127,6 +134,7 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
         edtVhnId = (EditText) findViewById(R.id.edt_vhn_id);
         edtPassword = (EditText) findViewById(R.id.edt_password);
         btnlogin = (Button) findViewById(R.id.btnlogin);
+        txtForgotPassword = (TextView) findViewById(R.id.txt_forgot_password);
     }
 
     @Override
@@ -142,7 +150,7 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
     @Override
     public void showLoginSuccess(String response) {
 
-        Log.d("Response success", response);
+        Log.e("Response success", response);
         JSONObject jObj = null;
         try {
             jObj = new JSONObject(response);
@@ -186,6 +194,7 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
 
     @Override
     public void showLoginError(String message) {
+        Log.e(LoginActivity.class.getSimpleName(),"error "+message);
         android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
         builder.setMessage(message);
         builder.create();

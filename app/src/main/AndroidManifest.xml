@@ -19,9 +19,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-
-
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <meta-data
         android:name="com.google.android.gms.version"
@@ -44,7 +42,7 @@
         <activity
             android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <!--
             <activity
             android:name=".model.ViewRecordActivity"
@@ -179,14 +177,16 @@
         <activity android:name=".activity.MotherDetails.MigrationMotherDetailsViewActivcity" />
         <activity android:name=".activity.MotherVisitReport.ANMotherVisitReportActivity" />
         <activity android:name=".activity.MotherVisitReport.PNMotherVisitReportActivity" />
-        <activity android:name=".activity.MotherList.PushNotificationListActivity"></activity>
-        <activity android:name=".activity.visitMotherDetails.PNMotherVisitDetailsActivity"></activity>
+        <activity android:name=".activity.MotherList.PushNotificationListActivity" />
+        <activity android:name=".activity.visitMotherDetails.PNMotherVisitDetailsActivity" />
+        <activity android:name=".activity.ViewReportsActivity" />
+        <activity android:name=".activity.ImageFullViewActivity" />
 
-        <activity android:name=".activity.ViewReportsActivity"/>
-        <activity android:name=".activity.ImageFullViewActivity"/>
+        <service
+            android:name=".service.PlayAudio"
+            android:enabled="true" />
 
-        <service android:name=".service.PlayAudio"  android:enabled="true"></service>
-
+        <activity android:name=".activity.ForgetPasswordActivity"></activity>
     </application>
 
 </manifest>

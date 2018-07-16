@@ -200,6 +200,8 @@
     <string name="change_password">Change Password</string>
     <string name="enter_old_password">Enter Old Password</string>
     <string name="enter_new_password">Enter New Password</string>
+    <string name="vhncode">Enter Vhn Code</string>
+    <string name="mobilenumber">Enter Mobile Number</string>
     <string name="conform_password">Conform Password</string>
     <string name="delivery_details">Delivery Details</string>
     <string name="date">Date</string>
@@ -225,6 +227,7 @@
     <string name="alert_list">Alert LIST</string>
     <string name="visit_list">Visit LIST</string>
     <string name="vhnid">VhnId</string>
+
     <string name="thaimai_app_ism_t_available_on_this_device">Thaimai App ism\'t available on this device.</string>
     <string name="mother_migration_list">Mother Migration List</string>
     <string name="mother_s_list">Mother\'s List</string>
@@ -311,6 +314,6 @@
     <string name="current_visit">Current Visit :</string>
     <string name="profile_image">profile_image</string>
     <string name="mother_reports">Mother Reports</string>
-
+    <string name="forgot_password">Forgot Password?</string>
 
 </resources>

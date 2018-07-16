@@ -136,6 +136,7 @@ public class Apiconstants {
     public static final String DELIVERY_DETAILS = "mother/mDeleveryDetails";
 
     public static final String CHANGE_PASSWORD = "changePassword";
+    public static final String FORGOT_PASSWORD = "forgotPassword";
 
     public static final String UPDATE_EDIT_PROFILE = "vVHN_get_Profile_Updated";
 
