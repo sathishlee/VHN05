@@ -16,7 +16,9 @@ import android.widget.Toast;
 
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.R;
+import com.unicef.vhn.activity.ANViewReportsActivity;
 import com.unicef.vhn.activity.MothersPrimaryRecordsActivity;
+import com.unicef.vhn.activity.ViewReportsActivity;
 import com.unicef.vhn.adapter.ANVisitAdapter;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.AppConstants;
@@ -57,7 +59,7 @@ public class ANMotherVisitReportActivity extends AppCompatActivity implements Vi
         realm = RealmController.with(this).getRealm();
         setContentView(R.layout.activity_anvisit_report);
         Toast.makeText(getApplicationContext(), ANMotherVisitReportActivity.class.getSimpleName(), Toast.LENGTH_LONG).show();
-        Log.d(ANMotherVisitReportActivity.class.getSimpleName(), "Activity Created");
+        Log.d(ANMotherVisitReportActivity.class.getSimpleName(), "Activity Created123");
         initUI();
         onClickListner();
         showActionBar();
@@ -129,11 +131,10 @@ public class ANMotherVisitReportActivity extends AppCompatActivity implements Vi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_primary_report:
-                startActivity(new Intent(getApplicationContext(), MothersPrimaryRecordsActivity.class));
-                break;
-//            case  R.id.btn_view_report:
-//                  startActivity(new Intent(getApplicationContext(),ANViewReportsActivity.class));
-//                  break;
+                startActivity(new Intent(getApplicationContext(), MothersPrimaryRecordsActivity.class)); break;
+            case  R.id.btn_view_report:
+//                 startActivity(new Intent(getApplicationContext(),ANViewReportsActivity.class)); break;
+                 startActivity(new Intent(getApplicationContext(),ViewReportsActivity.class)); break;
         }
     }
 

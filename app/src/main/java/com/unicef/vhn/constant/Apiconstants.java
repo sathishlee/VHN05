@@ -28,6 +28,11 @@ public class Apiconstants {
     public static final String MOTHER_PHOTO_URL = "http://192.168.100.222/thaimaiapp/assets/mother_photos/";
 //        public static final String MOTHER_PHOTO_URL = "http://demo.satvatinfosol.com/thaimai/assets/mother_photos/";
 
+
+    //    public static final String VISIT_REPORTS_URL = "http://218.248.44.77/thaimaiapp/assets/mother_reports/";
+    public static final String VISIT_REPORTS_URL = "http://192.168.100.222/thaimaiapp/assets/mother_reports/";
+//    public static final String VISIT_REPORTS_URL = "http://demo.satvatinfosol.com/thaimai/assets/mother_reports/";
+
     public static final String APK_URL = "http://218.248.44.77/thaimaiapp/";
 
     public static final String LOCATION_UPDATE = "vhnLocationUpdate";
@@ -135,5 +140,8 @@ public class Apiconstants {
     public static final String UPDATE_EDIT_PROFILE = "vVHN_get_Profile_Updated";
 
     public static final String DOWNLOAD_APK = "AdmLogin/downloadapp/vhn.apk";
+
+    public static final String GET_ALL_VISIT_REPORTS = "mother/getAllUploadReports";
+
 
 }

@@ -224,10 +224,6 @@ boolean isEditProfile=false;
         actionBar.setTitle("Profile");
         actionBar.setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        String itemTitle = getIntent().getStringExtra(TITLE);
-        toolbar_layout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-        toolbar_layout.setTitle(itemTitle);
-        toolbar_layout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
     }
 
     private void onClickListner() {

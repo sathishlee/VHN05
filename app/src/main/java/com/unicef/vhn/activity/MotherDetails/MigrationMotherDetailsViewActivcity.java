@@ -135,7 +135,7 @@ TextView txt_no_internet;
         txt_mother_name = (TextView) findViewById(R.id.txt_username);
         txt_picme_id = (TextView) findViewById(R.id.txt_picme_id);
         txt_mage = (TextView) findViewById(R.id.txt_age);
-//        txt_risk_status = (TextView) findViewById(R.id.txt_risk);
+        txt_risk_status = (TextView) findViewById(R.id.txt_risk);
         txt_gest_week = (TextView) findViewById(R.id.txt_gest_week);
         txt_weight = (TextView) findViewById(R.id.txt_weight);
         txt_lmp_date = (TextView) findViewById(R.id.txt_lmp_date);

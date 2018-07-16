@@ -182,6 +182,9 @@
         <activity android:name=".activity.MotherList.PushNotificationListActivity"></activity>
         <activity android:name=".activity.visitMotherDetails.PNMotherVisitDetailsActivity"></activity>
 
+        <activity android:name=".activity.ViewReportsActivity"/>
+        <activity android:name=".activity.ImageFullViewActivity"/>
+
         <service android:name=".service.PlayAudio"  android:enabled="true"></service>
 
     </application>
