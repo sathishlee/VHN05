@@ -53,6 +53,7 @@ public class NativeMotherFragment extends Fragment implements MotherListsViews, 
 
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
+
     PreferenceData preferenceData;
     private List<MotherMigrationResponseModel.Vhn_migrated_mothers> vhn_migrated_mothers;
 
