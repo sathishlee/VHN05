@@ -60,6 +60,15 @@
         <item>Village 4</item>
         <item>Village 5</item>
     </string-array>
+
+    <string-array name="array_dose_list">
+        <item>All</item>
+        <item>Dose 1 (Day 45)</item>
+        <item>Dose 2 (Day 75)</item>
+        <item>Dose 3 (Day 105)</item>
+        <item>Dose 4 (Day 270)</item>
+    </string-array>
+
     <string-array name="array_pn_hbnc_visit">
 
         <item>--Select--</item>
@@ -315,5 +324,7 @@
     <string name="profile_image">profile_image</string>
     <string name="mother_reports">Mother Reports</string>
     <string name="forgot_password">Forgot Password?</string>
+    <string name="migrated_mothers">Migrated Mothers</string>
+    <string name="native_mother">Native Mother</string>
 
 </resources>

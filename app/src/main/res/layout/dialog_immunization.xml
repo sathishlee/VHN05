@@ -59,51 +59,31 @@
 
     </LinearLayout>
 
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="7dp"
+        android:orientation="vertical">
+
         <LinearLayout
-            android:orientation="horizontal"
-            android:padding="7dp"
-            android:weightSum="2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-                <CheckBox
-                    android:id="@+id/ch_high_risk"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="High Risk " />
-
-                <CheckBox
-                    android:id="@+id/ch_desc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Descending" />
+            <TextView
+                android:layout_margin="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dose Wise"
+                android:textSize="@dimen/text_label"
+                android:textAlignment="textStart"
+                android:textColor="@color/startblue"
+                android:textStyle="bold" />
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="7dp"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_margin="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Mothers"
-                    android:textSize="@dimen/text_label"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/startblue"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
 
 
         <LinearLayout
@@ -113,34 +93,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <Spinner
+                android:id="@+id/sp_dose_wise"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
-                <CheckBox
-                    android:id="@+id/ch_anmother"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="AN Mothers"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-                <CheckBox
-                    android:id="@+id/ch_pnmother"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="PN Mothers"/>
-
-            </LinearLayout>
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_secondary"
+                android:layout_weight="1"
+                android:drawSelectorOnTop="true"
+                android:entries="@array/array_dose_list"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>
 
         </LinearLayout>
-        </LinearLayout>
 
-    <LinearLayout
+    </LinearLayout>
+
+      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="7dp"
@@ -184,128 +152,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_trimester"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="7dp"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_margin="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Trimester"
-                android:textSize="@dimen/text_label"
-                android:textAlignment="textStart"
-                android:textColor="@color/startblue"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:padding="4dp"
-            android:weightSum="2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-           <!-- <Spinner
-                android:id="@+id/sp_trimester"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_primary"
-                android:textSize="@dimen/text_secondary"
-                android:layout_weight="1"
-                android:drawSelectorOnTop="true"
-                android:entries="@array/array_trimester"
-                style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>-->
-<RadioGroup
-    android:id="@+id/rg_trim"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    >
-    <RadioButton
-        android:id="@+id/rb_trim_all"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="All"
-        android:layout_weight="1"/>
-    <RadioButton
-        android:id="@+id/rb_trim_first"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1st"
-        android:layout_weight="1"/>
-    <RadioButton
-        android:id="@+id/rb_trim_second"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2nd"
-        android:layout_weight="1"/>
-    <RadioButton
-        android:id="@+id/rb_trim_thrid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="3rd"
-        android:layout_weight="1"/>
-
-</RadioGroup>
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <!--<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="7dp"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_margin="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PN Mother Day Wise"
-                android:textSize="@dimen/text_label"
-                android:textAlignment="textStart"
-                android:textColor="@color/startblue"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:padding="4dp"
-            android:weightSum="2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Spinner
-                android:id="@+id/sp_pn_mother_day_wise"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_primary"
-                android:textSize="@dimen/text_secondary"
-                android:layout_weight="1"
-                android:drawSelectorOnTop="true"
-                android:entries="@array/array_pn_hbnc_visit"
-                style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>
-
-        </LinearLayout>
-
-    </LinearLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"

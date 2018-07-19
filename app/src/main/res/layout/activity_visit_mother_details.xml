@@ -208,7 +208,7 @@
         android:padding="16.0dip"
         app:cardBackgroundColor="@android:color/white"
         app:cardElevation="2.0dip"
-        android:visibility="gone">
+        android:visibility="visible">
         <!--welcome-->
         <LinearLayout
             android:layout_width="match_parent"
@@ -501,7 +501,7 @@
         android:padding="16.0dip"
         app:cardBackgroundColor="@android:color/white"
         app:cardElevation="2.0dip"
-        android:visibility="gone">
+        android:visibility="visible">
         <!--welcome-->
         <LinearLayout
             android:layout_width="match_parent"

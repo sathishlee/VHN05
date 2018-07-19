@@ -582,7 +582,7 @@ public class home extends Fragment implements MotherListsViews {
 
                 Intent objIntent = new Intent(getActivity(), PlayAudio.class);
                 if(  getActivity().startService(objIntent) != null) {
-                    Toast.makeText(getActivity(), "Service is already running", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "Service is already running", Toast.LENGTH_SHORT).show();
                     getActivity().stopService(objIntent);
                 }
                 else {
@@ -601,7 +601,7 @@ public class home extends Fragment implements MotherListsViews {
                 Intent objIntent = new Intent(getActivity(), PlayAudio.class);
 
                 if(  getActivity().startService(objIntent) != null) {
-                    Toast.makeText(getActivity(), "Service is already running", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "Service is already running", Toast.LENGTH_SHORT).show();
 //                    getActivity().stopService(objIntent);
                 }
                 else {

@@ -97,7 +97,7 @@
 
         <include
             layout="@layout/card_verify_otp"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <include
             layout="@layout/card_vhn_profile"

@@ -13,6 +13,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -35,6 +36,7 @@ import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.NotificationPresenter;
 import com.unicef.vhn.activity.MotherList.AllMotherListActivity;
 import com.unicef.vhn.activity.MotherList.MigrationMotherListActivity;
+import com.unicef.vhn.adapter.ViewPagerAdapter;
 import com.unicef.vhn.application.MyApplication;
 import com.unicef.vhn.broadcastReceiver.ConnectivityReceiver;
 import com.unicef.vhn.constant.Apiconstants;
@@ -64,6 +66,8 @@ public class MainActivity extends AppCompatActivity
     //   public static TextView txt_no_internet;
     String strTodayVisitCount = "0";
     int mCartItemCount = 10;
+
+    ViewPager viewpager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +148,8 @@ public class MainActivity extends AppCompatActivity
         setupNavigationView();
 
     }
+
+
 
 
     @Override
@@ -267,6 +273,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(i);
         } else if (id == R.id.today_visit) {
             Intent i = new Intent(getApplicationContext(), VisitActivity.class);
+//            Intent i = new Intent(getApplicationContext(), VisitActivityNew.class);
             startActivity(i);
 
         } else if (id == R.id.migration_mother) {
@@ -307,6 +314,7 @@ public class MainActivity extends AppCompatActivity
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
 
         if (bottomNavigationView != null) {
+
 
             // Select first menu item by default and show Fragment accordingly.
             Menu menu = bottomNavigationView.getMenu();

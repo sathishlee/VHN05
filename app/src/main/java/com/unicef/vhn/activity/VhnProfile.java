@@ -45,9 +45,7 @@ import com.unicef.vhn.Presenter.ProfilePresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
-import com.unicef.vhn.realmDbModel.DashBoardRealmModel;
 import com.unicef.vhn.realmDbModel.VhnProfileRealmModel;
-import com.unicef.vhn.realmDbModel.VisitListRealmModel;
 import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.view.ProfileViews;
 

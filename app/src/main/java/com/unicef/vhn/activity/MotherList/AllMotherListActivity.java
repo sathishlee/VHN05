@@ -125,11 +125,13 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
             ll_filter_block.setVisibility(View.GONE);
         }
         else if (AppConstants.MOTHER_LIST_TITLE.equalsIgnoreCase("AN High Risk Mother List")) {
-            ll_filter_block.setVisibility(View.GONE);
+//            ll_filter_block.setVisibility(View.GONE);
+            ll_filter_block.setVisibility(View.VISIBLE);
         } else if (AppConstants.MOTHER_LIST_TITLE.equalsIgnoreCase("High Risk Mother List")) {
             ll_filter_block.setVisibility(View.GONE);
         } else if (AppConstants.MOTHER_LIST_TITLE.equalsIgnoreCase("PN/HBNC Mother List")) {
-            ll_filter_block.setVisibility(View.GONE);
+//            ll_filter_block.setVisibility(View.GONE);
+            ll_filter_block.setVisibility(View.VISIBLE);
         } else {
             ll_filter_block.setVisibility(View.VISIBLE);
 
@@ -182,6 +184,7 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
                 dialog.setContentView(R.layout.dialog_fragment);
                 CheckBox ch_highRisk, ch_desc, ch_anmother, ch_pnmother;
                 Spinner sp_village_wise, sp_trimester;
+                LinearLayout llTrimester;
                 RadioGroup rg_trim;
                 RadioButton rb_trim_all,rb_trim_first,rb_trim_second,rb_trim_thrid;
                 rg_trim = (RadioGroup) dialog.findViewById(R.id.rg_trim);
@@ -195,6 +198,13 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
                 rb_trim_first = (RadioButton) dialog.findViewById(R.id.rb_trim_first);
                 rb_trim_second = (RadioButton) dialog.findViewById(R.id.rb_trim_second);
                 rb_trim_thrid = (RadioButton) dialog.findViewById(R.id.rb_trim_thrid);
+                llTrimester = (LinearLayout) dialog.findViewById(R.id.ll_trimester);
+                if (AppConstants.MOTHER_LIST_TITLE.equalsIgnoreCase("PN/HBNC Mother List")){
+                    llTrimester.setVisibility(View.GONE);
+                }else{
+                    llTrimester.setVisibility(View.VISIBLE);
+
+                }
 //                rb_trim_all.setChecked(true);
 
                 if (preferenceData.getTermisterPosition()==0){
@@ -641,7 +651,15 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
                 }
             } else {
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-
+                RealmResults<PNMMotherListRealmModel> motherListAdapterRealmModel =null;
+                motherListAdapterRealmModel= realm.where(PNMMotherListRealmModel.class).findAll();
+                Log.e("Realm size ---->", motherListAdapterRealmModel.size() + "");
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.delete(PNMMotherListRealmModel.class);
+                    }
+                });
             }
         } catch (JSONException e) {
             e.printStackTrace();

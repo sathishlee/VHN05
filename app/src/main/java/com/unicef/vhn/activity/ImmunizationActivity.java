@@ -100,24 +100,22 @@ Realm realm;
             ImmunizationDeatilsListRealmModel model = immuniationListRealmModels.get(i);
 
             immunizationList.setMid(model.getMid());
-            Log.e("immuniationListRealm", model.getMName());
-            Log.e("immuniationListRealm", model.getMPicmeId());
-            Log.e("immuniationListRealm", model.getDeleveryDate());
-            Log.e("immuniationListRealm", model.getImmDoseId());
-            Log.e("immuniationListRealm", model.getImmId());
-            Log.e("immuniationListRealm", model.getImmCarePovidedDate());
-            Log.e("immuniationListRealm", model.getImmActualDate());
 
+            immunizationList.setMid(model.getMid());
             immunizationList.setMName(model.getMName());
             immunizationList.setMPicmeId(model.getMPicmeId());
+            immunizationList.setDeleveryDate(model.getDeleveryDate());
+            immunizationList.setImmDoseId(model.getImmDoseId());
             immunizationList.setImmDoseNumber(model.getImmDoseNumber());
-            immunizationList.setImmDueDate(model.getImmDueDate());
-            immunizationList.setImmCarePovidedDate(model.getImmCarePovidedDate());
+            immunizationList.setImmActualDate(model.getImmActualDate());
             immunizationList.setImmOpvStatus(model.getImmOpvStatus());
+            immunizationList.setImmPentanvalentStatus(model.getImmPentanvalentStatus());
             immunizationList.setImmRotaStatus(model.getImmRotaStatus());
             immunizationList.setImmIpvStatus(model.getImmIpvStatus());
-            immunizationList.setImmDoseId(model.getImmDoseId());
-            immunizationList.setDeleveryDate(model.getDeleveryDate());
+            immunizationList.setImmDueDate(model.getImmDueDate());
+            immunizationList.setImmCarePovidedDate(model.getImmCarePovidedDate());
+
+
 
             immunization_lists.add(immunizationList);
         }

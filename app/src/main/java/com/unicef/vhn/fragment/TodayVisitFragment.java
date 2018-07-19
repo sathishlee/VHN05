@@ -1,22 +1,23 @@
-package com.unicef.vhn.activity;
+package com.unicef.vhn.fragment;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.ActionBar;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,8 @@ import com.unicef.vhn.Interface.MakeCallInterface;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
+import com.unicef.vhn.activity.ANTT1MothersList;
+import com.unicef.vhn.activity.VisitActivity;
 import com.unicef.vhn.adapter.VisitListAdapter;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
@@ -42,13 +45,9 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-/**
- * Created by Suthishan on 20/1/2018.
- */
 
-public class VisitActivity extends AppCompatActivity implements MotherListsViews, MakeCallInterface {
-
-    String TAG =VisitActivity.class.getSimpleName();
+public class TodayVisitFragment extends Fragment implements MotherListsViews, MakeCallInterface {
+    String TAG = TodayVisitFragment.class.getSimpleName();
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
@@ -68,37 +67,44 @@ public class VisitActivity extends AppCompatActivity implements MotherListsViews
     VisitListRealmModel visitListRealmMode;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e(TAG,"VisitActivity created");
-        realm = RealmController.with(this).getRealm();
-        setContentView(R.layout.activity_layout_visit);
-        showActionBar();
-        initUI();
-        onClickListner();
+
     }
 
-    public void initUI() {
-        Log.e(TAG,"VisitActivity INIT");
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view =null;
+           view = inflater.inflate(R.layout.fragment_today_visit, container, false);
+//        showActionBar();
+        initUI(view);
+//        onClickListner();
 
-        checkNetwork = new CheckNetwork(this);
-        pDialog = new ProgressDialog(this);
+        realm = RealmController.with(getActivity()).getRealm();
+
+        return  view;
+    }
+
+    public void initUI(View view) {
+        checkNetwork = new CheckNetwork(getActivity());
+        pDialog = new ProgressDialog(getActivity());
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
-        preferenceData = new PreferenceData(this);
-        pnMotherListPresenter = new MotherListPresenter(VisitActivity.this, this);
+        preferenceData = new PreferenceData(getActivity());
+        pnMotherListPresenter = new MotherListPresenter(getActivity(), this);
         if (checkNetwork.isNetworkAvailable()) {
-            Log.e(TAG,Apiconstants.CURRENT_VISIT_LIST+" api called");
             pnMotherListPresenter.getPNMotherList(Apiconstants.CURRENT_VISIT_LIST, preferenceData.getVhnCode(), preferenceData.getVhnId());
         } else {
             isoffline = true;
         }
         mResult = new ArrayList<>();
-        mother_recycler_view = (RecyclerView) findViewById(R.id.mother_recycler_view);
-        txt_no_records_found = (TextView) findViewById(R.id.txt_no_records_found);
-        mAdapter = new VisitListAdapter(VisitActivity.this, mResult, this);
+        mother_recycler_view = (RecyclerView)view. findViewById(R.id.mother_recycler_view);
+        txt_no_records_found = (TextView) view.findViewById(R.id.txt_no_records_found);
+        mAdapter = new VisitListAdapter(getActivity(), mResult, this);
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(VisitActivity.this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mother_recycler_view.setLayoutManager(mLayoutManager);
         mother_recycler_view.setItemAnimator(new DefaultItemAnimator());
         mother_recycler_view.setAdapter(mAdapter);
@@ -106,31 +112,42 @@ public class VisitActivity extends AppCompatActivity implements MotherListsViews
         if (isoffline) {
 //            showOfflineData();
         } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage("Record Not Found");
             builder.create();
         }
     }
 
+    private void showOfflineData() {
+        realm.beginTransaction();
+        RealmResults<VisitListRealmModel> motherListAdapterRealmModel = realm.where(VisitListRealmModel.class).findAll();
 
-    private void onClickListner() {
+        for (int i = 0; i < motherListAdapterRealmModel.size(); i++) {
+            mresponseResult = new VisitListResponseModel.Vhn_current_visits();
+
+            VisitListRealmModel model = motherListAdapterRealmModel.get(i);
+
+
+            mresponseResult.setMid(model.getMid());
+            mresponseResult.setMName(model.getMName());
+            mresponseResult.setPicmeId(model.getPicmeId());
+            mresponseResult.setVhnId(model.getVhnId());
+            mresponseResult.setMMotherMobile(model.getMMotherMobile());
+            mresponseResult.setMtype(model.getMtype());
+            mresponseResult.setNextVisit(model.getNextVisit());
+            mresponseResult.setMLatitude(model.getMLatitude());
+            mresponseResult.setMLongitude(model.getMLongitude());
+            mResult.add(mresponseResult);
+            mAdapter.notifyDataSetChanged();
+        }
+        realm.commitTransaction();
+
 
     }
 
-    public void showActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Today Visits List");
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(this, MainActivity.class);
-        finish();
-        startActivity(intent);
-        return super.onOptionsItemSelected(item);
-    }
+
+
 
     @Override
     public void showProgress() {
@@ -156,26 +173,26 @@ public class VisitActivity extends AppCompatActivity implements MotherListsViews
             RealmResults<VisitListRealmModel> motherListAdapterRealmModel = realm.where(VisitListRealmModel.class).findAll();
             Log.e(TAG, "jsonArray size ---->" + jsonArray.length() + "");
             Log.e(TAG, "Realm size ---->" + motherListAdapterRealmModel.size() + "");
-            realm.executeTransaction(new Realm.Transaction() {
+            /*realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
                     realm.delete(VisitListRealmModel.class);
                 }
-            });
+            });*/
             if (status.equalsIgnoreCase("1")) {
 
-              if (jsonArray.length() != 0) {
-                Log.e(TAG, jsonArray.length() + " of json array not null");
+                if (jsonArray.length() != 0) {
+                    Log.e(TAG, jsonArray.length() + " of json array not null");
 
 //                mother_recycler_view.setVisibility(View.VISIBLE);
 //                txt_no_records_found.setVisibility(View.GONE);
-                realm.beginTransaction();
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    visitListRealmMode = realm.createObject(VisitListRealmModel.class);
+//                    realm.beginTransaction();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+//                        visitListRealmMode = realm.createObject(VisitListRealmModel.class);
 
-                    mresponseResult = new VisitListResponseModel.Vhn_current_visits();
+                        mresponseResult = new VisitListResponseModel.Vhn_current_visits();
 
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 
                     /*visitListRealmMode.setMid(jsonObject.getString("mid"));
@@ -188,28 +205,28 @@ public class VisitActivity extends AppCompatActivity implements MotherListsViews
                     visitListRealmMode.setMLatitude(jsonObject.getString("mLatitude"));
                     visitListRealmMode.setMLongitude(jsonObject.getString("mLongitude"));*/
 
-                    mresponseResult.setNoteId(jsonObject.getString("noteId"));
-                    mresponseResult.setMasterId(jsonObject.getString("masterId"));
-                    mresponseResult.setMid(jsonObject.getString("mid"));
-                    mresponseResult.setMName(jsonObject.getString("mName"));
-                    mresponseResult.setPicmeId(jsonObject.getString("picmeId"));
-                    mresponseResult.setVhnId(jsonObject.getString("vhnId"));
-                    mresponseResult.setMMotherMobile(jsonObject.getString("mMotherMobile"));
-                    mresponseResult.setMtype(jsonObject.getString("mtype"));
-                    mresponseResult.setNextVisit(jsonObject.getString("nextvisit"));
+                        mresponseResult.setNoteId(jsonObject.getString("noteId"));
+                        mresponseResult.setMasterId(jsonObject.getString("masterId"));
+                        mresponseResult.setMid(jsonObject.getString("mid"));
+                        mresponseResult.setMName(jsonObject.getString("mName"));
+                        mresponseResult.setPicmeId(jsonObject.getString("picmeId"));
+                        mresponseResult.setVhnId(jsonObject.getString("vhnId"));
+                        mresponseResult.setMMotherMobile(jsonObject.getString("mMotherMobile"));
+                        mresponseResult.setMtype(jsonObject.getString("mtype"));
+                        mresponseResult.setNextVisit(jsonObject.getString("nextvisit"));
 //                    mresponseResult.setMotherType(jsonObject.getString("motherType"));
 //                mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
 //                mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
-                    mResult.add(mresponseResult);
-                    mAdapter.notifyDataSetChanged();
+                        mResult.add(mresponseResult);
+                        mAdapter.notifyDataSetChanged();
+                    }
+//                    realm.commitTransaction();
                 }
-                realm.commitTransaction();
-            }
-        }else {
+            }else {
                 Log.e(TAG,jsonArray.length()+" of json array  null");
 
-                mother_recycler_view.setVisibility(View.GONE);
-                txt_no_records_found.setVisibility(View.VISIBLE);
+//                mother_recycler_view.setVisibility(View.GONE);
+//                txt_no_records_found.setVisibility(View.VISIBLE);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -218,41 +235,6 @@ public class VisitActivity extends AppCompatActivity implements MotherListsViews
     }
 
     private void setValuetoUI() {
-        Log.e(TAG, "setValuetoUI method called");
-
-        realm.beginTransaction();
-        RealmResults<VisitListRealmModel> motherListAdapterRealmModel = realm.where(VisitListRealmModel.class).findAll();
-        Log.e(TAG, "setValuetoUI motherList size"+motherListAdapterRealmModel.size());
-
-        for (int i = 0; i < motherListAdapterRealmModel.size(); i++) {
-            mresponseResult = new VisitListResponseModel.Vhn_current_visits();
-
-            VisitListRealmModel model = motherListAdapterRealmModel.get(i);
-
-            Log.e(TAG, "setValuetoUI motherList model.getMid()"+model.getMid());
-            Log.e(TAG, "setValuetoUI motherList model.getMName()"+model.getMName());
-            Log.e(TAG, "setValuetoUI motherList model.getPicmeId()"+model.getPicmeId());
-
-            mresponseResult.setNoteId(model.getNoteId());
-            mresponseResult.setMasterId(model.getMasterId());
-            mresponseResult.setMid(model.getMid());
-            mresponseResult.setMName(model.getMName());
-            mresponseResult.setPicmeId(model.getPicmeId());
-            mresponseResult.setVhnId(model.getVhnId());
-            mresponseResult.setMMotherMobile(model.getMMotherMobile());
-            mresponseResult.setMtype(model.getMtype());
-            mresponseResult.setNextVisit(model.getNextVisit());
-
-            mresponseResult.setMLatitude(model.getMLatitude());
-            mresponseResult.setMLongitude(model.getMLongitude());
-            mResult.add(mresponseResult);
-            mAdapter.notifyDataSetChanged();
-        }
-        realm.commitTransaction();
-    }
-
-
-    private void showOfflineData() {
 
         Log.e(VisitActivity.class.getSimpleName(), "ON LINE ");
 
@@ -272,6 +254,7 @@ public class VisitActivity extends AppCompatActivity implements MotherListsViews
             mresponseResult.setMMotherMobile(model.getMMotherMobile());
             mresponseResult.setMtype(model.getMtype());
             mresponseResult.setNextVisit(model.getNextVisit());
+
             mresponseResult.setMLatitude(model.getMLatitude());
             mresponseResult.setMLongitude(model.getMLongitude());
             mResult.add(mresponseResult);
@@ -299,7 +282,7 @@ public class VisitActivity extends AppCompatActivity implements MotherListsViews
     @Override
     public void makeCall(String mMotherMobile) {
         isDataUpdate = false;
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestCallPermission();
         } else {
@@ -308,24 +291,24 @@ public class VisitActivity extends AppCompatActivity implements MotherListsViews
     }
 
     private void requestCallPermission() {
+
         Log.i(ANTT1MothersList.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
                 Manifest.permission.CALL_PHONE)) {
-            Toast.makeText(getApplicationContext(), "Displaying Call permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Displaying Call permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();
         } else {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE},
                     MAKE_CALL_PERMISSION_REQUEST_CODE);
         }
+
     }
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case MAKE_CALL_PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0 && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    Toast.makeText(this, "You can call the number by clicking on the button", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "You can call the number by clicking on the button", Toast.LENGTH_SHORT).show();
                 }
                 return;
         }

@@ -57,9 +57,14 @@ public class AppConstants {
     public static String TERMISTER_POSITION="0";
     public static String VILLAGENAME_POSITION="0";
 
+    public static String VILLAGENAME_IMMUNIZATION="All";
+    public static String DOSE_NO_IMMUNIZATION="All";
+
 
 
     public static boolean IS_MOTHER_LIST=false;
+    public static boolean IS_TODAY_VIST_LIST=false;
+    public static String SELECTED_VISIT_NOTE_ID="";
 
 
 }

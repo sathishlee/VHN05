@@ -67,7 +67,7 @@ public class MotherListPresenter implements MotherListInteractor {
                 params.put("vhnCode", vhnCode);
                 params.put("vhnId", vhnId);
 
-                Log.d("params--->", params.toString());
+                Log.e("params--->", params.toString());
 
                 return params;
             }
@@ -170,20 +170,22 @@ public class MotherListPresenter implements MotherListInteractor {
 
         motherListsViews.showProgress();
         String url = Apiconstants.BASE_URL + Apiconstants.MOTHER_DETAILS_TRACKING;
-        Log.d("Log in check Url--->", url);
-        Log.d("vhnCode--->", vhnCode);
-        Log.d("vhnId--->", vhnId);
-        Log.d("mid--->", mid);
+        Log.e("Log in check Url--->", url);
+        Log.e("vhnCode--->", vhnCode);
+        Log.e("vhnId--->", vhnId);
+        Log.e("mid--->", mid);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("SelectedMother", "Success" + response);
+                Log.e("SelectedMother", "Success" + response);
                 motherListsViews.hideProgress();
                 motherListsViews.showLoginSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.e("SelectedMother", "error" + error.toString());
+
                 motherListsViews.hideProgress();
                 motherListsViews.showLoginSuccess(error.toString());
             }
@@ -236,18 +238,21 @@ public class MotherListPresenter implements MotherListInteractor {
     public void getSelectedPNMother(final String mid) {
         motherListsViews.showProgress();
         String url = Apiconstants.BASE_URL + Apiconstants.VHN_MOTHER_DELVERY_INFO;
-        Log.d("Log in check Url--->", url);
-        Log.d("mid--->", mid);
+//        String url = Apiconstants.BASE_URL + Apiconstants.DASH_BOARD_MOTHERS_AN_RECORDS;
+        Log.e("Log in check Url--->", url);
+        Log.e("mid--->", mid);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("SelectedMother", "Success" + response);
+                Log.e("SelectedMother", "Success" + response);
                 motherListsViews.hideProgress();
                 motherListsViews.showLoginSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.e("SelectedMother", "Success" + error);
+
                 motherListsViews.hideProgress();
                 motherListsViews.showLoginSuccess(error.toString());
             }
@@ -260,7 +265,7 @@ public class MotherListPresenter implements MotherListInteractor {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("mid", mid);
 
-                Log.d("params--->", params.toString());
+                Log.e("params--->", params.toString());
 
                 return params;
             }
@@ -430,19 +435,23 @@ public class MotherListPresenter implements MotherListInteractor {
 
         motherListsViews.showProgress();
         String url = Apiconstants.BASE_URL + Apiconstants.DASH_BOARD_MOTHERS_TREM_PRE_TREM_MOTHERS_LIST;
-        Log.d("Log in check Url--->", url);
-        Log.d("vhnCode--->", vhnCode);
-        Log.d("vhnId--->", vhnId);
+        Log.e("Log in check Url--->", url);
+        Log.e("vhnCode--->", vhnCode);
+        Log.e("vhnId--->", vhnId);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 motherListsViews.hideProgress();
+                Log.e("response --->", response);
+
                 motherListsViews.showLoginSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 motherListsViews.hideProgress();
+                Log.e("error --->", error.toString());
+
                 motherListsViews.showLoginSuccess(error.toString());
             }
         }) {
@@ -455,7 +464,7 @@ public class MotherListPresenter implements MotherListInteractor {
                 params.put("vhnCode", vhnCode);
                 params.put("vhnId", vhnId);
 
-                Log.d("params--->", params.toString());
+                Log.e("params--->", params.toString());
 
                 return params;
             }

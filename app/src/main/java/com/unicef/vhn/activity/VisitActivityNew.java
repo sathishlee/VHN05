@@ -13,12 +13,14 @@ import com.unicef.vhn.R;
 import com.unicef.vhn.adapter.ViewPagerAdapter;
 import com.unicef.vhn.fragment.MigratedMotherFragment;
 import com.unicef.vhn.fragment.NativeMotherFragment;
+import com.unicef.vhn.fragment.RemainderVisitFragment;
+import com.unicef.vhn.fragment.TodayVisitFragment;
 
 /**
  * Created by Suthishan on 20/1/2018.
  */
 
-public class MotherMigrationNew extends AppCompatActivity{
+public class VisitActivityNew extends AppCompatActivity{
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
@@ -26,26 +28,24 @@ public class MotherMigrationNew extends AppCompatActivity{
     ViewPagerAdapter adapter;
 
     private int[] tabIcons = {
-            R.drawable.native_mother,
-            R.drawable.migrated_mothers,
+            R.drawable.ic_eye,
+            R.drawable.notifications_bell,
     };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mother_migration_new);
+        setContentView(R.layout.activity_visit_new);
         initUi();
     }
 
     private void initUi() {
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("Mother Migration");
+        toolbar.setTitle("Mother Visits");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
-
         setupViewPager(viewPager);
         setupTabIcons();
         showActionBar();
@@ -53,8 +53,8 @@ public class MotherMigrationNew extends AppCompatActivity{
 
     private void setupViewPager(ViewPager viewPager) {
         adapter = new ViewPagerAdapter(getSupportFragmentManager(),this);
-        adapter.addFragment(new NativeMotherFragment(), "Native Mother",tabIcons[0]);
-        adapter.addFragment(new MigratedMotherFragment(), "Non Native Mother",tabIcons[1]);
+        adapter.addFragment(new TodayVisitFragment(), "Today Visits",tabIcons[0]);
+        adapter.addFragment(new RemainderVisitFragment(), "Remainder Visits",tabIcons[1]);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 

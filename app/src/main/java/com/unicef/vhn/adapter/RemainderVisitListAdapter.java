@@ -2,7 +2,9 @@ package com.unicef.vhn.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +12,13 @@ import android.widget.TextView;
 
 import com.unicef.vhn.Interface.MakeCallInterface;
 import com.unicef.vhn.R;
+import com.unicef.vhn.activity.AlertActivity;
 import com.unicef.vhn.activity.MotherDetails.ANMotherDetailsViewActivcity;
 import com.unicef.vhn.activity.MotherDetails.PNMotherDetailsViewActivity;
 import com.unicef.vhn.activity.MotherLocationActivity;
 import com.unicef.vhn.constant.AppConstants;
+import com.unicef.vhn.fragment.RemainderVisitFragment;
+import com.unicef.vhn.model.RemainderVisitResponseModel;
 import com.unicef.vhn.model.VisitListResponseModel;
 
 import java.util.List;
@@ -22,20 +27,29 @@ import java.util.List;
  * Created by sathish on 3/31/2018.
  */
 
-public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.ViewHolder> {
-    String TAG= VisitListAdapter.class.getSimpleName();
-    private List<VisitListResponseModel.Vhn_current_visits> mResult;
+public class RemainderVisitListAdapter extends RecyclerView.Adapter<RemainderVisitListAdapter.ViewHolder> {
+    String TAG= RemainderVisitListAdapter.class.getSimpleName();
+    private List< RemainderVisitResponseModel.Remaindermothers> mResult;
     Activity applicationContext;
     String type;
     MakeCallInterface makeCallInterface;
 
     String strMid;
 
-    public VisitListAdapter(Activity applicationContext, List<VisitListResponseModel.Vhn_current_visits> mResult, MakeCallInterface makeCallInterface) {
-        this.applicationContext = applicationContext;
+    public RemainderVisitListAdapter(Activity alertActivity, List<RemainderVisitResponseModel.Remaindermothers> mResult, AlertActivity makeCallInterface) {
+        this.applicationContext = alertActivity;
         this.mResult = mResult;
+        Log.e(RemainderVisitListAdapter.class.getSimpleName(),"mResult size"+mResult);
         this.makeCallInterface = makeCallInterface;
     }
+
+
+   /* public RemainderVisitListAdapter(FragmentActivity activity, List<VisitListResponseModel.Vhn_current_visits> mResult, RemainderVisitFragment makeCallInterface) {
+        this.applicationContext = applicationContext;
+//        this.mResult = mResult;
+        Log.e(RemainderVisitListAdapter.class.getSimpleName(),"mResult size"+mResult);
+        this.makeCallInterface = makeCallInterface;
+    }*/
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -45,11 +59,14 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final VisitListResponseModel.Vhn_current_visits current_visits = mResult.get(position);
+        final  RemainderVisitResponseModel.Remaindermothers current_visits = mResult.get(position);
+        Log.e(RemainderVisitListAdapter.class.getSimpleName(),"getMName"+current_visits.getMName());
+        Log.e(RemainderVisitListAdapter.class.getSimpleName(),"getPicmeId"+current_visits.getPicmeId());
+
         holder.txt_username.setText(current_visits.getMName());
         holder.txt_picme_id.setText(current_visits.getPicmeId());
         holder.txt_list_type.setText(current_visits.getMtype());
-        holder.txt_current_visit.setText(current_visits.getNextVisit());
+        holder.txt_current_visit.setText(current_visits.getDays());
 
         if (current_visits.getMMotherMobile().equalsIgnoreCase("null")||current_visits.getMMotherMobile().length()<10){
             holder.txt_call.setVisibility(View.GONE);

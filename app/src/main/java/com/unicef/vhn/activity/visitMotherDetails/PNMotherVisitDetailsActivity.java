@@ -94,7 +94,8 @@ public class PNMotherVisitDetailsActivity extends AppCompatActivity implements V
         pDialog.setMessage("Please Wait ...");
         preferenceData =new PreferenceData(this);
         pnMotherListPresenter = new MotherListPresenter(PNMotherVisitDetailsActivity.this,this);
-        pnMotherListPresenter.getSelectedPNMother(AppConstants.SELECTED_MID);
+        pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(),preferenceData.getVhnId(),AppConstants.SELECTED_MID);
+
 
         txt_username = (TextView) findViewById(R.id.txt_username);
         txt_picme_id = (TextView) findViewById(R.id.txt_picme_id);
@@ -106,7 +107,7 @@ public class PNMotherVisitDetailsActivity extends AppCompatActivity implements V
         txt_maturity = (TextView) findViewById(R.id.txt_maturity);
         txt_next_visit = (TextView) findViewById(R.id.txt_next_visit);
         txt_husb_name = (TextView) findViewById(R.id.txt_husb_name);
-        txt_husb_name = (TextView) findViewById(R.id.txt_husb_name);
+
         txt_relationship = (TextView) findViewById(R.id.txt_relationship);
         txt_aww_relationship = (TextView) findViewById(R.id.txt_aww_relationship);
         img_call_1 = (ImageView) findViewById(R.id.img_call_1);
@@ -123,8 +124,6 @@ public class PNMotherVisitDetailsActivity extends AppCompatActivity implements V
         txt_birth_weight = (TextView) findViewById(R.id.txt_birth_weight);
         txt_type_delivery = (TextView) findViewById(R.id.txt_type_delivery);
         txt_pn_next_visit = (TextView) findViewById(R.id.txt_pn_next_visit);
-
-
 
     }
 
@@ -216,63 +215,20 @@ public class PNMotherVisitDetailsActivity extends AppCompatActivity implements V
 
     @Override
     public void showLoginSuccess(String response) {
-        Log.d(PNMotherVisitDetailsActivity.class.getSimpleName(),"Response success"+response);
-//        AppConstants.SELECTED_MID="0";
+        Log.e(PNMotherVisitDetailsActivity.class.getSimpleName(),"Response success"+response);
+
         try {
             JSONObject mJsnobject = new JSONObject(response);
             String status = mJsnobject.getString("status");
             String message = mJsnobject.getString("message");
             if (status.equalsIgnoreCase("1")){
-                ll_pn_mother_details.setVisibility(View.VISIBLE);
-                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
-                JSONObject mJsnobject_tracking = mJsnobject.getJSONObject("delveryInfo");
-                txt_username.setText(mJsnobject_tracking.getString("mName"));
-                txt_picme_id.setText(mJsnobject_tracking.getString("dpicmeId"));
-                strMobileNo = mJsnobject_tracking.getString("mMotherMobile");
-                strAltMobileNo = mJsnobject_tracking.getString("mHusbandMobile");
-                txt_mage.setText(mJsnobject_tracking.getString("mAge"));
-                txt_lmp_date.setText(mJsnobject_tracking.getString("mLMP"));
-                txt_edd_date.setText(mJsnobject_tracking.getString("mEDD"));
-                txt_delivery_date.setText(mJsnobject_tracking.getString("ddatetime"));
-                txt_birth_weight.setText(mJsnobject_tracking.getString("dBirthWeight"));
-                txt_type_delivery.setText(mJsnobject_tracking.getString("dBirthDetails"));
-                if(mJsnobject_tracking.getString("NextVisit").equalsIgnoreCase("Visits Closed")){
-                    txt_pn_next_visit.setText(mJsnobject_tracking.getString("PN"+"NextVisit"));
-                }else {
-                    txt_pn_next_visit.setText(mJsnobject_tracking.getString("NextVisit"));
-                }
+                JSONObject jsnobject =mJsnobject.getJSONObject("tracking");
 
-                txt_risk.setText(mJsnobject_tracking.getString("mRiskStatus"));
-                txt_date_of_delivery.setText(mJsnobject_tracking.getString("ddatetime"));
-                txt_type_of_delivery.setText(mJsnobject_tracking.getString("dtime"));
-                txt_weight.setText(mJsnobject_tracking.getString("mWeight"));
-                txt_maturity.setText(mJsnobject_tracking.getString("meaturityDate")+"Weeks");
-                if(mJsnobject_tracking.getString("NextVisit").equalsIgnoreCase("Visits Closed")){
-                    txt_next_visit.setText(mJsnobject_tracking.getString("AN"+"NextVisit"));
-                }
-                strLatitude = mJsnobject_tracking.getString("mLatitude");
-                strLongitude =mJsnobject_tracking.getString("mLongitude");
-                txt_mother_name_call.setText(mJsnobject_tracking.getString("mName"));
-
-                str_mPhoto = mJsnobject_tracking.getString("mPhoto");
-                Log.d("mphoto-->", Apiconstants.MOTHER_PHOTO_URL+str_mPhoto);
-
-                Picasso.with(context)
-                        .load(Apiconstants.MOTHER_PHOTO_URL+str_mPhoto)
-                        .placeholder(R.drawable.girl)
-                        .fit()
-                        .centerCrop()
-                        .memoryPolicy(MemoryPolicy.NO_CACHE)
-                        .networkPolicy(NetworkPolicy.NO_CACHE)
-                        .transform(new RoundedTransformation(90,4))
-                        .error(R.drawable.girl)
-                        .into(cardview_image);
-            }
-            else{
-                ll_pn_mother_details.setVisibility(View.GONE);
-
-                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
-finish();
+               /* txt_username, txt_picme_id, txt_mage, txt_risk,
+                        txt_date_of_delivery, txt_weight, txt_type_of_delivery, txt_maturity, txt_next_visit,
+                        txt_husb_name, txt_aww_name, txt_relationship, txt_aww_relationship, txt_mother_name_call,
+                        txt_gest_week, txt_lmp_date, txt_edd_date, txt_delivery_date, txt_birth_weight, txt_type_delivery
+                        , txt_pn_next_visit;*/
             }
         }catch (JSONException e) {
             e.printStackTrace();

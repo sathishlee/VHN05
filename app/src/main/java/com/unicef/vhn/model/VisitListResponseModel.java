@@ -37,6 +37,7 @@ public class VisitListResponseModel {
     }
 
     public static class Vhn_current_visits {
+
         private String mid;
         private String deleveryDate;
         private String mMotherMobile;
@@ -50,6 +51,37 @@ public class VisitListResponseModel {
         private String vhnId;
         private String nextVisit;
         private String motherType;
+        private String mtype;
+
+        private String noteId;
+        private String masterId;
+        private String month;
+
+
+        public String getNoteId() {
+            return noteId;
+        }
+
+        public void setNoteId(String noteId) {
+            this.noteId = noteId;
+        }
+
+        public String getMasterId() {
+            return masterId;
+        }
+
+        public void setMasterId(String masterId) {
+            this.masterId = masterId;
+        }
+
+        public String getMonth() {
+            return month;
+        }
+
+        public void setMonth(String month) {
+            this.month = month;
+        }
+
 
         public String getMtype() {
             return mtype;
@@ -59,7 +91,7 @@ public class VisitListResponseModel {
             this.mtype = mtype;
         }
 
-        private String mtype;
+
 
         public String getMid() {
             return mid;

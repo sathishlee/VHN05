@@ -33,10 +33,10 @@ public class ImmunizationPresenter  implements ImmunizationInteractor{
 
         motherListsViews.showProgress();
         String url = Apiconstants.BASE_URL + Apiconstants.IMMUNIZATION_LIST;
-        Log.d("Log in check Url--->", url);
-        Log.d("vhnId--->", vhnId);
-        Log.d("VhnCode--->", vhnCode);
-        Log.d("id--->", id);
+        Log.e("Log in check Url--->", url);
+        Log.e("vhnId--->", vhnId);
+        Log.e("VhnCode--->", vhnCode);
+        Log.e("id--->", id);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -62,7 +62,7 @@ public class ImmunizationPresenter  implements ImmunizationInteractor{
                 params.put("vhnId", vhnId);
                 params.put("id", id);
 
-                Log.d("params--->", params.toString());
+                Log.e("params--->", params.toString());
 
                 return params;
             }
