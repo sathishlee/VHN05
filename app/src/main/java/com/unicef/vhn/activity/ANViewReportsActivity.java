@@ -112,9 +112,10 @@ public class ANViewReportsActivity extends AppCompatActivity implements VisitANM
             case R.id.btn_primary_report:
                 startActivity(new Intent(getApplicationContext(),MothersPrimaryRecordsActivity.class));
                 break;
-//            case  R.id.btn_view_report:
-//                  startActivity(new Intent(getApplicationContext(),ANViewReportsActivity.class));
-//                  break;
+            case  R.id.btn_view_report:
+            Toast.makeText(getApplicationContext(),"view report imaage xyz",Toast.LENGTH_LONG).show();
+                  startActivity(new Intent(getApplicationContext(),ViewReportsActivity.class));
+                  break;
         }
     }
 

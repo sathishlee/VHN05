@@ -17,11 +17,10 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-
-
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <meta-data
         android:name="com.google.android.gms.version"
@@ -44,7 +43,7 @@
         <activity
             android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <!--
             <activity
             android:name=".model.ViewRecordActivity"
@@ -54,8 +53,8 @@
             android:name=".activity.VhnProfile"
             android:theme="@style/AppTheme1" />
         <activity
-            android:name=".activity.ImmunizationActivity"
-            android:theme="@style/AppTheme" />
+            android:name=".activity.ImmunizationActivity" />
+        <!--   android:theme="@style/AppTheme"-->
         <activity
             android:name=".activity.PNMotherDetailsActivity"
             android:theme="@style/AppTheme" />
@@ -179,10 +178,21 @@
         <activity android:name=".activity.MotherDetails.MigrationMotherDetailsViewActivcity" />
         <activity android:name=".activity.MotherVisitReport.ANMotherVisitReportActivity" />
         <activity android:name=".activity.MotherVisitReport.PNMotherVisitReportActivity" />
-        <activity android:name=".activity.MotherList.PushNotificationListActivity"></activity>
-
+        <activity android:name=".activity.MotherList.PushNotificationListActivity" />
+        <activity android:name=".activity.visitMotherDetails.PNMotherVisitDetailsActivity" />
+        <activity android:name=".activity.ViewReportsActivity" />
+        <activity android:name=".activity.ImageFullViewActivity" />
         <activity android:name=".activity.MotherMigrationNew"
             android:theme="@style/AppTheme1"></activity>
+
+        <activity android:name=".activity.VisitActivityNew"
+            android:theme="@style/AppTheme1"></activity>
+
+        <service
+            android:name=".service.PlayAudio"
+            android:enabled="true" />
+
+        <activity android:name=".activity.ForgetPasswordActivity"></activity>
     </application>
 
 </manifest>

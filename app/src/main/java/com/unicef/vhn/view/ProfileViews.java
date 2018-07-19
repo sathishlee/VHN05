@@ -17,4 +17,8 @@ public interface ProfileViews {
     void successUploadPhoto(String response);
 
     void errorUploadPhoto(String response);
+
+    void successUploadProfile(String response);
+
+    void errorUploadProfile(String response);
 }

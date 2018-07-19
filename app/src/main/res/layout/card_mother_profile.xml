@@ -313,12 +313,14 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/ll_low_risk"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/risk_background">
 
                     <TextView
-                        android:id="@+id/txt_risk_status"
+                        android:id="@+id/txt_low_risk_status"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="5dp"
@@ -329,7 +331,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/txt_risk"
+                        android:id="@+id/txt_low_risk"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="5dp"
@@ -337,6 +339,35 @@
                         android:textSize="@dimen/text_secondary"
                         android:layout_gravity="end"
                         android:textColor="#219653"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_high_risk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/risk_high_back">
+
+                    <TextView
+                        android:id="@+id/txt_high_risk_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="5dp"
+                        android:drawableStart="@drawable/risk_red"
+                        android:layout_gravity="end"
+                        android:textSize="@dimen/text_secondary"
+                        android:textColor="@color/red"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txt_highrisk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="5dp"
+                        android:text="@string/high_risk"
+                        android:textSize="@dimen/text_secondary"
+                        android:layout_gravity="end"
+                        android:textColor="@color/red"
                         android:textStyle="bold" />
 
                 </LinearLayout>

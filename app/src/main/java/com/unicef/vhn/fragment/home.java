@@ -4,10 +4,12 @@ package com.unicef.vhn.fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,6 +25,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.squareup.picasso.MemoryPolicy;
@@ -44,6 +47,7 @@ import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.realmDbModel.DashBoardRealmModel;
+import com.unicef.vhn.service.PlayAudio;
 import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.utiltiy.RoundedTransformation;
 import com.unicef.vhn.view.MotherListsViews;
@@ -72,12 +76,13 @@ public class home extends Fragment implements MotherListsViews {
     CheckNetwork checkNetwork;
     CardView profile;
     String str_mPhoto;
-    Ringtone ringtone;
+//    Ringtone ringtone;
     Context context;
     boolean isoffline = false;
 //    TextView txt_no_internet;
     Realm realm;
 
+    MediaPlayer mp;
     public static home newInstance() {
         home fragment = new home();
         return fragment;
@@ -143,7 +148,12 @@ public class home extends Fragment implements MotherListsViews {
                 AppConstants.GET_MOTHER_LIST_TYPE = "sos_count";
                 AppConstants.MOTHER_LIST_TITLE = "SOS List";
 //                ringtone.stop();
-                startActivity(new Intent(getActivity(), SosAlertListActivity.class));
+//                if (!txt_sos_count.getText().toString().equalsIgnoreCase("0")) {
+                    startActivity(new Intent(getActivity(), SosAlertListActivity.class));
+//                }
+//                else{
+//                    Toast.makeText(getContext(),"SOS Alert not found.",Toast.LENGTH_LONG).show();
+//                }
 
             }
         });
@@ -260,6 +270,9 @@ public class home extends Fragment implements MotherListsViews {
 
     private void initUI(View view) {
 
+
+        mp = MediaPlayer.create(getActivity(), R.raw.ambulance_alert);
+        mp.pause();
         checkNetwork = new CheckNetwork(getActivity());
 
         pDialog = new ProgressDialog(getActivity());
@@ -335,11 +348,16 @@ public class home extends Fragment implements MotherListsViews {
             txt_infants_count.setText(model.getInfantCount() + "");
             txt_sos_count.setText(model.getSosCount() + "");
             if (model.getSosCount() == 0) {
-
+//                mp.stop();
+                Intent objIntent = new Intent(getActivity(), PlayAudio.class);
+                getActivity().stopService(objIntent);
             } else {
                 mFlipper.startFlipping();
                 mFlipper.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
                 mFlipper.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
+//                mp.start();
+                Intent objIntent = new Intent(getActivity(), PlayAudio.class);
+                getActivity().startService(objIntent);
             }
             txt_antt_1_due.setText(model.getANTT1() + "");
             txt_antt_2_due.setText(model.getANTT2() + "");
@@ -406,19 +424,15 @@ public class home extends Fragment implements MotherListsViews {
                 txt_infants_count.setText(mJsnobject.getString("infantCount"));
                 txt_sos_count.setText(mJsnobject.getString("sosCount"));
 
-                Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-                ringtone = RingtoneManager.getRingtone(getActivity(), uri);
                 if (mJsnobject.getString("sosCount").equalsIgnoreCase("0")) {
+//                    ringtone.stop();
+                }
+                 else{
+//                    mFlipper.startFlipping();
+//                    mFlipper.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+//                    mFlipper.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
+//                    ringtone.play();
 
-                    ringtone.stop();
-                } else if (ringtone.isPlaying())
-                {
-                    ringtone.stop();
-                } else{
-                    mFlipper.startFlipping();
-                    mFlipper.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
-                    mFlipper.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
-                    ringtone.play();
                 }
 
                 txt_antt_1_due.setText(mJsnobject.getString("ANTT1"));
@@ -519,6 +533,12 @@ public class home extends Fragment implements MotherListsViews {
         setValueToUI();
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+
+    }
 
     @Override
     public void showLoginError(String response) {
@@ -554,16 +574,40 @@ public class home extends Fragment implements MotherListsViews {
             txt_high_risk_count.setText(model.getRiskMothersCount() + "");
             txt_infants_count.setText(model.getInfantCount() + "");
             txt_sos_count.setText(model.getSosCount() + "");
-            Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-            Ringtone ringtone = RingtoneManager.getRingtone(getActivity(), uri);
+//            Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+//            Ringtone ringtone = RingtoneManager.getRingtone(getActivity(), uri);
             if (model.getSosCount() == 0) {
-                ringtone.stop();
-            } else {
+//                ringtone.stop();
+//                mp.stop();
+
+                Intent objIntent = new Intent(getActivity(), PlayAudio.class);
+                if(  getActivity().startService(objIntent) != null) {
+//                    Toast.makeText(getActivity(), "Service is already running", Toast.LENGTH_SHORT).show();
+                    getActivity().stopService(objIntent);
+                }
+                else {
+                    Toast.makeText(getActivity(), "There is no service running, starting service..", Toast.LENGTH_SHORT).show();
+                }
+//                getActivity().stopService(objIntent);
+            }
+
+            else {
                 mFlipper.startFlipping();
                 mFlipper.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
                 mFlipper.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
+//                mp = MediaPlayer.create(getActivity(), R.raw.ambulance_alert);
+//                mp.start();
+//                ringtone.play();
+                Intent objIntent = new Intent(getActivity(), PlayAudio.class);
 
-                ringtone.play();
+                if(  getActivity().startService(objIntent) != null) {
+//                    Toast.makeText(getActivity(), "Service is already running", Toast.LENGTH_SHORT).show();
+//                    getActivity().stopService(objIntent);
+                }
+                else {
+                    getActivity().startService(objIntent);
+                    Toast.makeText(getActivity(), "There is no service running, starting service..", Toast.LENGTH_SHORT).show();
+                }
             }
             txt_antt_1_due.setText(model.getANTT1() + "");
             txt_antt_2_due.setText(model.getANTT2() + "");
@@ -600,6 +644,18 @@ public class home extends Fragment implements MotherListsViews {
         realm.commitTransaction();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Intent objIntent = new Intent(getActivity(), PlayAudio.class);
+        if(  getActivity().startService(objIntent) != null) {
+            Toast.makeText(getActivity(), "Service is already running", Toast.LENGTH_SHORT).show();
+            getActivity().stopService(objIntent);
+        }
+        else {
+            Toast.makeText(getActivity(), "There is no service running, starting service..", Toast.LENGTH_SHORT).show();
+        }
+    }
     /*  @Override
       public void onDestroy() {
           super.onDestroy();

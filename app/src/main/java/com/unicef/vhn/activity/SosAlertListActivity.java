@@ -119,8 +119,6 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
         mother_recycler_view.setAdapter(mAdapter);
 
         if (isoffline) {
-
-
             showOfflineData();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -147,26 +145,30 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
 
         try {
             JSONObject mJsnobject = new JSONObject(response);
+            String status = mJsnobject.getString("status");
+            if (status.equalsIgnoreCase("1")) {
             JSONArray jsonArray = mJsnobject.getJSONArray("vhnAN_Mothers_List");
 
-            RealmResults<SosListRealmModel> motherListAdapterRealmModel = realm.where(SosListRealmModel.class).findAll();
-            Log.e("Realm size ---->", motherListAdapterRealmModel.size() + "");
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    realm.delete(SosListRealmModel.class);
-                }
-            });
-            if (jsonArray.length()!=0) {
-                mother_recycler_view .setVisibility(View.VISIBLE);
-                txt_no_records_found  .setVisibility(View.GONE);
-                realm.beginTransaction();
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    sosListRealmModel = realm.createObject(SosListRealmModel.class);  //this will create a UserInfoRealmModel object which will be inserted in database
 
-                    mresponseResult = new SOSListResponse.VhnAN_Mothers_List();
+    RealmResults<SosListRealmModel> motherListAdapterRealmModel = realm.where(SosListRealmModel.class).findAll();
+    Log.e("Realm size ---->", motherListAdapterRealmModel.size() + "");
+    realm.executeTransaction(new Realm.Transaction() {
+        @Override
+        public void execute(Realm realm) {
+            realm.delete(SosListRealmModel.class);
+        }
+    });
 
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+    if (jsonArray.length() != 0) {
+        mother_recycler_view.setVisibility(View.VISIBLE);
+        txt_no_records_found.setVisibility(View.GONE);
+        realm.beginTransaction();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            sosListRealmModel = realm.createObject(SosListRealmModel.class);  //this will create a UserInfoRealmModel object which will be inserted in database
+
+            mresponseResult = new SOSListResponse.VhnAN_Mothers_List();
+
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                     /*mresponseResult.setMid(jsonObject.getString("mid"));
                     mresponseResult.setMName(jsonObject.getString("mName"));
@@ -185,35 +187,41 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
                     mResult.add(mresponseResult);
                     mAdapter.notifyDataSetChanged();*/
 
-                    sosListRealmModel.setMid(jsonObject.getString("mid"));
-                    sosListRealmModel.setMName(jsonObject.getString("mName"));
-                    sosListRealmModel.setMPicmeId(jsonObject.getString("mPicmeId"));
-                    sosListRealmModel.setSosId(jsonObject.getString("sosId"));
-                    sosListRealmModel.setMRiskStatus(jsonObject.getString("mRiskStatus"));
-                    sosListRealmModel.setSosStatus(jsonObject.getString("sosStatus"));
-                    sosListRealmModel.setVhnId(jsonObject.getString("vhnId"));
-                    sosListRealmModel.setMotherType(jsonObject.getString("motherType"));
+            sosListRealmModel.setMid(jsonObject.getString("mid"));
+            sosListRealmModel.setMName(jsonObject.getString("mName"));
+            sosListRealmModel.setMPicmeId(jsonObject.getString("mPicmeId"));
+            sosListRealmModel.setSosId(jsonObject.getString("sosId"));
+            sosListRealmModel.setMRiskStatus(jsonObject.getString("mRiskStatus"));
+            sosListRealmModel.setSosStatus(jsonObject.getString("sosStatus"));
+            sosListRealmModel.setVhnId(jsonObject.getString("vhnId"));
+            sosListRealmModel.setMotherType(jsonObject.getString("motherType"));
 
-                    sosListRealmModel.setmMotherMobile(jsonObject.getString("mMotherMobile"));
-                    sosListRealmModel.setMotherType(jsonObject.getString("motherType"));
-                    sosListRealmModel.setMLatitude(jsonObject.getString("mLatitude"));
-                    sosListRealmModel.setMLongitude(jsonObject.getString("mLongitude"));
-                    sosListRealmModel.setmPhoto(jsonObject.getString("mPhoto"));
+            sosListRealmModel.setmMotherMobile(jsonObject.getString("mMotherMobile"));
+            sosListRealmModel.setMotherType(jsonObject.getString("motherType"));
+            sosListRealmModel.setMLatitude(jsonObject.getString("mLatitude"));
+            sosListRealmModel.setMLongitude(jsonObject.getString("mLongitude"));
+            sosListRealmModel.setmPhoto(jsonObject.getString("mPhoto"));
 
-                }
-                realm.commitTransaction();
-            }
-            else{
-          /*      mother_recycler_view .setVisibility(View.GONE);
-                txt_no_records_found  .setVisibility(View.VISIBLE);*/
-            }
+        }
+        realm.commitTransaction();
+    } else {
+        mother_recycler_view.setVisibility(View.GONE);
+        txt_no_records_found.setVisibility(View.VISIBLE);
+    }
+}else{
+   /* realm.executeTransaction(new Realm.Transaction() {
+        @Override
+        public void execute(Realm realm) {
+            realm.delete(SosListRealmModel.class);
+        }
+    });*/
+    mother_recycler_view.setVisibility(View.GONE);
+    txt_no_records_found.setVisibility(View.VISIBLE);
+}
         }catch (JSONException e) {
             e.printStackTrace();
         }
         setValueToUI();
-
-
-
     }
 
     private void setValueToUI() {
@@ -263,8 +271,8 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
         RealmResults<SosListRealmModel> antt1listRealmResult = realm.where(SosListRealmModel.class).findAll();
         Log.e("ANTT1 list size ->", antt1listRealmResult.size() + "");
         if (antt1listRealmResult.size()==0){
-            mother_recycler_view .setVisibility(View.VISIBLE);
-            txt_no_records_found  .setVisibility(View.GONE);
+            mother_recycler_view .setVisibility(View.GONE);
+            txt_no_records_found  .setVisibility(View.VISIBLE);
         }
         for (int i = 0; i < antt1listRealmResult.size(); i++) {
             mresponseResult = new SOSListResponse.VhnAN_Mothers_List();

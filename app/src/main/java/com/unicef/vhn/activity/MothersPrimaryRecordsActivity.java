@@ -50,7 +50,7 @@ public class MothersPrimaryRecordsActivity extends AppCompatActivity implements 
     boolean isoffline = false;
     Realm realm;
     PrimaryMotherDetailsRealmModel primaryMotherDetailsRealmModel;
-TextView txt_no_internet;
+TextView txt_no_internet,txt_no_records_found;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +88,7 @@ TextView txt_no_internet;
         }
         motherPrimaryRegisterPresenter.getAllMotherPrimaryRegistration(AppConstants.MOTHER_PICME_ID);
         txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
+        txt_no_records_found = (TextView) findViewById(R.id.txt_no_records_found);
         txt_no_internet.setVisibility(View.GONE);
         txt_name = (TextView) findViewById(R.id.txt_name);
         txt_mother_age = (TextView) findViewById(R.id.txt_mother_age);

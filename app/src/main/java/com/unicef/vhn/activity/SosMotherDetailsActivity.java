@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +37,9 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
 
-    Button btn_view_location, btn_view_report,btn_alert_close;
+    Button btn_view_location, btn_view_report, btn_alert_close;
+    LinearLayout viewHighRisk, viewLowRisk;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +54,7 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
         txt_username.setText(strMotherName);
         txt_picme_id.setText(strPicmeId);
         txt_age.setText(strAge);
-        txt_risk.setText(strRisk);
+//        txt_risk.setText(strRisk);
         txt_message.setText(strMessage);
     }
 
@@ -83,10 +86,12 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
         preferenceData = new PreferenceData(this);
         pnMotherListPresenter = new MotherListPresenter(SosMotherDetailsActivity.this, this);
 
+        viewHighRisk = (LinearLayout) findViewById(R.id.ll_high_an_risk_status);
+        viewLowRisk = (LinearLayout) findViewById(R.id.ll_low_an_risk_status);
         txt_username = (TextView) findViewById(R.id.txt_username);
         txt_picme_id = (TextView) findViewById(R.id.txt_picme_id);
         txt_age = (TextView) findViewById(R.id.txt_age);
-        txt_risk = (TextView) findViewById(R.id.txt_risk);
+//        txt_risk = (TextView) findViewById(R.id.txt_risk);
         txt_message = (TextView) findViewById(R.id.txt_message);
         img_call_1 = (ImageView) findViewById(R.id.img_call_1);
         img_call_2 = (ImageView) findViewById(R.id.img_call_2);
@@ -125,8 +130,15 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
                 Log.d(SosMotherDetailsActivity.class.getSimpleName(), "strAltMobileNo" + strAltMobileNo);
                 txt_age.setText(mJsnobject_vhnSOSDetails.getString("mAge"));
                 strAge = mJsnobject_vhnSOSDetails.getString("mAge");
-                txt_risk.setText(mJsnobject_vhnSOSDetails.getString("mRiskStatus"));
+//                txt_risk.setText(mJsnobject_vhnSOSDetails.getString("mRiskStatus"));
                 strRisk = mJsnobject_vhnSOSDetails.getString("mRiskStatus");
+                if (mJsnobject_vhnSOSDetails.getString("mRiskStatus").equalsIgnoreCase("HIGH")){
+                    viewLowRisk.setVisibility(View.GONE);
+                    viewHighRisk.setVisibility(View.VISIBLE);
+                }else{
+                    viewLowRisk.setVisibility(View.VISIBLE);
+                    viewHighRisk.setVisibility(View.GONE);
+                }
                 txt_message.setText(mJsnobject_vhnSOSDetails.getString("message"));
                 strMessage = mJsnobject_vhnSOSDetails.getString("message");
                 strLatitude = mJsnobject_vhnSOSDetails.getString("mLatitude");
@@ -216,7 +228,7 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
             // Camera permissions is already available, show the camera preview.
             Log.i(SosMotherDetailsActivity.class.getSimpleName(), "CALL permission has already been granted. Displaying camera preview.");
 //            showCameraPreview();
-            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+" + str_mobile_number)));
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+91" + str_mobile_number)));
 
         }
 
@@ -224,8 +236,6 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
 
     private void requestCallPermission() {
 
-
-        Log.i(SosMotherDetailsActivity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
 
         Log.i(MothersDetailsActivity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
 

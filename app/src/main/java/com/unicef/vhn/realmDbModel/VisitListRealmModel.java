@@ -17,7 +17,38 @@ public class VisitListRealmModel extends RealmObject {
     private String picmeId;
     private String vhnId;
     private String nextVisit;
-    private String motherType;
+    private String mtype;
+
+    private String noteId;
+    private String masterId;
+    private String month;
+
+
+    public String getNoteId() {
+        return noteId;
+    }
+
+    public void setNoteId(String noteId) {
+        this.noteId = noteId;
+    }
+
+    public String getMasterId() {
+        return masterId;
+    }
+
+    public void setMasterId(String masterId) {
+        this.masterId = masterId;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+
 
     public String getMtype() {
         return mtype;
@@ -27,7 +58,6 @@ public class VisitListRealmModel extends RealmObject {
         this.mtype = mtype;
     }
 
-    private String mtype;
 
     public String getMid() {
         return mid;
@@ -125,13 +155,6 @@ public class VisitListRealmModel extends RealmObject {
         this.nextVisit = nextVisit;
     }
 
-    public String getMotherType() {
-        return motherType;
-    }
-
-    public void setMotherType(String motherType) {
-        this.motherType = motherType;
-    }
 
 
 }

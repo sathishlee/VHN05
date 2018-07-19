@@ -3,9 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="60dp">
+    >
 
-
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/pullToRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,13 +31,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"/>
+            <TextView
+                android:id="@+id/txt_no_records_found"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="NO RECORDES FOUND" />
+
             <View
                 android:layout_gravity="center"
                 android:background="@drawable/header_line"
                 android:layout_width="match_parent"
                 android:layout_height="5.0dp"
                 android:layout_weight="1.0"
-                android:layerType="software" />
+                android:layerType="software"
+                android:visibility="gone"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -137,11 +149,12 @@
 
                 </LinearLayout>
 
+
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginBottom="60dp">
+                android:layout_marginBottom="40dp">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/mother_recycler_view"
@@ -150,17 +163,8 @@
                     android:layout_height="wrap_content"/>
 
             </LinearLayout>
-            <TextView
-                android:id="@+id/txt_no_records_found"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="NO RECORDES FOUND" />
 
-                <include layout="@layout/item_mothers_an"
-                    android:visibility="gone"/>
 
     </LinearLayout>
-
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

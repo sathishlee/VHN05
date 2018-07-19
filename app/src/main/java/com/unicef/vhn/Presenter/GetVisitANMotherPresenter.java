@@ -100,19 +100,22 @@ public class GetVisitANMotherPresenter implements VisitANMotherInteractor {
 //        String url = Apiconstants.BASE_URL + Apiconstants.POST_VIST_HEALTH_RECORD_PICME;
         String url = Apiconstants.BASE_URL + Apiconstants.DASH_BOARD_MOTHERS_PN_VISIT_RECORDS;
 
-        Log.d("Log in check Url--->", url);
-        Log.d("vhnCode--->", vhnCode);
-        Log.d("vhnId--->", vhnId);
-        Log.d("Mid--->", mid);
+        Log.e("Log in check Url--->", url);
+        Log.e("vhnCode--->", vhnCode);
+        Log.e("vhnId--->", vhnId);
+        Log.e("Mid--->", mid);
         StringRequest strReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Log.e("PN Visit report success","success"+response);
                 visitANMotherViews.hideProgress();
                 visitANMotherViews.showPNVisitRecordsSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.e("PN Visit report error","error"+error);
+
                 visitANMotherViews.hideProgress();
                 visitANMotherViews.showPNVisitRecordsFailiur(error.toString());
             }
@@ -128,7 +131,7 @@ public class GetVisitANMotherPresenter implements VisitANMotherInteractor {
                 params.put("vhnId",vhnId);
                 params.put("mid",mid);
 
-                Log.d("params--->", params.toString());
+                Log.e("params--->", params.toString());
 
                 return params;
             }
@@ -140,7 +143,7 @@ public class GetVisitANMotherPresenter implements VisitANMotherInteractor {
                 HashMap<String, String> header = new HashMap<>();
 //                header.put("Content-Type", "application/x-www-from-urlencoded; charset=utf-8");
                 header.put("Authorization", "Basic " + base64EncodedCredentials);
-                Log.d("Credentials ", "Basic " + base64EncodedCredentials.toString());
+                Log.e("Credentials ", "Basic " + base64EncodedCredentials.toString());
 
                 return header;
             }

@@ -110,72 +110,76 @@ if (isOffline) {
 //            preferenceData.storeDid(model.getDid());
 //            Log.d("response---->", response);
             DelevaryDetailsPnMotherRealmModel model = primaryMotherDetailsRealmModelRealmResults.get(i);
-
             if(model.getDdatetime().equalsIgnoreCase("null")){
                 txt_delivery_date.setText("-");
             }else {
                 txt_delivery_date.setText(model.getDdatetime());
-            }
-            if (model.getDtime().equalsIgnoreCase("null")) {
+            }if(model.getDtime().equalsIgnoreCase("null")){
                 txt_delivery_time.setText("-");
             }else {
                 txt_delivery_time.setText(model.getDtime());
-            }
-            if(model.getDplace().equalsIgnoreCase("null")){
+
+            }if(model.getDplace().equalsIgnoreCase("null")){
                 txt_delivery_place.setText("-");
             }else {
                 txt_delivery_place.setText(model.getDplace());
-            }
-            if(model.getDdeleveryDetails().equalsIgnoreCase("null")){
+
+
+            }if(model.getDdeleveryDetails().equalsIgnoreCase("null")){
                 txt_delivery_type.setText("-");
             }else {
                 txt_delivery_type.setText(model.getDdeleveryDetails());
-            }
-            if(model.getDdeleveryOutcomeMother().equalsIgnoreCase("null")){
+            }if(model.getDdeleveryOutcomeMother().equalsIgnoreCase("null")){
                 txt_delivery_mother_outcome.setText("-");
             }else {
                 txt_delivery_mother_outcome.setText(model.getDdeleveryOutcomeMother());
+
             }
             if(model.getDnewBorn().equalsIgnoreCase("null")){
                 txt_delivery_new_born.setText("-");
             }else {
                 txt_delivery_new_born.setText(model.getDnewBorn());
             }
-            if(model.getdInfantId().equalsIgnoreCase("null")){
-                txt_infant_id.setText("-");
+           if(model.getdInfantId().equalsIgnoreCase("null")){
+               txt_infant_id.setText("-");
             }else {
-                txt_infant_id.setText(model.getdInfantId());
+               txt_infant_id.setText(model.getdInfantId());
             }
-            if(model.getdBirthDetails().equalsIgnoreCase("null")){
-                txt_infant_birth_type.setText("-");
+           if(model.getdBirthDetails().equalsIgnoreCase("null")){
+               txt_infant_birth_type.setText("-");
             }else {
-                txt_infant_birth_type.setText(model.getdBirthDetails());
-            }
-            if(model.getdBirthWeight().equalsIgnoreCase("null")){
-                txt_infant_weight.setText("-");
+               txt_infant_birth_type.setText(model.getdBirthDetails());
+
+           }
+           if(model.getdBirthWeight().equalsIgnoreCase("null")){
+               txt_infant_weight.setText("-");
             }else {
-                txt_infant_weight.setText(model.getdBirthWeight());
-            }
-            if(model.getdBirthHeight().equalsIgnoreCase("null")){
-                txt_infant_height.setText("-");
+               txt_infant_weight.setText(model.getdBirthWeight()+ " gm");
+           }
+           if(model.getdBirthHeight().equalsIgnoreCase("null")){
+               txt_infant_height.setText("-");
             }else {
-                txt_infant_height.setText(model.getdBirthHeight());
-            }
+               txt_infant_height.setText(model.getdBirthHeight()+" cm");
+
+           }
             if(model.getdBreastFeedingGiven().equalsIgnoreCase("null")){
                 txt_breast_feeding_given.setText("-");
             }else {
                 txt_breast_feeding_given.setText(model.getdBreastFeedingGiven());
+
+
             }
-            if(model.getdAdmittedSNCU().equalsIgnoreCase("null")){
-                txt_admitted_in_sncu.setText("-");
+             if(model.getdAdmittedSNCU().equalsIgnoreCase("null")){
+                 txt_admitted_in_sncu.setText("-");
             }else {
-                txt_admitted_in_sncu.setText(model.getdAdmittedSNCU());
+                 txt_admitted_in_sncu.setText(model.getdAdmittedSNCU());
             }
-            if(model.getdSNCUDate().equalsIgnoreCase("null")){
-                new_born_sncu_date.setText("-");
+             if(model.getdSNCUDate().equalsIgnoreCase("null")){
+                 new_born_sncu_date.setText("-");
             }else {
-                new_born_sncu_date.setText(model.getdSNCUDate());
+                 new_born_sncu_date.setText(model.getdSNCUDate());
             }
+
             if(model.getdSNCUOutcome().equalsIgnoreCase("null")){
                 txt_new_born_outcome.setText("-");
             }else {
@@ -186,16 +190,16 @@ if (isOffline) {
             }else {
                 txt_bcg_given_date.setText(model.getdBCGDate());
             }
-            if(model.getdOPVDate().equalsIgnoreCase("null")){
-                txt_opv_given_date.setText("-");
+           if(model.getdOPVDate().equalsIgnoreCase("null")){
+               txt_opv_given_date.setText("-");
             }else {
-                txt_opv_given_date.setText(model.getdOPVDate());
-            }
-            if(model.getdHEPBDate().equalsIgnoreCase("null")){
+               txt_opv_given_date.setText(model.getdOPVDate());
+            } if(model.getdHEPBDate().equalsIgnoreCase("null")){
                 txt_hepb_given_date.setText("-");
             }else {
                 txt_hepb_given_date.setText(model.getdHEPBDate());
             }
+
         }
         realm.commitTransaction();
         }

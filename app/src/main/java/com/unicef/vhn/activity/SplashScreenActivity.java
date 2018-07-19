@@ -67,7 +67,7 @@ CheckNetwork checkNetwork;
 
         }
         rel_splash_screen = (RelativeLayout) findViewById(R.id.rel_splash_screen);
-        rel_splash_screen.setVisibility(View.GONE);
+        rel_splash_screen.setVisibility(View.VISIBLE);
         locationUpdatePresenter = new LocationUpdatePresenter(this, this);
         preferenceData = new PreferenceData(this);
         checkAPiVersion();

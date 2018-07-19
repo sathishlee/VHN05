@@ -37,6 +37,31 @@ public class ImmunizationListResponseModel {
     }
 
     public static class Immunization_list {
+        public String getmVillage() {
+            return mVillage;
+        }
+
+        public void setmVillage(String mVillage) {
+            this.mVillage = mVillage;
+        }
+
+        public String getmPicmeId() {
+            return mPicmeId;
+        }
+
+        public void setmPicmeId(String mPicmeId) {
+            this.mPicmeId = mPicmeId;
+        }
+
+        public String getmName() {
+            return mName;
+        }
+
+        public void setmName(String mName) {
+            this.mName = mName;
+        }
+
+        private String mVillage;
         private String immCarePovidedDate;
         private String immDueDate;
         private String immIpvStatus;

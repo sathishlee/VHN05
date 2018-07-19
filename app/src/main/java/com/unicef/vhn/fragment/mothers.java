@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -81,6 +82,7 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
     ANMVisitRealmModel mhealthRecordResponseModel;
     PNMVisitRealmModel pnmVisitRealmModel;
     private SearchView searchView;
+    SwipeRefreshLayout pullToRefresh;
 
     public static mothers newInstance() {
         mothers fragment = new mothers();
@@ -115,6 +117,8 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(getActivity());
+
+        pullToRefresh = (SwipeRefreshLayout)view.findViewById(R.id.pullToRefresh);
 
         searchView = (SearchView) view.findViewById(R.id.search_mother);
         txt_no_internet = view.findViewById(R.id.txt_no_internet);
@@ -166,6 +170,19 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
                 AppConstants.ISQUERYFILTER = true;
                 mAdapter.getFilter().filter(query);
                 return false;
+            }
+        });
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (isoffline) {
+                    txt_no_internet.setVisibility(View.VISIBLE);
+                    setValueToUI();
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage("Record Not Found");
+                    builder.create();
+                }
             }
         });
     }
@@ -375,9 +392,26 @@ realm.commitTransaction();
                     pnmMotherListRealmModel.setmVillage(jsonObject.getString("mVillage"));
                     pnmMotherListRealmModel.setNextVisit(jsonObject.getString("nextVisit"));
 
+                    pnmMotherListRealmModel.setDeleveryDate(jsonObject.getString("deleveryDate"));
+                    pnmMotherListRealmModel.setdBirthDetails(jsonObject.getString("dBirthDetails"));
+                    pnmMotherListRealmModel.setdBirthWeight(jsonObject.getString("dBirthWeight"));
+                    pnmMotherListRealmModel.setMeturityWeek(jsonObject.getString("meturityWeek"));
+                    pnmMotherListRealmModel.setPnVisit(jsonObject.getString("pnVisit"));
+
+                    pnmMotherListRealmModel.setGestAge(jsonObject.getString("gestAge"));
+                    pnmMotherListRealmModel.setmWeight(jsonObject.getString("mWeight"));
+
+
                     if (jsonObject.getString("motherType").equalsIgnoreCase("AN")) {
+//                        pnmMotherListRealmModel.setGestAge(jsonObject.getString("gestAge"));
+//                        pnmMotherListRealmModel.setmWeight(jsonObject.getString("mWeight"));
                        getVisitANMotherPresenter.getVisitANMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), jsonObject.getString("mid"));
                     } else if (jsonObject.getString("motherType").equalsIgnoreCase("PN")) {
+                       /* pnmMotherListRealmModel.setDeleveryDate(jsonObject.getString("deleveryDate"));
+                        pnmMotherListRealmModel.setdBirthDetails(jsonObject.getString("dBirthDetails"));
+                        pnmMotherListRealmModel.setdBirthWeight(jsonObject.getString("dBirthWeight"));
+                        pnmMotherListRealmModel.setMeturityWeek(jsonObject.getString("meturityWeek"));
+                        pnmMotherListRealmModel.setPnVisit(jsonObject.getString("pnVisit"));*/
                         getVisitANMotherPresenter.getVisitPNMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), jsonObject.getString("mid"));
                     }
                 }
@@ -394,10 +428,8 @@ realm.commitTransaction();
     private void setValueToUI() {
         realm.beginTransaction();
         RealmResults<PNMMotherListRealmModel> userInfoRealmResult = realm.where(PNMMotherListRealmModel.class).findAll();
-        if (userInfoRealmResult.size()==0){
-            txt_no_records_found.setVisibility(View.VISIBLE);
-            mother_recycler_view.setVisibility(View.GONE);
-        }
+        if (userInfoRealmResult.size()!=0){
+
         for (int i = 0; i < userInfoRealmResult.size(); i++) {
 
             mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
@@ -413,6 +445,10 @@ realm.commitTransaction();
             mresponseResult.setmPhoto(model.getmPhoto());
 
             mResult.add(mresponseResult);
+        }
+        }else{
+            txt_no_records_found.setVisibility(View.VISIBLE);
+            mother_recycler_view.setVisibility(View.GONE);
         }
         mAdapter.notifyDataSetChanged();
 

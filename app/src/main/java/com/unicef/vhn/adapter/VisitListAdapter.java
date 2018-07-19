@@ -1,7 +1,6 @@
 package com.unicef.vhn.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,9 +10,9 @@ import android.widget.TextView;
 
 import com.unicef.vhn.Interface.MakeCallInterface;
 import com.unicef.vhn.R;
+import com.unicef.vhn.activity.MotherDetails.ANMotherDetailsViewActivcity;
+import com.unicef.vhn.activity.MotherDetails.PNMotherDetailsViewActivity;
 import com.unicef.vhn.activity.MotherLocationActivity;
-import com.unicef.vhn.activity.MothersDetailsActivity;
-import com.unicef.vhn.activity.PNMotherDetailsActivity;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.VisitListResponseModel;
 
@@ -24,6 +23,7 @@ import java.util.List;
  */
 
 public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.ViewHolder> {
+    String TAG= VisitListAdapter.class.getSimpleName();
     private List<VisitListResponseModel.Vhn_current_visits> mResult;
     Activity applicationContext;
     String type;
@@ -50,6 +50,7 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.View
         holder.txt_picme_id.setText(current_visits.getPicmeId());
         holder.txt_list_type.setText(current_visits.getMtype());
         holder.txt_current_visit.setText(current_visits.getNextVisit());
+
         if (current_visits.getMMotherMobile().equalsIgnoreCase("null")||current_visits.getMMotherMobile().length()<10){
             holder.txt_call.setVisibility(View.GONE);
         }else{
@@ -74,11 +75,13 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.View
             @Override
             public void onClick(View v) {
                 AppConstants.SELECTED_MID = current_visits.getMid();
+                AppConstants.SELECTED_VISIT_NOTE_ID = current_visits.getNoteId();
+                AppConstants.IS_TODAY_VIST_LIST=true;
                 if (current_visits.getMtype().equalsIgnoreCase("PN")) {
-                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherDetailsActivity.class));
+                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherDetailsViewActivity.class));
 
                 } else if (current_visits.getMtype().equalsIgnoreCase("AN")) {
-                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MothersDetailsActivity.class));
+                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), ANMotherDetailsViewActivcity.class));
 
                 }
 

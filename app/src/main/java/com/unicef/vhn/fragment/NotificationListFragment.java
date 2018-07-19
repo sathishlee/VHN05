@@ -64,7 +64,7 @@ public class NotificationListFragment extends Fragment implements NotificationVi
 
     CheckNetwork checkNetwork;
     boolean isoffline = false;
-    TextView txt_no_internet;
+    TextView txt_no_internet,txt_no_records_found;
     Realm realm;
     NotificationListRealm notificationListRealm;
 
@@ -107,6 +107,7 @@ public class NotificationListFragment extends Fragment implements NotificationVi
         notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(), preferenceData.getVhnId());
 
         txt_no_internet = view.findViewById(R.id.txt_no_internet);
+        txt_no_records_found = view.findViewById(R.id.txt_no_records_found);
         txt_no_internet.setVisibility(View.GONE);
         txt_today_visit_count = view.findViewById(R.id.txt_today_visit_count);
         txt_count_today_visit = view.findViewById(R.id.txt_count_today_visit);
@@ -148,44 +149,39 @@ public class NotificationListFragment extends Fragment implements NotificationVi
     }
 
     private void showOfflineData() {
-//        Log.e("off ->",  "offline");
-//
-//        realm.beginTransaction();
-//        RealmResults<NotificationListRealm> realmResults = realm.where(NotificationListRealm.class).findAll();
-//        Log.e("Mother list size ->", realmResults.size() + "");
-
-
-
-
-        Log.e("ON LINE ->",  "on line");
-
         realm.beginTransaction();
         RealmResults<NotificationListRealm> userInfoRealmResult = realm.where(NotificationListRealm.class).findAll();
-        Log.e("Mother list size ->", userInfoRealmResult.size() + "");
-        for (int i = 0; i < userInfoRealmResult.size(); i++) {
-            mresponseResult = new NotificationListResponseModel.Vhn_migrated_mothers();
 
 
+        if (userInfoRealmResult.size()!=0) {
+            for (int i = 0; i < userInfoRealmResult.size(); i++) {
+                mresponseResult = new NotificationListResponseModel.Vhn_migrated_mothers();
 
-            NotificationListRealm model = userInfoRealmResult.get(i);
 
-            mresponseResult.setMPicmeId(model.getMPicmeId());
-            mresponseResult.setMName(model.getMName());
-            mresponseResult.setMid(model.getMid());
-            mresponseResult.setVhnId(model.getVhnId());
-            mresponseResult.setSubject(model.getSubject());
-            mresponseResult.setMMotherMobile(model.getMMotherMobile());
-            mresponseResult.setClickHeremId(model.getClickHeremId());
-            mresponseResult.setMigratedmId(model.getMigratedmId());
-            mresponseResult.setNoteId(model.getNoteId());
-            mresponseResult.setNoteStartDateTime(model.getNoteStartDateTime());
-            mresponseResult.setMtype(model.getMtype());
-            mresponseResult.setMessage(model.getMessage());
-            mresponseResult.setmPhoto(model.getmPhoto());
-            mresponseResult.setNoteType(model.getNoteType());
+                NotificationListRealm model = userInfoRealmResult.get(i);
 
-            moviesList.add(mresponseResult);
+                mresponseResult.setMPicmeId(model.getMPicmeId());
+                mresponseResult.setMName(model.getMName());
+                mresponseResult.setMid(model.getMid());
+                mresponseResult.setVhnId(model.getVhnId());
+                mresponseResult.setSubject(model.getSubject());
+                mresponseResult.setMMotherMobile(model.getMMotherMobile());
+                mresponseResult.setClickHeremId(model.getClickHeremId());
+                mresponseResult.setMigratedmId(model.getMigratedmId());
+                mresponseResult.setNoteId(model.getNoteId());
+                mresponseResult.setNoteStartDateTime(model.getNoteStartDateTime());
+                mresponseResult.setMtype(model.getMtype());
+                mresponseResult.setMessage(model.getMessage());
+                mresponseResult.setmPhoto(model.getmPhoto());
+                mresponseResult.setNoteType(model.getNoteType());
 
+
+                moviesList.add(mresponseResult);
+
+            }
+        }else{
+            txt_no_records_found.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
         }
         mAdapter.notifyDataSetChanged();
         realm.commitTransaction();

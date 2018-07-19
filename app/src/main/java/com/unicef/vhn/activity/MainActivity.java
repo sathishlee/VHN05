@@ -13,6 +13,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -35,6 +36,7 @@ import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.NotificationPresenter;
 import com.unicef.vhn.activity.MotherList.AllMotherListActivity;
 import com.unicef.vhn.activity.MotherList.MigrationMotherListActivity;
+import com.unicef.vhn.adapter.ViewPagerAdapter;
 import com.unicef.vhn.application.MyApplication;
 import com.unicef.vhn.broadcastReceiver.ConnectivityReceiver;
 import com.unicef.vhn.constant.Apiconstants;
@@ -64,6 +66,8 @@ public class MainActivity extends AppCompatActivity
     //   public static TextView txt_no_internet;
     String strTodayVisitCount = "0";
     int mCartItemCount = 10;
+
+    ViewPager viewpager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,12 +150,39 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+
+
     @Override
-    public void onBackPressed() {
+    public void onBackPressed() {/*
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            super.onBackPressed();
+        }*/
+
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(MainActivity.this);
+            builder.setTitle(R.string.app_name);
+            builder.setIcon(R.mipmap.ic_launcher);
+            builder.setMessage("Are you Sure do you want to exit?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            android.app.AlertDialog alert = builder.create();
+            alert.show();
             super.onBackPressed();
         }
     }
@@ -242,6 +273,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(i);
         } else if (id == R.id.today_visit) {
             Intent i = new Intent(getApplicationContext(), VisitActivity.class);
+//            Intent i = new Intent(getApplicationContext(), VisitActivityNew.class);
             startActivity(i);
 
         } else if (id == R.id.migration_mother) {
@@ -267,6 +299,7 @@ public class MainActivity extends AppCompatActivity
                         finish();
                     }
                 });
+                builder.show();
             }
 
         }
@@ -281,6 +314,7 @@ public class MainActivity extends AppCompatActivity
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
 
         if (bottomNavigationView != null) {
+
 
             // Select first menu item by default and show Fragment accordingly.
             Menu menu = bottomNavigationView.getMenu();

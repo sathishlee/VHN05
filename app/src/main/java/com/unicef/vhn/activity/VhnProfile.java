@@ -26,10 +26,14 @@ import android.support.v7.widget.Toolbar;
 import android.transition.Slide;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,9 +45,7 @@ import com.unicef.vhn.Presenter.ProfilePresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
-import com.unicef.vhn.realmDbModel.DashBoardRealmModel;
 import com.unicef.vhn.realmDbModel.VhnProfileRealmModel;
-import com.unicef.vhn.realmDbModel.VisitListRealmModel;
 import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.view.ProfileViews;
 
@@ -91,7 +93,8 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
     ProfilePresenter profilePresenter;
     PreferenceData preferenceData;
     TextView user_name, txt_vhn_id, address, phc_name, tvNumber5, district_name, tvNumber1;
-
+    EditText edt_user_name, edt_vhn_id, edt_address, edt_phc_name, edt_Number5, edt_district_name, edt_Number1;
+    Button butSubmit,butCancel;
     ImageView img_camera, img_gallery;
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
     public static final int RequestPermissionCode = 7;
@@ -103,6 +106,9 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
     Realm realm;
     boolean isOffline;
     VhnProfileRealmModel vhnProfileRealmModel;
+    FloatingActionButton fab;
+    //LinearLayout viewProfile,viewProfileEdit;
+boolean isEditProfile=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +116,8 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
         realm = RealmController.with(this).getRealm();
         setContentView(R.layout.layout_profile);
         if (CheckingPermissionIsEnabledOrNot()) {
-            Toast.makeText(VhnProfile.this, "All Permissions Granted Successfully", Toast.LENGTH_LONG).show();
+            Toast.makeText(VhnProfile.this, "All Permissions Granted Successfully",
+                    Toast.LENGTH_LONG).show();
         }
 
         // If, If permission is not enabled then else condition will execute.
@@ -124,12 +131,23 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
         showActionBar();
         initUI();
         onClickListner();
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if (checkNetwork.isNetworkAvailable()) {
+
+                    edt_address.setVisibility(View.VISIBLE);
+                    address.setVisibility(View.GONE);
+                    edt_Number1.setVisibility(View.VISIBLE);
+                    tvNumber1.setVisibility(View.GONE);
+                    butSubmit.setVisibility(View.VISIBLE);
+                    butCancel.setVisibility(View.VISIBLE);
+                    fab.setVisibility(View.GONE);
+                }else{
+                    Toast.makeText(getApplicationContext(),"You can't edit your profile,\n No Internert connection",Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
@@ -204,14 +222,40 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
         actionBar.setTitle("Profile");
         actionBar.setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        String itemTitle = getIntent().getStringExtra(TITLE);
-        toolbar_layout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-        toolbar_layout.setTitle(itemTitle);
-        toolbar_layout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
     }
 
     private void onClickListner() {
         user_profile_photo.setOnClickListener(this);
+        butSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (edt_address.getText().toString().isEmpty() && edt_Number1.getText().toString().isEmpty()
+                        && edt_Number1.getText().toString().length()!=10) {
+                    profilePresenter.postVHNProfile(preferenceData.getVhnId(), preferenceData.getVhnCode(),
+                            edt_address.getText().toString(), edt_Number1.getText().toString());
+                }else{
+                    if (edt_address.getText().toString().isEmpty()){
+                        edt_address.setError("enter address");
+                    }  else if (edt_Number1.getText().toString().isEmpty()){
+                        edt_Number1.setError("enter mobile number");
+                    }else if (edt_Number1.getText().toString().length()!=10){
+                        edt_Number1.setError("enter valid mobile number");
+                    }
+                }
+            }
+        });
+        butCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edt_address.setVisibility(View.GONE);
+                address.setVisibility(View.VISIBLE);
+                edt_Number1.setVisibility(View.GONE);
+                tvNumber1.setVisibility(View.VISIBLE);
+                butSubmit.setVisibility(View.GONE);
+                butCancel.setVisibility(View.GONE);
+                fab.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void initUI() {
@@ -228,6 +272,9 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
         } else {
             isOffline = false;
         }
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        butSubmit = (Button) findViewById(R.id.but_submit);
+        butCancel = (Button) findViewById(R.id.but_cancel);
         user_profile_photo = (ImageView) findViewById(R.id.user_profile_photo);
         user_name = (TextView) findViewById(R.id.user_name);
         txt_vhn_id = (TextView) findViewById(R.id.txt_vhn_id);
@@ -237,9 +284,11 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
         district_name = (TextView) findViewById(R.id.district_name);
         tvNumber1 = (TextView) findViewById(R.id.tvNumber1);
 
+        edt_address= (EditText) findViewById(R.id.edaddress);
+        edt_Number1= (EditText) findViewById(R.id.edNumber1);
+
         if (isOffline) {
-//            showOfflineData();
-//            setValuesToUI();
+            setValuesToUI();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Record Not Found");
@@ -260,7 +309,7 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
+        inflater.inflate(R.menu.menu_main2, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -317,74 +366,59 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
             JSONObject jsonObject = new JSONObject(response);
             String status = jsonObject.getString("status");
             String msg = jsonObject.getString("message");
-        /*    RealmResults<VhnProfileRealmModel> motherListAdapterRealmModel = realm.where(VhnProfileRealmModel.class).findAll();
+            RealmResults<VhnProfileRealmModel> motherListAdapterRealmModel = realm.where(VhnProfileRealmModel.class).findAll();
             Log.e("Realm size ---->", motherListAdapterRealmModel.size() + "");
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
                     realm.delete(VhnProfileRealmModel.class);
                 }
-            })*/;
+            });
             if (status.equalsIgnoreCase("1")) {
-              /*  realm.beginTransaction();
+                realm.beginTransaction();
                 vhnProfileRealmModel = realm.createObject(VhnProfileRealmModel.class);
 
                 JSONObject editprofile = jsonObject.getJSONObject("EditProfile");
 
 
+                vhnProfileRealmModel.setVhnId(editprofile.getString("vhnId"));
                 vhnProfileRealmModel.setVhnName(editprofile.getString("vhnName"));
-                vhnProfileRealmModel.setVhnCode(editprofile.getString("vhncode"));
-                vhnProfileRealmModel.setVhnCode(editprofile.getString("vhnAddress"));
-                vhnProfileRealmModel.setVhnCode(editprofile.getString("hscName"));
-                vhnProfileRealmModel.setVhnCode(editprofile.getString("vhnDistrict"));
-                vhnProfileRealmModel.setVhnCode(editprofile.getString("vhnMobile"));
-                vhnProfileRealmModel.setVhnCode(editprofile.getString("vhnBlock"));
-                vhnProfileRealmModel.setVhnCode(editprofile.getString("vphoto"));
+                vhnProfileRealmModel.setVhnCode(editprofile.getString("vhnCode"));
+                vhnProfileRealmModel.setVphoto(editprofile.getString("vphoto"));
+                vhnProfileRealmModel.setVhnAddress(editprofile.getString("vhnAddress"));
+                vhnProfileRealmModel.setDistCode(editprofile.getString("distCode"));
+                vhnProfileRealmModel.setVhnDistrict(editprofile.getString("vhnDistrict"));
+                vhnProfileRealmModel.setVhnBlock(editprofile.getString("vhnBlock"));
+                vhnProfileRealmModel.setHscName(editprofile.getString("hscName"));
+                vhnProfileRealmModel.setVhnMobile(editprofile.getString("vhnMobile"));
+
 
                 realm.commitTransaction();
-*/
-                /*user_name.setText(editprofile.getString("vhnName"));
-                txt_vhn_id.setText(editprofile.getString("vhnCode"));
-                address.setText(editprofile.getString("vhnAddress"));
-                phc_name.setText(editprofile.getString("hscName"));
-                district_name.setText(editprofile.getString("vhnDistrict"));
-                tvNumber1.setText(editprofile.getString("vhnMobile"));
-                tvNumber5.setText(editprofile.getString("vhnBlock"));
-
-                str_mPhoto = editprofile.getString("vphoto");
-
-                Log.d("vphoto-->", Apiconstants.PHOTO_URL + str_mPhoto);
-
-                Picasso.with(context)
-                        .load(Apiconstants.PHOTO_URL + str_mPhoto)
-                        .placeholder(R.drawable.ln_logo)
-                        .fit()
-                        .centerCrop()
-                        .memoryPolicy(MemoryPolicy.NO_CACHE)
-                        .networkPolicy(NetworkPolicy.NO_CACHE)
-                        .error(R.drawable.ln_logo)
-                        .into(user_profile_photo);*/
-
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-//        setValuesToUI();
+        setValuesToUI();
     }
 
-    /*private void setValuesToUI() {
+    private void setValuesToUI() {
         realm.beginTransaction();
+
         RealmResults<VhnProfileRealmModel> vhnProfileRealmModelRealmResults = realm.where(VhnProfileRealmModel.class).findAll();
 
         for (int i = 0; i < vhnProfileRealmModelRealmResults.size(); i++) {
+
             VhnProfileRealmModel model = vhnProfileRealmModelRealmResults.get(i);
+
             user_name.setText(model.getVhnName());
             txt_vhn_id.setText(model.getVhnId());
             address.setText(model.getVhnAddress());
+            edt_address.setText(model.getVhnAddress());
             phc_name.setText(model.getHscName());
             district_name.setText(model.getVhnDistrict());
             tvNumber1.setText(model.getVhnMobile());
+            edt_Number1.setText(model.getVhnMobile());
             tvNumber5.setText(model.getVhnBlock());
 
             str_mPhoto = model.getVphoto();
@@ -402,40 +436,9 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
                     .into(user_profile_photo);
         }
         realm.commitTransaction();
-    }*/
+    }
 
 
-    /* private void showOfflineData() {
-
-         realm.beginTransaction();
-         RealmResults<VhnProfileRealmModel> vhnProfileRealmModelRealmResults = realm.where(VhnProfileRealmModel.class).findAll();
-
-         for (int i = 0; i < vhnProfileRealmModelRealmResults.size(); i++) {
-             VhnProfileRealmModel model = vhnProfileRealmModelRealmResults.get(i);
-             user_name.setText(model.getVhnName());
-             txt_vhn_id.setText(model.getVhnId());
-             address.setText(model.getVhnAddress());
-             phc_name.setText(model.getHscName());
-             district_name.setText(model.getVhnDistrict());
-             tvNumber1.setText(model.getVhnMobile());
-             tvNumber5.setText(model.getVhnBlock());
-
-             str_mPhoto = model.getVphoto();
-
-             Log.d("vphoto-->", Apiconstants.PHOTO_URL + str_mPhoto);
-
-             Picasso.with(context)
-                     .load(Apiconstants.PHOTO_URL + str_mPhoto)
-                     .placeholder(R.drawable.ln_logo)
-                     .fit()
-                     .centerCrop()
-                     .memoryPolicy(MemoryPolicy.NO_CACHE)
-                     .networkPolicy(NetworkPolicy.NO_CACHE)
-                     .error(R.drawable.ln_logo)
-                     .into(user_profile_photo);
-         }
-     }
- */
     @Override
     public void errorViewProfile(String response) {
 
@@ -452,6 +455,17 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
     public void errorUploadPhoto(String response) {
         Log.d("Image upload error", response);
         pDialog.dismiss();
+    }
+
+    @Override
+    public void successUploadProfile(String response) {
+        Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
+        startActivity(new Intent(getApplicationContext(),VhnProfile.class));
+    }
+
+    @Override
+    public void errorUploadProfile(String response) {
+        Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
     }
 
     @Override

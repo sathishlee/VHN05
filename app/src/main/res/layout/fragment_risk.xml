@@ -126,6 +126,14 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/txt_no_records_found"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="NO RECORDES FOUND"
+            android:visibility="visible" />
         <include layout="@layout/item_mother_risk"
             android:visibility="gone"/>
 

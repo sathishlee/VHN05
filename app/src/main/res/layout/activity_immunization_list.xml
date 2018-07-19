@@ -45,7 +45,7 @@
                     android:layout_weight="1"
                     android:gravity="end"
                     android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:id="@+id/ll_filter"
@@ -121,7 +121,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="NO RECORDES FOUND"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
         </LinearLayout>
 
