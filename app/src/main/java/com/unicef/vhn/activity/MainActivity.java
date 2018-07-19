@@ -268,11 +268,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.immunization) {
             Intent i = new Intent(getApplicationContext(), ImmunizationListActivity.class);
             startActivity(i);
-        } else if (id == R.id.alert) {
+        } /*else if (id == R.id.alert) {
             Intent i = new Intent(getApplicationContext(), AlertActivity.class);
             startActivity(i);
-        } else if (id == R.id.today_visit) {
-            Intent i = new Intent(getApplicationContext(), VisitActivity.class);
+        }*/ else if (id == R.id.today_visit) {
+            Intent i = new Intent(getApplicationContext(), VisitActivityNew.class);
 //            Intent i = new Intent(getApplicationContext(), VisitActivityNew.class);
             startActivity(i);
 

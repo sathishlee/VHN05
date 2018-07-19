@@ -1,3 +1,4 @@
+/*
 package com.unicef.vhn.activity;
 
 import android.Manifest;
@@ -232,3 +233,4 @@ pDialog.dismiss();
 
     }
 }
+*/

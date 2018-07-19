@@ -40,10 +40,10 @@
             android:icon="@drawable/ic_eye"
             android:title="Visit" />
 
-        <item
+        <!--<item
             android:id="@+id/alert"
             android:icon="@drawable/alert_side"
-            android:title="Alerts" />
+            android:title="Alerts" />-->
 
         <item
             android:id="@+id/migration_mother"

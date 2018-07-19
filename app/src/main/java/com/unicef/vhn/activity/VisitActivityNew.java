@@ -28,8 +28,8 @@ public class VisitActivityNew extends AppCompatActivity{
     ViewPagerAdapter adapter;
 
     private int[] tabIcons = {
-            R.drawable.ic_eye,
-            R.drawable.notifications_bell,
+            R.drawable.visit_icon,
+            R.drawable.remainder_icon,
     };
 
     @Override
@@ -103,7 +103,7 @@ public class VisitActivityNew extends AppCompatActivity{
 
     private void showActionBar() {
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Mother Migration");
+        actionBar.setTitle("Mother Visits");
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 

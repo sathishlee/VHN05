@@ -23,6 +23,7 @@ import java.util.List;
  */
 
 public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.ViewHolder> {
+
     String TAG= VisitListAdapter.class.getSimpleName();
     private List<VisitListResponseModel.Vhn_current_visits> mResult;
     Activity applicationContext;

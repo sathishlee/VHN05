@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.unicef.vhn.Interface.MakeCallInterface;
 import com.unicef.vhn.R;
-import com.unicef.vhn.activity.AlertActivity;
 import com.unicef.vhn.activity.MotherDetails.ANMotherDetailsViewActivcity;
 import com.unicef.vhn.activity.MotherDetails.PNMotherDetailsViewActivity;
 import com.unicef.vhn.activity.MotherLocationActivity;
@@ -36,7 +35,7 @@ public class RemainderVisitListAdapter extends RecyclerView.Adapter<RemainderVis
 
     String strMid;
 
-    public RemainderVisitListAdapter(Activity alertActivity, List<RemainderVisitResponseModel.Remaindermothers> mResult, AlertActivity makeCallInterface) {
+    public RemainderVisitListAdapter(List<RemainderVisitResponseModel.Remaindermothers> mResult, Activity alertActivity, MakeCallInterface makeCallInterface) {
         this.applicationContext = alertActivity;
         this.mResult = mResult;
         Log.e(RemainderVisitListAdapter.class.getSimpleName(),"mResult size"+mResult);
@@ -66,7 +65,7 @@ public class RemainderVisitListAdapter extends RecyclerView.Adapter<RemainderVis
         holder.txt_username.setText(current_visits.getMName());
         holder.txt_picme_id.setText(current_visits.getPicmeId());
         holder.txt_list_type.setText(current_visits.getMtype());
-        holder.txt_current_visit.setText(current_visits.getDays());
+        holder.txt_current_visit.setText(current_visits.getNextVisit());
 
         if (current_visits.getMMotherMobile().equalsIgnoreCase("null")||current_visits.getMMotherMobile().length()<10){
             holder.txt_call.setVisibility(View.GONE);

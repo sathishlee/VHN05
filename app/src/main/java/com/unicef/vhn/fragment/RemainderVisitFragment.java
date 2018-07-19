@@ -30,6 +30,7 @@ import com.unicef.vhn.adapter.RemainderVisitListAdapter;
 import com.unicef.vhn.adapter.VisitListAdapter;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
+import com.unicef.vhn.model.RemainderVisitResponseModel;
 import com.unicef.vhn.model.VisitListResponseModel;
 import com.unicef.vhn.realmDbModel.VisitListRealmModel;
 import com.unicef.vhn.utiltiy.CheckNetwork;
@@ -51,8 +52,8 @@ public class RemainderVisitFragment extends Fragment implements MotherListsViews
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
-    private List<VisitListResponseModel.Vhn_current_visits> mResult;
-    VisitListResponseModel.Vhn_current_visits mresponseResult;
+    private List<RemainderVisitResponseModel.Remaindermothers> mResult;
+    RemainderVisitResponseModel.Remaindermothers mresponseResult;
      private RecyclerView mother_recycler_view;
     private TextView txt_no_records_found;
     private RemainderVisitListAdapter mAdapter;
@@ -99,7 +100,7 @@ TextView visit_list;
         mother_recycler_view = (RecyclerView)view. findViewById(R.id.mother_recycler_view);
         txt_no_records_found = (TextView) view.findViewById(R.id.txt_no_records_found);
         visit_list =(TextView)view.findViewById(R.id.visit_list);
-//        mAdapter = new RemainderVisitListAdapter(getActivity(), mResult, this);
+        mAdapter = new RemainderVisitListAdapter(mResult,getActivity(), this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mother_recycler_view.setLayoutManager(mLayoutManager);
@@ -133,8 +134,10 @@ TextView visit_list;
 
             if (status.equalsIgnoreCase("1")) {
                 if (jsonArray.length() != 0) {
+                    mother_recycler_view.setVisibility(View.VISIBLE);
+                    txt_no_records_found.setVisibility(View.GONE);
                     for (int i = 0; i < jsonArray.length(); i++) {
-                        mresponseResult = new VisitListResponseModel.Vhn_current_visits();
+                        mresponseResult = new RemainderVisitResponseModel.Remaindermothers();
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         Log.e(TAG,"remaindermothers position -->"+i);
 
@@ -151,18 +154,17 @@ TextView visit_list;
                         mresponseResult.setVhnId(jsonObject.getString("vhnId"));
                         mresponseResult.setMMotherMobile(jsonObject.getString("mMotherMobile"));
                         mresponseResult.setMtype(jsonObject.getString("mtype"));
-                        mresponseResult.setMtype("AN");
-                        mresponseResult.setNextVisit("2018-08-18");
+                        mresponseResult.setNextVisit(jsonObject.getString("nextVisit"));
 
                        mResult.add(mresponseResult);
-
-                        mAdapter.notifyDataSetChanged();
+                       mAdapter.notifyDataSetChanged();
                     }
-                    Log.e(TAG,"mResult size -->"+mResult);
+                }else{
+                    mother_recycler_view.setVisibility(View.GONE);
+                    txt_no_records_found.setVisibility(View.VISIBLE);
                 }
             }else {
-                Log.e(TAG,"message   -->"+message);
-Toast.makeText(getActivity(),message,Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),message,Toast.LENGTH_LONG).show();
             }
         } catch (JSONException e) {
             e.printStackTrace();

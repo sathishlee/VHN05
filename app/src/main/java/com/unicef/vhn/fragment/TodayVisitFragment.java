@@ -168,31 +168,31 @@ public class TodayVisitFragment extends Fragment implements MotherListsViews, Ma
             String status = mJsnobject.getString("status");
             String msg = mJsnobject.getString("message");
 //            JSONArray jsonArray = mJsnobject.getJSONArray("vhn_today_visit_count");
-            JSONArray jsonArray = mJsnobject.getJSONArray("todaymothers");
-
-            RealmResults<VisitListRealmModel> motherListAdapterRealmModel = realm.where(VisitListRealmModel.class).findAll();
-            Log.e(TAG, "jsonArray size ---->" + jsonArray.length() + "");
-            Log.e(TAG, "Realm size ---->" + motherListAdapterRealmModel.size() + "");
+                if (status.equalsIgnoreCase("1")) {
+                JSONArray jsonArray = mJsnobject.getJSONArray("todaymothers");
+                RealmResults<VisitListRealmModel> motherListAdapterRealmModel = realm.where(VisitListRealmModel.class).findAll();
+                Log.e(TAG, "jsonArray size ---->" + jsonArray.length() + "");
+                Log.e(TAG, "Realm size ---->" + motherListAdapterRealmModel.size() + "");
             /*realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
                     realm.delete(VisitListRealmModel.class);
                 }
             });*/
-            if (status.equalsIgnoreCase("1")) {
 
-                if (jsonArray.length() != 0) {
-                    Log.e(TAG, jsonArray.length() + " of json array not null");
+
+                    if (jsonArray.length() != 0) {
+                        Log.e(TAG, jsonArray.length() + " of json array not null");
 
 //                mother_recycler_view.setVisibility(View.VISIBLE);
 //                txt_no_records_found.setVisibility(View.GONE);
 //                    realm.beginTransaction();
-                    for (int i = 0; i < jsonArray.length(); i++) {
+                        for (int i = 0; i < jsonArray.length(); i++) {
 //                        visitListRealmMode = realm.createObject(VisitListRealmModel.class);
 
-                        mresponseResult = new VisitListResponseModel.Vhn_current_visits();
+                            mresponseResult = new VisitListResponseModel.Vhn_current_visits();
 
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 
                     /*visitListRealmMode.setMid(jsonObject.getString("mid"));
@@ -205,33 +205,34 @@ public class TodayVisitFragment extends Fragment implements MotherListsViews, Ma
                     visitListRealmMode.setMLatitude(jsonObject.getString("mLatitude"));
                     visitListRealmMode.setMLongitude(jsonObject.getString("mLongitude"));*/
 
-                        mresponseResult.setNoteId(jsonObject.getString("noteId"));
-                        mresponseResult.setMasterId(jsonObject.getString("masterId"));
-                        mresponseResult.setMid(jsonObject.getString("mid"));
-                        mresponseResult.setMName(jsonObject.getString("mName"));
-                        mresponseResult.setPicmeId(jsonObject.getString("picmeId"));
-                        mresponseResult.setVhnId(jsonObject.getString("vhnId"));
-                        mresponseResult.setMMotherMobile(jsonObject.getString("mMotherMobile"));
-                        mresponseResult.setMtype(jsonObject.getString("mtype"));
-                        mresponseResult.setNextVisit(jsonObject.getString("nextvisit"));
+                            mresponseResult.setNoteId(jsonObject.getString("noteId"));
+                            mresponseResult.setMasterId(jsonObject.getString("masterId"));
+                            mresponseResult.setMid(jsonObject.getString("mid"));
+                            mresponseResult.setMName(jsonObject.getString("mName"));
+                            mresponseResult.setPicmeId(jsonObject.getString("picmeId"));
+                            mresponseResult.setVhnId(jsonObject.getString("vhnId"));
+                            mresponseResult.setMMotherMobile(jsonObject.getString("mMotherMobile"));
+                            mresponseResult.setMtype(jsonObject.getString("mtype"));
+                            mresponseResult.setNextVisit(jsonObject.getString("nextvisit"));
 //                    mresponseResult.setMotherType(jsonObject.getString("motherType"));
 //                mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
 //                mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
-                        mResult.add(mresponseResult);
-                        mAdapter.notifyDataSetChanged();
-                    }
+                            mResult.add(mresponseResult);
+                            mAdapter.notifyDataSetChanged();
+                        }
 //                    realm.commitTransaction();
-                }
-            }else {
-                Log.e(TAG,jsonArray.length()+" of json array  null");
+                    }else {
+                        Log.e(TAG, jsonArray.length() + " of json array  null");
 
 //                mother_recycler_view.setVisibility(View.GONE);
 //                txt_no_records_found.setVisibility(View.VISIBLE);
+                    }
+                }
+            } catch(JSONException e){
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 //        setValuetoUI();
+
     }
 
     private void setValuetoUI() {

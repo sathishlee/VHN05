@@ -48,6 +48,7 @@ public class RemainderVisitResponseModel {
         private String picmeId;
         private String mLMP;
         private String noteId;
+        private String nextVisit;
 
         public String getMtype() {
             return mtype;
@@ -167,6 +168,14 @@ public class RemainderVisitResponseModel {
 
         public void setNoteId(String noteId) {
             this.noteId = noteId;
+        }
+
+        public String getNextVisit() {
+            return nextVisit;
+        }
+
+        public void setNextVisit(String nextVisit) {
+            this.nextVisit = nextVisit;
         }
     }
 }

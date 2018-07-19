@@ -320,11 +320,14 @@
     <string name="reasons">Reasons</string>
     <string name="breast_examination">Breast Examination</string>
     <string name="out_come">Out Come</string>
-    <string name="current_visit">Current Visit :</string>
+    <string name="current_visit">Visit Date:</string>
     <string name="profile_image">profile_image</string>
     <string name="mother_reports">Mother Reports</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="migrated_mothers">Migrated Mothers</string>
     <string name="native_mother">Native Mother</string>
+    <string name="today_visit_list">Today Visit List</string>
+    <string name="remainder_visit_list">Remainder Visit List</string>
+    <string name="verify_otp">Verify OTP</string>
 
 </resources>
