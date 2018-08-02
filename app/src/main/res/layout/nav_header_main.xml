@@ -3,27 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/doctor_background"
     android:gravity="bottom"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
 
     <ImageView
-        android:id="@+id/userImageProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="5dp"
-        android:padding="5dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_nurse"
-        android:layout_marginBottom="20dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/profile_circular_border_imageview"
-        android:layout_alignParentStart="true" />
+            android:id="@+id/userImageProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            android:padding="5dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_nurse"
+            android:layout_marginBottom="20dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/profile_circular_border_imageview"
+            android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/txt_username"
@@ -32,6 +33,9 @@
         android:layout_gravity="center"
         android:padding="5dp"
         android:text="Username :"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+
         android:layout_marginStart="15dp"
         android:layout_above="@+id/vhn_id"
         android:layout_toEndOf="@+id/userImageProfile" />
@@ -44,6 +48,8 @@
         android:layout_gravity="center"
         android:textSize="14sp"
         android:text="VHN ID :"
+        android:textColor="@color/colorPrimaryDark"
+android:textStyle="bold"
         android:layout_alignBottom="@+id/userImageProfile"
         android:layout_alignStart="@+id/txt_username" />
 

@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,12 +25,14 @@ import com.squareup.picasso.Picasso;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
+import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
 
 import com.unicef.vhn.utiltiy.RoundedTransformation;
 import com.unicef.vhn.view.MotherListsViews;
 
+import io.realm.Realm;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,9 +51,12 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
     PreferenceData preferenceData;
 
     Button btn_view_location, btn_view_report;
+
+    Realm realm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        realm = RealmController.with(this).getRealm();
         setContentView(R.layout.activity_mothers_details);
         initUI();
         showActionBar();
@@ -94,11 +98,11 @@ public class MothersDetailsActivity extends AppCompatActivity implements View.On
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
-        pnMotherListPresenter = new MotherListPresenter(MothersDetailsActivity.this, this);
+        pnMotherListPresenter = new MotherListPresenter(MothersDetailsActivity.this, this, realm);
 
         pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
         preferenceData =new PreferenceData(this);
-        pnMotherListPresenter = new MotherListPresenter(MothersDetailsActivity.this,this);
+        pnMotherListPresenter = new MotherListPresenter(MothersDetailsActivity.this,this, realm);
         pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(),preferenceData.getVhnId(), AppConstants.SELECTED_MID);
 
         cardview_image = (ImageView) findViewById(R.id.cardview_image);

@@ -29,6 +29,16 @@ public class PNMMotherListRealmModel extends RealmObject {
     private String meturityWeek;
     private String gestAge;
     private String mWeight;
+    private String mAge;
+
+    public String getmAge() {
+        return mAge;
+    }
+
+    public void setmAge(String mAge) {
+        this.mAge = mAge;
+    }
+
 
 
     public String getmHusbandMobile() {

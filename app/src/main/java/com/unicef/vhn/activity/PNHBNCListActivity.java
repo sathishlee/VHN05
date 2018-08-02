@@ -91,7 +91,7 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
-        pnMotherListPresenter = new MotherListPresenter(PNHBNCListActivity.this, this);
+        pnMotherListPresenter = new MotherListPresenter(PNHBNCListActivity.this, this, realm);
 //        pnMotherListPresenter.getPNMotherList("V10001","1");
         if (checkNetwork.isNetworkAvailable()) {
             pnMotherListPresenter.getPNMotherRecordsList(preferenceData.getVhnCode(), preferenceData.getVhnId());
@@ -171,6 +171,7 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
                         pnhbncMotherListRealmModel.setMid(jsonObject.getString("mid"));
                         pnhbncMotherListRealmModel.setmName(jsonObject.getString("mName"));
                         pnhbncMotherListRealmModel.setmPicmeId(jsonObject.getString("mPicmeId"));
+                        pnhbncMotherListRealmModel.setmPicmeId(jsonObject.getString("mPicmeId"));
 //                        pnhbncMotherListRealmModel.pni(jsonObject.getString("pnId"));
                         pnhbncMotherListRealmModel.setMotherType(jsonObject.getString("motherType"));
                         pnhbncMotherListRealmModel.setVhnId(jsonObject.getString("vhnId"));
@@ -207,6 +208,7 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
             mresponseResult.setMid(model.getMid());
             mresponseResult.setMName(model.getmName());
             mresponseResult.setMPicmeId(model.getmPicmeId());
+            mresponseResult.setmAge(model.getmAge());
 //    mresponseResult.setPnId(jsonObject.getString("pnId"));
             mresponseResult.setMotherType(model.getMotherType());
             mresponseResult.setVhnId(model.getVhnId());
@@ -274,7 +276,6 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
     }
 
     private void requestCallPermission() {
-        Log.i(ANTT1MothersList.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CALL_PHONE)) {
             Toast.makeText(getApplicationContext(), "Displaying Call permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();

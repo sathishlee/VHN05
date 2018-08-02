@@ -16,6 +16,16 @@ public class PNHBNCMotherListRealmModel extends RealmObject {
     private String mPhoto;
     private String mLMP;
 
+    public String getmAge() {
+        return mAge;
+    }
+
+    public void setmAge(String mAge) {
+        this.mAge = mAge;
+    }
+
+    private String mAge;
+
     public String getmLongitude() {
         return mLongitude;
     }

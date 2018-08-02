@@ -9,6 +9,7 @@ package com.unicef.vhn.fragment;
         import android.support.annotation.NonNull;
         import android.support.v4.app.ActivityCompat;
         import android.support.v4.app.Fragment;
+        import android.support.v4.widget.SwipeRefreshLayout;
         import android.support.v7.app.AlertDialog;
         import android.support.v7.widget.DefaultItemAnimator;
         import android.support.v7.widget.LinearLayoutManager;
@@ -24,12 +25,11 @@ package com.unicef.vhn.fragment;
         import com.unicef.vhn.Preference.PreferenceData;
         import com.unicef.vhn.Presenter.MotherListPresenter;
         import com.unicef.vhn.R;
-        import com.unicef.vhn.activity.ANTT1MothersList;
+
         import com.unicef.vhn.adapter.MotherListAdapter;
         import com.unicef.vhn.application.RealmController;
         import com.unicef.vhn.constant.Apiconstants;
         import com.unicef.vhn.model.PNMotherListResponse;
-        import com.unicef.vhn.realmDbModel.MotherListRealm;
         import com.unicef.vhn.realmDbModel.MotherRiskListRealm;
         import com.unicef.vhn.utiltiy.CheckNetwork;
         import com.unicef.vhn.view.MotherListsViews;
@@ -49,6 +49,7 @@ package com.unicef.vhn.fragment;
  */
 
 public class risk extends Fragment implements MotherListsViews, MakeCallInterface, MotherListAdapter.ContactsAdapterListener {
+    String TAG = risk.class.getSimpleName();
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
@@ -67,7 +68,7 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
     boolean isoffline = false;
     Realm realm;
     MotherRiskListRealm motherRiskListRealm;
-
+SwipeRefreshLayout swipeRefreshLayout;
     public static risk newInstance() {
         risk fragment = new risk();
         return fragment;
@@ -88,18 +89,20 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
     }
 
     private void initUI(View view) {
+
         checkNetwork = new CheckNetwork(getActivity());
 
         pDialog = new ProgressDialog(getActivity());
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(getActivity());
-        pnMotherListPresenter = new MotherListPresenter(getActivity(), this);
+        pnMotherListPresenter = new MotherListPresenter(getActivity(), this, realm);
 
         txt_no_internet = view.findViewById(R.id.txt_no_internet);
         txt_no_records_found = view.findViewById(R.id.txt_no_records_found);
         txt_no_internet.setVisibility(View.GONE);
         txt_no_records_found.setVisibility(View.GONE);
+        swipeRefreshLayout =(SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh_layout);
         if (checkNetwork.isNetworkAvailable()) {
 
             pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_MOTHERS_RISK, preferenceData.getVhnCode(), preferenceData.getVhnId());
@@ -124,6 +127,16 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
             builder.setMessage("Record Not Found");
             builder.create();
         }
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (checkNetwork.isNetworkAvailable()) {
+                    pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_MOTHERS_RISK, preferenceData.getVhnCode(), preferenceData.getVhnId());
+                } else {
+                    isoffline = true;
+                }
+            }
+        });
     }
 
     private void showOfflineData() {
@@ -177,6 +190,9 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
             String message = jsonObject.getString("message");
             if (status.equalsIgnoreCase("1")) {
                 JSONArray jsonArray = jsonObject.getJSONArray("vhnAN_Mothers_List");
+                if (realm.isInTransaction()){
+                    realm.cancelTransaction();
+                    }
                 RealmResults<MotherRiskListRealm> motherListAdapterRealmModel = realm.where(MotherRiskListRealm.class).findAll();
                 Log.e("risk Realm size ---->", motherListAdapterRealmModel.size() + "");
                 if (motherListAdapterRealmModel.size() !=0) {
@@ -274,7 +290,7 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
     }
 
     private void requestCallPermission() {
-        Log.i(ANTT1MothersList.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
+        Log.i(TAG, "CALL permission has NOT been granted. Requesting permission.");
         if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CALL_PHONE)) {
             Toast.makeText(getActivity(), "Displaying Call permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();
         } else {

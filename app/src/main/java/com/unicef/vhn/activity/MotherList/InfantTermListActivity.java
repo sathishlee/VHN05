@@ -3,6 +3,7 @@ package com.unicef.vhn.activity.MotherList;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +37,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class InfantTermListActivity extends AppCompatActivity implements MotherListsViews {
+    String TAG = InfantTermListActivity.class.getSimpleName();
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
@@ -43,13 +45,14 @@ public class InfantTermListActivity extends AppCompatActivity implements MotherL
     TremAndPreTremResponseModel.DelveryInfo mresponseResult;
     //    private RecyclerView recyclerView;
     private RecyclerView mother_recycler_view;
-    private TextView txt_no_records_found;
+    private TextView txt_no_records_found,txt_no_internet;
     private TremAndPreTremAdapter mAdapter;
     CheckNetwork checkNetwork;
     boolean isoffline = false;
     Realm realm;
     TreamPreTreamListRealmModel treamPreTreamListRealmModel;
 
+    SwipeRefreshLayout swipe_refresh_layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +68,7 @@ checkNetwork =new CheckNetwork(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
-        pnMotherListPresenter = new MotherListPresenter(InfantTermListActivity.this, this);
+        pnMotherListPresenter = new MotherListPresenter(InfantTermListActivity.this, this, realm);
 //        pnMotherListPresenter.getPNMotherList("V10001","1");
         if (checkNetwork.isNetworkAvailable()) {
             pnMotherListPresenter.getTremAndPreTremMothersList(preferenceData.getVhnCode(), preferenceData.getVhnId());
@@ -75,14 +78,28 @@ checkNetwork =new CheckNetwork(this);
         mResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView) findViewById(R.id.mother_recycler_view);
         txt_no_records_found = (TextView) findViewById(R.id.txt_no_records_found);
+        txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
+        swipe_refresh_layout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         mAdapter = new TremAndPreTremAdapter(mResult, InfantTermListActivity.this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(InfantTermListActivity.this);
         mother_recycler_view.setLayoutManager(mLayoutManager);
         mother_recycler_view.setItemAnimator(new DefaultItemAnimator());
         mother_recycler_view.setAdapter(mAdapter);
-
+swipe_refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+    @Override
+    public void onRefresh() {
+        if (checkNetwork.isNetworkAvailable()) {
+            pnMotherListPresenter.getTremAndPreTremMothersList(preferenceData.getVhnCode(), preferenceData.getVhnId());
+        }else{
+            txt_no_internet.setVisibility(View.VISIBLE);
+            swipe_refresh_layout.setRefreshing(false);
+            isoffline=true;
+        }
+    }
+});
         if (isoffline) {
+            txt_no_internet.setVisibility(View.VISIBLE);
             showOfflineData();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -120,8 +137,8 @@ checkNetwork =new CheckNetwork(this);
 
     @Override
     public void showLoginSuccess(String response) {
-
-        Log.e(InfantTermListActivity.class.getSimpleName(), "Response success" + response);
+        swipe_refresh_layout.setRefreshing(false);
+        Log.e(TAG, "Response success" + response);
         try {
             JSONObject mJsnobject = new JSONObject(response);
             String status = mJsnobject.getString("status");
@@ -129,7 +146,7 @@ checkNetwork =new CheckNetwork(this);
                 JSONArray jsonArray = mJsnobject.getJSONArray("delveryInfo");
 
                 RealmResults<TreamPreTreamListRealmModel> motherListAdapterRealmModel = realm.where(TreamPreTreamListRealmModel.class).findAll();
-                Log.e("Realm size ---->", motherListAdapterRealmModel.size() + "");
+                Log.e(TAG,"Realm size ---->"+ motherListAdapterRealmModel.size() + "");
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
@@ -182,9 +199,6 @@ checkNetwork =new CheckNetwork(this);
     }
 
     private void setValueToUI() {
-
-        Log.e(InfantTermListActivity.class.getSimpleName(), "ON LINE ");
-
         realm.beginTransaction();
         RealmResults<TreamPreTreamListRealmModel> antt1listRealmResult = realm.where(TreamPreTreamListRealmModel.class).findAll();
         Log.e("ANTT1 list size ->", antt1listRealmResult.size() + "");
@@ -209,7 +223,6 @@ checkNetwork =new CheckNetwork(this);
 
 
     private void showOfflineData() {
-        Log.e(InfantTermListActivity.class.getSimpleName(), "ON LINE ");
 
         realm.beginTransaction();
         RealmResults<TreamPreTreamListRealmModel> antt1listRealmResult = realm.where(TreamPreTreamListRealmModel.class).findAll();
@@ -235,7 +248,9 @@ checkNetwork =new CheckNetwork(this);
 
     @Override
     public void showLoginError(String response) {
-        Log.e(InfantTermListActivity.class.getSimpleName(), "Response Error" + response);
+        swipe_refresh_layout.setRefreshing(false);
+
+        Log.e(TAG, "Response Error" + response);
 
     }
 

@@ -104,6 +104,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="NO RECORDES FOUND"
+        android:layout_below="@+id/txt_no_internet"
         android:visibility="gone" />
 
     <LinearLayout

@@ -4,15 +4,15 @@
     <item
         android:id="@+id/home"
         android:icon="@drawable/ic_home"
-        android:title="Home" />
+        android:title="@string/b_nav_home" />
     <item
         android:id="@+id/mothers"
         android:icon="@drawable/ic_newborn"
-        android:title="Mothers" />
+        android:title="@string/b_nav_mother" />
     <item
         android:id="@+id/risk"
         android:icon="@drawable/exclamation_circle_nve"
-        android:title="Risk Status" />
+        android:title="@string/b_nav_risk_status" />
 
   <!--  <item
         android:id="@+id/infant"

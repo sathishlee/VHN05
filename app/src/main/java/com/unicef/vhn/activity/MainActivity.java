@@ -4,13 +4,13 @@ package com.unicef.vhn.activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
@@ -20,7 +20,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,24 +31,31 @@ import android.widget.Toast;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.unicef.vhn.Interface.BackPressedFragment;
 import com.unicef.vhn.Preference.PreferenceData;
+import com.unicef.vhn.Presenter.GetVisitANMotherPresenter;
+import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.Presenter.NotificationPresenter;
+import com.unicef.vhn.R;
 import com.unicef.vhn.activity.MotherList.AllMotherListActivity;
-import com.unicef.vhn.activity.MotherList.MigrationMotherListActivity;
-import com.unicef.vhn.adapter.ViewPagerAdapter;
 import com.unicef.vhn.application.MyApplication;
+import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.broadcastReceiver.ConnectivityReceiver;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
-import com.unicef.vhn.R;
+import com.unicef.vhn.fragment.NotificationListFragment;
 import com.unicef.vhn.fragment.home;
 import com.unicef.vhn.fragment.mothers;
 import com.unicef.vhn.fragment.risk;
-import com.unicef.vhn.fragment.NotificationListFragment;
+import com.unicef.vhn.model.PNMotherListResponse;
 import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.utiltiy.RoundedTransformation;
+import com.unicef.vhn.view.MotherListsViews;
 import com.unicef.vhn.view.NotificationViews;
 
+import com.unicef.vhn.view.VisitANMotherViews;
+import io.realm.Realm;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -57,17 +63,25 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ConnectivityReceiver.ConnectivityReceiverListener, NotificationViews {
+        implements NavigationView.OnNavigationItemSelectedListener, ConnectivityReceiver.ConnectivityReceiverListener, NotificationViews, MotherListsViews, VisitANMotherViews {
     CheckNetwork checkNetwork;
     ProgressDialog pDialog;
     PreferenceData preferenceData;
     NotificationPresenter notificationPresenter;
     public static TextView notification_count;
+    View view;
     //   public static TextView txt_no_internet;
     String strTodayVisitCount = "0";
-    int mCartItemCount = 10;
 
-    ViewPager viewpager;
+
+    boolean doubleBackToExitPressedOnce = false;
+
+    MotherListPresenter pnMotherListPresenter;
+    GetVisitANMotherPresenter getVisitANMotherPresenter;
+
+    Realm realm;
+
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,21 +89,29 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+//        notification_count = (TextView)findViewById(R.id.notification_count);
 //        txt_no_internet = (TextView)findViewById(R.id.txt_no_internet);
 //        txt_no_internet.setVisibility(View.GONE);
         checkNetwork = new CheckNetwork(this);
-        if (checkNetwork.isNetworkAvailable()) {
-//            txt_no_internet.setVisibility(View.GONE);
-        } else {
-//            txt_no_internet.setVisibility(View.VISIBLE);
-        }
+        realm = RealmController.with(this).getRealm();
+
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
-        preferenceData.setNotificationCount(strTodayVisitCount);
+//        preferenceData.setNotificationCount(strTodayVisitCount);
+        preferenceData.setTodayvisitCount(strTodayVisitCount);
         notificationPresenter = new NotificationPresenter(this, this);
         notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(), preferenceData.getVhnId());
+
+        pnMotherListPresenter = new MotherListPresenter(getApplicationContext(), this,realm);
+        getVisitANMotherPresenter = new GetVisitANMotherPresenter(getApplicationContext(), this,realm);
+
+        if (checkNetwork.isNetworkAvailable()){
+
+    pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_LIST,
+            preferenceData.getVhnCode(), preferenceData.getVhnId());
+}
 
         // every 10 minut notification count api call
         Timer timer = new Timer();
@@ -106,7 +128,6 @@ public class MainActivity extends AppCompatActivity
 
 // schedule the task to run starting now and then every hour...
         timer.schedule(hourlyTask, 0l, 500 * 60 * 60);   // 1000*10*60 every 10 minut
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -140,8 +161,8 @@ public class MainActivity extends AppCompatActivity
         TextView vhnId = (TextView) headerView.findViewById(R.id.vhn_id);
         vhnId.setText("VHN ID : " + preferenceData.getVhnId());
         navigationView.setNavigationItemSelectedListener(this);
-        vhnName.setText(preferenceData.getVhnName());
-        vhnId.setText(preferenceData.getVhnId());
+//        vhnName.setText(preferenceData.getVhnName());
+//        vhnId.setText(preferenceData.getVhnId());
 
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
@@ -165,7 +186,96 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        } else if (doubleBackToExitPressedOnce) {
+
+            /*bottomNavigationView.setSelectedItemId(R.id.home);
+            Fragment homeFragment = home.newInstance();
+            android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.content, homeFragment).addToBackStack(null);
+            transaction.commit();*/
+
+                //super.onBackPressed();
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(MainActivity.this);
+            builder.setTitle(R.string.app_name);
+            builder.setIcon(R.mipmap.ic_launcher);
+            builder.setMessage("Are you Sure do you want to exit?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+//                            finish();
+                            Intent intent = new Intent(Intent.ACTION_MAIN);
+                            intent.addCategory(Intent.CATEGORY_HOME);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//***Change Here***
+                            startActivity(intent);
+                            finish();
+                            System.exit(0);
+
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            android.app.AlertDialog alert = builder.create();
+            alert.show();
+            }
+
+            else if (!doubleBackToExitPressedOnce){
+
+//            bottomNavigationView.setSelectedItemId(R.id.home);
+//            Fragment homeFragment = home.newInstance();
+//            android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//            transaction.replace(R.id.content, homeFragment).addToBackStack(null);
+//            transaction.commit();
+        }
+
+
+       /* else {
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(MainActivity.this);
+            builder.setTitle(R.string.app_name);
+            builder.setIcon(R.mipmap.ic_launcher);
+            builder.setMessage("Are you Sure do you want to exit?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+//                            finish();
+                            Intent intent = new Intent(Intent.ACTION_MAIN);
+                            intent.addCategory(Intent.CATEGORY_HOME);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//***Change Here***
+                            startActivity(intent);
+                            finish();
+                            System.exit(0);
+
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            android.app.AlertDialog alert = builder.create();
+            alert.show();
+//            super.onBackPressed();
+        }*/
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        /*bottomNavigationView.setSelectedItemId(R.id.home);
+        Fragment homeFragment = home.newInstance();
+        android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content, homeFragment).addToBackStack(null);
+        transaction.commit();*/
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+
+            }
+        }, 2000);
+
+        /*else {
             android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(MainActivity.this);
             builder.setTitle(R.string.app_name);
             builder.setIcon(R.mipmap.ic_launcher);
@@ -184,7 +294,9 @@ public class MainActivity extends AppCompatActivity
             android.app.AlertDialog alert = builder.create();
             alert.show();
             super.onBackPressed();
-        }
+        }*/
+
+
     }
 
     @Override
@@ -194,11 +306,12 @@ public class MainActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.main, menu);
         final MenuItem menuItem = menu.findItem(R.id.action_notification);
         MenuItemCompat.setActionView(menuItem, R.layout.notification_count);
-        View view = MenuItemCompat.getActionView(menuItem);
-//        notification_count = (TextView) view.findViewById(R.id.notification_count);
+          view = MenuItemCompat.getActionView(menuItem);
+        notification_count =   view.findViewById(R.id.notification_count);
+        notification_count.setText(preferenceData.getNotificationCount());
 //        notification_count.setVisibility(View.GONE);
 //        notification_count.setText(String.valueOf(strTodayVisitCount));
-        setupNotiCount();
+//        setupNotiCount();
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -230,15 +343,16 @@ public class MainActivity extends AppCompatActivity
 
         switch (item.getItemId()) {
             case R.id.action_notification:
+
                 notificationPresenter.getNotificationList(preferenceData.getVhnCode(), preferenceData.getVhnId());
                 android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content,
                         NotificationListFragment.newInstance()).commit();
                 return true;
             case R.id.action_help:
-                preferenceData.setLogin(false);
-                finish();
-                Toast.makeText(getApplicationContext(), "Logged Out", Toast.LENGTH_LONG).show();
+//                preferenceData.setLogin(false);
+//                finish();
+//                Toast.makeText(getApplicationContext(), "Logged Out", Toast.LENGTH_LONG).show();
                 return true;
             default:
                 super.onOptionsItemSelected(item);
@@ -273,7 +387,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(i);
         }*/ else if (id == R.id.today_visit) {
             Intent i = new Intent(getApplicationContext(), VisitActivityNew.class);
-//            Intent i = new Intent(getApplicationContext(), VisitActivityNew.class);
+//            Intent i = new Intent(getApplicationContext(), VisitActivity.class);
             startActivity(i);
 
         } else if (id == R.id.migration_mother) {
@@ -311,7 +425,7 @@ public class MainActivity extends AppCompatActivity
 
 
     private void setupNavigationView() {
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+          bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
 
         if (bottomNavigationView != null) {
 
@@ -338,6 +452,7 @@ public class MainActivity extends AppCompatActivity
         Fragment selectedFragment = null;
         switch (item.getItemId()) {
 
+
             case R.id.home:
                 AppConstants.ISQUERYFILTER=false;
                 // Action to perform when Home Menu item is selected.
@@ -358,7 +473,7 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.content, selectedFragment);
+        transaction.replace(R.id.content, selectedFragment).addToBackStack(null);
         transaction.commit();
 
     }
@@ -389,6 +504,71 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void hideProgress() {
         pDialog.dismiss();
+    }
+
+    @Override
+    public void showANVisitRecordsSuccess(String response) {
+
+    }
+
+    @Override
+    public void showANVisitRecordsFailiur(String response) {
+
+    }
+
+    @Override
+    public void showPNVisitRecordsSuccess(String response) {
+
+    }
+
+    @Override
+    public void showPNVisitRecordsFailiur(String response) {
+
+    }
+
+    @Override
+    public void showLoginSuccess(String response) {
+
+        try {
+            JSONObject mJsnobject = new JSONObject(response);
+            String status = mJsnobject.getString("status");
+            String message = mJsnobject.getString("message");
+            if (status.equalsIgnoreCase("1")) {
+                JSONArray jsonArray = mJsnobject.getJSONArray("vhnAN_Mothers_List");
+                if (jsonArray.length() != 0) {
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        if (jsonObject.getString("motherType").equalsIgnoreCase("AN")) {
+                            getVisitANMotherPresenter.getVisitANMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), jsonObject.getString("mid"));
+                        } else if (jsonObject.getString("motherType").equalsIgnoreCase("PN")) {
+                            getVisitANMotherPresenter.getVisitPNMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), jsonObject.getString("mid"));
+                        }
+                    }
+                 }
+
+                else {
+                }
+            } else {
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void showLoginError(String string) {
+
+    }
+
+    @Override
+    public void showAlertClosedSuccess(String response) {
+
+    }
+
+    @Override
+    public void showAlertClosedError(String string) {
+
     }
 
     @Override
@@ -431,14 +611,17 @@ public class MainActivity extends AppCompatActivity
             String status = jsonObject.getString("status");
             String msg = jsonObject.getString("message");
             if (status.equalsIgnoreCase("1")) {
-//                notification_count.setVisibility(View.VISIBLE);
+//                notification_count =view.findViewById(R.id.notification_count);
+
                 String strNotifyCount = jsonObject.getString("notificationCount");
+                Log.e(MainActivity.class.getSimpleName(), "Notification Count-->" + strNotifyCount);
+//                notification_count.setVisibility(View.VISIBLE);
+//                notification_count.setText(strNotifyCount);
                 preferenceData.setNotificationCount(strNotifyCount);
-                Log.d(MainActivity.class.getSimpleName(), "Notification Count-->" + strNotifyCount);
             } else {
                 if (msg.equalsIgnoreCase("No Notification")) {
 //                    notification_count.setVisibility(View.GONE);
-                    Log.d(MainActivity.class.getSimpleName(), "Notification message-->" + msg);
+                    Log.e(MainActivity.class.getSimpleName(), "Notification message-->" + msg);
                 }
             }
         } catch (JSONException e) {
@@ -450,4 +633,6 @@ public class MainActivity extends AppCompatActivity
     public void NotificationCountError(String respons) {
 
     }
+
+
 }

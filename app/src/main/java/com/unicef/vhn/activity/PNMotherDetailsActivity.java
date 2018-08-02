@@ -8,11 +8,9 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,12 +25,14 @@ import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
+import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.R;
 import com.unicef.vhn.utiltiy.RoundedTransformation;
 import com.unicef.vhn.view.MotherListsViews;
 
+import io.realm.Realm;
 import org.json.JSONException;
 import org.json.JSONObject;
 /*PN Mother Details  have api call working well is not use this project,
@@ -54,10 +54,11 @@ public class PNMotherDetailsActivity extends AppCompatActivity implements View.O
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
 
-
+Realm realm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        realm= RealmController.with(this).getRealm();
         setContentView(R.layout.activity_pn_mother_details);
         showActionBar();
         intUI();
@@ -91,7 +92,7 @@ public class PNMotherDetailsActivity extends AppCompatActivity implements View.O
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData =new PreferenceData(this);
-        pnMotherListPresenter = new MotherListPresenter(PNMotherDetailsActivity.this,this);
+        pnMotherListPresenter = new MotherListPresenter(PNMotherDetailsActivity.this,this, realm);
         pnMotherListPresenter.getSelectedPNMother(AppConstants.SELECTED_MID);
 
         txt_username = (TextView) findViewById(R.id.txt_username);

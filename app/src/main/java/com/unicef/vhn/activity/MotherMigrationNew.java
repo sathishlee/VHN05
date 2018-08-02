@@ -1,5 +1,6 @@
 package com.unicef.vhn.activity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -9,30 +10,46 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.unicef.vhn.Preference.PreferenceData;
+import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.adapter.ViewPagerAdapter;
+import com.unicef.vhn.application.RealmController;
+import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.fragment.MigratedMotherFragment;
 import com.unicef.vhn.fragment.NativeMotherFragment;
+import com.unicef.vhn.utiltiy.CheckNetwork;
+import com.unicef.vhn.view.MotherListsViews;
+import io.realm.Realm;
 
 /**
  * Created by Suthishan on 20/1/2018.
  */
 
-public class MotherMigrationNew extends AppCompatActivity{
+public class MotherMigrationNew extends AppCompatActivity implements MotherListsViews {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     ViewPagerAdapter adapter;
+    ProgressDialog pDialog;
+PreferenceData preferenceData;
 
     private int[] tabIcons = {
             R.drawable.native_mother,
             R.drawable.migrated_mothers,
     };
 
+    Realm realm;
+
+    MotherListPresenter pnMotherListPresenter;
+    CheckNetwork checkNetwork;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        realm = RealmController.with(this).getRealm(); // opens "myrealm.realm"
+
         setContentView(R.layout.activity_mother_migration_new);
         initUi();
     }
@@ -44,6 +61,21 @@ public class MotherMigrationNew extends AppCompatActivity{
         setSupportActionBar(toolbar);
         toolbar.setTitle("Mother Migration");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
+        pDialog.setMessage("Please Wait ...");
+        preferenceData = new PreferenceData(this);
+        checkNetwork = new CheckNetwork(this);
+
+        pnMotherListPresenter = new MotherListPresenter(getApplicationContext(), this,realm);
+
+
+        if (checkNetwork.isNetworkAvailable()) {
+            pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_LIST,
+                    preferenceData.getVhnCode(), preferenceData.getVhnId());
+        } else {
+//            isOffline = true;
+        }
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
 
@@ -114,5 +146,35 @@ public class MotherMigrationNew extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showProgress() {
+pDialog.show();
+    }
+
+    @Override
+    public void hideProgress() {
+pDialog.dismiss();
+    }
+
+    @Override
+    public void showLoginSuccess(String response) {
+
+    }
+
+    @Override
+    public void showLoginError(String string) {
+
+    }
+
+    @Override
+    public void showAlertClosedSuccess(String response) {
+
+    }
+
+    @Override
+    public void showAlertClosedError(String string) {
+
     }
 }

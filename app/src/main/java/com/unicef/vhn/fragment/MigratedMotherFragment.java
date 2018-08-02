@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -70,7 +71,7 @@ public class MigratedMotherFragment extends Fragment implements MotherListsViews
     boolean isoffline = false;
     Realm realm;
     MotherMigrationRealmModel motherMigrationRealmModel;
-
+private SwipeRefreshLayout swipeRefreshLayout;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +95,7 @@ public class MigratedMotherFragment extends Fragment implements MotherListsViews
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(getActivity());
 
-        pnMotherListPresenter = new MotherListPresenter(getActivity(),this);
+        pnMotherListPresenter = new MotherListPresenter(getActivity(),this, realm);
         if (checkNetwork.isNetworkAvailable()) {
             pnMotherListPresenter.getMigratedMothersList1(preferenceData.getVhnCode(), preferenceData.getVhnId());
         }else{
@@ -105,7 +106,7 @@ public class MigratedMotherFragment extends Fragment implements MotherListsViews
 
         recyclerView = (RecyclerView) view.findViewById(R.id.mother_recycler_view);
         textView = (TextView) view.findViewById(R.id.txt_no_records_found);
-
+swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh_layout);
         motherMigrationAdapter = new MotherMigrationAdapter(vhn_migrated_mothers, getActivity(), "", this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -119,6 +120,17 @@ public class MigratedMotherFragment extends Fragment implements MotherListsViews
             builder.setMessage("Record Not Found");
             builder.create();
         }
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (checkNetwork.isNetworkAvailable()) {
+                    pnMotherListPresenter.getMigratedMothersList1(preferenceData.getVhnCode(), preferenceData.getVhnId());
+                }else{
+                    swipeRefreshLayout.setRefreshing(false);
+                    isoffline=true;
+                }
+            }
+        });
     }
     private void showOfflineData() {
 
@@ -164,6 +176,8 @@ public class MigratedMotherFragment extends Fragment implements MotherListsViews
 
     @Override
     public void showLoginSuccess(String response) {
+        swipeRefreshLayout.setRefreshing(false);
+
         Log.e(MotherMigration.class.getSimpleName(), "Response success" + response);
 
         try {
@@ -171,7 +185,7 @@ public class MigratedMotherFragment extends Fragment implements MotherListsViews
             String status =mJsnobject.getString("status");
             String message =mJsnobject.getString("message");
             if (status.equalsIgnoreCase("1")) {
-
+                vhn_migrated_mothers.clear();
                 JSONArray jsonArray = mJsnobject.getJSONArray("vhn_migrated_mothers");
                 RealmResults<MotherMigrationRealmModel> motherListAdapterRealmModel = null;
 
@@ -223,7 +237,7 @@ public class MigratedMotherFragment extends Fragment implements MotherListsViews
     }
 
     private void setValueToUI() {
-        Log.d(MotherMigration.class.getSimpleName(),  "online");
+
         RealmResults<MotherMigrationRealmModel> motherMigrationrealmResults = null;
         realm.beginTransaction();
         motherMigrationrealmResults = realm.where(MotherMigrationRealmModel.class).findAll();
@@ -244,6 +258,8 @@ public class MigratedMotherFragment extends Fragment implements MotherListsViews
 
     @Override
     public void showLoginError(String string) {
+        swipeRefreshLayout.setRefreshing(false);
+
         Log.e(MotherMigration.class.getSimpleName(), "Response Error" + string);
     }
 

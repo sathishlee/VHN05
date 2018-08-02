@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -62,6 +63,7 @@ public class PNHBNCDueListActivity extends AppCompatActivity implements MotherLi
     boolean isoffline = false;
     Realm realm;
     PNHBNCDueListRealmModel pnhbncDueListRealmModel;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,19 +84,19 @@ public class PNHBNCDueListActivity extends AppCompatActivity implements MotherLi
     }
 
     public void initUI() {
-checkNetwork =new CheckNetwork(this);
+        checkNetwork = new CheckNetwork(this);
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
-
-        pnMotherListPresenter = new MotherListPresenter(PNHBNCDueListActivity.this, this);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        pnMotherListPresenter = new MotherListPresenter(PNHBNCDueListActivity.this, this, realm);
 //        pnMotherListPresenter.getPNMotherList("V10001","1");
         if (checkNetwork.isNetworkAvailable()) {
             pnMotherListPresenter.getPNHBNCDUEMotherList(preferenceData.getVhnCode(), preferenceData.getVhnId(), "1");
-        }else{
-            isoffline = true ;
-                    }
+        } else {
+            isoffline = true;
+        }
         tt1_lists = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.mother_recycler_view);
         textView = (TextView) findViewById(R.id.txt_no_records_found);
@@ -104,15 +106,25 @@ checkNetwork =new CheckNetwork(this);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(antt1Adapter);
-        if (isoffline){
-            showOfflineData();
-        }else{
+        if (isoffline) {
+            setValueToUI();
+        } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Record Not Found");
             builder.create();
         }
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (checkNetwork.isNetworkAvailable()) {
+                    pnMotherListPresenter.getPNHBNCDUEMotherList(preferenceData.getVhnCode(), preferenceData.getVhnId(), "1");
+                } else {
+                    swipeRefreshLayout.setRefreshing(false);
+                    isoffline = true;
+                }
+            }
+        });
     }
-
 
 
     @Override
@@ -128,9 +140,7 @@ checkNetwork =new CheckNetwork(this);
 
     @Override
     public void showLoginSuccess(String response) {
-
-
-        Log.e(ANTT1MothersList.class.getSimpleName(), "Response success" + response);
+        swipeRefreshLayout.setRefreshing(false);
 
         try {
             JSONObject mJsnobject = new JSONObject(response);
@@ -149,9 +159,9 @@ checkNetwork =new CheckNetwork(this);
                 if (jsonArray.length() != 0) {
                     recyclerView.setVisibility(View.VISIBLE);
                     textView.setVisibility(View.GONE);
-realm.beginTransaction();
+                    realm.beginTransaction();
                     for (int i = 0; i < jsonArray.length(); i++) {
-                         pnhbncDueListRealmModel= realm.createObject(PNHBNCDueListRealmModel.class);
+                        pnhbncDueListRealmModel = realm.createObject(PNHBNCDueListRealmModel.class);
 
                         tt1List = new PNHBNCDueListModel.VPNHBNC_List();
 
@@ -196,12 +206,12 @@ realm.beginTransaction();
     }
 
     private void setValueToUI() {
-        Log.d(PNHBNCDueListActivity.class.getSimpleName(),"On Line");
+        Log.d(PNHBNCDueListActivity.class.getSimpleName(), "On Line");
 
         realm.beginTransaction();
-        RealmResults<PNHBNCDueListRealmModel> realmModelRealmResults =realm.where(PNHBNCDueListRealmModel.class).findAll();
-        for (int i=0;i<realmModelRealmResults.size();i++){
-            tt1List  =new PNHBNCDueListModel.VPNHBNC_List();
+        RealmResults<PNHBNCDueListRealmModel> realmModelRealmResults = realm.where(PNHBNCDueListRealmModel.class).findAll();
+        for (int i = 0; i < realmModelRealmResults.size(); i++) {
+            tt1List = new PNHBNCDueListModel.VPNHBNC_List();
 
             PNHBNCDueListRealmModel model = realmModelRealmResults.get(i);
             tt1List.setMotherName(model.getMotherName());
@@ -220,36 +230,12 @@ realm.beginTransaction();
         realm.commitTransaction();
     }
 
-    private void showOfflineData() {
-
-        Log.d(PNHBNCDueListActivity.class.getSimpleName(),"Off Line");
-
-        realm.beginTransaction();
-        RealmResults<PNHBNCDueListRealmModel> realmModelRealmResults =realm.where(PNHBNCDueListRealmModel.class).findAll();
-        for (int i=0;i<realmModelRealmResults.size();i++){
-            tt1List  =new PNHBNCDueListModel.VPNHBNC_List();
-
-            PNHBNCDueListRealmModel model = realmModelRealmResults.get(i);
-            tt1List.setMotherName(model.getMotherName());
-            tt1List.setPicmeId(model.getPicmeId());
-            tt1List.setMobile(model.getMobile());
-            tt1List.setVisit1(model.getVisit1());
-            tt1List.setVisit2(model.getVisit2());
-            tt1List.setVisit3(model.getVisit3());
-            tt1List.setVisit4(model.getVisit4());
-            tt1List.setVisit5(model.getVisit5());
-            tt1List.setVisit6(model.getVisit6());
-            tt1List.setVisit7(model.getVisit7());
-            tt1_lists.add(tt1List);
-            antt1Adapter.notifyDataSetChanged();
-        }
-        realm.commitTransaction();
-
-    }
 
     @Override
     public void showLoginError(String string) {
-        Log.e(ANTT1MothersList.class.getSimpleName(), "Response Error" + string);
+        swipeRefreshLayout.setRefreshing(false);
+
+        Log.e(PNHBNCDueListActivity.class.getSimpleName(), "Response Error" + string);
 
     }
 
@@ -275,7 +261,6 @@ realm.beginTransaction();
     }
 
     private void requestCallPermission() {
-        Log.i(ANTT1MothersList.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CALL_PHONE)) {
             Toast.makeText(getApplicationContext(), "Displaying Call permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();

@@ -19,9 +19,7 @@ import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.adapter.TremAndPreTremAdapter;
 import com.unicef.vhn.application.RealmController;
-import com.unicef.vhn.model.SOSListResponse;
 import com.unicef.vhn.model.TremAndPreTremResponseModel;
-import com.unicef.vhn.realmDbModel.SosListRealmModel;
 import com.unicef.vhn.realmDbModel.TreamPreTreamListRealmModel;
 import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.view.MotherListsViews;
@@ -66,7 +64,7 @@ checkNetwork =new CheckNetwork(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
-        pnMotherListPresenter = new MotherListPresenter(TreamPreTreamListActivity.this, this);
+        pnMotherListPresenter = new MotherListPresenter(TreamPreTreamListActivity.this, this, realm);
 //        pnMotherListPresenter.getPNMotherList("V10001","1");
         if (checkNetwork.isNetworkAvailable()) {
             pnMotherListPresenter.getTremAndPreTremMothersList(preferenceData.getVhnCode(), preferenceData.getVhnId());

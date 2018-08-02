@@ -17,9 +17,11 @@ import android.widget.TextView;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.unicef.vhn.Interface.MakeCallInterface;
 import com.unicef.vhn.R;
 import com.unicef.vhn.activity.MotherDetails.ANMotherDetailsViewActivcity;
 import com.unicef.vhn.activity.MotherDetails.PNMotherDetailsViewActivity;
+import com.unicef.vhn.activity.MotherLocationActivity;
 import com.unicef.vhn.activity.SosAlertListActivity;
 import com.unicef.vhn.activity.SosMotherDetailsActivity;
 import com.unicef.vhn.constant.Apiconstants;
@@ -40,11 +42,14 @@ public class SOSListAdapter extends RecyclerView.Adapter<SOSListAdapter.ViewHold
     Activity applicationContext;
     String strSosId, strVHNID, str_mPhoto, SosStatus;
     CheckNetwork checkNetwork;
+    MakeCallInterface makeCallInterface;
 
-    public SOSListAdapter(List<SOSListResponse.VhnAN_Mothers_List> mResult, Activity applicationContext) {
+    public SOSListAdapter(List<SOSListResponse.VhnAN_Mothers_List> mResult, Activity applicationContext,MakeCallInterface makeCallInterface) {
         this.mResult = mResult;
         this.applicationContext = applicationContext;
         checkNetwork =new CheckNetwork(applicationContext);
+        this.makeCallInterface = makeCallInterface;
+
     }
 
 
@@ -128,6 +133,24 @@ public class SOSListAdapter extends RecyclerView.Adapter<SOSListAdapter.ViewHold
                 }
             }
         });
+
+
+
+        holder.ll_call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeCallInterface.makeCall(SosMotherResponseModel.getmMotherMobile());
+            }
+        });
+
+
+        holder.ll_track_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppConstants.SELECTED_MID = SosMotherResponseModel.getMid();
+                applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MotherLocationActivity.class));
+            }
+        });
     }
 
 
@@ -138,7 +161,7 @@ public class SOSListAdapter extends RecyclerView.Adapter<SOSListAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txt_username, txt_picme_id, txt_mother_type;
-        LinearLayout ll_ll_mother_type;
+        LinearLayout ll_ll_mother_type,ll_call,ll_track_location;
         ImageView cardview_image;
 
 
@@ -149,6 +172,9 @@ public class SOSListAdapter extends RecyclerView.Adapter<SOSListAdapter.ViewHold
             txt_picme_id = itemView.findViewById(R.id.txt_picme_id);
             txt_mother_type = itemView.findViewById(R.id.txt_mother_type);
             cardview_image = itemView.findViewById(R.id.cardview_image);
+            ll_ll_mother_type = itemView.findViewById(R.id.ll_ll_mother_type);
+            ll_call = itemView.findViewById(R.id.ll_call);
+            ll_track_location = itemView.findViewById(R.id.ll_track_location);
         }
     }
 }

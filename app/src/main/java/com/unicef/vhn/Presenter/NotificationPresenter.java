@@ -45,6 +45,7 @@ public class NotificationPresenter implements NotificationInteractor {
             @Override
             public void onResponse(String response) {
                 notificationViews.hideProgress();
+
                 notificationViews.NotificationCountSuccess(String.valueOf(response));
             }
         }, new Response.ErrorListener() {

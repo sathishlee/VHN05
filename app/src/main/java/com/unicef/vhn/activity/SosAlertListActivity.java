@@ -24,15 +24,10 @@ import com.unicef.vhn.Interface.MakeCallInterface;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
-import com.unicef.vhn.adapter.MotherListAdapter;
 import com.unicef.vhn.adapter.SOSListAdapter;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
-import com.unicef.vhn.model.ANTT1ResponseModel;
-import com.unicef.vhn.model.PNMotherListResponse;
 import com.unicef.vhn.model.SOSListResponse;
-import com.unicef.vhn.realmDbModel.ANTT1RealmModel;
-import com.unicef.vhn.realmDbModel.DashBoardRealmModel;
 import com.unicef.vhn.realmDbModel.SosListRealmModel;
 import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.view.MotherListsViews;
@@ -64,6 +59,10 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
     boolean isoffline = false;
     Realm realm;
     SosListRealmModel sosListRealmModel;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,9 +100,10 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData =new PreferenceData(this);
-        pnMotherListPresenter = new MotherListPresenter(SosAlertListActivity.this,this);
+        pnMotherListPresenter = new MotherListPresenter(SosAlertListActivity.this,this, realm);
         if (checkNetwork.isNetworkAvailable()) {
             pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_SOS_MOTHER_LIST, preferenceData.getVhnCode(), preferenceData.getVhnId());
+
         }
         else{
             isoffline=true;
@@ -111,7 +111,7 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
         mResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView) findViewById(R.id.mother_recycler_view);
         txt_no_records_found  =(TextView)findViewById(R.id.txt_no_records_found);
-        mAdapter = new SOSListAdapter(mResult, SosAlertListActivity.this);
+        mAdapter = new SOSListAdapter(mResult, SosAlertListActivity.this,this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(SosAlertListActivity.this);
         mother_recycler_view.setLayoutManager(mLayoutManager);
@@ -207,7 +207,7 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
     } else {
         mother_recycler_view.setVisibility(View.GONE);
         txt_no_records_found.setVisibility(View.VISIBLE);
-    }
+        }
 }else{
    /* realm.executeTransaction(new Realm.Transaction() {
         @Override
@@ -262,6 +262,10 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
             mAdapter.notifyDataSetChanged();
         }
         realm.commitTransaction();
+
+//        pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_LIST,
+//                preferenceData.getVhnCode(), preferenceData.getVhnId());
+
     }
     private void showOfflineData() {
 
@@ -327,7 +331,6 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
         }
     }
     private void requestCallPermission() {
-        Log.i(ANTT1MothersList.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CALL_PHONE)) {
             Toast.makeText(getApplicationContext(),"Displaying Call permission rationale to provide additional context.",Toast.LENGTH_SHORT).show();

@@ -1,6 +1,7 @@
 package com.unicef.vhn.Presenter;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -12,10 +13,17 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.interactor.MotherListInteractor;
+import com.unicef.vhn.model.PNMotherListResponse;
+import com.unicef.vhn.realmDbModel.PNMMotherListRealmModel;
 import com.unicef.vhn.view.MotherListsViews;
 import com.unicef.vhn.volleyservice.VolleySingleton;
+import io.realm.Realm;
+import io.realm.RealmResults;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,32 +36,85 @@ public class MotherListPresenter implements MotherListInteractor {
 
     Context context;
     MotherListsViews motherListsViews;
-
-    public MotherListPresenter(Context context, MotherListsViews motherListsViews) {
+    Realm realm;
+    public MotherListPresenter(Context context, MotherListsViews motherListsViews, Realm realm) {
         this.context = context;
         this.motherListsViews = motherListsViews;
+        this.realm = realm;
     }
 
     @Override
     public void getPNMotherList(String callurl, final String vhnCode, final String vhnId) {
         motherListsViews.showProgress();
         String url = Apiconstants.BASE_URL + callurl;
-        Log.e("Log in check Url--->", url);
-        Log.e("vhnCode--->", vhnCode);
-        Log.e("vhnId--->", vhnId);
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 motherListsViews.hideProgress();
-                Log.e("today visit success--->", response);
-
                 motherListsViews.showLoginSuccess(response);
+                try{
+                    JSONObject mJsnobject = new JSONObject(response);
+                    String status = mJsnobject.getString("status");
+                    String message = mJsnobject.getString("message");
+                    if (status.equalsIgnoreCase("1")) {
+                        JSONArray jsonArray = mJsnobject.getJSONArray("vhnAN_Mothers_List");
+                        RealmResults<PNMMotherListRealmModel> motherListAdapterRealmModel = null;
+                        motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).findAll();
+                        Log.e("Realm size ---->", motherListAdapterRealmModel.size() + "");
+                        realm.executeTransaction(new Realm.Transaction() {
+                            @Override
+                            public void execute(Realm realm) {
+                                realm.delete(PNMMotherListRealmModel.class);
+                            }
+                        });
+                        PNMMotherListRealmModel pnmMotherListRealmModel;
+
+                        if (jsonArray.length() != 0) {
+                             realm.beginTransaction();
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                pnmMotherListRealmModel = realm.createObject(PNMMotherListRealmModel.class);
+
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                pnmMotherListRealmModel.setMid(jsonObject.getString("mid"));
+                                pnmMotherListRealmModel.setmName(jsonObject.getString("mName"));
+                                pnmMotherListRealmModel.setmAge(jsonObject.getString("mAge"));
+                                pnmMotherListRealmModel.setmPicmeId(jsonObject.getString("mPicmeId"));
+                                pnmMotherListRealmModel.setVhnId(jsonObject.getString("vhnId"));
+                                pnmMotherListRealmModel.setmMotherMobile(jsonObject.getString("mMotherMobile"));
+                                pnmMotherListRealmModel.setMotherType(jsonObject.getString("motherType"));
+                                pnmMotherListRealmModel.setmLatitude(jsonObject.getString("mLatitude"));
+                                pnmMotherListRealmModel.setmLongitude(jsonObject.getString("mLongitude"));
+                                pnmMotherListRealmModel.setmPhoto(jsonObject.getString("mPhoto"));
+                                pnmMotherListRealmModel.setmRiskStatus(jsonObject.getString("mRiskStatus"));
+                                pnmMotherListRealmModel.setmEDD(jsonObject.getString("mEDD"));
+                                pnmMotherListRealmModel.setmHusbandName(jsonObject.getString("mHusbandName"));
+                                pnmMotherListRealmModel.setmHusbandMobile(jsonObject.getString("mHusbandMobile"));
+                                pnmMotherListRealmModel.setvLongitude(jsonObject.getString("vLongitude"));
+                                pnmMotherListRealmModel.setvLatitude(jsonObject.getString("vLatitude"));
+                                pnmMotherListRealmModel.setCurrentMonth(Integer.parseInt(jsonObject.getString("currentMonth")));
+                                pnmMotherListRealmModel.setmLMP(jsonObject.getString("mLMP"));
+                                pnmMotherListRealmModel.setmVillage(jsonObject.getString("mVillage"));
+                                pnmMotherListRealmModel.setNextVisit(jsonObject.getString("nextVisit"));
+                                pnmMotherListRealmModel.setGestAge(jsonObject.getString("gestAge"));
+                                pnmMotherListRealmModel.setmWeight(jsonObject.getString("mWeight"));
+                                pnmMotherListRealmModel.setDeleveryDate(jsonObject.getString("deleveryDate"));
+                                pnmMotherListRealmModel.setdBirthDetails(jsonObject.getString("dBirthDetails"));
+                                pnmMotherListRealmModel.setdBirthWeight(jsonObject.getString("dBirthWeight"));
+                                pnmMotherListRealmModel.setMeturityWeek(jsonObject.getString("meturityWeek"));
+                                pnmMotherListRealmModel.setPnVisit(jsonObject.getString("pnVisit"));
+                            }
+                            realm.commitTransaction();
+
+                        }
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("today visit error--->", error.toString());
-
                 motherListsViews.hideProgress();
                 motherListsViews.showLoginError(error.toString());
             }
@@ -615,7 +676,7 @@ public class MotherListPresenter implements MotherListInteractor {
 
         motherListsViews.showProgress();
         String url = Apiconstants.BASE_URL + Apiconstants.DASH_BOARD_MOTHERS_AN_TT2_DUELIST;
-        Log.d("Log in check Url--->", url);
+        Log.e("Log in check Url--->", url);
         Log.d("vhnId--->", vhnId);
         Log.d("VhnCode--->", vhnCode);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {

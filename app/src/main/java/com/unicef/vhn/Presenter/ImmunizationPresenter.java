@@ -40,7 +40,7 @@ public class ImmunizationPresenter  implements ImmunizationInteractor{
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("SelectedMother", "Success" + response);
+                Log.e(ImmunizationPresenter.class.getSimpleName(), "Success" + response);
                 motherListsViews.hideProgress();
                 motherListsViews.getImmunizationListSuccess(response);
                 motherListsViews.callMotherDetailsApi();
@@ -49,6 +49,7 @@ public class ImmunizationPresenter  implements ImmunizationInteractor{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.e(ImmunizationPresenter.class.getSimpleName(), "error" + error);
                 motherListsViews.hideProgress();
                 motherListsViews.getImmunizationListError(error.toString());
             }

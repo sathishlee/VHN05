@@ -45,7 +45,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="HSC :"
+                        android:text="@string/hsc"
                         android:layout_weight="1"
                         android:textSize="@dimen/text_primary"
                         android:textColor="@color/text_header"/>
@@ -72,7 +72,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="PHC Name :"
+                        android:text="@string/phc"
                         android:layout_weight="1"
                         android:textSize="@dimen/text_primary"
                         android:textColor="@color/text_header" />
@@ -107,7 +107,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Block :"
+                        android:text="@string/block_home"
                         android:layout_weight="1"
                         android:textSize="@dimen/text_primary"
                         android:textColor="@color/text_header"/>
@@ -134,7 +134,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Address :"
+                        android:text="@string/address_home"
                         android:layout_weight="1"
                         android:textSize="@dimen/text_primary"
                         android:textColor="@color/text_header" />
@@ -176,7 +176,7 @@
             android:id="@+id/txt_vhn_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Julie"
+            android:text=" "
             android:textAllCaps="true"
             android:padding="1dp"
             android:gravity="start"

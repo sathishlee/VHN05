@@ -28,7 +28,9 @@ import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.activity.ANViewReportsActivity;
 import com.unicef.vhn.activity.MotherLocationActivity;
+import com.unicef.vhn.activity.MotherVisitReport.ANMotherVisitReportActivity;
 import com.unicef.vhn.activity.MotherVisitReport.PNMotherVisitReportActivity;
+import com.unicef.vhn.activity.MotherVisitReport.PNViewReportsActivity;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
@@ -161,6 +163,7 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
 
             txt_username.setText(model.getmName());
             txt_picme_id.setText(model.getmPicmeId());
+            txt_mage.setText(model.getmAge());
             txt_gest_week.setText(model.getGestAge()+" Wks");
             txt_weight.setText(model.getmWeight()+" Kg");
             txt_lmp_date.setText(model.getmLMP());
@@ -243,7 +246,12 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
 //                startActivity(new Intent(getApplicationContext(),PNViewReportsActivity.class));
                 startActivity(new Intent(getApplicationContext(),PNMotherVisitReportActivity.class));
                 break;
-            case R.id.btn_view_an_report: startActivity(new Intent(getApplicationContext(),ANViewReportsActivity.class));
+            case R.id.btn_view_an_report:
+                Toast.makeText(getApplicationContext(),"AN MID"+AppConstants.SELECTED_MID ,Toast.LENGTH_SHORT).show();
+
+//                startActivity(new Intent(getApplicationContext(),ANViewReportsActivity.class));
+                startActivity(new Intent(getApplicationContext(), ANMotherVisitReportActivity.class));
+
                 break;
             case R.id.img_call_1:
                 makeCall(strMobileNo);

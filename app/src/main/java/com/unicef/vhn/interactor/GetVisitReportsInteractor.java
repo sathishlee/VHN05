@@ -7,5 +7,6 @@ package com.unicef.vhn.interactor;
 public interface GetVisitReportsInteractor {
 
     void getallVisitReports(String picmeId, String mid) ;
+    void getallPNVisitReports(String picmeId, String mid) ;
 
 }

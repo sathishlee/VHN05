@@ -5,6 +5,7 @@ package com.unicef.vhn.constant;
  */
 
 public class AppConstants {
+    public static boolean ISPNVISIT = false;
     public static boolean ISQUERYFILTER = false;
     public static boolean ISHOMEALREDYCLICKED = false;
     public static String NEAR_LATITUDE = "";
@@ -50,6 +51,7 @@ public class AppConstants {
     public static final String NOTIFICATION_COUNT = "0";
 
 
+
     public static String ISHIGHRISK="isHighRisk";
     public static String ISDECENDING="isDecending";
     public static String VILLAGENAME="villageName";
@@ -65,6 +67,8 @@ public class AppConstants {
     public static boolean IS_MOTHER_LIST=false;
     public static boolean IS_TODAY_VIST_LIST=false;
     public static String SELECTED_VISIT_NOTE_ID="";
+
+    public static final String LANGUAGE="ta";
 
 
 }

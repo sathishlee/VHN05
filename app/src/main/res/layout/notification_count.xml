@@ -34,7 +34,7 @@
                 android:textSize="@dimen/text_primary"
                 android:textColor="@color/text_primary"
                 android:background="@drawable/icon_back_count"
-                android:text="10" />
+                android:text="0" />
 
         </LinearLayout>
 

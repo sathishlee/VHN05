@@ -160,8 +160,8 @@
     <string name="newborn">பிறந்த</string>
     <string name="next_visit">அடுத்த வருகை:</string>
     <string name="no_image">உருவம் இல்லை</string>
-    <string name="no_recordes_found">இல்லை ரெக்கார்டுகள் கிடைக்கின்றன</string>
-    <string name="no_records_found">இல்லை ரெக்கார்டுகள் கிடைக்கின்றன</string>
+    <string name="no_recordes_found">எந்த பதிவுகளும் கண்டறியப்படவில்லை</string>
+    <string name="no_records_found">எந்த பதிவுகளும் கண்டறியப்படவில்லை</string>
     <string name="occupation">தொழில்</string>
     <string name="on_any_medication">எந்த மருந்துகளிலும்</string>
     <string name="opv">OPV</string>
@@ -240,4 +240,45 @@
     <string name="phc_name">PHC பெயர்</string>
     <string name="post_natal_mother_visit">நடால் அம்மா வருகை</string>
     <string name="you_are_in_offline">நீங்கள் ஆஃப்லைனில் இருக்கிறீர்கள்</string>
+
+
+    <string name="hsc">துணை சுகாதார மையம் :</string>
+    <string name="phc">முதன்மையான சுகாதார மையம் :</string>
+    <string name="block_home">தொகுதி :</string>
+    <string name="address_home">முகவரி :</string>
+    <string name="sos">நெருக்கடி நிலை தாய்மார்கள்</string>
+    <string name="mothers">தாய்மார்கள்</string>
+    <string name="high_risk_home">விளைவுருவானவர் :</string>
+    <string name="infants">கைக்குழந்தைகள்</string>
+
+
+    <string name="an_mothers">பிரசவத்திற்க்கு முன் </string>
+    <string name="pn_mothers">பிரசவத்திற்க்கு பின் </string>
+    <string name="total">மொத்தம் : </string>
+    <string name="preterm">பிரசவித்தவர்கள் : </string>
+    <string name="due_list">தடுப்பு ஊசி கொடுக்க வேண்டியவர்கள் </string>
+    <string name="antt1">முதல் ஊசி</string>
+    <string name="antt2">இரண்டாம் ஊசி</string>
+    <string name="pnhbnc">பிரசவித்தவர்கள்</string>
+
+
+    <string name="nav_an_mother">கற்பமுற்றவர்கள்</string>
+    <string name="nav_pn_mother">பிரசவித்தவர்கள்</string>
+    <string name="nav_immunization">நோய்த்தடுப்பு</string>
+    <string name="nav_visit">இன்றய பரிசோதனை தாய்மார்கள்</string>
+    <string name="nav_mother_migrationt">இடம் பெயர்ந்த தாய்மார்கள்</string>
+    <string name="nav_change_password">கடவுச்சொல்லை மாற்ற</string>
+    <string name="nav_change_language">மொழி மாற்ற</string>
+
+    <string name="b_nav_home">முகப்பு</string>
+    <string name="b_nav_mother">தாய்மார்கள்</string>
+    <string name="b_nav_risk_status">விளைவுருவானவர்</string>
+
+
+
+
+
+
+
+
 </resources>

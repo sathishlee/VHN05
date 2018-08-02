@@ -1,6 +1,7 @@
 package com.unicef.vhn.fragment;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -24,12 +25,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.unicef.vhn.Interface.BackPressedFragment;
 import com.unicef.vhn.Interface.MakeCallInterface;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.GetVisitANMotherPresenter;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
-import com.unicef.vhn.activity.ANTT1MothersList;
 import com.unicef.vhn.adapter.MotherListAdapter;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
@@ -58,7 +59,7 @@ import io.realm.RealmResults;
  */
 
 public class mothers extends Fragment implements MotherListsViews, MakeCallInterface,
-        VisitANMotherViews, MotherListAdapter.ContactsAdapterListener {
+        VisitANMotherViews, MotherListAdapter.ContactsAdapterListener  {
 //        , PrimaryRegisterViews, MotherDeliveryViews
 
     ProgressDialog pDialog;
@@ -83,6 +84,7 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
     PNMVisitRealmModel pnmVisitRealmModel;
     private SearchView searchView;
     SwipeRefreshLayout pullToRefresh;
+
 
     public static mothers newInstance() {
         mothers fragment = new mothers();
@@ -127,8 +129,8 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
         txt_no_records_found.setVisibility(View.GONE);
         Log.d(mothers.class.getSimpleName(), "mother fragment initUI view");
 
-        pnMotherListPresenter = new MotherListPresenter(getActivity(), this);
-        getVisitANMotherPresenter = new GetVisitANMotherPresenter(getActivity(), this);
+        pnMotherListPresenter = new MotherListPresenter(getActivity(), this, realm);
+        getVisitANMotherPresenter = new GetVisitANMotherPresenter(getActivity(), this,realm);
 
         if (checkNetwork.isNetworkAvailable()) {
             pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_LIST,
@@ -175,16 +177,23 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (isoffline) {
+                if (checkNetwork.isNetworkAvailable()) {
+                    pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_LIST,
+                            preferenceData.getVhnCode(), preferenceData.getVhnId());
+                } else {
+                    isoffline = true;
+                }
+            }
+        });
+
+        /*if (isoffline) {
                     txt_no_internet.setVisibility(View.VISIBLE);
                     setValueToUI();
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setMessage("Record Not Found");
                     builder.create();
-                }
-            }
-        });
+                }*/
     }
 
 
@@ -200,7 +209,7 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
 
 
     @Override
-    public void showANVisitRecordsSuccess(String response) {
+    public void showANVisitRecordsSuccess(String response) {/*
         try {
             JSONObject mJsnobject = new JSONObject(response);
             String status = mJsnobject.getString("status");
@@ -269,7 +278,7 @@ realm.commitTransaction();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+*/
 
     }
 
@@ -278,7 +287,7 @@ realm.commitTransaction();
     }
 
     @Override
-    public void showPNVisitRecordsSuccess(String response) {
+    public void showPNVisitRecordsSuccess(String response) {/*
         try {
             JSONObject mJsnobject = new JSONObject(response);
             String status = mJsnobject.getString("status");
@@ -335,7 +344,7 @@ realm.commitTransaction();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+*/
 
     }
 
@@ -346,6 +355,8 @@ realm.commitTransaction();
 
     @Override
     public void showLoginSuccess(String response) {
+        mResult.clear();
+        pullToRefresh.setRefreshing(false);
 
         try {
             JSONObject res_mJsnobject = new JSONObject(response);
@@ -354,24 +365,25 @@ realm.commitTransaction();
 
             if (status.equalsIgnoreCase("1")) {
 
-                JSONArray jsonArray = res_mJsnobject.getJSONArray("vhnAN_Mothers_List");
-                RealmResults<PNMMotherListRealmModel> motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).findAll();
+           JSONArray jsonArray = res_mJsnobject.getJSONArray("vhnAN_Mothers_List");
+                   /*  RealmResults<PNMMotherListRealmModel> motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).findAll();
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
                         realm.delete(PNMMotherListRealmModel.class);
                     }
-                });
+                });*/
 
 
                 //create new realm Table
-                realm.beginTransaction();       //create or open
+//                realm.beginTransaction();       //create or open
                 for (int i = 0; i < jsonArray.length(); i++) {
-                    PNMMotherListRealmModel pnmMotherListRealmModel = realm.createObject(PNMMotherListRealmModel.class);
+//                    PNMMotherListRealmModel pnmMotherListRealmModel = realm.createObject(PNMMotherListRealmModel.class);
 
                     mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
 
+                    /*
                     pnmMotherListRealmModel.setMid(jsonObject.getString("mid"));
                     pnmMotherListRealmModel.setmName(jsonObject.getString("mName"));
                     pnmMotherListRealmModel.setmPicmeId(jsonObject.getString("mPicmeId"));
@@ -400,7 +412,7 @@ realm.commitTransaction();
 
                     pnmMotherListRealmModel.setGestAge(jsonObject.getString("gestAge"));
                     pnmMotherListRealmModel.setmWeight(jsonObject.getString("mWeight"));
-
+                    */
 
                     if (jsonObject.getString("motherType").equalsIgnoreCase("AN")) {
 //                        pnmMotherListRealmModel.setGestAge(jsonObject.getString("gestAge"));
@@ -416,7 +428,7 @@ realm.commitTransaction();
                     }
                 }
 
-                realm.commitTransaction(); //close table
+//                realm.commitTransaction(); //close table
             } else {
             }
         } catch (JSONException e) {
@@ -436,6 +448,7 @@ realm.commitTransaction();
             PNMMotherListRealmModel model = userInfoRealmResult.get(i);
             mresponseResult.setMid(model.getMid());
             mresponseResult.setMName(model.getmName());
+            mresponseResult.setmAge(model.getmAge());
             mresponseResult.setMPicmeId(model.getmPicmeId());
             mresponseResult.setmMotherMobile(model.getmMotherMobile());
             mresponseResult.setVhnId(model.getVhnId());
@@ -459,6 +472,7 @@ realm.commitTransaction();
 
     @Override
     public void showLoginError(String response) {
+        pullToRefresh.setRefreshing(false);
     }
 
     @Override
@@ -484,7 +498,6 @@ realm.commitTransaction();
     }
 
     private void requestCallPermission() {
-        Log.i(ANTT1MothersList.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
         if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CALL_PHONE)) {
             Toast.makeText(getActivity(), "Displaying Call permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();
         } else {
@@ -510,4 +523,6 @@ realm.commitTransaction();
     public void onContactSelected(PNMotherListResponse.VhnAN_Mothers_List contact) {
 
     }
+
+
 }

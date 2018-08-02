@@ -8,9 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
 
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
@@ -28,10 +26,6 @@ import com.unicef.vhn.utiltiy.RoundedTransformation;
 
 import java.util.ArrayList;
 import java.util.List;
-
-
-import android.widget.Filter;
-import android.widget.Filterable;
 
 
 /**
@@ -136,12 +130,16 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
                 if (type.equalsIgnoreCase("PN")) {
                     AppConstants.SELECTED_MID = finalPNMotherResponseModel.getMid();
                     AppConstants.MOTHER_PICME_ID = finalPNMotherResponseModel.getMPicmeId();
+
+                    Toast.makeText(applicationContext.getApplicationContext(),"PN MID"+AppConstants.SELECTED_MID ,Toast.LENGTH_SHORT).show();
+
 //                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherVisitDetailsActivity.class));
                     applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherDetailsViewActivity.class));
 
                 } else if (type.equalsIgnoreCase("AN")) {
                     AppConstants.SELECTED_MID = finalPNMotherResponseModel.getMid();
                     AppConstants.MOTHER_PICME_ID = finalPNMotherResponseModel.getMPicmeId();
+                    Toast.makeText(applicationContext.getApplicationContext(),"AN MID"+AppConstants.SELECTED_MID ,Toast.LENGTH_SHORT).show();
 
 //                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MothersDetailsActivity.class));
                     applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), ANMotherDetailsViewActivcity.class));

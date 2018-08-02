@@ -1,7 +1,6 @@
 package com.unicef.vhn.activity;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,8 +19,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,10 +29,7 @@ import com.unicef.vhn.R;
 import com.unicef.vhn.adapter.ANTT1Adapter;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.model.ANTT1ResponseModel;
-import com.unicef.vhn.model.PNMotherListResponse;
-import com.unicef.vhn.model.TremAndPreTremResponseModel;
 import com.unicef.vhn.realmDbModel.ANTT1RealmModel;
-import com.unicef.vhn.realmDbModel.MotherListRealm;
 import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.view.MotherListsViews;
 
@@ -50,19 +45,16 @@ import io.realm.RealmResults;
 
 
 public class ANTT1MothersList extends AppCompatActivity implements MotherListsViews, MakeCallInterface {
-
+    String TAG = ANTT1MothersList.class.getSimpleName();
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
-
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
     private List<ANTT1ResponseModel.TT1_List> tt1_lists;
     ANTT1ResponseModel.TT1_List tt1List;
-
     boolean isDataUpdate = true;
-
     private RecyclerView recyclerView;
-    private TextView textView;
+    private TextView textView,txt_no_internet;
     private ANTT1Adapter antt1Adapter;
 
     final Context context = this;
@@ -72,6 +64,7 @@ public class ANTT1MothersList extends AppCompatActivity implements MotherListsVi
     boolean isoffline = false;
     Realm realm;
     ANTT1RealmModel antt1RealmModel;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +98,7 @@ public class ANTT1MothersList extends AppCompatActivity implements MotherListsVi
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
 
-        pnMotherListPresenter = new MotherListPresenter(ANTT1MothersList.this, this);
+        pnMotherListPresenter = new MotherListPresenter(ANTT1MothersList.this, this, realm);
 //        pnMotherListPresenter.getPNMotherList("V10001","1");
         if (checkNetwork.isNetworkAvailable()) {
             pnMotherListPresenter.getANTTMotherList(preferenceData.getVhnCode(), preferenceData.getVhnId());
@@ -116,6 +109,9 @@ public class ANTT1MothersList extends AppCompatActivity implements MotherListsVi
         tt1_lists = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.antt1_mother_recycler_view);
         textView = (TextView) findViewById(R.id.txt_no_records_found);
+        txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
+        txt_no_internet.setVisibility(View.GONE);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         antt1Adapter = new ANTT1Adapter(tt1_lists, ANTT1MothersList.this, this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(ANTT1MothersList.this);
@@ -124,12 +120,27 @@ public class ANTT1MothersList extends AppCompatActivity implements MotherListsVi
         recyclerView.setAdapter(antt1Adapter);
 
         if (isoffline) {
-            showOfflineData();
+            txt_no_internet.setVisibility(View.VISIBLE);
+            setValueToUI();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Record Not Found");
             builder.create();
         }
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (checkNetwork.isNetworkAvailable()) {
+                    pnMotherListPresenter.getANTTMotherList(preferenceData.getVhnCode(), preferenceData.getVhnId());
+
+                } else {
+                    swipeRefreshLayout.setRefreshing(false);
+                    isoffline = true;
+                    txt_no_internet.setVisibility(View.VISIBLE);
+
+                }
+            }
+        });
 
     }
 
@@ -145,50 +156,31 @@ public class ANTT1MothersList extends AppCompatActivity implements MotherListsVi
 
     @Override
     public void showLoginSuccess(String response) {
-
-        Log.e(ANTT1MothersList.class.getSimpleName(), "Response success" + response);
-
+        swipeRefreshLayout.setRefreshing(false);
         try {
             JSONObject mJsnobject = new JSONObject(response);
             String status = mJsnobject.getString("status");
             String message = mJsnobject.getString("message");
             if (status.equalsIgnoreCase("1")) {
                 JSONArray jsonArray = mJsnobject.getJSONArray("TT1_List");
-                RealmResults<ANTT1RealmModel> motherListAdapterRealmModel = realm.where(ANTT1RealmModel.class).findAll();
-                Log.e("Realm size ---->", motherListAdapterRealmModel.size() + "");
+//                RealmResults<ANTT1RealmModel> motherListAdapterRealmModel = realm.where(ANTT1RealmModel.class).findAll();
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
                         realm.delete(ANTT1RealmModel.class);
                     }
                 });
-
                 if (jsonArray.length() != 0) {
                     recyclerView.setVisibility(View.VISIBLE);
                     textView.setVisibility(View.GONE);
-
                     realm.beginTransaction();       //create or open
-
                     for (int i = 0; i < jsonArray.length(); i++) {
-
                         antt1RealmModel = realm.createObject(ANTT1RealmModel.class);  //this will create a UserInfoRealmModel object which will be inserted in database
-
                         tt1List = new ANTT1ResponseModel.TT1_List();
-
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-
-//                        tt1List.setMName(jsonObject.getString("mName"));
-//                        tt1List.setMPicmeId(jsonObject.getString("mPicmeId"));
-//                        tt1List.setMMotherMobile(jsonObject.getString("mMotherMobile"));
-
                         antt1RealmModel.setMName(jsonObject.getString("mName"));
                         antt1RealmModel.setMPicmeId(jsonObject.getString("mPicmeId"));
-                        ;
                         antt1RealmModel.setMMotherMobile(jsonObject.getString("mMotherMobile"));
-
-//                        tt1_lists.add(tt1List);
-//                        antt1Adapter.notifyDataSetChanged();
                     }
                     realm.commitTransaction(); //close table
                 } else {
@@ -196,7 +188,9 @@ public class ANTT1MothersList extends AppCompatActivity implements MotherListsVi
                     textView.setVisibility(View.VISIBLE);
                 }
             } else {
-                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                recyclerView.setVisibility(View.GONE);
+                textView.setVisibility(View.VISIBLE);
+                textView.setText(message);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -205,18 +199,12 @@ public class ANTT1MothersList extends AppCompatActivity implements MotherListsVi
     }
 
     private void setValueToUI() {
-
-        Log.e(ANTT1MothersList.class.getSimpleName(), "ON LINE ");
-
+        tt1_lists.clear();
         realm.beginTransaction();
         RealmResults<ANTT1RealmModel> antt1listRealmResult = realm.where(ANTT1RealmModel.class).findAll();
-        Log.e("ANTT1 list size ->", antt1listRealmResult.size() + "");
         for (int i = 0; i < antt1listRealmResult.size(); i++) {
             tt1List = new ANTT1ResponseModel.TT1_List();
-
             ANTT1RealmModel model = antt1listRealmResult.get(i);
-
-
             tt1List.setMName(model.getMName());
             tt1List.setMPicmeId(model.getMPicmeId());
             tt1List.setMMotherMobile(model.getMMotherMobile());
@@ -225,35 +213,12 @@ public class ANTT1MothersList extends AppCompatActivity implements MotherListsVi
         }
 
         realm.commitTransaction();
-    }
-
-    private void showOfflineData() {
-        Log.e(ANTT1MothersList.class.getSimpleName(), "OFF LINE ");
-
-        realm.beginTransaction();
-        RealmResults<ANTT1RealmModel> antt1listRealmResult = realm.where(ANTT1RealmModel.class).findAll();
-        Log.e("ANTT1 list size ->", antt1listRealmResult.size() + "");
-        for (int i = 0; i < antt1listRealmResult.size(); i++) {
-            tt1List = new ANTT1ResponseModel.TT1_List();
-
-            ANTT1RealmModel model = antt1listRealmResult.get(i);
-
-
-            tt1List.setMName(model.getMName());
-            tt1List.setMPicmeId(model.getMPicmeId());
-            tt1List.setMMotherMobile(model.getMMotherMobile());
-            tt1_lists.add(tt1List);
-            antt1Adapter.notifyDataSetChanged();
-        }
-
-        realm.commitTransaction();
-
     }
 
 
     @Override
     public void showLoginError(String string) {
-        Log.e(ANTT1MothersList.class.getSimpleName(), "Response Error" + string);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -278,7 +243,7 @@ public class ANTT1MothersList extends AppCompatActivity implements MotherListsVi
     }
 
     private void requestCallPermission() {
-        Log.i(ANTT1MothersList.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
+        Log.i(TAG, "CALL permission has NOT been granted. Requesting permission.");
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CALL_PHONE)) {
             Toast.makeText(getApplicationContext(), "Displaying Call permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();

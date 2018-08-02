@@ -27,6 +27,7 @@ import com.unicef.vhn.Presenter.NotificationPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.activity.MainActivity;
 import com.unicef.vhn.activity.VisitActivity;
+import com.unicef.vhn.activity.VisitActivityNew;
 import com.unicef.vhn.adapter.NotificationAdapter;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.model.NotificationListResponseModel;
@@ -119,7 +120,7 @@ public class NotificationListFragment extends Fragment implements NotificationVi
         ll_go_visit_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), VisitActivity.class));
+                startActivity(new Intent(getActivity(), VisitActivityNew.class));
             }
         });
         mRecyclerView = view.findViewById(R.id.recycler_view);

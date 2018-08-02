@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -60,7 +61,7 @@ import io.realm.RealmResults;
  */
 
 public class ImmunizationListActivity extends AppCompatActivity implements ImmunizationViews {
-
+String TAG =ImmunizationListActivity.class.getSimpleName();
     ProgressDialog pDialog;
     ImmunizationPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
@@ -79,7 +80,7 @@ public class ImmunizationListActivity extends AppCompatActivity implements Immun
 
     ArrayList<String> vhnVillageList;
     ArrayList<String> doseList;
-
+private SwipeRefreshLayout swipeRefreshLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,6 +123,7 @@ public class ImmunizationListActivity extends AppCompatActivity implements Immun
         recyclerView = (RecyclerView) findViewById(R.id.immunization_recycler_view);
         textView = (TextView) findViewById(R.id.txt_no_records_found);
         llFilter =(LinearLayout) findViewById(R.id.ll_filter);
+        swipeRefreshLayout =(SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         immunizationListAdapter = new ImmunizationListAdapter(immunization_lists, ImmunizationListActivity.this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(ImmunizationListActivity.this);
@@ -137,7 +139,17 @@ public class ImmunizationListActivity extends AppCompatActivity implements Immun
             builder.setMessage("Record Not Found");
             builder.create();
         }
-
+swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+    @Override
+    public void onRefresh() {
+        if (checkNetwork.isNetworkAvailable()) {
+            pnMotherListPresenter.getImmunizationList(preferenceData.getVhnCode(), preferenceData.getVhnId(), "1");
+        } else {
+            swipeRefreshLayout.setRefreshing(false);
+            isoffline = true;
+        }
+    }
+});
         llFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -197,10 +209,7 @@ public class ImmunizationListActivity extends AppCompatActivity implements Immun
 
                     }
                 });
-//                sp_dose_wise.setSelection(preferenceData.getVillageNamePosition());
-//                sp_trimester.setSelection(preferenceData.getTermisterPosition());
-
-                btn_cancel.setOnClickListener(new View.OnClickListener() {
+                 btn_cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
@@ -233,8 +242,7 @@ public class ImmunizationListActivity extends AppCompatActivity implements Immun
 
     @Override
     public void getImmunizationListSuccess(String response) {
-
-        Log.e(ImmunizationListActivity.class.getSimpleName(), "Response Success" + response);
+       Log.e(TAG, "Response Success" + response);
 
         try {
             JSONObject mJsnobject = new JSONObject(response);
@@ -252,26 +260,11 @@ public class ImmunizationListActivity extends AppCompatActivity implements Immun
                 });
 
                 if (jsonArray.length() != 0) {
-//                    recyclerView.setVisibility(View.VISIBLE);
-//                    textView.setVisibility(View.GONE);
-
                     realm.beginTransaction();       //create or open
-
                     for (int i = 0; i < jsonArray.length(); i++) {
                         immuniationListRealmModel = realm.createObject(ImmuniationListRealmModel.class);  //this will create a UserInfoRealmModel object which will be inserted in database
-
                         immunizationList = new ImmunizationListResponseModel.Immunization_list();
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-                       /* immunizationList.setMName(jsonObject.getString("mName"));
-                        immunizationList.setMPicmeId(jsonObject.getString("mPicmeId"));
-                        immunizationList.setImmDoseNumber(jsonObject.getString("immDoseNumber"));
-                        immunizationList.setMid(jsonObject.getString("mid"));
-
-                        immunization_lists.add(immunizationList);
-                        immunizationListAdapter.notifyDataSetChanged();*/
-
-
                         immuniationListRealmModel.setMName(jsonObject.getString("mName"));
                         immuniationListRealmModel.setMPicmeId(jsonObject.getString("mPicmeId"));
                         immuniationListRealmModel.setImmDoseNumber(jsonObject.getString("immDoseNumber"));
@@ -317,12 +310,16 @@ public class ImmunizationListActivity extends AppCompatActivity implements Immun
 
     @Override
     public void getImmunizationListError(String response) {
-        Log.e(ImmunizationListActivity.class.getSimpleName(), "Response Error" + response);
+
+
+        Log.e(TAG, "Response Error" + response);
 
     }
 
     @Override
     public void callMotherDetailsApi() {
+        swipeRefreshLayout.setRefreshing(false);
+
         RealmResults<ImmuniationListRealmModel> immuniationListRealmModels = realm.where(ImmuniationListRealmModel.class).findAll();
         Log.e("ANTT1 list size ->", immuniationListRealmModels.size() + "");
         for (int i = 0; i < immuniationListRealmModels.size(); i++) {
@@ -335,6 +332,7 @@ public class ImmunizationListActivity extends AppCompatActivity implements Immun
     //    ImmunizationDeatilsListRealmModel
     @Override
     public void getImmunizationDetailsSuccess(String response) {
+        swipeRefreshLayout.setRefreshing(false);
         try {
             JSONObject mJsnobject = new JSONObject(response);
             String status = mJsnobject.getString("status");
@@ -381,7 +379,7 @@ public class ImmunizationListActivity extends AppCompatActivity implements Immun
                     realm.commitTransaction();
                 }
             }else{
-                Log.e(ImmunizationListActivity.class.getSimpleName(),"No Record found");
+                Log.e(TAG,"No Record found");
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -391,7 +389,7 @@ public class ImmunizationListActivity extends AppCompatActivity implements Immun
 
     @Override
     public void getImmunizationDetailsError(String string) {
-
+        swipeRefreshLayout.setRefreshing(false);
     }
 
 

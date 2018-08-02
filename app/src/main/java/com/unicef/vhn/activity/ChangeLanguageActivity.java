@@ -14,7 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.R;
+import com.unicef.vhn.utiltiy.LocaleHelper;
 
 import java.util.Locale;
 
@@ -25,6 +27,7 @@ import java.util.Locale;
 public class ChangeLanguageActivity extends AppCompatActivity {
     Locale mylocale;
     TextView tam, eng;
+    PreferenceData preferenceData;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +40,8 @@ public class ChangeLanguageActivity extends AppCompatActivity {
     public void initUi() {
         tam = (TextView) findViewById(R.id.tam);
         eng = (TextView) findViewById(R.id.eng);
+        preferenceData = new PreferenceData(this);
+
         tam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,6 +52,8 @@ public class ChangeLanguageActivity extends AppCompatActivity {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 setLanguage("ta");
+                                preferenceData.setSharePrefrenceLocale("ta");
+                                LocaleHelper.setLocale(ChangeLanguageActivity.this,"ta");
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -69,6 +76,8 @@ public class ChangeLanguageActivity extends AppCompatActivity {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 setLanguage("en");
+                                preferenceData.setSharePrefrenceLocale("en");
+                                LocaleHelper.setLocale(ChangeLanguageActivity.this,"en");
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {

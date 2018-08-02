@@ -20,20 +20,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.activity.MotherLocationActivity;
 import com.unicef.vhn.activity.MothersDetailsActivity;
 import com.unicef.vhn.activity.PNViewReportsActivity;
-import com.unicef.vhn.constant.Apiconstants;
+import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.AppConstants;
-import com.unicef.vhn.utiltiy.RoundedTransformation;
 import com.unicef.vhn.view.MotherListsViews;
 
+import io.realm.Realm;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -55,11 +52,12 @@ public class PNMotherVisitDetailsActivity extends AppCompatActivity implements V
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
-
+Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        realm = RealmController.with(this).getRealm();
         setContentView(R.layout.activity_visit_mother_details);
         showActionBar();
         intUI();
@@ -93,7 +91,7 @@ public class PNMotherVisitDetailsActivity extends AppCompatActivity implements V
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData =new PreferenceData(this);
-        pnMotherListPresenter = new MotherListPresenter(PNMotherVisitDetailsActivity.this,this);
+        pnMotherListPresenter = new MotherListPresenter(PNMotherVisitDetailsActivity.this,this, realm);
         pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(),preferenceData.getVhnId(),AppConstants.SELECTED_MID);
 
 

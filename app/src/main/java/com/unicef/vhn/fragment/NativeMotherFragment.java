@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -70,7 +71,7 @@ public class NativeMotherFragment extends Fragment implements MotherListsViews, 
     boolean isoffline = false;
     Realm realm;
     MotherMigrationRealmModel motherMigrationRealmModel;
-
+private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,7 +101,7 @@ public class NativeMotherFragment extends Fragment implements MotherListsViews, 
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(getActivity());
 
-        pnMotherListPresenter = new MotherListPresenter(getActivity(),this);
+        pnMotherListPresenter = new MotherListPresenter(getActivity(),this, realm);
         if (checkNetwork.isNetworkAvailable()) {
             pnMotherListPresenter.getMigratedMothersList(preferenceData.getVhnCode(), preferenceData.getVhnId());
         }else{
@@ -111,6 +112,7 @@ public class NativeMotherFragment extends Fragment implements MotherListsViews, 
 
         recyclerView = (RecyclerView) view.findViewById(R.id.mother_recycler_view);
         textView = (TextView) view.findViewById(R.id.txt_no_records_found);
+        swipeRefreshLayout =view.findViewById(R.id.swipe_refresh_layout);
 
         motherMigrationAdapter = new MotherMigrationAdapter(vhn_migrated_mothers, getActivity(), "", this);
 
@@ -125,6 +127,17 @@ public class NativeMotherFragment extends Fragment implements MotherListsViews, 
             builder.setMessage("Record Not Found");
             builder.create();
         }
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (checkNetwork.isNetworkAvailable()) {
+                    pnMotherListPresenter.getMigratedMothersList(preferenceData.getVhnCode(), preferenceData.getVhnId());
+                }else{
+                    swipeRefreshLayout.setRefreshing(false);
+                    isoffline=true;
+                }
+            }
+        });
     }
 
     private void showOfflineData() {
@@ -167,6 +180,7 @@ public class NativeMotherFragment extends Fragment implements MotherListsViews, 
 
     @Override
     public void showLoginSuccess(String response) {
+        swipeRefreshLayout.setRefreshing(false);
 
         Log.e(MotherMigration.class.getSimpleName(), "Response success" + response);
 
@@ -227,6 +241,7 @@ public class NativeMotherFragment extends Fragment implements MotherListsViews, 
     }
 
     private void setValueToUI() {
+        vhn_migrated_mothers.clear();
         Log.d(MotherMigration.class.getSimpleName(),  "online");
         RealmResults<MotherMigrationRealmModel> motherMigrationrealmResults = null;
         realm.beginTransaction();
@@ -248,6 +263,7 @@ public class NativeMotherFragment extends Fragment implements MotherListsViews, 
 
     @Override
     public void showLoginError(String string) {
+        swipeRefreshLayout.setRefreshing(false);
         Log.e(MotherMigration.class.getSimpleName(), "Response Error" + string);
     }
 

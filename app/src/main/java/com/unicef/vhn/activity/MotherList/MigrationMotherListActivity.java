@@ -87,7 +87,7 @@ public class MigrationMotherListActivity extends AppCompatActivity implements Mo
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
 
-        pnMotherListPresenter = new MotherListPresenter(MigrationMotherListActivity.this, this);
+        pnMotherListPresenter = new MotherListPresenter(MigrationMotherListActivity.this, this, realm);
         if (checkNetwork.isNetworkAvailable()) {
             pnMotherListPresenter.getMigratedMothersList(preferenceData.getVhnCode(), preferenceData.getVhnId());
         } else {

@@ -22,14 +22,16 @@ import android.widget.Toast;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
+import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.view.MotherListsViews;
 
+import io.realm.Realm;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SosMotherDetailsActivity extends AppCompatActivity implements MotherListsViews, View.OnClickListener {
-    TextView txt_username, txt_picme_id, txt_age, txt_risk, txt_message;
+    TextView txt_username, txt_picme_id, txt_age, txt_risk, txt_message,txt_husb_name,txt_mother_name_call;
     String strMotherName, strPicmeId, strAge, strRisk, strMessage, strMobileNo, strAltMobileNo, strLatitude, strLongitude, strMotherType;
     ImageView img_call_1, img_call_2;
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
@@ -39,10 +41,11 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
 
     Button btn_view_location, btn_view_report, btn_alert_close;
     LinearLayout viewHighRisk, viewLowRisk;
-
+Realm realm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        realm = RealmController.with(this).getRealm();
         setContentView(R.layout.activity_sos_mother_details);
         initUI();
         srtValue();
@@ -84,7 +87,7 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
-        pnMotherListPresenter = new MotherListPresenter(SosMotherDetailsActivity.this, this);
+        pnMotherListPresenter = new MotherListPresenter(SosMotherDetailsActivity.this, this, realm);
 
         viewHighRisk = (LinearLayout) findViewById(R.id.ll_high_an_risk_status);
         viewLowRisk = (LinearLayout) findViewById(R.id.ll_low_an_risk_status);
@@ -93,6 +96,8 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
         txt_age = (TextView) findViewById(R.id.txt_age);
 //        txt_risk = (TextView) findViewById(R.id.txt_risk);
         txt_message = (TextView) findViewById(R.id.txt_message);
+        txt_husb_name = (TextView) findViewById(R.id.txt_husb_name);
+        txt_mother_name_call = (TextView) findViewById(R.id.txt_mother_name_call);
         img_call_1 = (ImageView) findViewById(R.id.img_call_1);
         img_call_2 = (ImageView) findViewById(R.id.img_call_2);
         btn_view_location = (Button) findViewById(R.id.btn_view_location);
@@ -130,6 +135,9 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
                 Log.d(SosMotherDetailsActivity.class.getSimpleName(), "strAltMobileNo" + strAltMobileNo);
                 txt_age.setText(mJsnobject_vhnSOSDetails.getString("mAge"));
                 strAge = mJsnobject_vhnSOSDetails.getString("mAge");
+
+                txt_husb_name.setText(mJsnobject_vhnSOSDetails.getString("mHusbandName"));
+                txt_mother_name_call.setText(mJsnobject_vhnSOSDetails.getString("mName"));
 //                txt_risk.setText(mJsnobject_vhnSOSDetails.getString("mRiskStatus"));
                 strRisk = mJsnobject_vhnSOSDetails.getString("mRiskStatus");
                 if (mJsnobject_vhnSOSDetails.getString("mRiskStatus").equalsIgnoreCase("HIGH")){

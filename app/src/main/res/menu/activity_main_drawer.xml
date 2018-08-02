@@ -11,11 +11,11 @@
         <item
             android:id="@+id/an_mothers"
             android:icon="@drawable/ic_pregnant_woman"
-            android:title="AN Mothers" />
+            android:title="@string/nav_an_mother" />
         <item
             android:id="@+id/pn_hbnc_mothers"
             android:icon="@drawable/ic_newborn"
-            android:title="PN Mothers/HBNC" />
+            android:title="@string/nav_pn_mother" />
 
 
         <!--<item-->
@@ -25,7 +25,7 @@
         <item
             android:id="@+id/immunization"
             android:icon="@drawable/syringe"
-            android:title="Immunization" />
+            android:title="@string/nav_immunization" />
        <!-- <item
             android:id="@+id/risk"
             android:icon="@drawable/ic_danger_sing"
@@ -38,7 +38,7 @@
         <item
             android:id="@+id/today_visit"
             android:icon="@drawable/ic_eye"
-            android:title="Visit" />
+            android:title="@string/nav_visit" />
 
         <!--<item
             android:id="@+id/alert"
@@ -48,18 +48,18 @@
         <item
             android:id="@+id/migration_mother"
             android:icon="@drawable/migration"
-            android:title="Mother Migration" />
+            android:title="@string/nav_mother_migrationt" />
 
 
         <item
             android:id="@+id/change_language"
             android:icon="@drawable/translate"
-            android:title="Change Language" />
+            android:title="@string/nav_change_language" />
 
         <item
             android:id="@+id/change_password"
             android:icon="@drawable/key"
-            android:title="Change Password" />
+            android:title="@string/nav_change_password" />
         <!--<item-->
             <!--android:id="@+id/message"-->
             <!--android:icon="@drawable/ic_close_envelope"-->

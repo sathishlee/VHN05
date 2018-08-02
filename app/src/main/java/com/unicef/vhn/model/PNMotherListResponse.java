@@ -49,8 +49,12 @@ public class PNMotherListResponse {
         private String mMotherMobile;
         private String mPhoto;
         private String mLMP;
+        private String mAge;
 
-    public VhnAN_Mothers_List(String mLongitude, String mLatitude, String vhnId, String mid, String mPicmeId, String mName, String motherType, String vLatitude, String vLongitude, String mMotherMobile, String mPhoto, String mLMP, String pnId) {
+
+
+
+    public VhnAN_Mothers_List(String mLongitude, String mLatitude, String vhnId, String mid, String mPicmeId, String mName, String motherType, String vLatitude, String vLongitude, String mMotherMobile, String mPhoto, String mLMP, String pnId, String mAge) {
         this.mLongitude = mLongitude;
         this.mLatitude = mLatitude;
         this.vhnId = vhnId;
@@ -64,10 +68,18 @@ public class PNMotherListResponse {
         this.mPhoto = mPhoto;
         this.mLMP = mLMP;
         this.pnId = pnId;
+        this.mAge = mAge;
     }
 
     public VhnAN_Mothers_List() {
 
+    }
+    public String getmAge() {
+        return mAge;
+    }
+
+    public void setmAge(String mAge) {
+        this.mAge = mAge;
     }
 
     public String getmPhoto(){return mPhoto;}

@@ -27,8 +27,6 @@ import com.unicef.vhn.R;
 import com.unicef.vhn.adapter.MotherMigrationAdapter;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.model.MotherMigrationResponseModel;
-import com.unicef.vhn.model.PNMotherListResponse;
-import com.unicef.vhn.realmDbModel.ANTT1RealmModel;
 import com.unicef.vhn.realmDbModel.MotherMigrationRealmModel;
 import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.view.MotherListsViews;
@@ -89,7 +87,7 @@ public class MotherMigration extends AppCompatActivity implements MotherListsVie
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
 
-        pnMotherListPresenter = new MotherListPresenter(MotherMigration.this, this);
+        pnMotherListPresenter = new MotherListPresenter(MotherMigration.this, this, realm);
         if (checkNetwork.isNetworkAvailable()) {
             pnMotherListPresenter.getMigratedMothersList(preferenceData.getVhnCode(), preferenceData.getVhnId());
         }else{

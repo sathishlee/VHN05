@@ -16,22 +16,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.unicef.vhn.Preference.PreferenceData;
+import com.unicef.vhn.Presenter.GetVisitANMotherPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.activity.ANViewReportsActivity;
 import com.unicef.vhn.activity.PNMotherDeliveryReportActivity;
 import com.unicef.vhn.adapter.PNHBNCVisitRecordsAdapter;
 import com.unicef.vhn.application.RealmController;
+import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.PnHbncVisitRecordsModel;
 import com.unicef.vhn.realmDbModel.PNMVisitRealmModel;
 import com.unicef.vhn.utiltiy.CheckNetwork;
 
 import java.util.ArrayList;
 
+import com.unicef.vhn.view.VisitANMotherViews;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
 /*This screen values form realm DB, Api call in mother list*/
-public class PNMotherVisitReportActivity extends AppCompatActivity implements View.OnClickListener {
+public class PNMotherVisitReportActivity extends AppCompatActivity implements View.OnClickListener, VisitANMotherViews {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     PreferenceData preferenceData;
@@ -44,6 +47,9 @@ public class PNMotherVisitReportActivity extends AppCompatActivity implements Vi
     TextView txt_no_records_found, txt_no_internet;
     CheckNetwork checkNetwork;
     Realm realm;
+
+    GetVisitANMotherPresenter getVisitANMotherPresenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +72,13 @@ public class PNMotherVisitReportActivity extends AppCompatActivity implements Vi
         txt_no_records_found = (TextView) findViewById(R.id.txt_no_records_found);
         txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
         txt_no_internet.setVisibility(View.GONE);
+
+        getVisitANMotherPresenter = new GetVisitANMotherPresenter(PNMotherVisitReportActivity.this, this,realm);
+
         if (checkNetwork.isNetworkAvailable()) {
+
+            getVisitANMotherPresenter.getVisitANMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
+
             txt_no_internet.setVisibility(View.GONE);
         } else {
             txt_no_internet.setVisibility(View.VISIBLE);
@@ -147,7 +159,13 @@ public class PNMotherVisitReportActivity extends AppCompatActivity implements Vi
                 startActivity(new Intent(getApplicationContext(), PNMotherDeliveryReportActivity.class));
             }
         });
-        btn_visit_reports.setOnClickListener(this);
+        btn_visit_reports.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(getApplicationContext(),PNViewReportsActivity.class));
+            }
+        });
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -181,6 +199,36 @@ public class PNMotherVisitReportActivity extends AppCompatActivity implements Vi
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    @Override
+    public void showProgress() {
+        pDialog.show();
+    }
+
+    @Override
+    public void hideProgress() {
+pDialog.dismiss();
+    }
+
+    @Override
+    public void showANVisitRecordsSuccess(String response) {
+
+    }
+
+    @Override
+    public void showANVisitRecordsFailiur(String response) {
+
+    }
+
+    @Override
+    public void showPNVisitRecordsSuccess(String response) {
+
+    }
+
+    @Override
+    public void showPNVisitRecordsFailiur(String response) {
 
     }
 }

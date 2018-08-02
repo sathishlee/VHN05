@@ -18,7 +18,6 @@ public class VisitListRealmModel extends RealmObject {
     private String vhnId;
     private String nextVisit;
     private String mtype;
-
     private String noteId;
     private String masterId;
     private String month;

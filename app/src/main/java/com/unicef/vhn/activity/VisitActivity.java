@@ -86,7 +86,7 @@ public class VisitActivity extends AppCompatActivity implements MotherListsViews
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
-        pnMotherListPresenter = new MotherListPresenter(VisitActivity.this, this);
+        pnMotherListPresenter = new MotherListPresenter(VisitActivity.this, this, realm);
         if (checkNetwork.isNetworkAvailable()) {
             Log.e(TAG,Apiconstants.CURRENT_VISIT_LIST+" api called");
             pnMotherListPresenter.getPNMotherList(Apiconstants.CURRENT_VISIT_LIST, preferenceData.getVhnCode(), preferenceData.getVhnId());
@@ -308,7 +308,7 @@ public class VisitActivity extends AppCompatActivity implements MotherListsViews
     }
 
     private void requestCallPermission() {
-        Log.i(ANTT1MothersList.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
+        Log.i( VisitActivity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CALL_PHONE)) {
             Toast.makeText(getApplicationContext(), "Displaying Call permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();

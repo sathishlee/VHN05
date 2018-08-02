@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,27 +25,24 @@ import com.unicef.vhn.Interface.MakeCallInterface;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
-import com.unicef.vhn.activity.ANTT1MothersList;
-import com.unicef.vhn.activity.VisitActivity;
 import com.unicef.vhn.adapter.RemainderVisitListAdapter;
-import com.unicef.vhn.adapter.VisitListAdapter;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.model.RemainderVisitResponseModel;
 import com.unicef.vhn.model.VisitListResponseModel;
+import com.unicef.vhn.realmDbModel.RemainderListRealModel;
 import com.unicef.vhn.realmDbModel.VisitListRealmModel;
 import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.view.MotherListsViews;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class RemainderVisitFragment extends Fragment implements MotherListsViews, MakeCallInterface {
 
@@ -63,10 +61,12 @@ public class RemainderVisitFragment extends Fragment implements MotherListsViews
 
     CheckNetwork checkNetwork;
 
+    Realm realm;
 
 
 TextView visit_list;
-
+boolean isoffline=false;
+private SwipeRefreshLayout swipeRefreshLayout;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,22 +83,23 @@ TextView visit_list;
     }
 
     private void initUI(View view) {
-
+        realm = RealmController.with(this).getRealm();
         checkNetwork = new CheckNetwork(getActivity());
         pDialog = new ProgressDialog(getActivity());
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(getActivity());
-        pnMotherListPresenter = new MotherListPresenter(getActivity(), this);
+        pnMotherListPresenter = new MotherListPresenter(getActivity(), this, realm);
         if (checkNetwork.isNetworkAvailable()) {
 
             pnMotherListPresenter.getPNMotherList(Apiconstants.REMAINDER_VISIT_LIST, preferenceData.getVhnCode(), preferenceData.getVhnId());
         } else {
-//            isoffline = true;
+            isoffline = true;
         }
         mResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView)view. findViewById(R.id.mother_recycler_view);
         txt_no_records_found = (TextView) view.findViewById(R.id.txt_no_records_found);
+        swipeRefreshLayout =(SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh_layout);
         visit_list =(TextView)view.findViewById(R.id.visit_list);
         mAdapter = new RemainderVisitListAdapter(mResult,getActivity(), this);
 
@@ -106,8 +107,24 @@ TextView visit_list;
         mother_recycler_view.setLayoutManager(mLayoutManager);
         mother_recycler_view.setItemAnimator(new DefaultItemAnimator());
         mother_recycler_view.setAdapter(mAdapter);
-
-
+if (isoffline){
+    setValuetoUI();
+}else{
+    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+    builder.setMessage("Record Not Found");
+    builder.create();
+}
+swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+    @Override
+    public void onRefresh() {
+        if (checkNetwork.isNetworkAvailable()) {
+            pnMotherListPresenter.getPNMotherList(Apiconstants.REMAINDER_VISIT_LIST, preferenceData.getVhnCode(), preferenceData.getVhnId());
+        } else {
+            swipeRefreshLayout.setRefreshing(false);
+            isoffline = true;
+        }
+    }
+});
     }
 
 
@@ -123,6 +140,8 @@ TextView visit_list;
 
     @Override
     public void showLoginSuccess(String response) {
+        swipeRefreshLayout.setRefreshing(false);
+        mResult.clear();
         Log.e(TAG, Apiconstants.CURRENT_VISIT_LIST +" api response"+response);
 
         try {
@@ -130,16 +149,26 @@ TextView visit_list;
             String status = mJsnobject.getString("status");
             String message = mJsnobject.getString("message");
               JSONArray jsonArray = mJsnobject.getJSONArray("remaindermothers");
-            Log.e(TAG,"jsonArray.length -->"+jsonArray.length());
-
+//            RemainderListRealModel
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realm.delete(RemainderListRealModel.class);
+                }
+            });
             if (status.equalsIgnoreCase("1")) {
                 if (jsonArray.length() != 0) {
                     mother_recycler_view.setVisibility(View.VISIBLE);
                     txt_no_records_found.setVisibility(View.GONE);
+
+                    realm.beginTransaction();       //create or open
+                    RemainderListRealModel   remainderListRealModel=null;
                     for (int i = 0; i < jsonArray.length(); i++) {
                         mresponseResult = new RemainderVisitResponseModel.Remaindermothers();
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         Log.e(TAG,"remaindermothers position -->"+i);
+                            remainderListRealModel  = realm.createObject(RemainderListRealModel.class);  //this will create a UserInfoRealmModel object which will be inserted in database
+
 
                         Log.e(TAG,"noteId   -->"+i+"-->"+jsonObject.getString("noteId"));
                         Log.e(TAG,"  mid -->"+i+"-->"+jsonObject.getString("masterId"));
@@ -147,35 +176,128 @@ TextView visit_list;
                         Log.e(TAG,"  picmeId -->"+i+"-->"+jsonObject.getString("picmeId"));
 
                         mresponseResult.setNoteId(jsonObject.getString("noteId"));
-                        mresponseResult.setMasterId(jsonObject.getString("masterId"));
-                        mresponseResult.setMid(jsonObject.getString("masterId"));
-                        mresponseResult.setMName(jsonObject.getString("mName"));
-                        mresponseResult.setPicmeId(jsonObject.getString("picmeId"));
-                        mresponseResult.setVhnId(jsonObject.getString("vhnId"));
-                        mresponseResult.setMMotherMobile(jsonObject.getString("mMotherMobile"));
-                        mresponseResult.setMtype(jsonObject.getString("mtype"));
-                        mresponseResult.setNextVisit(jsonObject.getString("nextVisit"));
+                        remainderListRealModel.setNoteId(jsonObject.getString("noteId"));
 
-                       mResult.add(mresponseResult);
-                       mAdapter.notifyDataSetChanged();
+                        mresponseResult.setMasterId(jsonObject.getString("masterId"));
+                        remainderListRealModel.setMasterId(jsonObject.getString("masterId"));
+
+                        mresponseResult.setMid(jsonObject.getString("masterId"));
+                        remainderListRealModel.setMid(jsonObject.getString("masterId"));
+
+                        mresponseResult.setMName(jsonObject.getString("mName"));
+                        remainderListRealModel.setmName(jsonObject.getString("mName"));
+
+                        mresponseResult.setPicmeId(jsonObject.getString("picmeId"));
+                        remainderListRealModel.setPicmeId(jsonObject.getString("picmeId"));
+
+                        mresponseResult.setVhnId(jsonObject.getString("vhnId"));
+                        remainderListRealModel.setVhnId(jsonObject.getString("vhnId"));
+
+                        mresponseResult.setMMotherMobile(jsonObject.getString("mMotherMobile"));
+                        remainderListRealModel.setmMotherMobile(jsonObject.getString("mMotherMobile"));
+
+                        mresponseResult.setMtype(jsonObject.getString("mtype"));
+                        remainderListRealModel.setMtype(jsonObject.getString("mtype"));
+
+                        mresponseResult.setNextVisit(jsonObject.getString("nextVisit"));
+                        remainderListRealModel.setNextVisit(jsonObject.getString("nextVisit"));
+
+//                       mResult.add(mresponseResult);
+//                       mAdapter.notifyDataSetChanged();
                     }
+                    realm.commitTransaction();
                 }else{
                     mother_recycler_view.setVisibility(View.GONE);
                     txt_no_records_found.setVisibility(View.VISIBLE);
                 }
             }else {
-                Toast.makeText(getActivity(),message,Toast.LENGTH_LONG).show();
+                mother_recycler_view.setVisibility(View.GONE);
+                txt_no_records_found.setVisibility(View.VISIBLE);
+                txt_no_records_found.setText(message);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        setValuetoUI();
+    }
+
+    private void setValuetoUI() {
+
+        mResult.clear();
+        realm.beginTransaction();
+        RealmResults<RemainderListRealModel> motherListAdapterRealmModel = realm.where(RemainderListRealModel.class).findAll();
+        Log.e(TAG, "Today Visit realm db size" + motherListAdapterRealmModel.size());
+
+        if (motherListAdapterRealmModel.size() != 0) {
+
+            for (int i = 0; i < motherListAdapterRealmModel.size(); i++) {
+                RemainderListRealModel model = motherListAdapterRealmModel.get(i);
+
+                /*Log.e(TAG, i+ " Note Id" + model.getNoteId());
+                Log.e(TAG, i+ " MId" + model.getMid());
+                Log.e(TAG, i+ " MASTER Id" + model.getMasterId());
+                Log.e(TAG, i+ " NAME" + model.getMName());
+                Log.e(TAG, i+ " PICME ID" + model.getPicmeId());
+                Log.e(TAG, i+ " VHN ID" + model.getVhnId());
+                Log.e(TAG, i+ " MOTHER MOBILE" + model.getMMotherMobile());
+                Log.e(TAG, i+ " MOTHER NEXT VISIT" + model.getNextVisit());
+                Log.e(TAG, i+ " MOTHER TYPE" + model.getMtype());*/
+
+
+                mresponseResult = new RemainderVisitResponseModel.Remaindermothers();
+
+                mresponseResult.setNoteId(model.getNoteId());
+
+                mresponseResult.setMasterId(model.getMasterId());
+
+                mresponseResult.setMid(model.getMid());
+
+                mresponseResult.setMName(model.getmName());
+
+                mresponseResult.setPicmeId(model.getPicmeId());
+
+                mresponseResult.setVhnId(model.getVhnId());
+
+                mresponseResult.setMMotherMobile(model.getmMotherMobile());
+
+                mresponseResult.setMtype(model.getMtype());
+
+                mresponseResult.setNextVisit(model.getNextVisit());
+
+
+
+
+                mResult.add(mresponseResult);
+                mAdapter.notifyDataSetChanged();
+
+
+//                mresponseResult = new VisitListResponseModel.Vhn_current_visits();
+
+            /*
+                mresponseResult.setNoteId(model.getNoteId());
+                mresponseResult.setMasterId(model.getMasterId());
+                mresponseResult.setMid(model.getMid());
+                mresponseResult.setMName(model.getMName());
+                mresponseResult.setPicmeId(model.getPicmeId());
+                mresponseResult.setVhnId(model.getVhnId());
+                mresponseResult.setMMotherMobile(model.getMMotherMobile());
+                mresponseResult.setMtype(model.getMtype());
+                mresponseResult.setNextVisit(model.getNextVisit());
+
+                mResult.add(mresponseResult);
+                mAdapter.notifyDataSetChanged();*/
+            }
+
+        }
+        realm.commitTransaction();
+
 
     }
 
 
-
     @Override
     public void showLoginError(String string) {
+        swipeRefreshLayout.setRefreshing(false);
 
     }
 
@@ -202,7 +324,6 @@ TextView visit_list;
 
     private void requestCallPermission() {
 
-        Log.i(ANTT1MothersList.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
         if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
                 Manifest.permission.CALL_PHONE)) {
             Toast.makeText(getActivity(), "Displaying Call permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();

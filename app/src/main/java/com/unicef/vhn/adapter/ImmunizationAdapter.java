@@ -25,6 +25,8 @@ public class ImmunizationAdapter extends RecyclerView.Adapter<ImmunizationAdapte
     public ImmunizationAdapter(List<ImmunizationListResponseModel.Immunization_list> immunization_lists, Activity activity) {
         this.activity = activity;
         this.immunization_lists = immunization_lists;
+
+        Log.e(ImmunizationListAdapter.class.getSimpleName(),"immunization_lists size"+immunization_lists.size()+"");
     }
 
     @Override
@@ -36,9 +38,9 @@ public class ImmunizationAdapter extends RecyclerView.Adapter<ImmunizationAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final ImmunizationListResponseModel.Immunization_list immunization_list = immunization_lists.get(position);
-        Log.e(ImmunizationAdapter.class.getSimpleName(),immunization_list.getImmDueDate());
-        Log.e(ImmunizationAdapter.class.getSimpleName(),immunization_list.getImmCarePovidedDate());
-        Log.e(ImmunizationAdapter.class.getSimpleName(),immunization_list.getImmOpvStatus());
+        Log.e(ImmunizationAdapter.class.getSimpleName(),position+" "+immunization_list.getImmDueDate());
+        Log.e(ImmunizationAdapter.class.getSimpleName(),position+" "+immunization_list.getImmCarePovidedDate());
+        Log.e(ImmunizationAdapter.class.getSimpleName(),position+" "+immunization_list.getImmOpvStatus());
 
         if(immunization_list.getImmDueDate().equalsIgnoreCase("null")){
             holder.txt_due_date.setText("-");

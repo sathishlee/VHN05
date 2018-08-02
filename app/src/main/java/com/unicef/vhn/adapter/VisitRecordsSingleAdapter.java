@@ -100,6 +100,7 @@ public class VisitRecordsSingleAdapter extends RecyclerView.Adapter<VisitRecords
 
 
                 Intent intent= new Intent(context,ImageFullViewActivity.class);
+                AppConstants.ISPNVISIT=false;
 //                intent.putExtra("mylist", visitRecordsSingleResponseModels);
                 String[] imgList=new String[visitRecordsSingleResponseModels.size()];
                 for (int i=0;i<visitRecordsSingleResponseModels.size();i++){

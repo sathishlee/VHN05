@@ -11,9 +11,11 @@ import android.widget.TextView;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
+import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.view.MotherListsViews;
 
+import io.realm.Realm;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,10 +29,11 @@ public class TremAndPreTreamDetailsActivity extends AppCompatActivity implements
             txt_delivery_new_born, txt_infant_height, txt_infant_weight, txt_infant_id, txt_infant_birth_type,
             txt_breast_feeding_given, txt_admitted_in_sncu, new_born_sncu_date, txt_new_born_outcome, txt_bcg_given_date,
             txt_opv_given_date, txt_hepb_given_date;
-
+Realm realm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        realm=RealmController.with(this).getRealm();
         setContentView(R.layout.activity_trem_and_pre_tream_details);
         showActionBar();
 
@@ -60,7 +63,7 @@ public class TremAndPreTreamDetailsActivity extends AppCompatActivity implements
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
-        motherListPresenter = new MotherListPresenter(this, this);
+        motherListPresenter = new MotherListPresenter(this, this, realm);
         motherListPresenter.getTremAndPreTremMothers(preferenceData.getVhnId(), preferenceData.getVhnCode(), AppConstants.SELECTED_MID);
         txt_delivery_date = (TextView) findViewById(R.id.txt_delivery_date);
         txt_delivery_time = (TextView) findViewById(R.id.txt_delivery_time);

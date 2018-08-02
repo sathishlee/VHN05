@@ -57,10 +57,15 @@ public class SlidingImage_Adapter extends PagerAdapter {
 
 
 //        imageView.setImageResource(Integer.parseInt());
-
+        String imgageUrl="";
+if (AppConstants.ISPNVISIT){
+    imgageUrl=Apiconstants.PN_VISIT_REPORTS_URL+ AppConstants.MOTHER_PICME_ID+"/"+IMAGES.get(position);
+}else{
+    imgageUrl=Apiconstants.VISIT_REPORTS_URL+ AppConstants.MOTHER_PICME_ID+"/"+IMAGES.get(position);
+}
 
             Picasso.with(this.context)
-                    .load(Apiconstants.VISIT_REPORTS_URL+ AppConstants.MOTHER_PICME_ID+"/"+IMAGES.get(position))
+                    .load(imgageUrl)
                     .placeholder(R.drawable.no_image)
                     .fit()
                     .centerCrop()

@@ -89,11 +89,11 @@ Realm realm;
     }
 
     private void getRealmData() {
-        Log.d(ImmunizationActivity.class.getSimpleName(),"  AppConstants.SELECTED_MID "+  AppConstants.SELECTED_MID );
+        Log.e(ImmunizationActivity.class.getSimpleName(),"  AppConstants.SELECTED_MID "+  AppConstants.SELECTED_MID );
 
         realm.beginTransaction();
         RealmResults<ImmunizationDeatilsListRealmModel> immuniationListRealmModels = realm.where(ImmunizationDeatilsListRealmModel.class).equalTo("mid",AppConstants.SELECTED_MID).findAll();
-        Log.e("ANTT1 list size ->", immuniationListRealmModels.size() + "");
+        Log.e(ImmunizationActivity.class.getSimpleName(),"Immunization realm size ->"+ immuniationListRealmModels.size() + "");
         for (int i = 0; i < immuniationListRealmModels.size(); i++) {
             immunizationList = new ImmunizationListResponseModel.Immunization_list();
 
@@ -115,11 +115,10 @@ Realm realm;
             immunizationList.setImmDueDate(model.getImmDueDate());
             immunizationList.setImmCarePovidedDate(model.getImmCarePovidedDate());
 
-
-
             immunization_lists.add(immunizationList);
+            immunizationAdapter.notifyDataSetChanged();
         }
-        immunizationAdapter.notifyDataSetChanged();
+        Log.e(ImmunizationActivity.class.getSimpleName(),"immunization_lists  size ->"+ immunization_lists.size() + "");
 
         realm.commitTransaction();
 

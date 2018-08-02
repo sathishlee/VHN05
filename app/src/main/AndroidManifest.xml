@@ -169,7 +169,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".activity.MotherList.AllMotherListActivity" />
-        <activity android:name=".activity.MotherList.ANMotherListActivity" />
+
         <activity android:name=".activity.MotherList.InfantTermListActivity" />
         <activity android:name=".activity.MotherList.MigrationMotherListActivity" />
         <activity android:name=".activity.MotherDetails.ANMotherDetailsViewActivcity" />
@@ -178,9 +178,12 @@
         <activity android:name=".activity.MotherDetails.MigrationMotherDetailsViewActivcity" />
         <activity android:name=".activity.MotherVisitReport.ANMotherVisitReportActivity" />
         <activity android:name=".activity.MotherVisitReport.PNMotherVisitReportActivity" />
+        <activity android:name=".activity.MotherVisitReport.ANViewReportsActivity" />
+        <activity android:name=".activity.MotherVisitReport.PNViewReportsActivity" />
+
         <activity android:name=".activity.MotherList.PushNotificationListActivity" />
         <activity android:name=".activity.visitMotherDetails.PNMotherVisitDetailsActivity" />
-        <activity android:name=".activity.ViewReportsActivity" />
+
         <activity android:name=".activity.ImageFullViewActivity" />
         <activity android:name=".activity.MotherMigrationNew"
             android:theme="@style/AppTheme1"></activity>

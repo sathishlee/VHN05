@@ -13,7 +13,7 @@ import com.unicef.vhn.adapter.SlidingImage_Adapter;
 import java.util.ArrayList;
 
 public class ImageFullViewActivity  extends AppCompatActivity {
-
+String TAG=ImageFullViewActivity.class.getSimpleName();
     private static ViewPager mPager;
     private ArrayList<String> ImagesArray = new ArrayList<String>();
     @Override
@@ -40,10 +40,11 @@ public class ImageFullViewActivity  extends AppCompatActivity {
         {
             ImagesArray.add(imagelist[i]);
         }
-        Log.e(ImageFullViewActivity.class.getSimpleName(),imagelist.length+"");
+        Log.e(TAG,imagelist.length+"");
 
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(new SlidingImage_Adapter(ImageFullViewActivity.this,ImagesArray));
+
     }
 
     @Override

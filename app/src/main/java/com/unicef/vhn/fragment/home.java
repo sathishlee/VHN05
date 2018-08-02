@@ -13,6 +13,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
@@ -35,14 +36,9 @@ import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.HomePresenter;
 import com.unicef.vhn.R;
 //import com.unicef.vhn.activity.HighRiskListActivity;
-import com.unicef.vhn.activity.ANTT1MothersList;
-import com.unicef.vhn.activity.ANTT2MothersList;
+import com.unicef.vhn.activity.*;
 import com.unicef.vhn.activity.MotherList.AllMotherListActivity;
 import com.unicef.vhn.activity.MotherList.InfantTermListActivity;
-import com.unicef.vhn.activity.NoInternetConnectionActivity;
-import com.unicef.vhn.activity.PNHBNCDueListActivity;
-import com.unicef.vhn.activity.SosAlertListActivity;
-import com.unicef.vhn.activity.VhnProfile;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
@@ -60,14 +56,13 @@ import io.realm.RealmResults;
 
 
 public class home extends Fragment implements MotherListsViews {
+
     ImageView img_mother_count, img_high_risk_count, img_infant_count, userImageProfile;
     public TextView txt_mother_count, txt_high_risk_count, txt_infants_count, txt_sos_count;
     Button but_an_mother_total_count, but_an_mother_high_risk_count, but_an_mother_pn_hbnc_totlal_count,
             but_an_mother_pn_hbnc_term_preterm_count;
     TextView txt_antt_1_due, txt_antt_2_due, txt_pnhbnc_due;
-
     private ViewFlipper mFlipper;
-
     TextView txt_vhn_name, txt_hsc, txt_phc, txt_block, txt_address;
     ProgressDialog pDialog;
     HomePresenter homePresenter;
@@ -76,13 +71,14 @@ public class home extends Fragment implements MotherListsViews {
     CheckNetwork checkNetwork;
     CardView profile;
     String str_mPhoto;
-//    Ringtone ringtone;
     Context context;
     boolean isoffline = false;
-//    TextView txt_no_internet;
     Realm realm;
-
     MediaPlayer mp;
+
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    LinearLayout ll_view_block;
     public static home newInstance() {
         home fragment = new home();
         return fragment;
@@ -96,9 +92,10 @@ public class home extends Fragment implements MotherListsViews {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_new, container, false);
+        ll_view_block =view.findViewById(R.id.ll_view_block);
+        ll_view_block.setVisibility(View.GONE);
         realm = RealmController.with(getActivity()).getRealm(); // opens "myrealm.realm"
 
-//        checkInterNetConnection();
         initUI(view);
 
         profile = (CardView) view.findViewById(R.id.user_profile_photo);
@@ -147,13 +144,9 @@ public class home extends Fragment implements MotherListsViews {
             public void onClick(View v) {
                 AppConstants.GET_MOTHER_LIST_TYPE = "sos_count";
                 AppConstants.MOTHER_LIST_TITLE = "SOS List";
-//                ringtone.stop();
-//                if (!txt_sos_count.getText().toString().equalsIgnoreCase("0")) {
-                    startActivity(new Intent(getActivity(), SosAlertListActivity.class));
-//                }
-//                else{
-//                    Toast.makeText(getContext(),"SOS Alert not found.",Toast.LENGTH_LONG).show();
-//                }
+
+                startActivity(new Intent(getActivity(), SosAlertListActivity.class));
+
 
             }
         });
@@ -173,11 +166,13 @@ public class home extends Fragment implements MotherListsViews {
         img_infant_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppConstants.GET_MOTHER_LIST_TYPE = "infant_count";
+                /*AppConstants.GET_MOTHER_LIST_TYPE = "infant_count";
                 AppConstants.MOTHER_LIST_TITLE = "Infant List";
 
 //                startActivity(new Intent(getActivity(), TreamPreTreamListActivity.class));
-                startActivity(new Intent(getActivity(), InfantTermListActivity.class));
+                startActivity(new Intent(getActivity(), InfantTermListActivity.class));*/
+                Intent i = new Intent(getContext(), ImmunizationListActivity.class);
+                startActivity(i);
             }
         });
 
@@ -258,34 +253,21 @@ public class home extends Fragment implements MotherListsViews {
 
     }
 
-    private void checkInterNetConnection() {
-        checkNetwork = new CheckNetwork(getActivity());
-        if (checkNetwork.isNetworkAvailable()) {
-            Log.w(home.class.getSimpleName(), "Is" + checkNetwork.isNetworkAvailable());
-        } else {
-            Log.w(home.class.getSimpleName(), "Is" + checkNetwork.isNetworkAvailable());
-            startActivity(new Intent(getActivity(), NoInternetConnectionActivity.class));
-        }
-    }
-
     private void initUI(View view) {
-
-
-        mp = MediaPlayer.create(getActivity(), R.raw.ambulance_alert);
+        mp = MediaPlayer.create(getActivity(), R.raw.alarm_tone);
         mp.pause();
         checkNetwork = new CheckNetwork(getActivity());
-
         pDialog = new ProgressDialog(getActivity());
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(getActivity());
-        homePresenter = new HomePresenter(getActivity(), this);
+        homePresenter = new HomePresenter(getActivity(), this,realm);
         context = getActivity();
 
         userImageProfile = (ImageView) view.findViewById(R.id.userImageProfile);
 
         img_mother_count = (ImageView) view.findViewById(R.id.img_mother_count);
-
+swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
 //        txt_no_internet = view.findViewById(R.id.txt_no_internet);
 //        txt_no_internet.setVisibility(View.GONE);
 
@@ -317,8 +299,6 @@ public class home extends Fragment implements MotherListsViews {
         if (checkNetwork.isNetworkAvailable()) {
             homePresenter.getDashBoard(preferenceData.getVhnCode(), preferenceData.getVhnId());
         } else {
-//            Log.w(home.class.getSimpleName(), "Is" + checkNetwork.isNetworkAvailable());
-//            startActivity(new Intent(getActivity(), NoInternetConnectionActivity.class));
             isoffline = true;
         }
         mFlipper = ((ViewFlipper) view.findViewById(R.id.flipper));
@@ -330,6 +310,16 @@ public class home extends Fragment implements MotherListsViews {
             builder.setMessage("Record Not Found");
             builder.create();
         }
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (checkNetwork.isNetworkAvailable()) {
+                    homePresenter.getDashBoard(preferenceData.getVhnCode(), preferenceData.getVhnId());
+                } else {
+                    isoffline = true;
+                }
+            }
+        });
     }
 
     private void showOfflineData() {
@@ -340,6 +330,7 @@ public class home extends Fragment implements MotherListsViews {
             DashBoardRealmModel model = userInfoRealmResult.get(i);
 
             Log.e("getMothersCount", model.getMothersCount() + "");
+//            Log.e("getImmMothersCount", model.getImmCount() + "");
             Log.e("getRiskMothersCount", model.getRiskMothersCount() + "");
             Log.e("getInfantCount", model.getInfantCount() + "");
             Log.e("getSosCount", model.getSosCount() + "");
@@ -403,20 +394,23 @@ public class home extends Fragment implements MotherListsViews {
     @Override
     public void showProgress() {
         pDialog.show();
+        ll_view_block.setVisibility(View.GONE);
     }
 
     @Override
     public void hideProgress() {
         pDialog.dismiss();
+        ll_view_block.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showLoginSuccess(String response) {
+        swipeRefreshLayout.setRefreshing(false);
         Log.e(home.class.getSimpleName(), "Response success" + response);
+       /*
         try {
             JSONObject mJsnobject = new JSONObject(response);
             String status = mJsnobject.getString("status");
-            String message = mJsnobject.getString("message");
 
             if (status.equalsIgnoreCase("1")) {
                 txt_mother_count.setText(mJsnobject.getString("mothersCount"));
@@ -425,13 +419,7 @@ public class home extends Fragment implements MotherListsViews {
                 txt_sos_count.setText(mJsnobject.getString("sosCount"));
 
                 if (mJsnobject.getString("sosCount").equalsIgnoreCase("0")) {
-//                    ringtone.stop();
-                }
-                 else{
-//                    mFlipper.startFlipping();
-//                    mFlipper.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
-//                    mFlipper.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
-//                    ringtone.play();
+                } else {
 
                 }
 
@@ -529,7 +517,7 @@ public class home extends Fragment implements MotherListsViews {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+*/
         setValueToUI();
     }
 
@@ -542,6 +530,7 @@ public class home extends Fragment implements MotherListsViews {
 
     @Override
     public void showLoginError(String response) {
+        swipeRefreshLayout.setRefreshing(false);
         Log.e(home.class.getSimpleName(), "Response Error" + response);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(response);
@@ -560,51 +549,37 @@ public class home extends Fragment implements MotherListsViews {
 
     private void setValueToUI() {
         Log.e(home.class.getSimpleName(), "your app is now ON LINE");
-
+if (realm.isInTransaction()){
+    realm.cancelTransaction();
+}
         realm.beginTransaction();
         RealmResults<DashBoardRealmModel> userInfoRealmResult = realm.where(DashBoardRealmModel.class).findAll();
         for (int i = 0; i < userInfoRealmResult.size(); i++) {
             DashBoardRealmModel model = userInfoRealmResult.get(i);
 
-            Log.e("getMothersCount", model.getMothersCount() + "");
-            Log.e("getRiskMothersCount", model.getRiskMothersCount() + "");
-            Log.e("getInfantCount", model.getInfantCount() + "");
-            Log.e("getSosCount", model.getSosCount() + "");
             txt_mother_count.setText(model.getMothersCount() + "");
             txt_high_risk_count.setText(model.getRiskMothersCount() + "");
             txt_infants_count.setText(model.getInfantCount() + "");
             txt_sos_count.setText(model.getSosCount() + "");
-//            Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-//            Ringtone ringtone = RingtoneManager.getRingtone(getActivity(), uri);
             if (model.getSosCount() == 0) {
-//                ringtone.stop();
-//                mp.stop();
-
                 Intent objIntent = new Intent(getActivity(), PlayAudio.class);
-                if(  getActivity().startService(objIntent) != null) {
-//                    Toast.makeText(getActivity(), "Service is already running", Toast.LENGTH_SHORT).show();
+                if (getActivity().startService(objIntent) != null) {
                     getActivity().stopService(objIntent);
-                }
-                else {
+                } else {
                     Toast.makeText(getActivity(), "There is no service running, starting service..", Toast.LENGTH_SHORT).show();
                 }
 //                getActivity().stopService(objIntent);
-            }
-
-            else {
+            } else {
                 mFlipper.startFlipping();
                 mFlipper.setInAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
                 mFlipper.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
-//                mp = MediaPlayer.create(getActivity(), R.raw.ambulance_alert);
-//                mp.start();
-//                ringtone.play();
+
                 Intent objIntent = new Intent(getActivity(), PlayAudio.class);
 
-                if(  getActivity().startService(objIntent) != null) {
+                if (getActivity().startService(objIntent) != null) {
 //                    Toast.makeText(getActivity(), "Service is already running", Toast.LENGTH_SHORT).show();
 //                    getActivity().stopService(objIntent);
-                }
-                else {
+                } else {
                     getActivity().startService(objIntent);
                     Toast.makeText(getActivity(), "There is no service running, starting service..", Toast.LENGTH_SHORT).show();
                 }
@@ -613,13 +588,21 @@ public class home extends Fragment implements MotherListsViews {
             txt_antt_2_due.setText(model.getANTT2() + "");
             txt_pnhbnc_due.setText(model.getPnhbncCount() + "");
 
+            but_an_mother_total_count.setText(getResources().getString(R.string.total) +" "+ model.getANMothersCount() + "");
+            but_an_mother_high_risk_count.setText(getResources().getString(R.string.high_risk_home) +" "+ model.getANMotherRiskCount() + "");
+            but_an_mother_pn_hbnc_totlal_count.setText(getResources().getString(R.string.total)+" " + model.getPNMotherCount() + "");
+            but_an_mother_pn_hbnc_term_preterm_count.setText(getResources().getString(R.string.preterm)+" " + model.getTermsCount() + "");
+
+
+            /*
             but_an_mother_total_count.setText("Total: " + model.getANMothersCount() + "");
             but_an_mother_high_risk_count.setText("High Risk: " + model.getANMotherRiskCount() + "");
             but_an_mother_pn_hbnc_totlal_count.setText("Total: " + model.getPNMotherCount() + "");
-            but_an_mother_pn_hbnc_term_preterm_count.setText("Term/Preterm: " + model.getTermsCount() + "");
+            but_an_mother_pn_hbnc_term_preterm_count.setText("Term/Preterm: " + model.getTermsCount() + ""); */
 
 //            JSONObject mJsnobject_phcDetails = mJsnobject.getJSONObject("phcDetails");
 //                JSONObject mJsnobject_phcDetails = mJsnobject.getJSONObject("phcDetails");
+
             txt_vhn_name.setText(model.getVhnName());
             txt_phc.setText(model.getPhcName());
             txt_hsc.setText(model.getFacilityName());
@@ -629,7 +612,7 @@ public class home extends Fragment implements MotherListsViews {
             str_mPhoto = model.getVphoto();
             Log.d("vphoto-->", Apiconstants.PHOTO_URL + str_mPhoto);
 
-            /*Picasso.with(context)
+            Picasso.with(context)
                     .load(Apiconstants.PHOTO_URL + str_mPhoto)
                     .placeholder(R.drawable.ic_nurse)
                     .fit()
@@ -638,47 +621,36 @@ public class home extends Fragment implements MotherListsViews {
                     .networkPolicy(NetworkPolicy.NO_CACHE)
                     .transform(new RoundedTransformation(90, 4))
                     .error(R.drawable.ic_nurse)
-                    .into(userImageProfile);*/
+                    .into(userImageProfile);
         }
 
         realm.commitTransaction();
+
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+//        realm.close();
         Intent objIntent = new Intent(getActivity(), PlayAudio.class);
-        if(  getActivity().startService(objIntent) != null) {
+        if (getActivity().startService(objIntent) != null) {
             Toast.makeText(getActivity(), "Service is already running", Toast.LENGTH_SHORT).show();
             getActivity().stopService(objIntent);
-        }
-        else {
+        } else {
             Toast.makeText(getActivity(), "There is no service running, starting service..", Toast.LENGTH_SHORT).show();
         }
     }
-    /*  @Override
-      public void onDestroy() {
-          super.onDestroy();
-          realm.close();
-      }
 
-      @Override
-      public void onResume() {
-          super.onResume();
-          realm = RealmController.with(getActivity()).getRealm(); // opens "myrealm.realm"
-
-      }*/
     @Override
     public void onResume() {
         super.onResume();
-//      realm = RealmController.with(getActivity()).getRealm(); // opens "myrealm.realm"
-//        AppConstants.ISQUERYFILTER=false;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        AppConstants.ISHOMEALREDYCLICKED=true;
+        AppConstants.ISHOMEALREDYCLICKED = true;
 
     }
+
 }

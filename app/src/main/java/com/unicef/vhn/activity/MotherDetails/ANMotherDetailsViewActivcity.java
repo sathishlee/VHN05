@@ -137,8 +137,10 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
+
 //        pnMotherListPresenter = new MotherListPresenter(ANMotherDetailsViewActivcity.this, this);
 //        pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
+
         checkNetwork =new CheckNetwork(this);
         verifyVisitOtpPresenter= new VerifyVisitOtpPresenter(getApplicationContext(),this);
         txt_no_internet =(TextView)findViewById(R.id.txt_no_internet);
@@ -197,6 +199,7 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
 
         txt_mother_name.setText(model.getmName());
         txt_picme_id.setText(model.getmPicmeId());
+        txt_mage.setText(model.getmAge());
         txt_gest_week.setText(model.getGestAge()+" Wks");
         txt_weight.setText(model.getmWeight()+" Kg");
         strMobileNo = model.getmMotherMobile();
@@ -308,7 +311,11 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
                 break;
             case R.id.btn_view_report:
 //                startActivity(new Intent(getApplicationContext(), ANViewReportsActivity.class));
+                Toast.makeText(getApplicationContext(),"AN Mother MID"+AppConstants.SELECTED_MID ,Toast.LENGTH_SHORT).show();
+
                 startActivity(new Intent(getApplicationContext(), ANMotherVisitReportActivity.class));
+//                startActivity(new Intent(getApplicationContext(), ANViewReportsActivity.class));
+
                 break;
         }
     }

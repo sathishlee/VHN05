@@ -22,6 +22,7 @@
     <string name="welcome">Welcome!</string>
     <string name="password">Password</string>
     <string name="signin">SignIn</string>
+    <string name="tamil">Tamil</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -329,5 +330,36 @@
     <string name="today_visit_list">Today Visit List</string>
     <string name="remainder_visit_list">Remainder Visit List</string>
     <string name="verify_otp">Verify OTP</string>
+
+    <string name="hsc">HSC :</string>
+    <string name="phc">PHC Name :</string>
+    <string name="block_home">Block :</string>
+    <string name="address_home">Address :</string>
+    <string name="sos">SOS</string>
+    <string name="mothers">Mothers</string>
+    <string name="high_risk_home">High Risk</string>
+    <string name="infants">Infants</string>
+    <string name="an_mothers">Antenatal Mothers</string>
+    <string name="pn_mothers">PN/HBNC Mothers</string>
+    <string name="total">Total :</string>
+    <string name="preterm">Preterm :</string>
+    <string name="due_list">Due List</string>
+    <string name="antt1">AN TT1</string>
+    <string name="antt2">AN TT 2</string>
+    <string name="pnhbnc">PN/HBNC</string>
+
+    <string name="nav_an_mother">AN Mothers</string>
+    <string name="nav_pn_mother">PN Mothers/HBNC</string>
+    <string name="nav_immunization">Immunization</string>
+    <string name="nav_visit">Visit</string>
+    <string name="nav_mother_migrationt">Mother Migration</string>
+    <string name="nav_change_password">Change Password</string>
+    <string name="nav_change_language">Change Language</string>
+
+    <string name="b_nav_home">Home</string>
+    <string name="b_nav_mother">Mothers</string>
+    <string name="b_nav_risk_status">Risk Status</string>
+
+
 
 </resources>

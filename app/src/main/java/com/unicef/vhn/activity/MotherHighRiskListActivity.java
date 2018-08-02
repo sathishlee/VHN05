@@ -87,7 +87,7 @@ public class MotherHighRiskListActivity extends AppCompatActivity implements Mot
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData =new PreferenceData(this);
-        pnMotherListPresenter = new MotherListPresenter(MotherHighRiskListActivity.this,this);
+        pnMotherListPresenter = new MotherListPresenter(MotherHighRiskListActivity.this,this, realm);
 
 if (checkNetwork.isNetworkAvailable()) {
     if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("mother_count")) {
@@ -253,6 +253,7 @@ else{
             mresponseResult.setMid(model.getMid());
                         mresponseResult.setMName(model.getmName());
                         mresponseResult.setMPicmeId(model.getmPicmeId());
+                        mresponseResult.setmAge(model.getmAge());
                         mresponseResult.setVhnId(model.getVhnId());
                         mresponseResult.setmMotherMobile(model.getmMotherMobile());
                         mresponseResult.setMotherType(model.getMotherType());
@@ -295,7 +296,6 @@ else{
         }
     }
     private void requestCallPermission() {
-        Log.i(ANTT1MothersList.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CALL_PHONE)) {
             Toast.makeText(getApplicationContext(),"Displaying Call permission rationale to provide additional context.",Toast.LENGTH_SHORT).show();

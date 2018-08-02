@@ -35,6 +35,7 @@ import com.unicef.vhn.R;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.service.LocationMonitoringService;
 import com.unicef.vhn.utiltiy.CheckNetwork;
+import com.unicef.vhn.utiltiy.LocaleHelper;
 import com.unicef.vhn.view.LocationUpdateViews;
 
 public class SplashScreenActivity extends AppCompatActivity implements LocationUpdateViews {
@@ -70,8 +71,13 @@ CheckNetwork checkNetwork;
         rel_splash_screen.setVisibility(View.VISIBLE);
         locationUpdatePresenter = new LocationUpdatePresenter(this, this);
         preferenceData = new PreferenceData(this);
-        checkAPiVersion();
+//        checkAPiVersion();
 
+        if(preferenceData.getSharePrefrenceLocale().equalsIgnoreCase("ta")){
+            LocaleHelper.setLocale(SplashScreenActivity.this,"ta");
+        }else{
+            LocaleHelper.setLocale(SplashScreenActivity.this,"en");
+        }
 
         startStep1();
 

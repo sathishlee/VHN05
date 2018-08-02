@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:padding="10dp"
-                android:text="Tamil" />
+                android:text="@string/tamil" />
         </LinearLayout>
 
         <include layout="@layout/language_divider" />

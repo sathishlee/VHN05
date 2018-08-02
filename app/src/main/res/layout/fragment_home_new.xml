@@ -1,14 +1,19 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="60dp">
-
+    android:layout_marginBottom="60dp"
+    android:id="@+id/swipe_refresh_layout">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+    android:id="@+id/ll_view_block">
 
 
         <LinearLayout
@@ -162,7 +167,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Mothers"
+                    android:text="@string/mother"
                     android:textSize="@dimen/text_title"
                     android:textColor="@color/text_main"/>
 
@@ -195,7 +200,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="High Risks"
+                    android:text="@string/high_risk_home"
                     android:textColor="@color/text_main"
                     android:textSize="@dimen/text_title"/>
 
@@ -228,7 +233,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Infants"
+                    android:text="@string/infants"
                     android:textColor="@color/text_main"
                     android:textSize="@dimen/text_title" />
 
@@ -270,7 +275,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Antenatal Mothers"
+                        android:text="@string/an_mothers"
                         android:textAlignment="textStart"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_label"
@@ -294,7 +299,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/primary_round"
                 android:layout_marginEnd="5dp"
-                android:text="Total: 106"
+                android:text="@string/total"
                 android:textColor="@color/white"/>
 
             <Button
@@ -304,7 +309,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/primary_round"
                 android:layout_marginStart="5dp"
-                android:text="High Risk: 12"
+                android:text="@string/high_risk_home"
                 android:textColor="@color/white"/>
         </LinearLayout>
 
@@ -348,7 +353,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="PN/HBNC Mothers"
+                    android:text="@string/pn_mothers"
                     android:textAlignment="textStart"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/text_label"
@@ -373,7 +378,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/primary_round"
                 android:layout_marginEnd="5dp"
-                android:text="Total: 106"
+                android:text="@string/total"
                 android:textColor="@color/white"/>
 
             <Button
@@ -383,7 +388,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/primary_round"
                 android:layout_marginStart="5dp"
-                android:text="Preterm: 12"
+                android:text="@string/preterm"
                 android:textColor="@color/white"/>
 
         </LinearLayout>
@@ -429,7 +434,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Due List"
+                        android:text="@string/due_list"
                         android:textAlignment="textStart"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_label"
@@ -486,7 +491,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="AN TT 1"
+                    android:text="@string/antt1"
                     android:textSize="@dimen/text_label"
                     android:textColor="@color/text_main"/>
 
@@ -513,7 +518,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="AN TT 2"
+                    android:text="@string/antt2"
                     android:textSize="@dimen/text_label"
                     android:textColor="@color/text_main"/>
 
@@ -541,7 +546,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="PN/HBNC"
+                    android:text="@string/pnhbnc"
                     android:textSize="@dimen/text_label"
                     android:textColor="@color/text_main"/>
 
@@ -1020,3 +1025,4 @@
     </LinearLayout>
 
 </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>

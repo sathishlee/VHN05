@@ -18,10 +18,12 @@ import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.GetVisitANMotherPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.adapter.ANVisitAdapter;
+import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.ANMotherVisitResponseModel;
 import com.unicef.vhn.view.VisitANMotherViews;
 
+import io.realm.Realm;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,10 +44,11 @@ public class ANViewReportsActivity extends AppCompatActivity implements VisitANM
     Button btn_primary_report, btn_view_report;
     TextView txt_no_records_found;
     String strPicmeId;
-
+Realm realm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        realm = RealmController.with(this).getRealm();
         setContentView(R.layout.activity_anview_reports);
         initUI();
         onClickListner();
@@ -57,7 +60,7 @@ public class ANViewReportsActivity extends AppCompatActivity implements VisitANM
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData =new PreferenceData(this);
-        getVisitANMotherPresenter = new GetVisitANMotherPresenter(ANViewReportsActivity.this, this);
+        getVisitANMotherPresenter = new GetVisitANMotherPresenter(ANViewReportsActivity.this, this,realm);
 //        gVHRecordsPresenteer.getAllVistHeathRecord(Apiconstants.POST_VIST_HEALTH_RECORD_PICME,preferenceData.getPicmeId(), preferenceData.getMId());
         getVisitANMotherPresenter.getVisitANMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
         mhealthRecordList =new ArrayList<>();
@@ -114,7 +117,7 @@ public class ANViewReportsActivity extends AppCompatActivity implements VisitANM
                 break;
             case  R.id.btn_view_report:
             Toast.makeText(getApplicationContext(),"view report imaage xyz",Toast.LENGTH_LONG).show();
-                  startActivity(new Intent(getApplicationContext(),ViewReportsActivity.class));
+                  startActivity(new Intent(getApplicationContext(), com.unicef.vhn.activity.MotherVisitReport.ANViewReportsActivity.class));
                   break;
         }
     }

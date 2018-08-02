@@ -15,10 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.unicef.vhn.Preference.PreferenceData;
+import com.unicef.vhn.Presenter.GetVisitANMotherPresenter;
 import com.unicef.vhn.R;
-import com.unicef.vhn.activity.ANViewReportsActivity;
+import com.unicef.vhn.activity.MotherList.AllMotherListActivity;
 import com.unicef.vhn.activity.MothersPrimaryRecordsActivity;
-import com.unicef.vhn.activity.ViewReportsActivity;
 import com.unicef.vhn.adapter.ANVisitAdapter;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.AppConstants;
@@ -28,10 +28,11 @@ import com.unicef.vhn.utiltiy.CheckNetwork;
 
 import java.util.ArrayList;
 
+import com.unicef.vhn.view.VisitANMotherViews;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class ANMotherVisitReportActivity extends AppCompatActivity implements View.OnClickListener {
+public class ANMotherVisitReportActivity extends AppCompatActivity implements View.OnClickListener, VisitANMotherViews {
 
 
     private ProgressDialog pDialog;
@@ -53,12 +54,17 @@ public class ANMotherVisitReportActivity extends AppCompatActivity implements Vi
     CheckNetwork checkNetwork;
     TextView txt_no_internet;
 
+    GetVisitANMotherPresenter getVisitANMotherPresenter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         realm = RealmController.with(this).getRealm();
         setContentView(R.layout.activity_anvisit_report);
-        Toast.makeText(getApplicationContext(), ANMotherVisitReportActivity.class.getSimpleName(), Toast.LENGTH_LONG).show();
+
+        Toast.makeText(getApplicationContext(),"AN Mother visit MID"+AppConstants.SELECTED_MID ,Toast.LENGTH_SHORT).show();
+
         Log.d(ANMotherVisitReportActivity.class.getSimpleName(), "Activity Created123");
         initUI();
         onClickListner();
@@ -76,8 +82,12 @@ public class ANMotherVisitReportActivity extends AppCompatActivity implements Vi
         txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
         checkNetwork =new CheckNetwork(this);
         txt_no_internet.setVisibility(View.GONE);
+        getVisitANMotherPresenter = new GetVisitANMotherPresenter(ANMotherVisitReportActivity.this, this,realm);
+
         if (checkNetwork.isNetworkAvailable())
         {
+            getVisitANMotherPresenter.getVisitANMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
+
             txt_no_internet.setVisibility(View.GONE);
         }else{
             txt_no_internet.setVisibility(View.VISIBLE);
@@ -134,13 +144,14 @@ public class ANMotherVisitReportActivity extends AppCompatActivity implements Vi
                 startActivity(new Intent(getApplicationContext(), MothersPrimaryRecordsActivity.class)); break;
             case  R.id.btn_view_report:
 //                 startActivity(new Intent(getApplicationContext(),ANViewReportsActivity.class)); break;
-                 startActivity(new Intent(getApplicationContext(),ViewReportsActivity.class)); break;
+                 startActivity(new Intent(getApplicationContext(),ANViewReportsActivity.class)); break;
         }
     }
 
     private void getValuefromRealm() {
 
         Log.d(ANMotherVisitReportActivity.class.getSimpleName(), "getValue formRealm");
+        Log.e(ANMotherVisitReportActivity.class.getSimpleName(), "showe report of mid  "+ AppConstants.SELECTED_MID);
 
         realm.beginTransaction();
         RealmResults<ANMVisitRealmModel> userInfoRealmResult = realm.where(ANMVisitRealmModel.class)
@@ -202,5 +213,36 @@ public class ANMotherVisitReportActivity extends AppCompatActivity implements Vi
             tabLayout.setVisibility(View.GONE);
         }
         realm.commitTransaction();
+    }
+
+    @Override
+    public void showProgress() {
+        pDialog.show();
+    }
+
+    @Override
+    public void hideProgress() {
+        pDialog.dismiss();
+
+    }
+
+    @Override
+    public void showANVisitRecordsSuccess(String response) {
+
+    }
+
+    @Override
+    public void showANVisitRecordsFailiur(String response) {
+
+    }
+
+    @Override
+    public void showPNVisitRecordsSuccess(String response) {
+
+    }
+
+    @Override
+    public void showPNVisitRecordsFailiur(String response) {
+
     }
 }

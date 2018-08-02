@@ -97,6 +97,10 @@ public class PreferenceData {
         sharedPreferences.edit().putString(AppConstants.NOTIFICATION_COUNT, strTodayVisitCount).commit();
     }
 
+    public void setTodayvisitCount(String strTodayVisitCount) {
+        sharedPreferences.edit().putString(AppConstants.TODAY_VISIT_COUNT, strTodayVisitCount).commit();
+    }
+
     public String getTodayVisitCount() {
         return sharedPreferences.getString(AppConstants.TODAY_VISIT_COUNT, "");
     }
@@ -174,6 +178,16 @@ public class PreferenceData {
     }
     public boolean getFilterStatus() {
                 return sharedPreferences.getBoolean("isfillter", Boolean.parseBoolean(""));
+
+    }
+
+
+    public void setSharePrefrenceLocale(String locale) {
+        sharedPreferences.edit().putString(AppConstants.LANGUAGE,locale).commit();
+    }
+
+    public String getSharePrefrenceLocale() {
+        return sharedPreferences.getString(AppConstants.LANGUAGE,"");
 
     }
 }

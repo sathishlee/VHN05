@@ -20,9 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
@@ -30,11 +27,9 @@ import com.unicef.vhn.activity.ANViewReportsActivity;
 import com.unicef.vhn.activity.MotherLocationActivity;
 import com.unicef.vhn.adapter.MotherMigrationAdapter;
 import com.unicef.vhn.application.RealmController;
-import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.realmDbModel.MigrationMotherDetailsRealmModel;
 import com.unicef.vhn.utiltiy.CheckNetwork;
-import com.unicef.vhn.utiltiy.RoundedTransformation;
 import com.unicef.vhn.view.MotherListsViews;
 
 import org.json.JSONException;
@@ -58,6 +53,7 @@ public class MigrationMotherDetailsViewActivcity extends AppCompatActivity imple
     Realm realm;
     CheckNetwork checkNetwork;
     boolean isoffline;
+    LinearLayout otpview;
 
     LinearLayout view_norecords, view_block,viewHighRisk,viewLowrisk;
 TextView txt_no_internet;
@@ -111,9 +107,10 @@ TextView txt_no_internet;
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
         checkNetwork = new CheckNetwork(this);
-        pnMotherListPresenter = new MotherListPresenter(MigrationMotherDetailsViewActivcity.this, this);
+        pnMotherListPresenter = new MotherListPresenter(MigrationMotherDetailsViewActivcity.this, this, realm);
         txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
-
+        otpview = (LinearLayout) findViewById(R.id.otpview);
+        otpview.setVisibility(View.GONE);
         if (checkNetwork.isNetworkAvailable()) {
             txt_no_internet.setVisibility(View.GONE);
 
@@ -135,7 +132,7 @@ TextView txt_no_internet;
         txt_mother_name = (TextView) findViewById(R.id.txt_username);
         txt_picme_id = (TextView) findViewById(R.id.txt_picme_id);
         txt_mage = (TextView) findViewById(R.id.txt_age);
-        txt_risk_status = (TextView) findViewById(R.id.txt_risk);
+//        txt_risk_status = (TextView) findViewById(R.id.txt_risk);
         txt_gest_week = (TextView) findViewById(R.id.txt_gest_week);
         txt_weight = (TextView) findViewById(R.id.txt_weight);
         txt_lmp_date = (TextView) findViewById(R.id.txt_lmp_date);
@@ -194,7 +191,7 @@ TextView txt_no_internet;
 
                 }
                 txt_mage.setText(model.getMAge());
-                txt_risk_status.setText(model.getMRiskStatus());
+//                txt_risk_status.setText(model.getMRiskStatus());
                 if (model.getMRiskStatus().equalsIgnoreCase("HIGH")){
                viewLowrisk.setVisibility(View.GONE);
                viewHighRisk.setVisibility(View.VISIBLE);

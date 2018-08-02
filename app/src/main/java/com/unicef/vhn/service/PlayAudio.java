@@ -17,7 +17,7 @@ public class PlayAudio extends Service {
     public void onCreate(){
         super.onCreate();
         Log.d(LOGCAT, "Service Started!");
-        objPlayer = MediaPlayer.create(this, R.raw.ambulance_alert);
+        objPlayer = MediaPlayer.create(this, R.raw.alarm_tone);
     }
 
     public int onStartCommand(Intent intent, int flags, int startId){
