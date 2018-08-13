@@ -51,8 +51,8 @@ import io.realm.RealmResults;
 
 public class ANMotherDetailsViewActivcity extends AppCompatActivity implements View.OnClickListener, TodayVisitCloseViews {
     TextView txt_mother_name, txt_picme_id, txt_mage, txt_risk_status, txt_gest_week, txt_weight,
-            txt_lmp_date, txt_edd_date, txt_next_visit,txt_husb_name,txt_mother_name_call;
-    String strMobileNo, strAltMobileNo,strVerifyOtp;
+            txt_lmp_date, txt_edd_date, txt_next_visit, txt_husb_name, txt_mother_name_call;
+    String strMobileNo, strAltMobileNo, strVerifyOtp;
     Context context;
     String strLatitude, strLongitude, str_mPhoto;
     ImageView img_call_1, img_call_2, cardview_image;
@@ -61,7 +61,7 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
 
-    Button btn_view_location, btn_view_report,but_verify_otp;
+    Button btn_view_location, btn_view_report, but_verify_otp;
     EditText edt_otp;
 
     Realm realm;
@@ -69,9 +69,10 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
     MotherListRealm dashBoardRealmModel;
     TextView txt_no_internet;
     CheckNetwork checkNetwork;
-    LinearLayout view_block,viewLowrisk,viewHighRisk,otpview;
+    LinearLayout view_block, viewLowrisk, viewHighRisk, otpview;
 
     VerifyVisitOtpPresenter verifyVisitOtpPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,12 +115,12 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
 
     private void verifyOtp() {
         strVerifyOtp = edt_otp.getText().toString();
-       if (strVerifyOtp.equalsIgnoreCase("")){
-                   Toast.makeText(getApplicationContext(),"please enter otp",Toast.LENGTH_LONG).show();
+        if (strVerifyOtp.equalsIgnoreCase("")) {
+            Toast.makeText(getApplicationContext(), "please enter otp", Toast.LENGTH_LONG).show();
 
-       }  else{
-           verifyVisitOtpPresenter.getverifyOTP(AppConstants.SELECTED_VISIT_NOTE_ID,strVerifyOtp,AppConstants.SELECTED_MID);
-       }
+        } else {
+            verifyVisitOtpPresenter.getverifyOTP(AppConstants.SELECTED_VISIT_NOTE_ID, strVerifyOtp, AppConstants.SELECTED_MID);
+        }
 
     }
 
@@ -141,26 +142,25 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
 //        pnMotherListPresenter = new MotherListPresenter(ANMotherDetailsViewActivcity.this, this);
 //        pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
 
-        checkNetwork =new CheckNetwork(this);
-        verifyVisitOtpPresenter= new VerifyVisitOtpPresenter(getApplicationContext(),this);
-        txt_no_internet =(TextView)findViewById(R.id.txt_no_internet);
+        checkNetwork = new CheckNetwork(this);
+        verifyVisitOtpPresenter = new VerifyVisitOtpPresenter(getApplicationContext(), this);
+        txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
         txt_no_internet.setVisibility(View.GONE);
-        if (checkNetwork.isNetworkAvailable()){
+        if (checkNetwork.isNetworkAvailable()) {
             txt_no_internet.setVisibility(View.GONE);
-        }
-        else{
+        } else {
             txt_no_internet.setVisibility(View.VISIBLE);
         }
-        viewHighRisk =(LinearLayout)findViewById(R.id.ll_high_risk);
-        viewLowrisk =(LinearLayout)findViewById(R.id.ll_low_risk);
-        otpview =(LinearLayout)findViewById(R.id.otpview);
-        if (AppConstants.IS_TODAY_VIST_LIST){
+        viewHighRisk = (LinearLayout) findViewById(R.id.ll_high_risk);
+        viewLowrisk = (LinearLayout) findViewById(R.id.ll_low_risk);
+        otpview = (LinearLayout) findViewById(R.id.otpview);
+        if (AppConstants.IS_TODAY_VIST_LIST) {
             otpview.setVisibility(View.VISIBLE);
-            AppConstants.IS_TODAY_VIST_LIST=false;
-        }else{
+            AppConstants.IS_TODAY_VIST_LIST = false;
+        } else {
             otpview.setVisibility(View.GONE);
         }
-        view_block =(LinearLayout)findViewById(R.id.view_block);
+        view_block = (LinearLayout) findViewById(R.id.view_block);
         view_block.setVisibility(View.GONE);
         cardview_image = (ImageView) findViewById(R.id.cardview_image);
         txt_mother_name = (TextView) findViewById(R.id.txt_username);
@@ -172,8 +172,8 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
         txt_lmp_date = (TextView) findViewById(R.id.txt_lmp_date);
         txt_edd_date = (TextView) findViewById(R.id.txt_edd_date);
         txt_next_visit = (TextView) findViewById(R.id.txt_next_visit);
-        txt_husb_name= (TextView) findViewById(R.id.txt_husb_name);
-        txt_mother_name_call= (TextView) findViewById(R.id.txt_mother_name_call);
+        txt_husb_name = (TextView) findViewById(R.id.txt_husb_name);
+        txt_mother_name_call = (TextView) findViewById(R.id.txt_mother_name_call);
         img_call_1 = (ImageView) findViewById(R.id.img_call_1);
         img_call_2 = (ImageView) findViewById(R.id.img_call_2);
         btn_view_location = (Button) findViewById(R.id.btn_view_location);
@@ -187,54 +187,89 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
     }
 
     private void getValuesFromRealm() {
+if (realm.isInTransaction()){
+    realm.cancelTransaction();
+    }
+        realm.beginTransaction();
+        RealmResults<PNMMotherListRealmModel> realmResults = realm.where(PNMMotherListRealmModel.class)
+                .equalTo("mid", AppConstants.SELECTED_MID).findAll();
+        if (realmResults.size() != 0) {
+            view_block.setVisibility(View.VISIBLE);
 
-    realm.beginTransaction();
-    RealmResults<PNMMotherListRealmModel> realmResults =realm.where(PNMMotherListRealmModel.class)
-            .equalTo("mid", AppConstants.SELECTED_MID).findAll();
-    if (realmResults.size()!=0){
-        view_block.setVisibility(View.VISIBLE);
+            for (int i = 0; i < realmResults.size(); i++) {
+                PNMMotherListRealmModel model = realmResults.get(i);
 
-    for (int i=0; i<realmResults.size();i++){
-        PNMMotherListRealmModel model = realmResults.get(i);
+                if (model.getmName().equalsIgnoreCase("null")) {
+                    txt_mother_name.setText("-");
+                } else {
+                    txt_mother_name.setText(model.getmName());
 
-        txt_mother_name.setText(model.getmName());
-        txt_picme_id.setText(model.getmPicmeId());
-        txt_mage.setText(model.getmAge());
-        txt_gest_week.setText(model.getGestAge()+" Wks");
-        txt_weight.setText(model.getmWeight()+" Kg");
-        strMobileNo = model.getmMotherMobile();
-        if (strMobileNo.equalsIgnoreCase("null")||strMobileNo.length()<10){
-            img_call_1.setVisibility(View.GONE);
-        }else{
-            img_call_1.setVisibility(View.VISIBLE);
-        }
-        txt_husb_name.setText(model.getmHusbandName());
-        txt_mother_name_call.setText(model.getmName());
-        strAltMobileNo = model.getmHusbandMobile();
-        if (strAltMobileNo.equalsIgnoreCase("null")||strAltMobileNo.length()<10){
-            img_call_2.setVisibility(View.GONE);
-        }else{
-            img_call_2.setVisibility(View.VISIBLE);
+                }
+                if (model.getmPicmeId().equalsIgnoreCase("null")) {
+                    txt_picme_id.setText("-");
+                } else {
+                    txt_picme_id.setText(model.getmPicmeId());
 
-        }
+                }
+                if (model.getmAge().equalsIgnoreCase("null")) {
+                    txt_mage.setText("-");
+
+                } else {
+                    txt_mage.setText(model.getmAge());
+                }
+                if (model.getGestAge().equalsIgnoreCase("null")) {
+                    txt_gest_week.setText("-");
+                } else {
+                    txt_gest_week.setText(model.getGestAge());
+
+                }
+                if (model.getmWeight().equalsIgnoreCase("null")){
+                    txt_weight.setText("-");
+                }else {
+                    txt_weight.setText(model.getmWeight() + " Kg");
+                }
+                strMobileNo = model.getmMotherMobile();
+                if (strMobileNo.equalsIgnoreCase("null") || strMobileNo.length() < 10) {
+                    img_call_1.setVisibility(View.GONE);
+                } else {
+                    img_call_1.setVisibility(View.VISIBLE);
+                }
+                if (model.getmHusbandName().equalsIgnoreCase("null")){
+                    txt_husb_name.setText("-");
+                }else {
+                    txt_husb_name.setText(model.getmHusbandName());
+                }
+                if (model.getmName().equalsIgnoreCase("null")){
+                    txt_mother_name_call.setText("-");
+                }
+                else{
+                    txt_mother_name_call.setText(model.getmName());
+                }
+                strAltMobileNo = model.getmHusbandMobile();
+                if (strAltMobileNo.equalsIgnoreCase("null") || strAltMobileNo.length() < 10) {
+                    img_call_2.setVisibility(View.GONE);
+                } else {
+                    img_call_2.setVisibility(View.VISIBLE);
+
+                }
 //            txt_mage.setText(mJsnobject_tracking.);
 //        txt_risk_status.setText(model.getmRiskStatus());
-        if (model.getmRiskStatus().equalsIgnoreCase("HIGH")){
-            viewLowrisk.setVisibility(View.GONE);
-            viewHighRisk.setVisibility(View.VISIBLE);
-        }else{
-            viewLowrisk.setVisibility(View.VISIBLE);
-            viewHighRisk.setVisibility(View.GONE);
-        }
+                if (model.getmRiskStatus().equalsIgnoreCase("HIGH")) {
+                    viewLowrisk.setVisibility(View.GONE);
+                    viewHighRisk.setVisibility(View.VISIBLE);
+                } else {
+                    viewLowrisk.setVisibility(View.VISIBLE);
+                    viewHighRisk.setVisibility(View.GONE);
+                }
 //            txt_gest_week.setText(mJsnobject_tracking.getCurrentMonth());
 //            txt_weight.setText(mJsnobject_tracking.);
-        txt_next_visit.setText(model.getNextVisit());
-        txt_lmp_date.setText(model.getmLMP());
-        txt_edd_date.setText(model.getmEDD());
-        strLatitude = model.getmLatitude();
-        strLongitude = model.getmLongitude();
+                txt_next_visit.setText(model.getNextVisit());
+                txt_lmp_date.setText(model.getmLMP());
+                txt_edd_date.setText(model.getmEDD());
+                strLatitude = model.getmLatitude();
+                strLongitude = model.getmLongitude();
 
-        str_mPhoto = model.getmPhoto();
+                str_mPhoto = model.getmPhoto();
 
       /*  Picasso.with(context)
                 .load(Apiconstants.MOTHER_PHOTO_URL + str_mPhoto)
@@ -247,32 +282,31 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
                 .error(R.drawable.girl)
                 .into(cardview_image);*/
 
-    }
-}
-    else{
-    view_block.setVisibility(View.GONE);
+            }
+        } else {
+            view_block.setVisibility(View.GONE);
 
-    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    builder.setTitle("Records Not Available!");
-    builder.setMessage("You are in offline, please connect internet.");
-    // Add the buttons
-    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-        public void onClick(DialogInterface dialog, int id) {
-            // User clicked OK button
-            dialog.dismiss();
-            finish();
-        }
-    });
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Records Not Available!");
+            builder.setMessage("You are in offline, please connect internet.");
+            // Add the buttons
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User clicked OK button
+                    dialog.dismiss();
+                    finish();
+                }
+            });
 
 
 // Create the AlertDialog
-    AlertDialog dialog = builder.create();
+            AlertDialog dialog = builder.create();
 
-    dialog.show();
+            dialog.show();
+        }
+        realm.commitTransaction();
+
     }
-    realm.commitTransaction();
-
-       }
 
 
     private void makeCall(String str_mobile_number) {
@@ -306,15 +340,15 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
             case R.id.btn_view_location:
 
                 Toast.makeText(getApplicationContext(),
-                        "you are in offline, check Internet connection",Toast.LENGTH_LONG).show();
+                        "you are in offline, check Internet connection", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(getApplicationContext(), MotherLocationActivity.class));
                 break;
             case R.id.btn_view_report:
 //                startActivity(new Intent(getApplicationContext(), ANViewReportsActivity.class));
-                Toast.makeText(getApplicationContext(),"AN Mother MID"+AppConstants.SELECTED_MID ,Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(),"AN Mother MID"+AppConstants.SELECTED_MID ,Toast.LENGTH_SHORT).show();
 
-                startActivity(new Intent(getApplicationContext(), ANMotherVisitReportActivity.class));
-//                startActivity(new Intent(getApplicationContext(), ANViewReportsActivity.class));
+//                startActivity(new Intent(getApplicationContext(), ANMotherVisitReportActivity.class));
+                startActivity(new Intent(getApplicationContext(), ANViewReportsActivity.class));
 
                 break;
         }
@@ -350,7 +384,7 @@ public class ANMotherDetailsViewActivcity extends AppCompatActivity implements V
 
     @Override
     public void hideProgress() {
-pDialog.dismiss();
+        pDialog.dismiss();
     }
 
     @Override
@@ -360,12 +394,12 @@ pDialog.dismiss();
             String status = mJsnobject.getString("status");
             String message = mJsnobject.getString("message");
             if (status.equalsIgnoreCase("1")) {
-                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            }else{
-                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
             }
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -374,6 +408,6 @@ pDialog.dismiss();
 
     @Override
     public void todayVisitCloseFailiur(String response) {
-        Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
     }
 }

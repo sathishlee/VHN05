@@ -30,6 +30,16 @@ public class PNMMotherListRealmModel extends RealmObject {
     private String gestAge;
     private String mWeight;
     private String mAge;
+    private String userType;
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
 
     public String getmAge() {
         return mAge;

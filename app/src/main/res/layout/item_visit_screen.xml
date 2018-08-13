@@ -177,7 +177,7 @@
                                 android:id="@+id/txt_visited_date"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="15-02-2018"
+                                android:text="-"
                                 android:textAlignment="textStart"
                                 android:textColor="#fff"
                                 android:textSize="@dimen/text_secondary" />
@@ -218,7 +218,7 @@
                                 android:id="@+id/txt_visited_type"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Scheduled"
+                                android:text="-"
                                 android:layout_gravity="start"
                                 android:textColor="#fff"
                                 android:textSize="@dimen/text_secondary"/>
@@ -259,7 +259,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="PHC"
+                            android:text="-"
                             android:textSize="@dimen/text_secondary"
                             android:textAlignment="textStart"
                             android:textColor="@color/text_primary"/>
@@ -286,7 +286,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="Burning"
+                            android:text="-"
                             android:textSize="@dimen/text_secondary"
                             android:layout_gravity="start"
                             android:textColor="@color/text_primary"/>
@@ -401,7 +401,7 @@
                                 android:id="@+id/txt_bp_value"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="162/102"
+                                android:text="-"
                                 android:textAlignment="textStart"
                                 android:textColor="#fff"
                                 android:textSize="@dimen/text_secondary"/>
@@ -443,7 +443,7 @@
                                 android:id="@+id/txt_pluse_rate"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="82"
+                                android:text="-"
                                 android:layout_gravity="start"
                                 android:textColor="#fff"
                                 android:textSize="@dimen/text_secondary"/>
@@ -482,7 +482,7 @@
                             android:id="@+id/txt_weight"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="92kg"
+                            android:text="-"
                             android:textSize="@dimen/text_secondary"
                             android:textAlignment="textStart"
                             android:textColor="@color/text_primary"/>
@@ -509,7 +509,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="65cm"
+                            android:text="-"
                             android:textSize="@dimen/text_secondary"
                             android:layout_gravity="start"
                             android:textColor="@color/text_primary"/>
@@ -547,7 +547,7 @@
                             android:id="@+id/txt_fhs"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="223"
+                            android:text="-"
                             android:layout_marginStart="5dp"
                             android:textSize="@dimen/text_secondary"
                             android:textAlignment="textStart"
@@ -576,7 +576,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:textSize="@dimen/text_secondary"
-                            android:text="Yes"
+                            android:text="-"
                             android:layout_gravity="start"
                             android:textColor="@color/text_primary"/>
 
@@ -690,7 +690,7 @@
                                 android:id="@+id/txt_hp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="162%"
+                                android:text="-"
                                 android:textSize="@dimen/text_secondary"
                                 android:textAlignment="textStart"
                                 android:textColor="#fff" />
@@ -732,7 +732,7 @@
                                 android:id="@+id/txt_fbs"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="82"
+                                android:text="-"
                                 android:textSize="@dimen/text_secondary"
                                 android:layout_gravity="start"
                                 android:textColor="#fff"/>
@@ -773,7 +773,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="92"
+                            android:text="-"
                             android:textSize="@dimen/text_secondary"
                             android:textAlignment="textStart"
                             android:textColor="@color/text_primary"/>
@@ -800,7 +800,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="65cm"
+                            android:text="-"
                             android:textSize="@dimen/text_secondary"
                             android:layout_gravity="start"
                             android:textColor="@color/text_primary" />
@@ -837,7 +837,7 @@
                             android:id="@+id/txt_sugar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="223"
+                            android:text="-"
                             android:textSize="@dimen/text_secondary"
                             android:layout_marginStart="5dp"
                             android:textAlignment="textStart"
@@ -864,7 +864,7 @@
                             android:id="@+id/txt_urin_alubin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="223"
+                            android:text="-"
                             android:textSize="@dimen/text_secondary"
                             android:layout_marginStart="5dp"
                             android:textAlignment="textStart"
@@ -963,7 +963,7 @@
                             android:id="@+id/txt_fetus"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Alive"
+                            android:text="-"
                             android:textSize="@dimen/text_secondary"
                             android:textAlignment="textStart"
                             android:textColor="@color/text_primary"/>
@@ -989,7 +989,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/text_secondary"
-                            android:text="Single"
+                            android:text="-"
                             android:layout_gravity="start"
                             android:textColor="@color/text_primary" />
 
@@ -1025,7 +1025,7 @@
                             android:id="@+id/txt_liquor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Not"
+                            android:text="-"
                             android:textSize="@dimen/text_secondary"
                             android:textAlignment="textStart"
                             android:textColor="@color/text_primary" />
@@ -1052,7 +1052,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/text_secondary"
-                            android:text="Normal"
+                            android:text="-"
                             android:layout_gravity="start"
                             android:textColor="@color/text_primary" />
 
@@ -1088,7 +1088,7 @@
                             android:id="@+id/txt_tsh"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="NA"
+                            android:text="-"
                             android:textSize="@dimen/text_secondary"
                             android:textAlignment="textStart"
                             android:textColor="@color/text_primary"/>

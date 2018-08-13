@@ -280,7 +280,7 @@
                         android:layout_height="wrap_content"
                         android:textAlignment="textStart"
                         android:padding="1dp"
-                        android:text="123456789101"
+                        android:text="-"
                         android:textColor="#333333"
                         android:textSize="@dimen/text_secondary" />
                 </LinearLayout>
@@ -336,7 +336,7 @@
                         android:layout_height="wrap_content"
                         android:textAlignment="textStart"
                         android:padding="1dp"
-                        android:text="Term"
+                        android:text="-"
                         android:textColor="#333333"
                         android:textSize="@dimen/text_secondary" />
 
@@ -351,7 +351,7 @@
                 android:layout_marginStart="3dp"
                 android:layout_marginTop="10dp"
                 android:gravity="start"
-                android:text="Mother Name"
+                android:text="-"
                 android:textColor="#333333"
                 android:textSize="@dimen/text_lable" />
 

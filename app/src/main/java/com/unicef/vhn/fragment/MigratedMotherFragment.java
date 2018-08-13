@@ -31,6 +31,7 @@ import com.unicef.vhn.adapter.MotherMigrationAdapter;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.model.MotherMigrationResponseModel;
 import com.unicef.vhn.realmDbModel.MotherMigrationRealmModel;
+import com.unicef.vhn.realmDbModel.RemainderListRealModel;
 import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.view.MotherListsViews;
 
@@ -63,15 +64,16 @@ public class MigratedMotherFragment extends Fragment implements MotherListsViews
     boolean isDataUpdate = true;
 
     private RecyclerView recyclerView;
-    private TextView textView;
+    private TextView textView,txt_mig_mother_list;
     private MotherMigrationAdapter motherMigrationAdapter;
 
 
     CheckNetwork checkNetwork;
     boolean isoffline = false;
     Realm realm;
-    MotherMigrationRealmModel motherMigrationRealmModel;
-private SwipeRefreshLayout swipeRefreshLayout;
+    RemainderListRealModel motherMigrationRealmModel;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,27 +97,28 @@ private SwipeRefreshLayout swipeRefreshLayout;
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(getActivity());
 
-        pnMotherListPresenter = new MotherListPresenter(getActivity(),this, realm);
+        pnMotherListPresenter = new MotherListPresenter(getActivity(), this, realm);
         if (checkNetwork.isNetworkAvailable()) {
             pnMotherListPresenter.getMigratedMothersList1(preferenceData.getVhnCode(), preferenceData.getVhnId());
-        }else{
-            isoffline=true;
+        } else {
+            isoffline = true;
         }
 
         vhn_migrated_mothers = new ArrayList<>();
 
         recyclerView = (RecyclerView) view.findViewById(R.id.mother_recycler_view);
         textView = (TextView) view.findViewById(R.id.txt_no_records_found);
-swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh_layout);
+        txt_mig_mother_list = (TextView) view.findViewById(R.id.txt_mig_mother_list);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         motherMigrationAdapter = new MotherMigrationAdapter(vhn_migrated_mothers, getActivity(), "", this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(motherMigrationAdapter);
-        if (isoffline){
+        if (isoffline) {
             showOfflineData();
-        }else{
+        } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage("Record Not Found");
             builder.create();
@@ -125,37 +128,40 @@ swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh_la
             public void onRefresh() {
                 if (checkNetwork.isNetworkAvailable()) {
                     pnMotherListPresenter.getMigratedMothersList1(preferenceData.getVhnCode(), preferenceData.getVhnId());
-                }else{
+                } else {
                     swipeRefreshLayout.setRefreshing(false);
-                    isoffline=true;
+                    isoffline = true;
                 }
             }
         });
     }
+
     private void showOfflineData() {
 
-        Log.d(MotherMigration.class.getSimpleName(),  "off line");
+        Log.d(MotherMigration.class.getSimpleName(), "off line");
 
         realm.beginTransaction();
 
-        RealmResults<MotherMigrationRealmModel> motherMigrationrealmResults = realm.where(MotherMigrationRealmModel.class).findAll();
-        for (int i=0;i<motherMigrationrealmResults.size();i++){
-            getVhn_migrated_mothers =new  MotherMigrationResponseModel.Vhn_migrated_mothers();
+        RealmResults<RemainderListRealModel> motherMigrationrealmResults = realm.where(RemainderListRealModel.class).findAll();
+        for (int i = 0; i < motherMigrationrealmResults.size(); i++) {
+            getVhn_migrated_mothers = new MotherMigrationResponseModel.Vhn_migrated_mothers();
 
-            MotherMigrationRealmModel model = motherMigrationrealmResults.get(i);
+            RemainderListRealModel model = motherMigrationrealmResults.get(i);
 
             getVhn_migrated_mothers.setMid(model.getMid());
-            getVhn_migrated_mothers.setMName(model.getMName());
-            getVhn_migrated_mothers.setMPicmeId(model.getMPicmeId());
+            getVhn_migrated_mothers.setMName(model.getmName());
+            getVhn_migrated_mothers.setMPicmeId(model.getPicmeId());
             getVhn_migrated_mothers.setMtype(model.getMtype());
-            getVhn_migrated_mothers.setSubject(model.getSubject());
-            getVhn_migrated_mothers.setMMotherMobile(model.getMMotherMobile());
+//            getVhn_migrated_mothers.setSubject(model.getSubject());
+            getVhn_migrated_mothers.setMMotherMobile(model.getmMotherMobile());
 
             vhn_migrated_mothers.add(getVhn_migrated_mothers);
             motherMigrationAdapter.notifyDataSetChanged();
 
 
         }
+        txt_mig_mother_list.setText(getResources().getString(R.string.migrated_mothers)+"("+vhn_migrated_mothers.size()+")");
+
         realm.commitTransaction();
 
     }
@@ -182,40 +188,36 @@ swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh_la
 
         try {
             JSONObject mJsnobject = new JSONObject(response);
-            String status =mJsnobject.getString("status");
-            String message =mJsnobject.getString("message");
+            String status = mJsnobject.getString("status");
+            String message = mJsnobject.getString("message");
             if (status.equalsIgnoreCase("1")) {
                 vhn_migrated_mothers.clear();
                 JSONArray jsonArray = mJsnobject.getJSONArray("vhn_migrated_mothers");
-                RealmResults<MotherMigrationRealmModel> motherListAdapterRealmModel = null;
+                RealmResults<RemainderListRealModel> motherListAdapterRealmModel = null;
 
-                motherListAdapterRealmModel = realm.where(MotherMigrationRealmModel.class).findAll();
+                motherListAdapterRealmModel = realm.where(RemainderListRealModel.class).findAll();
                 Log.e("Realm size ---->", motherListAdapterRealmModel.size() + "");
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        realm.delete(MotherMigrationRealmModel.class);
+                        realm.delete(RemainderListRealModel.class);
                     }
                 });
 
                 if (jsonArray.length() != 0) {
                     recyclerView.setVisibility(View.VISIBLE);
                     textView.setVisibility(View.GONE);
-
                     realm.beginTransaction();       //create or open
-
                     for (int i = 0; i < jsonArray.length(); i++) {
-
-                        motherMigrationRealmModel = realm.createObject(MotherMigrationRealmModel.class);
-
+                        motherMigrationRealmModel = realm.createObject(RemainderListRealModel.class);
                         getVhn_migrated_mothers = new MotherMigrationResponseModel.Vhn_migrated_mothers();
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         motherMigrationRealmModel.setMid(jsonObject.getString("mid"));
-                        motherMigrationRealmModel.setMName(jsonObject.getString("mName"));
-                        motherMigrationRealmModel.setMPicmeId(jsonObject.getString("mPicmeId"));
+                        motherMigrationRealmModel.setmName(jsonObject.getString("mName"));
+                        motherMigrationRealmModel.setPicmeId(jsonObject.getString("mPicmeId"));
                         motherMigrationRealmModel.setMtype(jsonObject.getString("mtype"));
-                        motherMigrationRealmModel.setSubject(jsonObject.getString("subject"));
-                        motherMigrationRealmModel.setMMotherMobile(jsonObject.getString("mMotherMobile"));
+//                        motherMigrationRealmModel.setsubject(jsonObject.getString("subject"));
+                        motherMigrationRealmModel.setmMotherMobile(jsonObject.getString("mMotherMobile"));
                     }
 
                     realm.commitTransaction();       //create or open
@@ -238,21 +240,23 @@ swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh_la
 
     private void setValueToUI() {
 
-        RealmResults<MotherMigrationRealmModel> motherMigrationrealmResults = null;
+        RealmResults<RemainderListRealModel> motherMigrationrealmResults = null;
         realm.beginTransaction();
-        motherMigrationrealmResults = realm.where(MotherMigrationRealmModel.class).findAll();
-        for (int i=0;i<motherMigrationrealmResults.size();i++){
-            getVhn_migrated_mothers =new  MotherMigrationResponseModel.Vhn_migrated_mothers();
-            MotherMigrationRealmModel model = motherMigrationrealmResults.get(i);
+        motherMigrationrealmResults = realm.where(RemainderListRealModel.class).findAll();
+        for (int i = 0; i < motherMigrationrealmResults.size(); i++) {
+            getVhn_migrated_mothers = new MotherMigrationResponseModel.Vhn_migrated_mothers();
+            RemainderListRealModel model = motherMigrationrealmResults.get(i);
             getVhn_migrated_mothers.setMid(model.getMid());
-            getVhn_migrated_mothers.setMName(model.getMName());
-            getVhn_migrated_mothers.setMPicmeId(model.getMPicmeId());
+            getVhn_migrated_mothers.setMName(model.getmName());
+            getVhn_migrated_mothers.setMPicmeId(model.getPicmeId());
             getVhn_migrated_mothers.setMtype(model.getMtype());
-            getVhn_migrated_mothers.setSubject(model.getSubject());
-            getVhn_migrated_mothers.setMMotherMobile(model.getMMotherMobile());
+//            getVhn_migrated_mothers.setSubject(model.getSu());
+            getVhn_migrated_mothers.setMMotherMobile(model.getmMotherMobile());
             vhn_migrated_mothers.add(getVhn_migrated_mothers);
             motherMigrationAdapter.notifyDataSetChanged();
+
         }
+        txt_mig_mother_list.setText(getResources().getString(R.string.migrated_mothers)+"("+vhn_migrated_mothers.size()+")");
         realm.commitTransaction();
     }
 

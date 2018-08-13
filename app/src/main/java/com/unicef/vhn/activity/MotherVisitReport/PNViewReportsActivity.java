@@ -22,6 +22,7 @@ import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.fragment.GetVisitReportsPresenter;
 import com.unicef.vhn.model.responseModel.PNVisitRecordsFullResponseModel;
 import com.unicef.vhn.model.responseModel.PNVisitRecordsSingleResponseModel;
+import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.view.GetAllReportsViews;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,14 +43,14 @@ String TAG =PNViewReportsActivity.class.getSimpleName();
     RecyclerView rec_mother_reports;
     PNVisitRecordsAdapter visitRecordsAdapter;
     GetVisitReportsPresenter getVisitReportsPresenter;
-    TextView txt_no_records_found;
+    TextView txt_no_records_found,txt_no_internet;
     String visitImage;
     Context context;
     ImageView itemImage;
     boolean isImageFitToScreen;
 
     ArrayList<PNVisitRecordsSingleResponseModel> singleResponseModelsList;
-
+CheckNetwork checkNetwork;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,10 +69,18 @@ String TAG =PNViewReportsActivity.class.getSimpleName();
         context = PNViewReportsActivity.this;
 
         visitRecordsFullResponseModels = new ArrayList<>();
+        txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
+        txt_no_internet.setVisibility(View.GONE);
 
+        checkNetwork =new CheckNetwork(this);
         getVisitReportsPresenter = new GetVisitReportsPresenter(PNViewReportsActivity.this, this);
-        getVisitReportsPresenter.getallPNVisitReports(AppConstants.MOTHER_PICME_ID, AppConstants.SELECTED_MID);
+        if (checkNetwork.isNetworkAvailable()) {
+            getVisitReportsPresenter.getallPNVisitReports(AppConstants.MOTHER_PICME_ID, AppConstants.SELECTED_MID);
+        }else{
+            txt_no_internet.setVisibility(View.VISIBLE);
+        }
         txt_no_records_found = (TextView) findViewById(R.id.txt_no_records);
+
         itemImage = (ImageView) findViewById(R.id.itemImage);
 
         txt_no_records_found.setVisibility(View.GONE);

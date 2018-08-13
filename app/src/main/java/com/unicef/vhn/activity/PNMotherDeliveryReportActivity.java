@@ -298,6 +298,9 @@ if (isOffline) {
                 JSONObject jsonObject = jsonObject_res.getJSONObject("Delevery_Info");
 //                preferenceData.storeDid(jsonObject.getString("did"));
 //                Log.d("response---->", response);
+                if (realm.isInTransaction()){
+                    realm.cancelTransaction();
+                }
                 RealmResults<DelevaryDetailsPnMotherRealmModel> delevaryDetailsPnMotherRealmModels = realm.where(DelevaryDetailsPnMotherRealmModel.class).findAll();
                if (delevaryDetailsPnMotherRealmModels.size()!=0) {
                    realm.executeTransaction(new Realm.Transaction() {

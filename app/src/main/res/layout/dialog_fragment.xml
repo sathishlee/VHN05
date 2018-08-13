@@ -64,6 +64,28 @@
             android:padding="7dp"
             android:weightSum="2"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+        android:visibility="gone">
+
+                <CheckBox
+                    android:id="@+id/ch_android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Android User" />
+
+                <CheckBox
+                    android:id="@+id/ch_non_android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Non Android User" />
+
+        </LinearLayout> <LinearLayout
+            android:orientation="horizontal"
+            android:padding="7dp"
+            android:weightSum="2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
                 <CheckBox

@@ -94,7 +94,7 @@
                 android:id="@+id/txt_name"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Mrs. Tamil Selvi"
+                android:text="-"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_secondary"
                 android:layout_weight="1"/>
@@ -121,7 +121,7 @@
                 android:id="@+id/txt_mother_age"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="28"
+                android:text="-"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_secondary"
                 android:layout_weight="1"/>
@@ -171,7 +171,7 @@
                         android:id="@+id/txt_lmp_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="24-02-2018"
+                        android:text="-"
                         android:textAlignment="textStart"
                         android:textColor="#fff"
                         android:textSize="@dimen/text_secondary" />
@@ -213,7 +213,7 @@
                         android:id="@+id/txt_edd_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="02/10/2018"
+                        android:text="-"
                         android:layout_gravity="start"
                         android:textColor="#fff"
                         android:textSize="@dimen/text_secondary"/>
@@ -250,7 +250,7 @@
                     android:id="@+id/txt_pry_mobile_no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="9788782667"
+                    android:text="-"
                     android:textSize="@dimen/text_secondary"
                     android:textAlignment="textStart"
                     android:textColor="@color/text_primary"/>
@@ -277,7 +277,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:textSize="@dimen/text_secondary"
-                    android:text="9865049912"
+                    android:text="-"
                     android:textColor="@color/text_primary" />
 
             </LinearLayout>
@@ -311,7 +311,7 @@
                     android:id="@+id/txt_mother_occupation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Home Maker"
+                    android:text="-"
                     android:textSize="@dimen/text_secondary"
                     android:textAlignment="textStart"
                     android:textColor="@color/text_primary"/>
@@ -337,7 +337,7 @@
                     android:id="@+id/txt_hus_occupation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Priavte Sector"
+                    android:text="-"
                     android:textSize="@dimen/text_secondary"
                     android:layout_gravity="start"
                     android:textColor="@color/text_primary"/>
@@ -374,7 +374,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_secondary"
-                    android:text="28"
+                    android:text="-"
                     android:textAlignment="textStart"
                     android:textColor="@color/text_primary"/>
 
@@ -400,7 +400,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_secondary"
-                    android:text="No"
+                    android:text="-"
                     android:layout_gravity="start"
                     android:textColor="@color/text_primary"/>
 
@@ -435,7 +435,7 @@
                     android:id="@+id/txt_history_of_illness"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Diabetes"
+                    android:text="-"
                     android:textSize="@dimen/text_secondary"
                     android:textAlignment="textStart"
                     android:textColor="@color/text_primary"/>
@@ -462,7 +462,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_secondary"
-                    android:text="Htn"
+                    android:text="-"
                     android:layout_gravity="start"
                     android:textColor="@color/text_primary"/>
 
@@ -492,7 +492,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_secondary"
-                android:text="No"
+                android:text="-"
                 android:layout_gravity="start"
                 android:textColor="@color/text_primary"/>
 
@@ -585,7 +585,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/text_secondary"
-                            android:text="No"
+                            android:text="-"
                             android:layout_gravity="start"
                             android:textColor="@color/text_primary"/>
 
@@ -612,7 +612,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/text_secondary"
-                            android:text="No"
+                            android:text="-"
                             android:layout_gravity="start"
                             android:textColor="@color/text_primary"/>
 
@@ -646,7 +646,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_secondary"
-                android:text="No"
+                android:text="-"
                 android:layout_gravity="start"
                 android:textColor="@color/text_primary"/>
 
@@ -674,7 +674,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_secondary"
-                android:text="No"
+                android:text="-"
                 android:layout_gravity="start"
                 android:textColor="@color/text_primary"/>
 
@@ -702,7 +702,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_secondary"
-                android:text="No"
+                android:text="-"
                 android:layout_gravity="start"
                 android:textColor="@color/text_primary"/>
 
@@ -729,7 +729,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_secondary"
-                android:text="No"
+                android:text="-"
                 android:layout_gravity="start"
                 android:textColor="@color/text_primary"/>
 
@@ -756,7 +756,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_secondary"
-                android:text="Hypertension"
+                android:text="-"
                 android:layout_gravity="start"
                 android:textColor="@color/text_primary"/>
 
@@ -848,7 +848,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/text_primary"
-                            android:text="1"
+                            android:text="-"
                             android:layout_gravity="start"
                             android:textColor="@color/text_primary"/>
 
@@ -875,7 +875,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/text_secondary"
-                            android:text="0"
+                            android:text="-"
                             android:layout_gravity="start"
                             android:textColor="@color/text_primary"/>
 
@@ -911,7 +911,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/text_secondary"
-                            android:text="0"
+                            android:text="-"
                             android:layout_gravity="start"
                             android:textColor="@color/text_primary"/>
 
@@ -938,7 +938,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/text_secondary"
-                            android:text="0"
+                            android:text="-"
                             android:layout_gravity="start"
                             android:textColor="@color/text_primary"/>
 
@@ -971,7 +971,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_secondary"
-                android:text="12Wks"
+                android:text="-"
                 android:layout_gravity="start"
                 android:textColor="@color/text_primary"/>
 
@@ -1021,7 +1021,7 @@
                         android:id="@+id/txt_an_tt_1st"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="02/12/2017"
+                        android:text="-"
                         android:textAlignment="textStart"
                         android:textColor="@color/text_primary"
                         android:textSize="@dimen/text_secondary" />
@@ -1061,7 +1061,7 @@
                         android:id="@+id/txt_an_tt_2nd"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="02/10/2018"
+                        android:text="-"
                         android:layout_gravity="start"
                         android:textColor="@color/text_primary"
                         android:textSize="@dimen/text_secondary"/>
@@ -1101,7 +1101,7 @@
                     android:id="@+id/txt_ifa_start_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="02/12/2017"
+                    android:text="-"
                     android:textSize="@dimen/text_secondary"
                     android:textAlignment="textStart"
                     android:textColor="@color/text_primary"/>
@@ -1129,7 +1129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:textSize="@dimen/text_secondary"
-                    android:text="156cms"
+                    android:text="-"
                     android:layout_gravity="start"
                     android:textColor="@color/text_primary"/>
 
@@ -1165,7 +1165,7 @@
                     android:id="@+id/txt_blood_group"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="B+ve"
+                    android:text="-"
                     android:textSize="@dimen/text_secondary"
                     android:textAlignment="textStart"
                     android:textColor="@color/text_primary"/>
@@ -1193,7 +1193,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:textSize="@dimen/text_secondary"
-                    android:text="Non Reactive"
+                    android:text="-"
                     android:layout_gravity="start"
                     android:textColor="@color/text_primary"/>
 
@@ -1230,7 +1230,7 @@
                     android:id="@+id/txt_vdrl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Non Reactive"
+                    android:text="-"
                     android:textSize="@dimen/text_secondary"
                     android:textAlignment="textStart"
                     android:textColor="@color/text_primary"/>
@@ -1258,7 +1258,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:textSize="@dimen/text_secondary"
-                    android:text="Non Reactive"
+                    android:text="-"
                     android:layout_gravity="start"
                     android:textColor="@color/text_primary"/>
 
@@ -1352,7 +1352,7 @@
                             android:id="@+id/txt_hus_blood_group"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="B+ve"
+                            android:text="-"
                             android:textSize="@dimen/text_secondary"
                             android:textAlignment="textStart"
                             android:textColor="@color/text_primary"/>
@@ -1378,7 +1378,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/text_secondary"
-                            android:text="Non Reactive"
+                            android:text="-"
                             android:layout_gravity="start"
                             android:textColor="@color/text_primary"/>
 
@@ -1414,7 +1414,7 @@
                             android:id="@+id/txt_hus_vdrl"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Non Reactive"
+                            android:text="-"
                             android:textSize="@dimen/text_secondary"
                             android:textAlignment="textStart"
                             android:textColor="@color/text_primary"/>
@@ -1440,7 +1440,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/text_secondary"
-                            android:text="Non Reactive"
+                            android:text="-"
                             android:layout_gravity="start"
                             android:textColor="@color/text_primary"/>
 

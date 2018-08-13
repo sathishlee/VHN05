@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.unicef.vhn.Preference.PreferenceData;
+import com.unicef.vhn.Presenter.HomePresenter;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.application.RealmController;
@@ -31,7 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SosMotherDetailsActivity extends AppCompatActivity implements MotherListsViews, View.OnClickListener {
-    TextView txt_username, txt_picme_id, txt_age, txt_risk, txt_message,txt_husb_name,txt_mother_name_call;
+    TextView txt_username, txt_picme_id, txt_age, txt_risk, txt_message, txt_husb_name, txt_mother_name_call;
     String strMotherName, strPicmeId, strAge, strRisk, strMessage, strMobileNo, strAltMobileNo, strLatitude, strLongitude, strMotherType;
     ImageView img_call_1, img_call_2;
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
@@ -39,9 +40,13 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
 
-    Button btn_view_location, btn_view_report, btn_alert_close;
+    Button btn_view_location, btn_pn_view_report, btn_an_view_report, btn_alert_close;
     LinearLayout viewHighRisk, viewLowRisk;
-Realm realm;
+    Realm realm;
+
+
+    HomePresenter homePresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +68,8 @@ Realm realm;
 
     private void onClickListner() {
         btn_view_location.setOnClickListener(this);
-        btn_view_report.setOnClickListener(this);
+        btn_pn_view_report.setOnClickListener(this);
+        btn_an_view_report.setOnClickListener(this);
         btn_alert_close.setOnClickListener(this);
         img_call_1.setOnClickListener(this);
         img_call_2.setOnClickListener(this);
@@ -87,6 +93,11 @@ Realm realm;
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
+
+
+        homePresenter = new HomePresenter(this, this, realm);
+
+
         pnMotherListPresenter = new MotherListPresenter(SosMotherDetailsActivity.this, this, realm);
 
         viewHighRisk = (LinearLayout) findViewById(R.id.ll_high_an_risk_status);
@@ -101,7 +112,8 @@ Realm realm;
         img_call_1 = (ImageView) findViewById(R.id.img_call_1);
         img_call_2 = (ImageView) findViewById(R.id.img_call_2);
         btn_view_location = (Button) findViewById(R.id.btn_view_location);
-        btn_view_report = (Button) findViewById(R.id.btn_view_report);
+        btn_pn_view_report = (Button) findViewById(R.id.btn_pn_view_report);
+        btn_an_view_report = (Button) findViewById(R.id.btn_an_view_report);
         btn_alert_close = (Button) findViewById(R.id.btn_alert_close);
         pnMotherListPresenter.getSelectedSosMother(preferenceData.getVhnId(), preferenceData.getVhnCode(), AppConstants.SOS_ID);
     }
@@ -125,33 +137,85 @@ Realm realm;
             String message = mJsnobject.getString("message");
             if (status.equalsIgnoreCase("1")) {
                 JSONObject mJsnobject_vhnSOSDetails = mJsnobject.getJSONObject("vhnSOSDetails");
-                txt_username.setText(mJsnobject_vhnSOSDetails.getString("mName"));
-                strMotherName = mJsnobject_vhnSOSDetails.getString("mName");
-                txt_picme_id.setText(mJsnobject_vhnSOSDetails.getString("mPicmeId"));
-                strPicmeId = mJsnobject_vhnSOSDetails.getString("mPicmeId");
-                strMobileNo = mJsnobject_vhnSOSDetails.getString("mMotherMobile");
-                strAltMobileNo = mJsnobject_vhnSOSDetails.getString("mHusbandMobile");
+                if (mJsnobject_vhnSOSDetails.getString("mName").equalsIgnoreCase("null")) {
+                    txt_username.setText("-");
+                    strMotherName = "-";
+                    txt_mother_name_call.setText("-");
+                } else {
+                    txt_username.setText(mJsnobject_vhnSOSDetails.getString("mName"));
+                    strMotherName = mJsnobject_vhnSOSDetails.getString("mName");
+                    txt_mother_name_call.setText(mJsnobject_vhnSOSDetails.getString("mName"));
+                }
+                if (mJsnobject_vhnSOSDetails.getString("mPicmeId").equalsIgnoreCase("null")) {
+                    txt_picme_id.setText("-");
+                    strPicmeId = "-";
+                } else {
+                    txt_picme_id.setText(mJsnobject_vhnSOSDetails.getString("mPicmeId"));
+                    strPicmeId = mJsnobject_vhnSOSDetails.getString("mPicmeId");
+                }
+                if (mJsnobject_vhnSOSDetails.getString("mMotherMobile").equalsIgnoreCase("null")) {
+                    strMobileNo = "-";
+
+                } else {
+                    strMobileNo = mJsnobject_vhnSOSDetails.getString("mMotherMobile");
+                }
+                if (mJsnobject_vhnSOSDetails.getString("mHusbandMobile").equalsIgnoreCase("null")) {
+                    strAltMobileNo = "-";
+                } else {
+                    strAltMobileNo = mJsnobject_vhnSOSDetails.getString("mHusbandMobile");
+
+                }
                 Log.d(SosMotherDetailsActivity.class.getSimpleName(), "strMobileNo" + strMobileNo);
                 Log.d(SosMotherDetailsActivity.class.getSimpleName(), "strAltMobileNo" + strAltMobileNo);
-                txt_age.setText(mJsnobject_vhnSOSDetails.getString("mAge"));
-                strAge = mJsnobject_vhnSOSDetails.getString("mAge");
-
-                txt_husb_name.setText(mJsnobject_vhnSOSDetails.getString("mHusbandName"));
-                txt_mother_name_call.setText(mJsnobject_vhnSOSDetails.getString("mName"));
-//                txt_risk.setText(mJsnobject_vhnSOSDetails.getString("mRiskStatus"));
-                strRisk = mJsnobject_vhnSOSDetails.getString("mRiskStatus");
-                if (mJsnobject_vhnSOSDetails.getString("mRiskStatus").equalsIgnoreCase("HIGH")){
-                    viewLowRisk.setVisibility(View.GONE);
-                    viewHighRisk.setVisibility(View.VISIBLE);
-                }else{
-                    viewLowRisk.setVisibility(View.VISIBLE);
-                    viewHighRisk.setVisibility(View.GONE);
+                if (mJsnobject_vhnSOSDetails.getString("mAge").equalsIgnoreCase("null")) {
+                    txt_age.setText("-");
+                    strAge = "-";
+                } else {
+                    txt_age.setText(mJsnobject_vhnSOSDetails.getString("mAge"));
+                    strAge = mJsnobject_vhnSOSDetails.getString("mAge");
                 }
-                txt_message.setText(mJsnobject_vhnSOSDetails.getString("message"));
-                strMessage = mJsnobject_vhnSOSDetails.getString("message");
-                strLatitude = mJsnobject_vhnSOSDetails.getString("mLatitude");
-                strLongitude = mJsnobject_vhnSOSDetails.getString("mLongitude");
-                strMotherType = mJsnobject_vhnSOSDetails.getString("motherType");
+                if (mJsnobject_vhnSOSDetails.getString("mHusbandName").equalsIgnoreCase("null")) {
+                    txt_husb_name.setText("-");
+
+                } else {
+                    txt_husb_name.setText(mJsnobject_vhnSOSDetails.getString("mHusbandName"));
+                }
+//                txt_risk.setText(mJsnobject_vhnSOSDetails.getString("mRiskStatus"));
+                if (mJsnobject_vhnSOSDetails.getString("mRiskStatus").equalsIgnoreCase("null")) {
+                    strRisk = "-";
+                } else {
+                    strRisk = mJsnobject_vhnSOSDetails.getString("mRiskStatus");
+                    if (mJsnobject_vhnSOSDetails.getString("mRiskStatus").equalsIgnoreCase("HIGH")) {
+                        viewLowRisk.setVisibility(View.GONE);
+                        viewHighRisk.setVisibility(View.VISIBLE);
+                    } else {
+                        viewLowRisk.setVisibility(View.VISIBLE);
+                        viewHighRisk.setVisibility(View.GONE);
+                    }
+                }
+                if (mJsnobject_vhnSOSDetails.getString("message").equalsIgnoreCase("null")) {
+                    txt_message.setText("-");
+                    strMessage = "-";
+                } else {
+                    txt_message.setText(mJsnobject_vhnSOSDetails.getString("message"));
+                    strMessage = mJsnobject_vhnSOSDetails.getString("message");
+
+                }
+                if (mJsnobject_vhnSOSDetails.getString("mLatitude").equalsIgnoreCase("null")) {
+                    strLatitude = "-";
+                } else {
+                    strLatitude = mJsnobject_vhnSOSDetails.getString("mLatitude");
+                }
+                if (mJsnobject_vhnSOSDetails.getString("mLongitude").equalsIgnoreCase("null")) {
+                    strLongitude = "-";
+                } else {
+                    strLongitude = mJsnobject_vhnSOSDetails.getString("mLongitude");
+                }
+                if (mJsnobject_vhnSOSDetails.getString("motherType").equalsIgnoreCase("null")) {
+                    strMotherType = "-";
+                } else {
+                    strMotherType = mJsnobject_vhnSOSDetails.getString("motherType");
+                }
                 Log.d(SosMotherDetailsActivity.class.getSimpleName(), "strLatitude" + strLatitude);
                 Log.d(SosMotherDetailsActivity.class.getSimpleName(), "strLongitude" + strLongitude);
             } else {
@@ -177,6 +241,7 @@ Realm realm;
             String message = mJsnobject.getString("message");
             if (status.equalsIgnoreCase("1")) {
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                homePresenter.getDashBoard(preferenceData.getVhnCode(), preferenceData.getVhnId());
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
             } else {
@@ -199,14 +264,28 @@ Realm realm;
             case R.id.btn_view_location:
                 startActivity(new Intent(getApplicationContext(), MotherLocationActivity.class));
                 break;
-            case R.id.btn_view_report:
-                if (strMotherType.equalsIgnoreCase("AN")) {
-                    startActivity(new Intent(getApplicationContext(), ANViewReportsActivity.class));
-                } else if (strMotherType.equalsIgnoreCase("PN")) {
+            case R.id.btn_pn_view_report:
+//                if (strMotherType.equalsIgnoreCase("AN")) {
+//                    startActivity(new Intent(getApplicationContext(), ANViewReportsActivity.class));
+//                } else
+                if (strMotherType.equalsIgnoreCase("PN")) {
                     startActivity(new Intent(getApplicationContext(), PNViewReportsActivity.class));
                 } else {
-
+                    Toast.makeText(getApplicationContext(), "PN Records Not Available", Toast.LENGTH_SHORT).show();
                 }
+// else {
+//
+//                }
+                break;
+
+            case R.id.btn_an_view_report:
+//                if (strMotherType.equalsIgnoreCase("AN")) {
+                startActivity(new Intent(getApplicationContext(), ANViewReportsActivity.class));
+//                } else if (strMotherType.equalsIgnoreCase("PN")) {
+//                    startActivity(new Intent(getApplicationContext(), PNViewReportsActivity.class));
+//                } else {
+//
+//                }
                 break;
             case R.id.btn_alert_close:
                 pnMotherListPresenter.closeSosAlertSelectedMother(preferenceData.getVhnId(), preferenceData.getVhnCode(), AppConstants.SOS_ID);

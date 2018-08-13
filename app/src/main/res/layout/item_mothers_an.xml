@@ -24,8 +24,12 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="5dp"
-            android:orientation="vertical">
-
+            android:orientation="vertical"
+        android:visibility="visible">
+            <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start">
             <ImageView
                 android:id="@+id/cardview_image"
                 android:layout_width="wrap_content"
@@ -37,7 +41,30 @@
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/girl" />
 
+                <LinearLayout
+                        android:id="@+id/iv_android_user"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:layout_margin="4dp"
+                        android:elevation="10dp"
+                        android:background="@drawable/icon_back_location"
+                android:visibility="visible">
+
+                    <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_gravity="top|end"
+                            android:background="@drawable/ic_android_user"/>
+
+                </LinearLayout>
+            </FrameLayout>
         </LinearLayout>
+
+
+
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,7 +81,7 @@
                 android:layout_marginStart="3dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
-                android:text="Mrs. Tamil Selvi"
+                android:text="-"
                 android:textColor="#333333"
                 android:textSize="@dimen/text_lable" />
 
@@ -88,7 +115,7 @@
                         android:layout_height="wrap_content"
                         android:textAlignment="textStart"
                         android:padding="1dp"
-                        android:text="123456789101"
+                        android:text="-"
                         android:textColor="#333333"
                         android:textSize="@dimen/text_secondary" />
                 </LinearLayout>
@@ -162,6 +189,30 @@
                             android:drawableStart="@drawable/phone_call"
                             android:textColor="@color/secondary"
                             android:textSize="@dimen/text_primary" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_android_user"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:padding="5dp"
+                        android:background="@drawable/background_icon"
+                        android:layout_marginStart="5dp"
+                        android:orientation="vertical"
+                    android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/txt_android_user"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:padding="1dp"
+                            android:drawableStart="@drawable/ic_android_user"
+                            android:textColor="@color/secondary"
+                            android:textSize="@dimen/text_primary"
+                        android:visibility="gone"/>
 
                     </LinearLayout>
 

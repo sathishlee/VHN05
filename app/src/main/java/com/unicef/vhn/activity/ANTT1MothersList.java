@@ -54,7 +54,7 @@ public class ANTT1MothersList extends AppCompatActivity implements MotherListsVi
     ANTT1ResponseModel.TT1_List tt1List;
     boolean isDataUpdate = true;
     private RecyclerView recyclerView;
-    private TextView textView,txt_no_internet;
+    private TextView textView,txt_no_internet,txt_an_tt;
     private ANTT1Adapter antt1Adapter;
 
     final Context context = this;
@@ -110,6 +110,7 @@ public class ANTT1MothersList extends AppCompatActivity implements MotherListsVi
         recyclerView = (RecyclerView) findViewById(R.id.antt1_mother_recycler_view);
         textView = (TextView) findViewById(R.id.txt_no_records_found);
         txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
+        txt_an_tt = (TextView) findViewById(R.id.txt_an_tt);
         txt_no_internet.setVisibility(View.GONE);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         antt1Adapter = new ANTT1Adapter(tt1_lists, ANTT1MothersList.this, this);
@@ -142,6 +143,14 @@ public class ANTT1MothersList extends AppCompatActivity implements MotherListsVi
             }
         });
 
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        if(pDialog.isShowing()){
+            pDialog.dismiss();
+        }
     }
 
     @Override
@@ -210,6 +219,7 @@ public class ANTT1MothersList extends AppCompatActivity implements MotherListsVi
             tt1List.setMMotherMobile(model.getMMotherMobile());
             tt1_lists.add(tt1List);
             antt1Adapter.notifyDataSetChanged();
+            txt_an_tt.setText(getResources().getString(R.string.an_tt_1_due_s_list)+"("+tt1_lists.size()+")");
         }
 
         realm.commitTransaction();

@@ -4,6 +4,7 @@ package com.unicef.vhn.fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -77,6 +78,8 @@ public class home extends Fragment implements MotherListsViews {
     MediaPlayer mp;
 
     SwipeRefreshLayout swipeRefreshLayout;
+
+    TextView txt_no_internet,txt_no_records_found;
 
     LinearLayout ll_view_block;
     public static home newInstance() {
@@ -264,6 +267,13 @@ public class home extends Fragment implements MotherListsViews {
         homePresenter = new HomePresenter(getActivity(), this,realm);
         context = getActivity();
 
+
+        txt_no_internet =(TextView) view.findViewById(R.id.txt_no_internet);
+        txt_no_internet.setVisibility(View.GONE);
+
+        txt_no_records_found =(TextView) view.findViewById(R.id.txt_no_records_found);
+        txt_no_records_found.setVisibility(View.GONE);
+
         userImageProfile = (ImageView) view.findViewById(R.id.userImageProfile);
 
         img_mother_count = (ImageView) view.findViewById(R.id.img_mother_count);
@@ -299,12 +309,15 @@ swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_l
         if (checkNetwork.isNetworkAvailable()) {
             homePresenter.getDashBoard(preferenceData.getVhnCode(), preferenceData.getVhnId());
         } else {
+            txt_no_internet.setVisibility(View.VISIBLE);
             isoffline = true;
         }
         mFlipper = ((ViewFlipper) view.findViewById(R.id.flipper));
         if (isoffline) {
+            ll_view_block.setVisibility(View.VISIBLE);
 //            txt_no_internet.setVisibility(View.GONE);
-            showOfflineData();
+//            showOfflineData();
+            setValueToUI();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage("Record Not Found");
@@ -323,7 +336,7 @@ swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_l
     }
 
     private void showOfflineData() {
-        Log.e(home.class.getSimpleName(), "your app is now OFF LINE");
+
         realm.beginTransaction();
         RealmResults<DashBoardRealmModel> userInfoRealmResult = realm.where(DashBoardRealmModel.class).findAll();
         for (int i = 0; i < userInfoRealmResult.size(); i++) {
@@ -532,9 +545,14 @@ swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_l
     public void showLoginError(String response) {
         swipeRefreshLayout.setRefreshing(false);
         Log.e(home.class.getSimpleName(), "Response Error" + response);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(response);
-        builder.create();
+        txt_no_records_found.setText("Failed to connect to  server, Please Try again!");
+        txt_no_records_found.setBackgroundColor(getResources().getColor(R.color.red));
+        txt_no_records_found.setTextColor(Color.WHITE);
+        txt_no_records_found.setVisibility(View.VISIBLE);
+        setValueToUI();
+//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//        builder.setMessage(response);
+//        builder.create();
     }
 
     @Override
@@ -548,12 +566,16 @@ swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_l
     }
 
     private void setValueToUI() {
-        Log.e(home.class.getSimpleName(), "your app is now ON LINE");
+
 if (realm.isInTransaction()){
     realm.cancelTransaction();
 }
         realm.beginTransaction();
         RealmResults<DashBoardRealmModel> userInfoRealmResult = realm.where(DashBoardRealmModel.class).findAll();
+
+        if (userInfoRealmResult.size()==0){
+            txt_no_records_found.setVisibility(View.VISIBLE);
+        }
         for (int i = 0; i < userInfoRealmResult.size(); i++) {
             DashBoardRealmModel model = userInfoRealmResult.get(i);
 
@@ -634,16 +656,22 @@ if (realm.isInTransaction()){
 //        realm.close();
         Intent objIntent = new Intent(getActivity(), PlayAudio.class);
         if (getActivity().startService(objIntent) != null) {
-            Toast.makeText(getActivity(), "Service is already running", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), "Service is already running", Toast.LENGTH_SHORT).show();
             getActivity().stopService(objIntent);
         } else {
-            Toast.makeText(getActivity(), "There is no service running, starting service..", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), "There is no service running, starting service..", Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        if (checkNetwork.isNetworkAvailable()) {
+            homePresenter.getDashBoard(preferenceData.getVhnCode(), preferenceData.getVhnId());
+        } else {
+            txt_no_internet.setVisibility(View.VISIBLE);
+            isoffline = true;
+        }
     }
 
     @Override

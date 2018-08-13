@@ -159,7 +159,7 @@
                                 android:id="@+id/txt_due_date"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text=""
+                                android:text="-"
                                 android:textAlignment="textStart"
                                 android:textColor="#fff"
                                 android:textStyle="bold" />
@@ -199,7 +199,7 @@
                                 android:id="@+id/txt_provided_date"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text=""
+                                android:text="-"
                                 android:layout_gravity="start"
                                 android:textColor="#fff"
                                 android:textStyle="bold" />
@@ -237,7 +237,7 @@
                         android:id="@+id/txt_hbnc_visit_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Visit 1"
+                        android:text="-"
                         android:textAlignment="textStart"
                         android:textColor="@color/text_primary" />
                 </LinearLayout>
@@ -262,7 +262,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="HSC"
+                        android:text="-"
                         android:layout_gravity="start"
                         android:textColor="@color/text_primary"/>
 
@@ -296,7 +296,7 @@
                             android:id="@+id/txt_weight"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="130"
+                            android:text="-"
                             android:textAlignment="textStart"
                             android:textColor="@color/text_primary"/>
                     </LinearLayout>
@@ -321,7 +321,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="75"
+                            android:text="-"
                             android:layout_gravity="start"
                             android:textColor="@color/text_primary" />
 
@@ -356,7 +356,7 @@
                             android:id="@+id/txt_umbilical_tump"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Healthy"
+                            android:text="-"
                             android:textAlignment="textStart"
                             android:textColor="@color/text_primary"/>
 
@@ -382,7 +382,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="Normal"
+                            android:text="-"
                             android:layout_gravity="start"
                             android:textColor="@color/text_primary" />
 
@@ -417,7 +417,7 @@
                             android:id="@+id/txt_eye"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Normal"
+                            android:text="-"
                             android:textAlignment="textStart"
                             android:textColor="@color/text_primary"/>
 
@@ -443,7 +443,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="Normal"
+                            android:text="-"
                             android:layout_gravity="start"
                             android:textColor="@color/text_primary" />
 
@@ -478,7 +478,7 @@
                             android:id="@+id/txt_breat_feeding"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="No"
+                            android:text="-"
                             android:textAlignment="textStart"
                             android:textColor="@color/text_primary"/>
 
@@ -504,7 +504,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="Mother not able to get Milk"
+                            android:text="-"
                             android:layout_gravity="start"
                             android:textColor="@color/text_primary" />
 
@@ -539,7 +539,7 @@
                         android:id="@+id/txt_out_come"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="No intervention"
+                        android:text="-"
                         android:textColor="@color/text_primary"
                         android:layout_weight="1"/>
 
@@ -820,7 +820,7 @@
                             android:id="@+id/txt_mother_any_complient"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Fever"
+                            android:text="-"
                             android:textAlignment="textStart"
                             android:textColor="@color/text_primary" />
                     </LinearLayout>
@@ -845,7 +845,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="160/120"
+                            android:text="-"
                             android:layout_gravity="start"
                             android:textColor="@color/text_primary"/>
 
@@ -880,7 +880,7 @@
                             android:id="@+id/txt_mother_pluse_rate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="90"
+                            android:text="-"
                             android:textAlignment="textStart"
                             android:textColor="@color/text_primary"/>
 
@@ -907,7 +907,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="60"
+                            android:text="-"
                             android:layout_gravity="start"
                             android:textColor="@color/text_primary"/>
 
@@ -942,7 +942,7 @@
                             android:id="@+id/txt_mother_epistomy_tear_suture"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Healthy"
+                            android:text="-"
                             android:textAlignment="textStart"
                             android:textColor="@color/text_primary"/>
 
@@ -968,7 +968,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="Normal"
+                            android:text="-"
                             android:layout_gravity="start"
                             android:textColor="@color/text_primary"/>
 
@@ -1003,7 +1003,7 @@
                             android:id="@+id/txt_mother_breast_feeding"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="No"
+                            android:text="-"
                             android:textAlignment="textStart"
                             android:textColor="@color/text_primary"/>
 
@@ -1029,7 +1029,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="Milk amount not enough"
+                            android:text="-"
                             android:layout_gravity="start"
                             android:textColor="@color/text_primary"/>
 
@@ -1064,7 +1064,7 @@
                             android:id="@+id/txt_mother_breast_examination"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Engorgement"
+                            android:text="-"
                             android:textAlignment="textStart"
                             android:textColor="@color/text_primary"/>
 
@@ -1090,7 +1090,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="No intervention"
+                            android:text="-"
                             android:layout_gravity="start"
                             android:textColor="@color/text_primary"/>
 

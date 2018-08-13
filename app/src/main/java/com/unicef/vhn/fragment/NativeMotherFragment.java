@@ -63,7 +63,7 @@ public class NativeMotherFragment extends Fragment implements MotherListsViews, 
     boolean isDataUpdate = true;
 
     private RecyclerView recyclerView;
-    private TextView textView;
+    private TextView textView,txt_native_mother_list;
     private MotherMigrationAdapter motherMigrationAdapter;
 
 
@@ -112,6 +112,7 @@ private SwipeRefreshLayout swipeRefreshLayout;
 
         recyclerView = (RecyclerView) view.findViewById(R.id.mother_recycler_view);
         textView = (TextView) view.findViewById(R.id.txt_no_records_found);
+        txt_native_mother_list = (TextView) view.findViewById(R.id.txt_native_mother_list);
         swipeRefreshLayout =view.findViewById(R.id.swipe_refresh_layout);
 
         motherMigrationAdapter = new MotherMigrationAdapter(vhn_migrated_mothers, getActivity(), "", this);
@@ -161,7 +162,7 @@ private SwipeRefreshLayout swipeRefreshLayout;
 
             vhn_migrated_mothers.add(getVhn_migrated_mothers);
             motherMigrationAdapter.notifyDataSetChanged();
-
+            txt_native_mother_list.setText(getResources().getString(R.string.native_mother)+"("+vhn_migrated_mothers.size()+")");
 
         }
         realm.commitTransaction();
@@ -258,6 +259,8 @@ private SwipeRefreshLayout swipeRefreshLayout;
             vhn_migrated_mothers.add(getVhn_migrated_mothers);
             motherMigrationAdapter.notifyDataSetChanged();
         }
+        txt_native_mother_list.setText(getResources().getString(R.string.native_mother)+"("+vhn_migrated_mothers.size()+")");
+
         realm.commitTransaction();
     }
 

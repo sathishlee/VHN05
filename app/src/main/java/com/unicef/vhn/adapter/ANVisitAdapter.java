@@ -77,7 +77,7 @@ public class ANVisitAdapter extends PagerAdapter {
         } if(mhealthRecordResponseModel.getVClinicalBPDiastolic().equalsIgnoreCase("null")&& mhealthRecordResponseModel.getVClinicalBPSystolic().equalsIgnoreCase("null")){
             txtBPValue.setText("-");
         }else {
-            txtBPValue.setText(mhealthRecordResponseModel.getVClinicalBPDiastolic()+ " mm Hg" + "/" + mhealthRecordResponseModel.getVClinicalBPSystolic()+ " mm Hg");
+            txtBPValue.setText( mhealthRecordResponseModel.getVClinicalBPSystolic()+ " mm Hg"+ "/" + mhealthRecordResponseModel.getVClinicalBPDiastolic()+ " mm Hg");
         }
         if(mhealthRecordResponseModel.getVEnterPulseRate().equalsIgnoreCase("null")){
             txtPluseRate.setText("-");

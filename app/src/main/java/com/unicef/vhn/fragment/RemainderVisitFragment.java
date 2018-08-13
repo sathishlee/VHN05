@@ -201,6 +201,8 @@ swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener
 
                         mresponseResult.setNextVisit(jsonObject.getString("nextVisit"));
                         remainderListRealModel.setNextVisit(jsonObject.getString("nextVisit"));
+ mresponseResult.setMonth(jsonObject.getString("month"));
+                        remainderListRealModel.setMonth(jsonObject.getString("month"));
 
 //                       mResult.add(mresponseResult);
 //                       mAdapter.notifyDataSetChanged();
@@ -264,12 +266,14 @@ swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener
 
                 mresponseResult.setNextVisit(model.getNextVisit());
 
+                mresponseResult.setMonth(model.getMonth());
+
 
 
 
                 mResult.add(mresponseResult);
                 mAdapter.notifyDataSetChanged();
-
+                visit_list.setText(getResources().getString(R.string.remainder_visit_list)+"("+mResult.size()+")");
 
 //                mresponseResult = new VisitListResponseModel.Vhn_current_visits();
 

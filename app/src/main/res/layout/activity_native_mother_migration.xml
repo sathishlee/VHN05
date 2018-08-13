@@ -52,6 +52,7 @@
                             android:orientation="vertical">
 
                         <TextView
+                                android:id="@+id/txt_native_mother_list"
                                 android:layout_margin="5dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"

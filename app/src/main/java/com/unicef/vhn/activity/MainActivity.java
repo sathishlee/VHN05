@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity
     ProgressDialog pDialog;
     PreferenceData preferenceData;
     NotificationPresenter notificationPresenter;
-    public static TextView notification_count;
+    public static TextView notification_count,notification_count_new;
     View view;
     //   public static TextView txt_no_internet;
     String strTodayVisitCount = "0";
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity
     Realm realm;
 
     BottomNavigationView bottomNavigationView;
-
+    ImageView img_notify;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,25 +92,28 @@ public class MainActivity extends AppCompatActivity
 //        notification_count = (TextView)findViewById(R.id.notification_count);
 //        txt_no_internet = (TextView)findViewById(R.id.txt_no_internet);
 //        txt_no_internet.setVisibility(View.GONE);
+        img_notify = (ImageView) findViewById(R.id.img_notify);
+
         checkNetwork = new CheckNetwork(this);
         realm = RealmController.with(this).getRealm();
-
+        notification_count_new = (TextView) findViewById(R.id.notification_count_new);
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
 //        preferenceData.setNotificationCount(strTodayVisitCount);
-        preferenceData.setTodayvisitCount(strTodayVisitCount);
+        preferenceData.setTodayVisitCount(strTodayVisitCount);
         notificationPresenter = new NotificationPresenter(this, this);
         notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(), preferenceData.getVhnId());
+        notificationPresenter.getNotificationCount(preferenceData.getVhnId());
 
         pnMotherListPresenter = new MotherListPresenter(getApplicationContext(), this,realm);
         getVisitANMotherPresenter = new GetVisitANMotherPresenter(getApplicationContext(), this,realm);
 
+
         if (checkNetwork.isNetworkAvailable()){
 
-    pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_LIST,
-            preferenceData.getVhnCode(), preferenceData.getVhnId());
+//    pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_LIST,preferenceData.getVhnCode(), preferenceData.getVhnId());
 }
 
         // every 10 minut notification count api call
@@ -119,9 +122,10 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void run() {
                 if (checkNetwork.isNetworkAvailable()) {
+
                     notificationPresenter.getNotificationCount(preferenceData.getVhnId());
                 } else {
-                    strTodayVisitCount = preferenceData.getNotificationCount();
+//                    strTodayVisitCount = preferenceData.getNotificationCount();
                 }
             }
         };
@@ -174,8 +178,8 @@ public class MainActivity extends AppCompatActivity
 
 
     @Override
-    public void onBackPressed() {/*
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+    public void onBackPressed() {
+        /*DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -443,6 +447,16 @@ public class MainActivity extends AppCompatActivity
                             return false;
                         }
                     });
+
+            img_notify.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    notificationPresenter.getNotificationList(preferenceData.getVhnCode(), preferenceData.getVhnId());
+                    android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.content,
+                            NotificationListFragment.newInstance()).commit();
+                }
+            });
         }
     }
 
@@ -471,6 +485,10 @@ public class MainActivity extends AppCompatActivity
                 AppConstants.ISQUERYFILTER=false;
                 selectedFragment = risk.newInstance();
                 break;
+
+                default:   AppConstants.ISQUERYFILTER=false;
+                    // Action to perform when Home Menu item is selected.
+                    selectedFragment = home.newInstance();
         }
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content, selectedFragment).addToBackStack(null);
@@ -539,9 +557,10 @@ public class MainActivity extends AppCompatActivity
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         if (jsonObject.getString("motherType").equalsIgnoreCase("AN")) {
-                            getVisitANMotherPresenter.getVisitANMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), jsonObject.getString("mid"));
+
+//                            getVisitANMotherPresenter.getVisitANMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), jsonObject.getString("mid"));
                         } else if (jsonObject.getString("motherType").equalsIgnoreCase("PN")) {
-                            getVisitANMotherPresenter.getVisitPNMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), jsonObject.getString("mid"));
+//                            getVisitANMotherPresenter.getVisitPNMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), jsonObject.getString("mid"));
                         }
                     }
                  }
@@ -605,22 +624,18 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void NotificationCountSuccess(String response) {
 
-        Log.d(MainActivity.class.getSimpleName(), "Notification count response success" + response);
+        Log.e(MainActivity.class.getSimpleName(), "Notification count response success" + response);
         try {
             JSONObject jsonObject = new JSONObject(response);
             String status = jsonObject.getString("status");
             String msg = jsonObject.getString("message");
             if (status.equalsIgnoreCase("1")) {
-//                notification_count =view.findViewById(R.id.notification_count);
-
                 String strNotifyCount = jsonObject.getString("notificationCount");
-                Log.e(MainActivity.class.getSimpleName(), "Notification Count-->" + strNotifyCount);
-//                notification_count.setVisibility(View.VISIBLE);
-//                notification_count.setText(strNotifyCount);
+                Log.e(MainActivity.class.getSimpleName(), "Notification Count -->" + strNotifyCount);
+                notification_count_new.setText(jsonObject.getString("notificationCount"));
                 preferenceData.setNotificationCount(strNotifyCount);
             } else {
                 if (msg.equalsIgnoreCase("No Notification")) {
-//                    notification_count.setVisibility(View.GONE);
                     Log.e(MainActivity.class.getSimpleName(), "Notification message-->" + msg);
                 }
             }

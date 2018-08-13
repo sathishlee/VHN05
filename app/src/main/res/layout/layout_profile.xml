@@ -13,7 +13,8 @@
         android:fitsSystemWindows="true"
         android:background="@color/colorPrimary"
         android:theme="@style/AppTheme.AppBarOverlay">
-
+<!--        android:layout_height="256dp"
+-->
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"

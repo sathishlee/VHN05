@@ -229,11 +229,23 @@ boolean isEditProfile=false;
         butSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (edt_address.getText().toString().isEmpty() && edt_Number1.getText().toString().isEmpty()
-                        && edt_Number1.getText().toString().length()!=10) {
+                Log.e(VhnProfile.class.getSimpleName(),"you clicked submit");
+                if (!edt_address.getText().toString().equalsIgnoreCase("") ) {
+                    Log.e(VhnProfile.class.getSimpleName(), "you clicked submit condition true address"+edt_address.getText().toString());
+
+                    if (!edt_Number1.getText().toString().equalsIgnoreCase("")){
+                        Log.e(VhnProfile.class.getSimpleName(), "you clicked submit condition true mobile number"+edt_Number1.getText().toString());
+
+                        if ( edt_Number1.getText().toString().length()==10) {
+                    Log.e(VhnProfile.class.getSimpleName(), "you clicked submit condition true mobile number lenth "+edt_Number1.length());
+
                     profilePresenter.postVHNProfile(preferenceData.getVhnId(), preferenceData.getVhnCode(),
                             edt_address.getText().toString(), edt_Number1.getText().toString());
+                }
+                }
                 }else{
+                    Log.e(VhnProfile.class.getSimpleName(),"you clicked submit condition false");
+
                     if (edt_address.getText().toString().isEmpty()){
                         edt_address.setError("enter address");
                     }  else if (edt_Number1.getText().toString().isEmpty()){
@@ -459,8 +471,7 @@ boolean isEditProfile=false;
 
     @Override
     public void successUploadProfile(String response) {
-        Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
-        startActivity(new Intent(getApplicationContext(),VhnProfile.class));
+                startActivity(new Intent(getApplicationContext(),VhnProfile.class));
     }
 
     @Override

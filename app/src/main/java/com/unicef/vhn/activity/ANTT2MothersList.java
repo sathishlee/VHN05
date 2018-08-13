@@ -58,7 +58,7 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
 
     boolean isDataUpdate = true;
     private RecyclerView recyclerView;
-    private TextView textView,txt_no_internet;
+    private TextView textView,txt_no_internet,txt_antt2;
     private ANTT2Adapter antt2Adapter;
 
     PreferenceData preferenceData;
@@ -95,6 +95,15 @@ SwipeRefreshLayout swipeRefreshLayout;
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
+        if(pDialog.isShowing()){
+            pDialog.dismiss();
+        }
+    }
+
     public void initUI() {
         checkNetwork = new CheckNetwork(this);
 
@@ -113,6 +122,7 @@ SwipeRefreshLayout swipeRefreshLayout;
         recyclerView = (RecyclerView) findViewById(R.id.antt2_mother_recycler_view);
         textView = (TextView) findViewById(R.id.txt_no_records_found);
         txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
+        txt_antt2 = (TextView) findViewById(R.id.txt_antt2);
         txt_no_internet.setVisibility(View.GONE);
 
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_layout);
@@ -271,7 +281,9 @@ SwipeRefreshLayout swipeRefreshLayout;
             tt2list.setMMotherMobile(model.getMMotherMobile());
             tt2_lists.add(tt2list);
             antt2Adapter.notifyDataSetChanged();
-        }
+                    }
+        txt_antt2.setText(getResources().getString(R.string.an_tt_1_due_s_list)+"("+tt2_lists.size()+")");
+
         realm.commitTransaction();
     }
 

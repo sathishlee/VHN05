@@ -588,6 +588,31 @@
             android:weightSum="2">
 
             <Button
+                android:id="@+id/btn_an_view_report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:drawableStart="@drawable/ic_view_report"
+                android:padding="5dp"
+                android:text="@string/an_view_report"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/btn_pn_view_report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:drawableStart="@drawable/ic_view_report"
+                android:padding="5dp"
+                android:text="@string/pn_view_report"
+                android:textColor="#ffffff" />
+
+        </LinearLayout>
+        <Button
                 android:id="@+id/btn_view_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -598,21 +623,6 @@
                 android:padding="5dp"
                 android:text="@string/view_location"
                 android:textColor="#ffffff" />
-
-            <Button
-                android:id="@+id/btn_view_report"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="@color/colorPrimary"
-                android:drawableStart="@drawable/ic_view_report"
-                android:padding="5dp"
-                android:text="@string/mother_report"
-                android:textColor="#ffffff" />
-
-        </LinearLayout>
-
         <Button
             android:id="@+id/btn_alert_close"
             android:layout_width="match_parent"

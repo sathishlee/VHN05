@@ -71,4 +71,8 @@ public class AppConstants {
     public static final String LANGUAGE="ta";
 
 
+
+    public static String selectedUserType="All";
+
+
 }

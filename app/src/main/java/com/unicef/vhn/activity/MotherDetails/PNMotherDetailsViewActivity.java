@@ -28,9 +28,7 @@ import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.activity.ANViewReportsActivity;
 import com.unicef.vhn.activity.MotherLocationActivity;
-import com.unicef.vhn.activity.MotherVisitReport.ANMotherVisitReportActivity;
-import com.unicef.vhn.activity.MotherVisitReport.PNMotherVisitReportActivity;
-import com.unicef.vhn.activity.MotherVisitReport.PNViewReportsActivity;
+import com.unicef.vhn.activity.PNViewReportsActivity;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
@@ -160,31 +158,95 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
         }
         for (int i=0; i<realmResults.size();i++){
             PNMMotherListRealmModel model = realmResults.get(i);
+if (model.getmName().equalsIgnoreCase("null")) {
+    txt_username.setText("-");
+}else{
+    txt_username.setText(model.getmName());
+}
+if (model.getmPicmeId().equalsIgnoreCase("null")){
+    txt_picme_id.setText("-");
+}else{
+    txt_picme_id.setText(model.getmPicmeId());
+}
+if (model.getmAge().equalsIgnoreCase("null")){
+    txt_mage.setText("-");
+}else{
+    txt_mage.setText(model.getmAge());
 
-            txt_username.setText(model.getmName());
-            txt_picme_id.setText(model.getmPicmeId());
-            txt_mage.setText(model.getmAge());
-            txt_gest_week.setText(model.getGestAge()+" Wks");
-            txt_weight.setText(model.getmWeight()+" Kg");
-            txt_lmp_date.setText(model.getmLMP());
-            txt_edd_date.setText(model.getmEDD());
-            txt_next_visit.setText(model.getNextVisit());
-            txt_delivery_date.setText(model.getDeleveryDate());
-            txt_birth_weight.setText(model.getdBirthWeight()+" kg");
-            txt_type_delivery.setText(model.getdBirthDetails());
-            txt_maturity.setText(model.getMeturityWeek()+ " Wks");
-            txt_pn_next_visit.setText(model.getPnVisit());
+}
+if (model.getmWeight().equalsIgnoreCase("null")) {
+txt_gest_week.setText("-");
+}
+else{
+    txt_gest_week.setText(model.getGestAge());
+}
+if (model.getmWeight().equalsIgnoreCase("null")){
+txt_weight.setText("-");
+}else {
+    txt_weight.setText(model.getmWeight() + " Kg");
+}
+if (model.getmLMP().equalsIgnoreCase("null")){
+    txt_lmp_date.setText("-");
+}else {
+    txt_lmp_date.setText(model.getmLMP());
+}
+if (model.getmEDD().equalsIgnoreCase("null")){
+    txt_edd_date.setText("-");
+}else {
+    txt_edd_date.setText(model.getmEDD());
+}
+if (model.getNextVisit().equalsIgnoreCase("null")) {
+txt_next_visit.setText("-");
+}else{
+        txt_next_visit.setText(model.getNextVisit());
+    }
+    if (model.getDeleveryDate().equalsIgnoreCase("null")) {
+        txt_delivery_date.setText("-");
+    }
+    else{txt_delivery_date.setText(model.getDeleveryDate());
+    }
+    if (model.getdBirthWeight().equalsIgnoreCase("null")){
+    txt_birth_weight.setText("-");
+    }else {
+        txt_birth_weight.setText(model.getdBirthWeight() + " kg");
+    }
+    if (model.getdBirthDetails().equalsIgnoreCase("null")){txt_type_delivery.setText("-");}
+    else {
+    txt_type_delivery.setText(model.getdBirthDetails());
+}if (model.getMeturityWeek().equalsIgnoreCase("null")){
+                txt_maturity.setText("-");
 
+            }
+            else {
+                txt_maturity.setText(model.getMeturityWeek());
+            }
+            if (model.getPnVisit().equalsIgnoreCase("null")){
+    txt_pn_next_visit.setText("-");
+            }
+            else {
+                txt_pn_next_visit.setText(model.getPnVisit());
+            }
+if (model.getmHusbandName().equalsIgnoreCase("null")){
+    txt_husb_name.setText("-");
+}
+else {
+    txt_husb_name.setText(model.getmHusbandName());
+}
+if (model.getmName().equalsIgnoreCase("null")){
+    txt_mother_name_call.setText("-");
+}
+else {
+    txt_mother_name_call.setText(model.getmName());
+}
 
-            txt_husb_name.setText(model.getmHusbandName());
-            strMobileNo = model.getmMotherMobile();
+strMobileNo = model.getmMotherMobile();
             if (strMobileNo.equalsIgnoreCase("null")||strMobileNo.length()<10){
                 img_call_1.setVisibility(View.GONE);
             }else{
                 img_call_1.setVisibility(View.VISIBLE);
 
             }
-            txt_mother_name_call.setText(model.getmName());
+
             strAltMobileNo = model.getmHusbandMobile();
             if (strAltMobileNo.equalsIgnoreCase("null")||strAltMobileNo.length()<10){
                 img_call_2.setVisibility(View.GONE);
@@ -243,14 +305,14 @@ public class PNMotherDetailsViewActivity extends AppCompatActivity implements Vi
                 startActivity(new Intent(getApplicationContext(),MotherLocationActivity.class));
                 break;
             case R.id.btn_view_report:
-//                startActivity(new Intent(getApplicationContext(),PNViewReportsActivity.class));
-                startActivity(new Intent(getApplicationContext(),PNMotherVisitReportActivity.class));
+                startActivity(new Intent(getApplicationContext(),PNViewReportsActivity.class));
+//                startActivity(new Intent(getApplicationContext(),PNMotherVisitReportActivity.class));
                 break;
             case R.id.btn_view_an_report:
-                Toast.makeText(getApplicationContext(),"AN MID"+AppConstants.SELECTED_MID ,Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(),"AN MID"+AppConstants.SELECTED_MID ,Toast.LENGTH_SHORT).show();
 
-//                startActivity(new Intent(getApplicationContext(),ANViewReportsActivity.class));
-                startActivity(new Intent(getApplicationContext(), ANMotherVisitReportActivity.class));
+                startActivity(new Intent(getApplicationContext(),ANViewReportsActivity.class));
+//                startActivity(new Intent(getApplicationContext(), ANMotherVisitReportActivity.class));
 
                 break;
             case R.id.img_call_1:

@@ -56,7 +56,7 @@ public class PNMotherVisitReportActivity extends AppCompatActivity implements Vi
         super.onCreate(savedInstanceState);
         realm = RealmController.with(this).getRealm();
         setContentView(R.layout.activity_pnmother_visit_report);
-        Toast.makeText(getApplicationContext(), PNMotherVisitReportActivity.class.getSimpleName(), Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), PNMotherVisitReportActivity.class.getSimpleName(), Toast.LENGTH_LONG).show();
         initUI();
         showActionBar();
         onClickListner();
@@ -77,7 +77,7 @@ public class PNMotherVisitReportActivity extends AppCompatActivity implements Vi
 
         if (checkNetwork.isNetworkAvailable()) {
 
-            getVisitANMotherPresenter.getVisitANMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
+//            getVisitANMotherPresenter.getVisitANMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
 
             txt_no_internet.setVisibility(View.GONE);
         } else {

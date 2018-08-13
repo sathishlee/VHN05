@@ -17,6 +17,16 @@ public class MotherRiskListRealm extends RealmObject{
         private String mPhoto;
         private String mLMP;
 
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    private String userType;
+
 
 
 

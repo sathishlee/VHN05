@@ -58,15 +58,36 @@ public class RemainderVisitListAdapter extends RecyclerView.Adapter<RemainderVis
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final  RemainderVisitResponseModel.Remaindermothers current_visits = mResult.get(position);
-        Log.e(RemainderVisitListAdapter.class.getSimpleName(),"getMName"+current_visits.getMName());
-        Log.e(RemainderVisitListAdapter.class.getSimpleName(),"getPicmeId"+current_visits.getPicmeId());
-
-        holder.txt_username.setText(current_visits.getMName());
-        holder.txt_picme_id.setText(current_visits.getPicmeId());
+        final RemainderVisitResponseModel.Remaindermothers current_visits = mResult.get(position);
+        if (current_visits.getMName().equalsIgnoreCase("null")) {
+            holder.txt_username.setText("-");
+        } else {
+            holder.txt_username.setText(current_visits.getMName());
+        }
+        if (current_visits.getPicmeId().equalsIgnoreCase("null")) {
+            holder.txt_picme_id.setText("-");
+        } else {
+            holder.txt_picme_id.setText(current_visits.getPicmeId());
+        }
+        if (current_visits.getMtype().equalsIgnoreCase("null")){
+            holder.txt_list_type.setText("-");
+        }
+        else {
         holder.txt_list_type.setText(current_visits.getMtype());
-        holder.txt_current_visit.setText(current_visits.getNextVisit());
+    }
+        if (current_visits.getNextVisit().equalsIgnoreCase("null")){
+            holder.txt_current_visit.setText("-");
+        }
+        else {
+            holder.txt_current_visit.setText(current_visits.getNextVisit());
+        }
 
+        if (current_visits.getMonth().equalsIgnoreCase("null")){
+            holder.txt_visit_month.setText("-");
+        }
+        else {
+            holder.txt_visit_month.setText("V.No : "+current_visits.getMonth());
+        }
         if (current_visits.getMMotherMobile().equalsIgnoreCase("null")||current_visits.getMMotherMobile().length()<10){
             holder.txt_call.setVisibility(View.GONE);
         }else{
@@ -111,7 +132,7 @@ public class RemainderVisitListAdapter extends RecyclerView.Adapter<RemainderVis
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_username, txt_picme_id, txt_list_type, txt_track, txt_call, txt_current_visit;
+        TextView txt_username, txt_picme_id, txt_list_type, txt_track, txt_call, txt_current_visit,txt_visit_month;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -121,6 +142,7 @@ public class RemainderVisitListAdapter extends RecyclerView.Adapter<RemainderVis
             txt_track = itemView.findViewById(R.id.txt_track);
             txt_call = itemView.findViewById(R.id.txt_call);
             txt_current_visit = itemView.findViewById(R.id.txt_current_visit);
+            txt_visit_month = itemView.findViewById(R.id.txt_visit_month);
         }
     }
 }

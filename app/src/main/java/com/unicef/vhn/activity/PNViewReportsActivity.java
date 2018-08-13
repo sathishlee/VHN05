@@ -32,6 +32,7 @@ import java.util.ArrayList;
 /*pN Mother visit Report have api call working well is not use this project,
 use for PNMothervistReportActivity */
 public class PNViewReportsActivity extends AppCompatActivity implements VisitANMotherViews, View.OnClickListener {
+    String TAG = PNViewReportsActivity.class.getSimpleName();
     private TabLayout tabLayout;
     private ViewPager viewPager;
     PreferenceData preferenceData;
@@ -39,23 +40,18 @@ public class PNViewReportsActivity extends AppCompatActivity implements VisitANM
     ProgressDialog pDialog;
     GetVisitANMotherPresenter getVisitANMotherPresenter;
     Button btn_delivery_reports, btn_visit_reports;
-
-    //    HealthRecordResponseModel.Visit_Records mhealthRecordResponseModel;
     PnHbncVisitRecordsModel.PnMothersVisit mPnHbncVisitRecordsModel;
     ArrayList<PnHbncVisitRecordsModel.PnMothersVisit> mPnHbncVisitRecordsList;
-
     String strpnId, strPicmeId;
-
-
     PNHBNCVisitRecordsAdapter pnhbncVisitRecordsAdapter;
     TextView txt_no_records_found;
-
     Realm realm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         realm = RealmController.with(this).getRealm();
         setContentView(R.layout.activity_pnview_reports);
+        Log.e(TAG,"");
         initUI();
         showActionBar();
         onClickListner();
@@ -66,9 +62,9 @@ public class PNViewReportsActivity extends AppCompatActivity implements VisitANM
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
         getVisitANMotherPresenter = new GetVisitANMotherPresenter(PNViewReportsActivity.this, this,realm);
+        Log.e(TAG,"VHNMothersPNRecord ");
+
         getVisitANMotherPresenter.getVisitPNMotherRecords(preferenceData.getVhnCode(),preferenceData.getVhnId(), AppConstants.SELECTED_MID);
-//        gVHRecordsPresenteer = new GetVisitHealthRecordsPresenter(getActivity(), this);
-//        gVHRecordsPresenteer.getPN_HBNC_VisitRecord(Apiconstants.POST_PN_HBNC_VIST_RECORD,preferenceData.getPicmeId(), preferenceData.getMId());
 
         mPnHbncVisitRecordsList = new ArrayList<>();
         txt_no_records_found = (TextView) findViewById(R.id.txt_no_records_found);
@@ -99,7 +95,12 @@ public class PNViewReportsActivity extends AppCompatActivity implements VisitANM
                 startActivity(new Intent(getApplicationContext(),PNMotherDeliveryReportActivity.class));
             }
         });
-        btn_visit_reports.setOnClickListener(this);
+        btn_visit_reports.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), com.unicef.vhn.activity.MotherVisitReport.PNViewReportsActivity.class));
+            }
+        });
     }
     private void setupViewPager(ViewPager viewPager) {
         pnhbncVisitRecordsAdapter =new PNHBNCVisitRecordsAdapter(this,mPnHbncVisitRecordsList);
@@ -108,10 +109,7 @@ public class PNViewReportsActivity extends AppCompatActivity implements VisitANM
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        Intent intent = new Intent(MothersDetailsActivity.this, MainActivity.class);
         finish();
-//        startActivity(intent);
-
         return super.onOptionsItemSelected(item);
     }
 

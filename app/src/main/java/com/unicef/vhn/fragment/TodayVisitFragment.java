@@ -54,7 +54,7 @@ public class TodayVisitFragment extends Fragment implements MotherListsViews, Ma
     VisitListResponseModel.Vhn_current_visits mresponseResult;
 
     private RecyclerView mother_recycler_view;
-    private TextView txt_no_records_found;
+    private TextView txt_no_records_found,txt_today_visit_size;
     private VisitListAdapter mAdapter;
 
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
@@ -100,6 +100,7 @@ public class TodayVisitFragment extends Fragment implements MotherListsViews, Ma
         mResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView) view.findViewById(R.id.mother_recycler_view);
         txt_no_records_found = (TextView) view.findViewById(R.id.txt_no_records_found);
+        txt_today_visit_size = (TextView) view.findViewById(R.id.txt_today_visit_size);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
 
         mAdapter = new VisitListAdapter(getActivity(), mResult, this);
@@ -197,8 +198,11 @@ public class TodayVisitFragment extends Fragment implements MotherListsViews, Ma
                         visitListRealmModels.setMtype(jsonObject.getString("mtype"));
                         mresponseResult.setMtype(jsonObject.getString("mtype"));
 
-                        visitListRealmModels.setNextVisit(jsonObject.getString("nextvisit"));
-                        mresponseResult.setNextVisit(jsonObject.getString("nextvisit"));
+                        visitListRealmModels.setNextVisit(jsonObject.getString("nextVisit"));
+                        mresponseResult.setNextVisit(jsonObject.getString("nextVisit"));
+
+                        visitListRealmModels.setMonth(jsonObject.getString("month"));
+                        mresponseResult.setMonth(jsonObject.getString("month"));
 
 //                        mResult.add(mresponseResult);
 //                        mAdapter.notifyDataSetChanged();
@@ -222,6 +226,9 @@ realm.commitTransaction();
 
     private void setValuetoUI() {
         mResult.clear();
+        if (realm.isInTransaction()){
+            realm.cancelTransaction();
+        }
         realm.beginTransaction();
         RealmResults<VisitListRealmModel> motherListAdapterRealmModel = realm.where(VisitListRealmModel.class).findAll();
         Log.e(TAG, "Today Visit realm db size" + motherListAdapterRealmModel.size());
@@ -253,11 +260,12 @@ realm.commitTransaction();
                 mresponseResult.setMMotherMobile(model.getMMotherMobile());
                 mresponseResult.setNextVisit( model.getNextVisit());
                 mresponseResult.setMtype( model.getMtype());
+                mresponseResult.setMonth( model.getMonth());
 
 
                 mResult.add(mresponseResult);
                 mAdapter.notifyDataSetChanged();
-
+                txt_today_visit_size.setText(getResources().getString(R.string.today_visit_list)+"("+mResult.size()+")");
 
 //                mresponseResult = new VisitListResponseModel.Vhn_current_visits();
 

@@ -1,6 +1,7 @@
 package com.unicef.vhn.activity;
 
 import android.Manifest;
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -87,6 +88,8 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();
@@ -152,6 +155,9 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
 
     RealmResults<SosListRealmModel> motherListAdapterRealmModel = realm.where(SosListRealmModel.class).findAll();
     Log.e("Realm size ---->", motherListAdapterRealmModel.size() + "");
+    if (realm.isInTransaction()){
+        realm.cancelTransaction();
+    }
     realm.executeTransaction(new Realm.Transaction() {
         @Override
         public void execute(Realm realm) {

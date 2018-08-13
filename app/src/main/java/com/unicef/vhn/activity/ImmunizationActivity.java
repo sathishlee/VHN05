@@ -3,6 +3,7 @@ package com.unicef.vhn.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 
 import com.unicef.vhn.Preference.PreferenceData;
+import com.unicef.vhn.Presenter.ImmunizationPresenter;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.adapter.ImmunizationAdapter;
@@ -25,6 +27,8 @@ import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.ImmunizationListResponseModel;
 import com.unicef.vhn.realmDbModel.ImmuniationListRealmModel;
 import com.unicef.vhn.realmDbModel.ImmunizationDeatilsListRealmModel;
+import com.unicef.vhn.utiltiy.CheckNetwork;
+import com.unicef.vhn.view.ImmunizationViews;
 import com.unicef.vhn.view.MotherListsViews;
 
 import org.json.JSONArray;
@@ -37,18 +41,24 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class ImmunizationActivity extends AppCompatActivity  {
+public class ImmunizationActivity extends AppCompatActivity implements ImmunizationViews {
 //implements MotherListsViews
 
-//    ProgressDialog pDialog;
+    ProgressDialog pDialog;
 //    MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
     private List<ImmunizationListResponseModel.Immunization_list> immunization_lists;
     ImmunizationListResponseModel.Immunization_list immunizationList;
 
     private RecyclerView recyclerView;
-    private TextView textView;
+    private TextView textView,txt_no_internet;
     private ImmunizationAdapter immunizationAdapter;
+
+    CheckNetwork checkNetwork;
+    boolean isoffline = false;
+    ImmunizationPresenter pnMotherListPresenter;
+
+
 Realm realm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,17 +77,26 @@ Realm realm;
     }
 
     public void initUI() {
-//        pDialog = new ProgressDialog(this);
-//        pDialog.setCancelable(false);
-//        pDialog.setMessage("Please Wait ...");
+        pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
+        pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
-
+        checkNetwork =new CheckNetwork(this);
 //        pnMotherListPresenter = new MotherListPresenter(ImmunizationActivity.this, this);
 //        pnMotherListPresenter.getSelectedImmuMother(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
+
+
+        pnMotherListPresenter = new ImmunizationPresenter(ImmunizationActivity.this, this);
+        if (checkNetwork.isNetworkAvailable()){
+            pnMotherListPresenter.getSelectedImmuMother(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
+        }else{
+            isoffline=true;
+        }
 
         immunization_lists = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.mother_recycler_view);
         textView = (TextView) findViewById(R.id.txt_no_records_found);
+        txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
         immunizationAdapter = new ImmunizationAdapter(immunization_lists, ImmunizationActivity.this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(ImmunizationActivity.this);
@@ -85,7 +104,14 @@ Realm realm;
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(immunizationAdapter);
 
-        getRealmData();
+if (isoffline) {
+//        getRealmData();
+    txt_no_internet.setVisibility(View.VISIBLE);
+}else{
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setMessage("Record Not Found");
+    builder.create();
+}
     }
 
     private void getRealmData() {
@@ -115,8 +141,8 @@ Realm realm;
             immunizationList.setImmDueDate(model.getImmDueDate());
             immunizationList.setImmCarePovidedDate(model.getImmCarePovidedDate());
 
-            immunization_lists.add(immunizationList);
-            immunizationAdapter.notifyDataSetChanged();
+//            immunization_lists.add(immunizationList);
+//            immunizationAdapter.notifyDataSetChanged();
         }
         Log.e(ImmunizationActivity.class.getSimpleName(),"immunization_lists  size ->"+ immunization_lists.size() + "");
 
@@ -128,6 +154,125 @@ Realm realm;
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showProgress() {
+       pDialog.show();
+    }
+
+    @Override
+    public void hideProgress() {
+pDialog.dismiss();
+    }
+
+    @Override
+    public void getImmunizationListSuccess(String response) {
+
+    }
+
+    @Override
+    public void getImmunizationListError(String string) {
+
+    }
+
+    @Override
+    public void callMotherDetailsApi() {
+
+    }
+
+    @Override
+    public void getImmunizationDetailsSuccess(String response) {
+
+
+        try {
+            JSONObject mJsnobject = new JSONObject(response);
+            String status = mJsnobject.getString("status");
+            String message = mJsnobject.getString("message");
+            if (status.equalsIgnoreCase("1")) {
+                JSONArray jsonArray = mJsnobject.getJSONArray("immunization_list");
+                Log.e(ImmunizationActivity.class.getSimpleName(),"immunization_list size success "+jsonArray.length());
+                if (jsonArray.length() != 0) {
+                    /*
+                    recyclerView.setVisibility(View.VISIBLE);
+                    textView.setVisibility(View.GONE);
+                    RealmResults<ImmunizationDeatilsListRealmModel> immunizationDeatilsListRealmModelRealmResults=null;
+                    immunizationDeatilsListRealmModelRealmResults = realm.where(ImmunizationDeatilsListRealmModel.class).findAll();
+                    if (immunizationDeatilsListRealmModelRealmResults.size()!=0) {
+                        realm.executeTransaction(new Realm.Transaction() {
+                            @Override
+                            public void execute(Realm realm) {
+                                realm.delete(ImmunizationDeatilsListRealmModel.class);
+                            }
+                        });
+                    }
+                    realm.beginTransaction();
+                    ImmunizationDeatilsListRealmModel immunizationDeatilsListRealmModel = null;
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        immunizationDeatilsListRealmModel = realm.createObject(ImmunizationDeatilsListRealmModel.class);
+                        immunizationList = new ImmunizationListResponseModel.Immunization_list();
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        immunizationDeatilsListRealmModel.setMid(jsonObject.getString("mid"));
+                        immunizationDeatilsListRealmModel.setMName(jsonObject.getString("mName"));
+                        immunizationDeatilsListRealmModel.setMPicmeId(jsonObject.getString("mPicmeId"));
+                        immunizationDeatilsListRealmModel.setDeleveryDate(jsonObject.getString("deleveryDate"));
+                        immunizationDeatilsListRealmModel.setImmId(jsonObject.getString("immId"));
+                        immunizationDeatilsListRealmModel.setImmDoseId(jsonObject.getString("immDoseId"));
+                        immunizationDeatilsListRealmModel.setImmDoseNumber(jsonObject.getString("immDoseNumber"));
+                        immunizationDeatilsListRealmModel.setImmActualDate(jsonObject.getString("immActualDate"));
+                        immunizationDeatilsListRealmModel.setImmOpvStatus(jsonObject.getString("immOpvStatus"));
+
+                        immunizationDeatilsListRealmModel.setImmPentanvalentStatus(jsonObject.getString("immPentanvalentStatus"));
+                        immunizationDeatilsListRealmModel.setImmRotaStatus(jsonObject.getString("immRotaStatus"));
+                        immunizationDeatilsListRealmModel.setImmIpvStatus(jsonObject.getString("immIpvStatus"));
+
+                        immunizationDeatilsListRealmModel.setImmDueDate(jsonObject.getString("immDueDate"));
+                        immunizationDeatilsListRealmModel.setImmCarePovidedDate(jsonObject.getString("immCarePovidedDate"));
+                        immunizationDeatilsListRealmModel.setmVillage(jsonObject.getString("mVillage"));
+                    }
+                    realm.commitTransaction();
+               */
+                    recyclerView.setVisibility(View.VISIBLE);
+                    textView.setVisibility(View.GONE);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        immunizationList = new ImmunizationListResponseModel.Immunization_list();
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        immunizationList.setMid(jsonObject.getString("mid"));
+                        immunizationList.setMName(jsonObject.getString("mName"));
+                        immunizationList.setMPicmeId(jsonObject.getString("mPicmeId"));
+                        immunizationList.setDeleveryDate(jsonObject.getString("deleveryDate"));
+                        immunizationList.setImmId(jsonObject.getString("immId"));
+                        immunizationList.setImmDoseId(jsonObject.getString("immDoseId"));
+                        immunizationList.setImmDoseNumber(jsonObject.getString("immDoseNumber"));
+                        immunizationList.setImmActualDate(jsonObject.getString("immActualDate"));
+                        immunizationList.setImmOpvStatus(jsonObject.getString("immOpvStatus"));
+
+                        immunizationList.setImmPentanvalentStatus(jsonObject.getString("immPentanvalentStatus"));
+                        immunizationList.setImmRotaStatus(jsonObject.getString("immRotaStatus"));
+                        immunizationList.setImmIpvStatus(jsonObject.getString("immIpvStatus"));
+
+                        immunizationList.setImmDueDate(jsonObject.getString("immDueDate"));
+                        immunizationList.setImmCarePovidedDate(jsonObject.getString("immCarePovidedDate"));
+                        immunizationList.setmVillage(jsonObject.getString("mVillage"));
+
+                        immunization_lists.add(immunizationList);
+                        immunizationAdapter.notifyDataSetChanged();
+                    }
+                    Log.e(ImmunizationActivity.class.getSimpleName(),"immunization_lists size"+immunization_lists.size());
+                }
+            }else{
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+        }
+//        getRealmData();
+    }
+
+    @Override
+    public void getImmunizationDetailsError(String string) {
+
     }
 
   /*  @Override

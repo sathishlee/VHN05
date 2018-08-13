@@ -66,6 +66,7 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
     TextView txt_no_internet, txt_no_records_found;
     CheckNetwork checkNetwork;
     boolean isoffline = false;
+    TextView txt_risk_list_count;
     Realm realm;
     MotherRiskListRealm motherRiskListRealm;
 SwipeRefreshLayout swipeRefreshLayout;
@@ -100,6 +101,7 @@ SwipeRefreshLayout swipeRefreshLayout;
 
         txt_no_internet = view.findViewById(R.id.txt_no_internet);
         txt_no_records_found = view.findViewById(R.id.txt_no_records_found);
+        txt_risk_list_count = view.findViewById(R.id.txt_risk_list_count);
         txt_no_internet.setVisibility(View.GONE);
         txt_no_records_found.setVisibility(View.GONE);
         swipeRefreshLayout =(SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh_layout);
@@ -156,6 +158,7 @@ SwipeRefreshLayout swipeRefreshLayout;
                 mresponseResult.setMLongitude(model.getvLongitude());
                 mresponseResult.setMotherType(model.getMotherType());
                 mresponseResult.setmPhoto(model.getmPhoto());
+                mresponseResult.setUserType(model.getUserType());
                 mResult.add(mresponseResult);
             }
         } else {
@@ -163,6 +166,7 @@ SwipeRefreshLayout swipeRefreshLayout;
             mother_recycler_view.setVisibility(View.GONE);
         }
         mAdapter.notifyDataSetChanged();
+        txt_risk_list_count.setText(getResources().getString(R.string.risk_status_list)+"("+mResult.size()+")");
 
         realm.commitTransaction();
 
@@ -217,6 +221,8 @@ SwipeRefreshLayout swipeRefreshLayout;
                     motherRiskListRealm.setMLongitude(mJsnobject.getString("mLongitude"));
                     motherRiskListRealm.setMotherType(mJsnobject.getString("motherType"));
                     motherRiskListRealm.setmPhoto(mJsnobject.getString("mPhoto"));
+                    motherRiskListRealm.setUserType(mJsnobject.getString("userType"));
+
                 }
 
                 realm.commitTransaction(); //close table
@@ -250,6 +256,7 @@ SwipeRefreshLayout swipeRefreshLayout;
                 mresponseResult.setMLongitude(model.getvLongitude());
                 mresponseResult.setMotherType(model.getMotherType());
                 mresponseResult.setmPhoto(model.getmPhoto());
+                mresponseResult.setUserType(model.getUserType());
                 mResult.add(mresponseResult);
             }
         } else {
@@ -257,7 +264,7 @@ SwipeRefreshLayout swipeRefreshLayout;
             mother_recycler_view.setVisibility(View.GONE);
         }
         mAdapter.notifyDataSetChanged();
-
+        txt_risk_list_count.setText(getResources().getString(R.string.risk_status_list)+"("+mResult.size()+")");
         realm.commitTransaction();
 
     }

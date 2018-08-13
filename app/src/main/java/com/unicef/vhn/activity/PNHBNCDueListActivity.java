@@ -56,7 +56,7 @@ public class PNHBNCDueListActivity extends AppCompatActivity implements MotherLi
     private List<String> visit;
     boolean isDataUpdate = true;
     private RecyclerView recyclerView;
-    private TextView textView;
+    private TextView textView,txt_pnhbnc_list;
     private PNHBNCDueAdapter antt1Adapter;
 
     CheckNetwork checkNetwork;
@@ -74,6 +74,15 @@ public class PNHBNCDueListActivity extends AppCompatActivity implements MotherLi
         initUI();
 
 
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
+        if(pDialog.isShowing()){
+            pDialog.dismiss();
+        }
     }
 
     public void showActionBar() {
@@ -100,6 +109,7 @@ public class PNHBNCDueListActivity extends AppCompatActivity implements MotherLi
         tt1_lists = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.mother_recycler_view);
         textView = (TextView) findViewById(R.id.txt_no_records_found);
+        txt_pnhbnc_list = (TextView) findViewById(R.id.txt_pnhbnc_list);
         antt1Adapter = new PNHBNCDueAdapter(tt1_lists, PNHBNCDueListActivity.this, this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(PNHBNCDueListActivity.this);
@@ -227,6 +237,7 @@ public class PNHBNCDueListActivity extends AppCompatActivity implements MotherLi
             tt1_lists.add(tt1List);
             antt1Adapter.notifyDataSetChanged();
         }
+        txt_pnhbnc_list.setText(getResources().getString(R.string.pn_hbnc_list)+"("+tt1_lists.size()+")");
         realm.commitTransaction();
     }
 

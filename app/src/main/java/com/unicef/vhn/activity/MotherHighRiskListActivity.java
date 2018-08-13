@@ -222,6 +222,7 @@ else{
                         pnmMotherListRealmModel.setmLatitude(jsonObject.getString("mLatitude"));
                         pnmMotherListRealmModel.setmLongitude(jsonObject.getString("mLongitude"));
                         pnmMotherListRealmModel.setmPhoto(jsonObject.getString("mPhoto"));
+                        pnmMotherListRealmModel.setUserType(jsonObject.getString("userType"));
 
                     }
                     realm.commitTransaction();
@@ -260,6 +261,7 @@ else{
                         mresponseResult.setMLatitude(model.getmLatitude());
                         mresponseResult.setMLongitude(model.getmLongitude());
                         mresponseResult.setmPhoto(model.getmPhoto());
+                        mresponseResult.setUserType(model.getUserType());
 
 
                         mResult.add(mresponseResult);

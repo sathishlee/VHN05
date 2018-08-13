@@ -40,28 +40,28 @@ public class MotherPrimaryRegisterPresenter implements MotherPrimaryRegisterInte
 
     @Override
     public void getAllMotherPrimaryRegistration(final String picmeId) {
-        String url = null;
-//        String url = Apiconstants.MOTHER_BASE_URL + Apiconstants.GET_MOTHER_PRIMARY_INFO;
-        if (Apiconstants.BASE_URL.equalsIgnoreCase("http://192.168.100.222/thaimaiapp/api/vhn/Vhn/")){
+
+        String url = Apiconstants.MOTHER_BASE_URL + Apiconstants.GET_MOTHER_PRIMARY_INFO;
+       /* if (Apiconstants.BASE_URL.equalsIgnoreCase("http://192.168.100.222/thaimaiapp/api/vhn/Vhn/")){
                      url = "http://192.168.100.222/thaimaiapp/api/" + Apiconstants.GET_MOTHER_PRIMARY_INFO;
         }else {
             url = "http://218.248.44.77/thaimaiapp/api/" + Apiconstants.GET_MOTHER_PRIMARY_INFO;
 
-        }
-        Log.d("Log in check Url--->", url);
-        Log.d("picmeId--->", picmeId);
+        }*/
+        Log.e("Log in check Url--->", url);
+        Log.e("picmeId--->", picmeId);
         primaryRegisterViews.showProgress();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d(MotherPrimaryRegisterPresenter.class.getSimpleName(), "Success response" + response);
+                Log.e(MotherPrimaryRegisterPresenter.class.getSimpleName(), "Success response" + response);
                 primaryRegisterViews.hideProgress();
                 primaryRegisterViews.getAllMotherPrimaryRegisterSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(MotherPrimaryRegisterPresenter.class.getSimpleName(), "Success response" + error.toString());
+                Log.e(MotherPrimaryRegisterPresenter.class.getSimpleName(), "Success response" + error.toString());
                 primaryRegisterViews.hideProgress();
                 primaryRegisterViews.getAllMotherPrimaryRegisterFailure(error.toString());
 
@@ -75,7 +75,7 @@ public class MotherPrimaryRegisterPresenter implements MotherPrimaryRegisterInte
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("picmeId", picmeId);
 
-                Log.d("params--->", params.toString());
+                Log.e("params--->", params.toString());
 
                 return params;
             }

@@ -1,6 +1,5 @@
 package com.unicef.vhn.Presenter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Base64;
 import android.util.Log;
@@ -12,18 +11,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.fragment.GetVisitReportsPresenter;
-import com.unicef.vhn.fragment.mothers;
 import com.unicef.vhn.interactor.VisitANMotherInteractor;
-import com.unicef.vhn.realmDbModel.ANMVisitRealmModel;
-import com.unicef.vhn.realmDbModel.PNMVisitRealmModel;
 import com.unicef.vhn.view.VisitANMotherViews;
 import com.unicef.vhn.volleyservice.VolleySingleton;
 import io.realm.Realm;
-import io.realm.RealmResults;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,11 +23,14 @@ import java.util.Map;
  */
 
 public class GetVisitANMotherPresenter implements VisitANMotherInteractor {
+    String TAG = GetVisitANMotherPresenter.class.getSimpleName();
     Context activity;
     VisitANMotherViews visitANMotherViews;
     Realm realm;
 
     public GetVisitANMotherPresenter(Context activity, VisitANMotherViews visitANMotherViews, Realm realm) {
+        Log.e(TAG,"Api name  --> GetVisitANMotherPresenter cons");
+
         this.activity = activity;
         this.visitANMotherViews = visitANMotherViews;
         this.realm = realm;
@@ -44,22 +38,25 @@ public class GetVisitANMotherPresenter implements VisitANMotherInteractor {
 
     @Override
     public void getVisitANMotherRecords(final String vhnCode, final String vhnId, final String mid) {
-        Log.e(GetVisitReportsPresenter.class.getSimpleName(),"ANMother Records  "+ " API CALL START");
         visitANMotherViews.showProgress();
+
         String url = Apiconstants.BASE_URL + Apiconstants.DASH_BOARD_MOTHERS_AN_RECORDS;
+        Log.e(TAG, "AN Report -----> "+url+"\n vhnCode"+ vhnCode +"\n vhnId"+vhnId+ "\n mid"+mid);
 
         StringRequest strReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e(GetVisitReportsPresenter.class.getSimpleName(),"ANMother Records  Response success"+ response);
+                Log.e(GetVisitReportsPresenter.class.getSimpleName(), "ANMother Records  Response success" + response);
 
                 visitANMotherViews.hideProgress();
+                visitANMotherViews.showANVisitRecordsSuccess(response);
+/*
                 try {
                     JSONObject mJsnobject = new JSONObject(response);
                     String status = mJsnobject.getString("status");
                     String message = mJsnobject.getString("message");
                     if (status.equalsIgnoreCase("1")) {
-                        Log.d(mothers.class.getSimpleName(), "ANVisitRecordsSuccess api call success status" + status);
+
                         if (realm.isInTransaction()) {
                             realm.cancelTransaction();
                         }
@@ -148,13 +145,11 @@ public class GetVisitANMotherPresenter implements VisitANMotherInteractor {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }
-                visitANMotherViews.showANVisitRecordsSuccess(response);
+                }*/
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(GetVisitReportsPresenter.class.getSimpleName(),"ANMother Records  Response success"+ error);
 
                 visitANMotherViews.hideProgress();
                 visitANMotherViews.showANVisitRecordsFailiur(error.toString());
@@ -203,13 +198,16 @@ public class GetVisitANMotherPresenter implements VisitANMotherInteractor {
     public void getVisitPNMotherRecords(final String vhnCode, final String vhnId, final String mid) {
         visitANMotherViews.showProgress();
         String url = Apiconstants.BASE_URL + Apiconstants.DASH_BOARD_MOTHERS_PN_VISIT_RECORDS;
+        Log.e(TAG,"PN Report ----->"+ url+"\n vhnCode"+ vhnCode +"\n vhnId"+vhnId+ "\n mid"+mid);
+
 
         StringRequest strReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 visitANMotherViews.hideProgress();
-
-                try {
+                visitANMotherViews.showPNVisitRecordsSuccess(response);
+// Do Not Delete this code, this code stored  pn visit records into realm db
+                /*try {
                     JSONObject mJsnobject = new JSONObject(response);
                     String status = mJsnobject.getString("status");
                     String message = mJsnobject.getString("message");
@@ -217,6 +215,9 @@ public class GetVisitANMotherPresenter implements VisitANMotherInteractor {
                         JSONArray jsonArray = mJsnobject.getJSONArray("pnMothersVisit");
                         RealmResults<PNMVisitRealmModel> motherListAdapterRealmModel = realm.where(PNMVisitRealmModel.class).findAll();
 
+                        if (realm.isInTransaction()) {
+                            realm.cancelTransaction();
+                        }
 
                         realm.executeTransaction(new Realm.Transaction() {
                             @Override
@@ -281,16 +282,15 @@ public class GetVisitANMotherPresenter implements VisitANMotherInteractor {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }
+                }*/
 
-                visitANMotherViews.showPNVisitRecordsSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("PN Visit report error", "error" + error);
 
-                visitANMotherViews.hideProgress();
+//                visitANMotherViews.hideProgress();
                 visitANMotherViews.showPNVisitRecordsFailiur(error.toString());
             }
         }) {

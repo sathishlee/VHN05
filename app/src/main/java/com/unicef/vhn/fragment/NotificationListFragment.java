@@ -36,11 +36,14 @@ import com.unicef.vhn.realmDbModel.NotificationListRealm;
 import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.view.NotificationViews;
 
+import io.realm.Sort;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -153,7 +156,9 @@ public class NotificationListFragment extends Fragment implements NotificationVi
         realm.beginTransaction();
         RealmResults<NotificationListRealm> userInfoRealmResult = realm.where(NotificationListRealm.class).findAll();
 
+//        motherListAdapterRealmModel = motherListAdapterRealmModel.sort("mPicmeId", Sort.DESCENDING);
 
+        userInfoRealmResult = userInfoRealmResult.sort("noteId",Sort.DESCENDING);
         if (userInfoRealmResult.size()!=0) {
             for (int i = 0; i < userInfoRealmResult.size(); i++) {
                 mresponseResult = new NotificationListResponseModel.Vhn_migrated_mothers();
@@ -179,11 +184,20 @@ public class NotificationListFragment extends Fragment implements NotificationVi
 
                 moviesList.add(mresponseResult);
 
+
+
             }
         }else{
             txt_no_records_found.setVisibility(View.VISIBLE);
             mRecyclerView.setVisibility(View.GONE);
         }
+       /* Collections.sort(data, new Comparator<NotificationListResponseModel.Vhn_migrated_mothers>() {
+            @Override
+            public int compare(NotificationListResponseModel.Vhn_migrated_mothers lhs, NotificationListResponseModel.Vhn_migrated_mothers rhs) {
+                // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+                return lhs.get() > rhs.getId() ? -1 : (lhs.customInt < rhs.customInt ) ? 1 : 0;
+            }
+        });*/
         mAdapter.notifyDataSetChanged();
         realm.commitTransaction();
     }
@@ -228,6 +242,9 @@ public class NotificationListFragment extends Fragment implements NotificationVi
             if (status.equalsIgnoreCase("1")) {
                 RealmResults<NotificationListRealm> motherListAdapterRealmModel = realm.where(NotificationListRealm.class).findAll();
                 Log.e("Realm size ---->", motherListAdapterRealmModel.size() + "");
+                if (realm.isInTransaction()){
+                    realm.cancelTransaction();
+                }
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
@@ -301,6 +318,9 @@ public class NotificationListFragment extends Fragment implements NotificationVi
 
         realm.beginTransaction();
         RealmResults<NotificationListRealm> userInfoRealmResult = realm.where(NotificationListRealm.class).findAll();
+
+        userInfoRealmResult = userInfoRealmResult.sort("noteId",Sort.DESCENDING);
+
         Log.e("Mother list size ->", userInfoRealmResult.size() + "");
         for (int i = 0; i < userInfoRealmResult.size(); i++) {
             mresponseResult = new NotificationListResponseModel.Vhn_migrated_mothers();

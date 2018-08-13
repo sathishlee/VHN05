@@ -37,7 +37,7 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
     private List<PNMotherListResponse.VhnAN_Mothers_List> mResultfilter;
     Activity applicationContext;
     MakeCallInterface makeCallInterface;
-    String strMid, str_mPhoto, type;
+    String strMid, str_mPhoto, type,userType;
     ContactsAdapterListener listener;
 
     public MotherListAdapter(List<PNMotherListResponse.VhnAN_Mothers_List> mResult, Activity applicationContext,
@@ -69,7 +69,13 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
         holder.txt_username.setText(pNMotherResponseModel.getMName());
         holder.txt_picme_id.setText(pNMotherResponseModel.getMPicmeId());
         holder.txt_list_type.setText(pNMotherResponseModel.getMotherType());
+userType = pNMotherResponseModel.getUserType();
+if (userType.equalsIgnoreCase("0")){
+    holder.iv_android_user.setVisibility(View.GONE);
+}else{
+    holder.iv_android_user.setVisibility(View.VISIBLE);
 
+}
         str_mPhoto = pNMotherResponseModel.getmPhoto();
         Log.d("mphoto-->", Apiconstants.MOTHER_PHOTO_URL + str_mPhoto);
 
@@ -90,6 +96,7 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
 
         strMid = pNMotherResponseModel.getMid();
         type = pNMotherResponseModel.getMotherType();
+
 
         if (type.equalsIgnoreCase("PN")) {
             holder.txt_list_type.setText(type);
@@ -131,15 +138,13 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
                     AppConstants.SELECTED_MID = finalPNMotherResponseModel.getMid();
                     AppConstants.MOTHER_PICME_ID = finalPNMotherResponseModel.getMPicmeId();
 
-                    Toast.makeText(applicationContext.getApplicationContext(),"PN MID"+AppConstants.SELECTED_MID ,Toast.LENGTH_SHORT).show();
-
 //                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherVisitDetailsActivity.class));
                     applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherDetailsViewActivity.class));
 
                 } else if (type.equalsIgnoreCase("AN")) {
                     AppConstants.SELECTED_MID = finalPNMotherResponseModel.getMid();
                     AppConstants.MOTHER_PICME_ID = finalPNMotherResponseModel.getMPicmeId();
-                    Toast.makeText(applicationContext.getApplicationContext(),"AN MID"+AppConstants.SELECTED_MID ,Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(applicationContext.getApplicationContext(),"AN MID"+AppConstants.SELECTED_MID ,Toast.LENGTH_SHORT).show();
 
 //                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MothersDetailsActivity.class));
                     applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), ANMotherDetailsViewActivcity.class));
@@ -163,7 +168,7 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txt_username, txt_picme_id, txt_list_type;
-        LinearLayout ll_ll_mother_type, ll_track_location, ll_call;
+        LinearLayout ll_ll_mother_type, ll_track_location, ll_call,iv_android_user;
         ImageView cardview_image;
 
 
@@ -176,6 +181,7 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
             ll_track_location = itemView.findViewById(R.id.ll_track_location);
             ll_call = itemView.findViewById(R.id.ll_call);
             cardview_image = itemView.findViewById(R.id.cardview_image);
+            iv_android_user = itemView.findViewById(R.id.iv_android_user);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

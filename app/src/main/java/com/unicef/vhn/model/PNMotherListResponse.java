@@ -51,10 +51,21 @@ public class PNMotherListResponse {
         private String mLMP;
         private String mAge;
 
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    private String userType;
 
 
 
-    public VhnAN_Mothers_List(String mLongitude, String mLatitude, String vhnId, String mid, String mPicmeId, String mName, String motherType, String vLatitude, String vLongitude, String mMotherMobile, String mPhoto, String mLMP, String pnId, String mAge) {
+
+
+    public VhnAN_Mothers_List(String mLongitude, String mLatitude, String vhnId, String mid, String mPicmeId, String mName, String motherType, String vLatitude, String vLongitude, String mMotherMobile, String mPhoto, String mLMP, String pnId, String mAge, String userType) {
         this.mLongitude = mLongitude;
         this.mLatitude = mLatitude;
         this.vhnId = vhnId;
@@ -69,6 +80,7 @@ public class PNMotherListResponse {
         this.mLMP = mLMP;
         this.pnId = pnId;
         this.mAge = mAge;
+        this.userType = userType;
     }
 
     public VhnAN_Mothers_List() {

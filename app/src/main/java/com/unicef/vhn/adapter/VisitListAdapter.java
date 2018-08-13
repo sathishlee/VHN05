@@ -50,6 +50,8 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.View
         holder.txt_username.setText(current_visits.getMName());
         holder.txt_picme_id.setText(current_visits.getPicmeId());
         holder.txt_list_type.setText(current_visits.getMtype());
+        holder.txt_visit_month.setText("V.No : "+current_visits.getMonth());
+
         holder.txt_current_visit.setText(current_visits.getNextVisit());
 
         if (current_visits.getMMotherMobile().equalsIgnoreCase("null")||current_visits.getMMotherMobile().length()<10){
@@ -96,7 +98,7 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_username, txt_picme_id, txt_list_type, txt_track, txt_call, txt_current_visit;
+        TextView txt_username, txt_picme_id, txt_list_type, txt_track, txt_call, txt_current_visit,txt_visit_month;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -106,6 +108,7 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.View
             txt_track = itemView.findViewById(R.id.txt_track);
             txt_call = itemView.findViewById(R.id.txt_call);
             txt_current_visit = itemView.findViewById(R.id.txt_current_visit);
+            txt_visit_month = itemView.findViewById(R.id.txt_visit_month);
         }
     }
 }

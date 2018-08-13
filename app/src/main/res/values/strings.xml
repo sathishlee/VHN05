@@ -172,7 +172,9 @@
 
 
     <!-- <string name="permission_rationale">Please grant location permission to start the service</string>-->
-    <string name="permission_denied_explanation">You have not granted location permission. So the service cannot be started.</string>
+    <string name="permission_denied_explanation">You have not granted location permission. So the service cannot be
+        started.
+    </string>
     <string name="settings">settings</string>
     <string name="title_alert_no_intenet">No internet</string>
     <string name="msg_alert_no_internet">Please make sure that you have active internet connection.</string>
@@ -187,6 +189,10 @@
     <string name="mother_s_information">Mother\'s Information</string>
     <string name="view_location">View Location</string>
     <string name="view_report">View Report</string>
+
+    <string name="an_view_report">AN Report</string>
+    <string name="pn_view_report">PN Report</string>
+
     <string name="picme_id">PICME Id</string>
     <string name="age">Age</string>
     <string name="present_status">AN care</string>
@@ -289,6 +295,7 @@
     <string name="block">Block</string>
     <string name="district">District</string>
     <string name="home">Home</string>
+    <string name="risk_status_list">Risk Status List</string>
     <string name="visit_details">Visit Details</string>
     <string name="date_of_visit">Date of Visit</string>
     <string name="visit_type">Visit Type</string>
@@ -337,7 +344,8 @@
     <string name="address_home">Address :</string>
     <string name="sos">SOS</string>
     <string name="mothers">Mothers</string>
-    <string name="high_risk_home">High Risk</string>
+    <string name="high_risk_home_count">High Risk </string>
+    <string name="high_risk_home">High Risk :</string>
     <string name="infants">Infants</string>
     <string name="an_mothers">Antenatal Mothers</string>
     <string name="pn_mothers">PN/HBNC Mothers</string>
@@ -359,7 +367,6 @@
     <string name="b_nav_home">Home</string>
     <string name="b_nav_mother">Mothers</string>
     <string name="b_nav_risk_status">Risk Status</string>
-
 
 
 </resources>

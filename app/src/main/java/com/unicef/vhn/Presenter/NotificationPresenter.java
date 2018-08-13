@@ -37,8 +37,8 @@ public class NotificationPresenter implements NotificationInteractor {
     public void getNotificationCount(final String vhnId) {
 
         String url = Apiconstants.BASE_URL + Apiconstants.POST_NOTIFICATION_COUNT;
-        Log.d("Url--->", url);
-        Log.d("mid--->", vhnId);
+        Log.e("Url--->", url);
+        Log.e("mid--->", vhnId);
 //        notificationViews.showProgress();
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -75,7 +75,7 @@ public class NotificationPresenter implements NotificationInteractor {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("vhnId", vhnId);
 
-                Log.d("params--->", params.toString());
+                Log.e("params--->", params.toString());
 
                 return params;
             }

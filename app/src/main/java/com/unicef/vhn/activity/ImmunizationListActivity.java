@@ -69,7 +69,7 @@ String TAG =ImmunizationListActivity.class.getSimpleName();
     ImmunizationListResponseModel.Immunization_list immunizationList;
 
     private RecyclerView recyclerView;
-    private TextView textView;
+    private TextView textView,txt_no_internet,txt_immu_list_count;
     private ImmunizationListAdapter immunizationListAdapter;
     private LinearLayout llFilter;
 
@@ -122,6 +122,8 @@ private SwipeRefreshLayout swipeRefreshLayout;
         immunization_lists = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.immunization_recycler_view);
         textView = (TextView) findViewById(R.id.txt_no_records_found);
+        txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
+        txt_immu_list_count = (TextView) findViewById(R.id.txt_immu_list_count);
         llFilter =(LinearLayout) findViewById(R.id.ll_filter);
         swipeRefreshLayout =(SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         immunizationListAdapter = new ImmunizationListAdapter(immunization_lists, ImmunizationListActivity.this);
@@ -134,6 +136,7 @@ private SwipeRefreshLayout swipeRefreshLayout;
 
         if (isoffline) {
             setValueToUI();
+            txt_no_internet.setVisibility(View.VISIBLE);
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Record Not Found");
@@ -285,8 +288,8 @@ swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener
                     realm.commitTransaction();       //create or open
 
                 } else {
-                    recyclerView.setVisibility(View.GONE);
-                    textView.setVisibility(View.VISIBLE);
+//                    recyclerView.setVisibility(View.GONE);
+//                    textView.setVisibility(View.VISIBLE);
                 }
             } else {
                 RealmResults<ImmuniationListRealmModel> motherListAdapterRealmModel = realm.where(ImmuniationListRealmModel.class).findAll();
@@ -417,6 +420,7 @@ swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener
                 immunizationList.setImmDoseNumber(model.getImmDoseNumber());
                 immunizationList.setMid(model.getMid());
                 immunization_lists.add(immunizationList);
+                txt_immu_list_count.setText(getResources().getString(R.string.immunization_lists)+"("+immunization_lists.size()+")");
                 immunizationListAdapter.notifyDataSetChanged();
             }
         }else{

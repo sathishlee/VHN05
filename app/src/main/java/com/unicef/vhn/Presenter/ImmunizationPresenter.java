@@ -93,20 +93,22 @@ public class ImmunizationPresenter  implements ImmunizationInteractor{
 
         motherListsViews.showProgress();
         String url = Apiconstants.BASE_URL + Apiconstants.IMMUNIZATION_LIST;
-        Log.d("Log in check Url--->", url);
-        Log.d("vhnId--->", vhnId);
-        Log.d("VhnCode--->", vhnCode);
-        Log.d("mid--->", mid);
+        Log.e("Log in check Url--->", url);
+        Log.e("vhnId--->", vhnId);
+        Log.e("VhnCode--->", vhnCode);
+        Log.e("mid--->", mid);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("SelectedMother", "Success" + response);
+                Log.e("SelectedMother", "Success" + response);
                 motherListsViews.hideProgress();
                 motherListsViews.getImmunizationDetailsSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.e("SelectedMother", "error" + error);
+
                 motherListsViews.hideProgress();
                 motherListsViews.getImmunizationDetailsError(error.toString());
             }

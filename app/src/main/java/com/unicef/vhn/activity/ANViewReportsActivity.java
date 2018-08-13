@@ -21,6 +21,7 @@ import com.unicef.vhn.adapter.ANVisitAdapter;
 import com.unicef.vhn.application.RealmController;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.ANMotherVisitResponseModel;
+import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.view.VisitANMotherViews;
 
 import io.realm.Realm;
@@ -32,6 +33,8 @@ import java.util.ArrayList;
 /*AN Mother visit Report have api call working well is not use this project,
 use for ANMothervistReportActivity */
 public class ANViewReportsActivity extends AppCompatActivity implements VisitANMotherViews, View.OnClickListener {
+    String TAG = ANViewReportsActivity.class.getSimpleName();
+
     private  ProgressDialog pDialog;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -42,14 +45,17 @@ public class ANViewReportsActivity extends AppCompatActivity implements VisitANM
     ANVisitAdapter hAdapter;
 
     Button btn_primary_report, btn_view_report;
-    TextView txt_no_records_found;
+    TextView txt_no_records_found,txt_no_internet;
     String strPicmeId;
 Realm realm;
+CheckNetwork checkNetwork;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         realm = RealmController.with(this).getRealm();
         setContentView(R.layout.activity_anview_reports);
+        Log.e(TAG,"");
+
         initUI();
         onClickListner();
         showActionBar();
@@ -60,9 +66,20 @@ Realm realm;
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData =new PreferenceData(this);
+        checkNetwork=new CheckNetwork(this);
+
+        txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
+        txt_no_internet.setVisibility(View.GONE);
+
         getVisitANMotherPresenter = new GetVisitANMotherPresenter(ANViewReportsActivity.this, this,realm);
 //        gVHRecordsPresenteer.getAllVistHeathRecord(Apiconstants.POST_VIST_HEALTH_RECORD_PICME,preferenceData.getPicmeId(), preferenceData.getMId());
-        getVisitANMotherPresenter.getVisitANMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
+        if (checkNetwork.isNetworkAvailable()) {
+            Log.e(TAG,"Api name  --> vDashboardANVisitRecords");
+
+            getVisitANMotherPresenter.getVisitANMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
+        }else{
+            txt_no_internet.setVisibility(View.VISIBLE);
+        }
         mhealthRecordList =new ArrayList<>();
         tabLayout =(TabLayout) findViewById(R.id.hre_tabs);
         viewPager =(ViewPager) findViewById(R.id.hre_viewpager);
@@ -116,7 +133,6 @@ Realm realm;
                 startActivity(new Intent(getApplicationContext(),MothersPrimaryRecordsActivity.class));
                 break;
             case  R.id.btn_view_report:
-            Toast.makeText(getApplicationContext(),"view report imaage xyz",Toast.LENGTH_LONG).show();
                   startActivity(new Intent(getApplicationContext(), com.unicef.vhn.activity.MotherVisitReport.ANViewReportsActivity.class));
                   break;
         }

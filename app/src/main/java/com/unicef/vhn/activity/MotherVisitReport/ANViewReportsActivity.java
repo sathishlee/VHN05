@@ -22,6 +22,7 @@ import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.fragment.GetVisitReportsPresenter;
 import com.unicef.vhn.model.VisitRecordsFullResponseModel;
 import com.unicef.vhn.model.VisitRecordsSingleResponseModel;
+import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.view.GetAllReportsViews;
 
 import org.json.JSONArray;
@@ -43,13 +44,14 @@ String TAG =ANViewReportsActivity.class.getSimpleName();
     RecyclerView rec_mother_reports;
     VisitRecordsAdapter visitRecordsAdapter;
     GetVisitReportsPresenter getVisitReportsPresenter;
-    TextView txt_no_records_found;
+    TextView txt_no_records_found,txt_no_internet;
     String visitImage;
     Context context;
     ImageView itemImage;
     boolean isImageFitToScreen;
 
     ArrayList<VisitRecordsSingleResponseModel> singleResponseModelsList;
+    CheckNetwork checkNetwork;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,11 +71,18 @@ String TAG =ANViewReportsActivity.class.getSimpleName();
         context = ANViewReportsActivity.this;
 
         visitRecordsFullResponseModels = new ArrayList<>();
-
+        checkNetwork =new CheckNetwork(this);
+        txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
+        txt_no_internet.setVisibility(View.GONE);
         getVisitReportsPresenter = new GetVisitReportsPresenter(ANViewReportsActivity.this, this);
 //        getVisitReportsPresenter.getallVisitReports(preferenceData.getPicmeId(),preferenceData.getMId());
-        getVisitReportsPresenter.getallVisitReports(AppConstants.MOTHER_PICME_ID, AppConstants.SELECTED_MID);
+        if (checkNetwork.isNetworkAvailable()) {
+            getVisitReportsPresenter.getallVisitReports(AppConstants.MOTHER_PICME_ID, AppConstants.SELECTED_MID);
+        }else{
+            txt_no_internet.setVisibility(View.VISIBLE);
+        }
         txt_no_records_found = (TextView) findViewById(R.id.txt_no_records);
+
         itemImage = (ImageView) findViewById(R.id.itemImage);
 
         txt_no_records_found.setVisibility(View.GONE);

@@ -103,11 +103,16 @@ public class MotherListPresenter implements MotherListInteractor {
                                 pnmMotherListRealmModel.setdBirthWeight(jsonObject.getString("dBirthWeight"));
                                 pnmMotherListRealmModel.setMeturityWeek(jsonObject.getString("meturityWeek"));
                                 pnmMotherListRealmModel.setPnVisit(jsonObject.getString("pnVisit"));
+                                pnmMotherListRealmModel.setUserType(jsonObject.getString("userType"));
+
                             }
                             realm.commitTransaction();
 
                         }
+
                     }
+//                                    motherListsViews.hideProgress();
+
                 }catch (Exception e){
                     e.printStackTrace();
                 }

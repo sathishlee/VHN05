@@ -15,7 +15,8 @@
         app:cardCornerRadius="5dp"
         android:backgroundTint="#c8ffffff"
         app:cardElevation="4dp"
-        app:cardUseCompatPadding="false" >
+        app:cardUseCompatPadding="false"
+    >
 
         <RelativeLayout
             android:id="@+id/ll_info"
@@ -53,7 +54,7 @@
                         android:id="@+id/txt_hsc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Medavakkam"
+                        android:text="-"
                         android:gravity="start"
                         android:padding="1dp"
                         android:layout_weight="1"
@@ -80,7 +81,7 @@
                         android:id="@+id/txt_phc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ankaputhur"
+                        android:text="-"
                         android:gravity="start"
                         android:padding="1dp"
                         android:layout_weight="1"
@@ -115,7 +116,7 @@
                         android:id="@+id/txt_block"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pallavaram"
+                        android:text="-"
                         android:gravity="start"
                         android:padding="1dp"
                         android:layout_weight="1"
@@ -146,7 +147,7 @@
                         android:layout_weight="1"
                         android:gravity="start"
                         android:padding="1dp"
-                        android:text="No.17, south usman road, T Nagar, CH-17"
+                        android:text="-"
                         android:textColor="#333333"
                         android:textSize="@dimen/text_secondary" />
 
@@ -193,6 +194,7 @@
         app:srcCompat="@drawable/ic_nurse"
         android:background="@drawable/profile_circular_border_imageview"
         android:elevation="5dp"
+
         />
 <!--  app:srcCompat="@drawable/ic_nurse"
         android:background="@drawable/profile_circular_border_imageview"

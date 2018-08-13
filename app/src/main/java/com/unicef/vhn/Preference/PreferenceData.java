@@ -97,9 +97,7 @@ public class PreferenceData {
         sharedPreferences.edit().putString(AppConstants.NOTIFICATION_COUNT, strTodayVisitCount).commit();
     }
 
-    public void setTodayvisitCount(String strTodayVisitCount) {
-        sharedPreferences.edit().putString(AppConstants.TODAY_VISIT_COUNT, strTodayVisitCount).commit();
-    }
+
 
     public String getTodayVisitCount() {
         return sharedPreferences.getString(AppConstants.TODAY_VISIT_COUNT, "");
@@ -118,6 +116,18 @@ public class PreferenceData {
         sharedPreferences.edit().putBoolean( AppConstants.ISHIGHRISK, highRiskStatus).commit();
 
     } public boolean getHighRiskStatus() {
+        return sharedPreferences.getBoolean(AppConstants.ISHIGHRISK, Boolean.parseBoolean(""));
+
+    }public void setAndroidUser(boolean highRiskStatus) {
+        sharedPreferences.edit().putBoolean( AppConstants.ISHIGHRISK, highRiskStatus).commit();
+
+    } public boolean getAndroidUser() {
+        return sharedPreferences.getBoolean(AppConstants.ISHIGHRISK, Boolean.parseBoolean(""));
+
+    }public void setNonAndroidUser(boolean highRiskStatus) {
+        sharedPreferences.edit().putBoolean( AppConstants.ISHIGHRISK, highRiskStatus).commit();
+
+    } public boolean getNonAndroidUser() {
         return sharedPreferences.getBoolean(AppConstants.ISHIGHRISK, Boolean.parseBoolean(""));
 
     }
@@ -188,6 +198,16 @@ public class PreferenceData {
 
     public String getSharePrefrenceLocale() {
         return sharedPreferences.getString(AppConstants.LANGUAGE,"");
+
+    }
+
+    public void setAppUserType(String s) {
+        sharedPreferences.edit().putString(AppConstants.selectedUserType,s).commit();
+
+    }
+
+    public String getAppUserType() {
+        return sharedPreferences.getString(AppConstants.selectedUserType,"");
 
     }
 }

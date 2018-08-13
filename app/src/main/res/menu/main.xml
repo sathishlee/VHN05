@@ -6,7 +6,8 @@
         android:icon="@drawable/notifications_bell"
         app:showAsAction="always"
         android:actionLayout="@layout/notification_count"
-        android:title="Notification" />
+        android:title="Notification"
+    android:visible="false"/>
 
     <item android:id="@+id/action_help"
         android:icon="@drawable/vector_drawable_information"

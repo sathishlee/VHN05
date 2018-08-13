@@ -123,7 +123,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:inputType="date"
-                                android:text="24-02-2018"
+                                android:text="-"
                                 android:textAlignment="textStart"
                                 android:textColor="#fff"
                                 android:textSize="@dimen/text_secondary" />
@@ -168,7 +168,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start"
                                 android:inputType="time"
-                                android:text="02:30 PM"
+                                android:text="-"
                                 android:textColor="#fff"
                                 android:textSize="@dimen/text_secondary" />
 
@@ -206,7 +206,7 @@
                             android:id="@+id/txt_delivery_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="HSC"
+                            android:text="-"
                             android:textAlignment="textStart"
                             android:textColor="@color/text_primary"
                             android:textSize="@dimen/text_secondary" />
@@ -235,7 +235,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginStart="5dp"
-                            android:text="Normal Viginal"
+                            android:text="-"
                             android:textColor="@color/text_primary"
                             android:textSize="@dimen/text_secondary" />
 
@@ -334,7 +334,7 @@
                             android:id="@+id/txt_delivery_mother_outcome"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Alive"
+                            android:text="-"
                             android:textAlignment="textStart"
                             android:textColor="@color/text_primary"
                             android:textSize="@dimen/text_secondary" />
@@ -363,7 +363,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginStart="5dp"
-                            android:text="Alive Single"
+                            android:text="-"
                             android:textColor="@color/text_primary"
                             android:textSize="@dimen/text_secondary" />
 
@@ -478,7 +478,7 @@
                                 android:id="@+id/txt_infant_height"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="50 cms"
+                                android:text="-"
                                 android:textAlignment="textStart"
                                 android:textColor="#fff"
                                 android:textSize="@dimen/text_secondary" />
@@ -522,7 +522,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start"
-                                android:text="2000 gms"
+                                android:text="-"
                                 android:textColor="#fff"
                                 android:textSize="@dimen/text_secondary" />
 
@@ -560,7 +560,7 @@
                             android:id="@+id/txt_infant_id"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="100001"
+                            android:text="-"
                             android:textAlignment="textStart"
                             android:textColor="@color/text_primary"
                             android:textSize="@dimen/text_secondary" />
@@ -589,7 +589,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginStart="5dp"
-                            android:text="Term"
+                            android:text="-"
                             android:textColor="@color/text_primary"
                             android:textSize="@dimen/text_secondary" />
 
@@ -625,7 +625,7 @@
                             android:id="@+id/txt_breast_feeding_given"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Yes"
+                            android:text="-"
                             android:textAlignment="textStart"
                             android:textColor="@color/text_primary"
                             android:textSize="@dimen/text_secondary" />
@@ -905,7 +905,8 @@
                                 android:id="@+id/txt_bcg_given_date"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="22-02-2018"
+                                android:text="-"
+                                android:layout_gravity="center"
                                 android:textAlignment="textStart"
                                 android:textColor="#fff"
                                 android:textSize="@dimen/text_secondary" />
@@ -949,7 +950,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start"
-                                android:text="22-02-2018"
+                                android:text="-"
+                                android:gravity="center"
                                 android:textColor="#fff"
                                 android:textSize="@dimen/text_secondary" />
 
@@ -1002,7 +1004,8 @@
                                 android:id="@+id/txt_hepb_given_date"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="22-02-2018"
+                                android:text="-"
+                                android:layout_gravity="center"
                                 android:textAlignment="textStart"
                                 android:textColor="#fff"
                                 android:textSize="@dimen/text_secondary" />
