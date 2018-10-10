@@ -2,10 +2,11 @@ package com.unicef.vhn.realmDbModel;
 
 import io.realm.RealmObject;
 
-public class PushNotificationListRealmModel extends RealmObject{
+public class PushNotificationListRealmModel extends RealmObject {
     String title;
     String body;
     String intime;
+
     public String getTitle() {
         return title;
     }

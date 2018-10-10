@@ -112,8 +112,8 @@ public class MotherLocationActivity extends FragmentActivity
     private String GOOGLE_PLACES_API_KEY = "AIzaSyD789ejb86QhaIBRPovLCtjW_XrrDAKdto";
     private List<Marker> markers;
     TextView txt_username, txt_picme_id, txt_call;
-    String strLat,strLon, motherLatitude, motherLongitude, vhnLatitude, vhnLongitude, motherLocation, VhnLocation;
-    String strMotherloc, strVHNloc, strmAdd, strvAdd, motherName, motherID,str_mPhoto, strMotherNo;
+    String strLat, strLon, motherLatitude, motherLongitude, vhnLatitude, vhnLongitude, motherLocation, VhnLocation;
+    String strMotherloc, strVHNloc, strmAdd, strvAdd, motherName, motherID, str_mPhoto, strMotherNo;
     Context context;
     ImageView cardview_image;
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
@@ -126,6 +126,7 @@ public class MotherLocationActivity extends FragmentActivity
         bindActivity();
         onClickListner();
     }
+
     FloatingActionButton get_directions;
 
     private void bindActivity() {
@@ -137,15 +138,16 @@ public class MotherLocationActivity extends FragmentActivity
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Please Wait ...");
 
-        if (!checkNetwork.isNetworkAvailable()){
+        if (!checkNetwork.isNetworkAvailable()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("You can't see this mother location!");
+            builder.setCancelable(false);
             builder.setMessage("Please check internet connection");
             // Add the buttons
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     // User clicked OK button
-                    dialog.dismiss();
+//                    dialog.dismiss();
                     finish();
                 }
             });
@@ -156,8 +158,8 @@ public class MotherLocationActivity extends FragmentActivity
 
             dialog.show();
         }
-        txt_username = (TextView)findViewById(R.id.txt_username);
-        txt_picme_id = (TextView)findViewById(R.id.txt_picme_id);
+        txt_username = (TextView) findViewById(R.id.txt_username);
+        txt_picme_id = (TextView) findViewById(R.id.txt_picme_id);
         txt_call = (TextView) findViewById(R.id.txt_call);
         cardview_image = (ImageView) findViewById(R.id.cardview_image);
 
@@ -165,7 +167,7 @@ public class MotherLocationActivity extends FragmentActivity
 //        this.trackings = trackings;
 
         locationPresenter = new LocationPresenter(MotherLocationActivity.this, this);
-        locationPresenter.getMotherLocatin(preferenceData.getVhnCode(),preferenceData.getVhnId(), AppConstants.SELECTED_MID);
+        locationPresenter.getMotherLocatin(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
 
         findViewById(R.id.get_directions).setOnClickListener(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -188,10 +190,10 @@ public class MotherLocationActivity extends FragmentActivity
         txt_call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (strMotherNo.equalsIgnoreCase("null")||strMotherNo.length()<10){
+                if (strMotherNo.equalsIgnoreCase("null") || strMotherNo.length() < 10) {
 //                    img_call_1.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(),"Invalid Mobile Number",Toast.LENGTH_LONG).show();
-                }else{
+                    Toast.makeText(getApplicationContext(), "Invalid Mobile Number", Toast.LENGTH_LONG).show();
+                } else {
                     makeCall(strMotherNo);
                 }
 
@@ -234,7 +236,7 @@ public class MotherLocationActivity extends FragmentActivity
         LatLng latLng = new LatLng(mlat,mlong);
         mMap.addMarker(new MarkerOptions().position(latLng).title(strmAdd));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));*/
-        get_directions = (FloatingActionButton)findViewById(R.id.get_directions);
+        get_directions = (FloatingActionButton) findViewById(R.id.get_directions);
 
 
     }
@@ -252,10 +254,10 @@ public class MotherLocationActivity extends FragmentActivity
 //                    showMessage("Please pick to address");
 //                    return;
 //                }
-                if (view.equals(get_directions)){
+                if (view.equals(get_directions)) {
                     addMarkersToMaplatlng(motherLatitude, motherLongitude, vhnLatitude, vhnLongitude);
                     getResultLocation();
-                }else{
+                } else {
                     addMotherLocation(motherLatitude, motherLongitude);
                 }
 //                getDirections();
@@ -265,22 +267,22 @@ public class MotherLocationActivity extends FragmentActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        boolean x=   super.onOptionsItemSelected(item);
+        boolean x = super.onOptionsItemSelected(item);
         finish();
         return x;
     }
 
-    public void getDirections(){
+    public void getDirections() {
         Log.e("Mlatitude--", motherLatitude);
         Log.e("Mlong--", motherLongitude);
-        Uri gmmIntentUri = Uri.parse("google.navigation:q="+motherLatitude+","+motherLongitude);
+        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + motherLatitude + "," + motherLongitude);
 
 
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                mapIntent.setPackage("com.google.android.apps.maps");
-                if (mapIntent.resolveActivity(applicationContext.getPackageManager()) != null) {
-                    applicationContext. startActivity(mapIntent);
-                }
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        if (mapIntent.resolveActivity(applicationContext.getPackageManager()) != null) {
+            applicationContext.startActivity(mapIntent);
+        }
     }
 
 //    @Override
@@ -302,18 +304,18 @@ public class MotherLocationActivity extends FragmentActivity
     private void getResultLocation() {
         DirectionsResult directionsResult = getDirectionsDetails(strmAdd, strvAdd, TravelMode.DRIVING);
 
-        Log.d("Mother---",strmAdd);
-        Log.d("VHN--",strvAdd);
+        Log.d("Mother---", strmAdd);
+        Log.d("VHN--", strvAdd);
         if (directionsResult != null) {
             addPolyline(directionsResult, mMap);
 //            addMarkersToMap(directionsResult, mMap);
-            addMarkersToMap(directionsResult,mMap);
+            addMarkersToMap(directionsResult, mMap);
 
             positionCamera(directionsResult.routes[overview], mMap);
         }
     }
 
-    public  void addMarkerMap(DirectionsResult directionsResult, GoogleMap mMap){
+    public void addMarkerMap(DirectionsResult directionsResult, GoogleMap mMap) {
 //        Marker markerSrc = mMap.addMarker(new MarkerOptions().position(new LatLng(directionsResult.routes[overview])))
     }
 
@@ -328,11 +330,11 @@ public class MotherLocationActivity extends FragmentActivity
                 new LatLng(directionsResult.routes[overview].legs[overview].startLocation.lat,
                         directionsResult.routes[overview].legs[overview].startLocation.lng))
                 .title(directionsResult.routes[overview].legs[overview].startAddress)
-                .icon(BitmapDescriptorFactory.fromBitmap(createCustomMarker(MotherLocationActivity.this,R.drawable.girl))));
+                .icon(BitmapDescriptorFactory.fromBitmap(createCustomMarker(MotherLocationActivity.this, R.drawable.girl))));
         final Marker markerDes = mMap.addMarker(new MarkerOptions().position(new LatLng(directionsResult.routes[overview]
                 .legs[overview].endLocation.lat, directionsResult.routes[overview].legs[overview].endLocation.lng))
                 .title(directionsResult.routes[overview].legs[overview].endAddress)
-                .icon(BitmapDescriptorFactory.fromBitmap(createCustomMarker(MotherLocationActivity.this,R.drawable.ic_nurse)))
+                .icon(BitmapDescriptorFactory.fromBitmap(createCustomMarker(MotherLocationActivity.this, R.drawable.ic_nurse)))
                 .snippet(getEndLocationTitle(directionsResult)));
         markers = new ArrayList<>();
         markers.add(markerSrc);
@@ -366,19 +368,19 @@ public class MotherLocationActivity extends FragmentActivity
         double mlat = Double.parseDouble(motherLatitude);
         double mlong = Double.parseDouble(motherLongitude);
 
-        final LatLng mlatlng = new LatLng(mlat,mlong);
+        final LatLng mlatlng = new LatLng(mlat, mlong);
 
-        strmAdd = getCompleteAddressString(motherLatitude,motherLongitude);
+        strmAdd = getCompleteAddressString(motherLatitude, motherLongitude);
 
-        MarkerOptions mothermarker = new MarkerOptions().position(new LatLng(mlat,mlong))
-                .title("Mother Name : "+motherName)
-                .snippet("Piceme Id : "+motherID)
-                .snippet("Address : "+strmAdd);
+        MarkerOptions mothermarker = new MarkerOptions().position(new LatLng(mlat, mlong))
+                .title("Mother Name : " + motherName)
+                .snippet("Piceme Id : " + motherID)
+                .snippet("Address : " + strmAdd);
 
         strMotherloc = String.valueOf(mothermarker);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mlatlng, 12));
 //        mothermarker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-        mothermarker.icon(BitmapDescriptorFactory.fromBitmap(createCustomMarker(MotherLocationActivity.this,R.drawable.girl)));
+        mothermarker.icon(BitmapDescriptorFactory.fromBitmap(createCustomMarker(MotherLocationActivity.this, R.drawable.girl)));
         mMap.addMarker(mothermarker);
     }
 
@@ -389,16 +391,16 @@ public class MotherLocationActivity extends FragmentActivity
         double vlat = Double.parseDouble(vhnLatitude);
         double vlong = Double.parseDouble(vhnLongitude);
 
-        final LatLng mlatlng = new LatLng(mlat,mlong);
+        final LatLng mlatlng = new LatLng(mlat, mlong);
         strLat = String.valueOf(mlatlng);
-        Log.d("Mother Location--->",strLat);
+        Log.d("Mother Location--->", strLat);
 
-        final LatLng vlatlng = new LatLng(vlat,vlong);
+        final LatLng vlatlng = new LatLng(vlat, vlong);
         strLon = String.valueOf(vlatlng);
-        Log.d("VHN Location--->",strLon);
+        Log.d("VHN Location--->", strLon);
 
-        MarkerOptions mothermarker = new MarkerOptions().position(new LatLng(mlat,mlong)).title(strmAdd);
-        MarkerOptions vhnmarker = new MarkerOptions().position(new LatLng(vlat,vlong)).title(preferenceData.getVhnName());
+        MarkerOptions mothermarker = new MarkerOptions().position(new LatLng(mlat, mlong)).title(strmAdd);
+        MarkerOptions vhnmarker = new MarkerOptions().position(new LatLng(vlat, vlong)).title(preferenceData.getVhnName());
 
         strMotherloc = String.valueOf(mothermarker);
         strVHNloc = String.valueOf(vhnmarker);
@@ -416,12 +418,12 @@ public class MotherLocationActivity extends FragmentActivity
         Geocoder geocoder = new Geocoder(this, Locale.ENGLISH);
 
         try {
-            List<Address> addresses = geocoder.getFromLocation(mlat,mlong,1);
-            List<Address> addresses1 = geocoder.getFromLocation(vlat,vlong,1);
+            List<Address> addresses = geocoder.getFromLocation(mlat, mlong, 1);
+            List<Address> addresses1 = geocoder.getFromLocation(vlat, vlong, 1);
 
-            if(addresses !=null){
+            if (addresses != null) {
                 String maddress = addresses.get(0).getAddressLine(0);
-                String mcity =  addresses.get(0).getLocality();
+                String mcity = addresses.get(0).getLocality();
                 String mstate = addresses.get(0).getAdminArea();
                 String mcountry = addresses.get(0).getCountryName();
                 String mpostalcode = addresses.get(0).getPostalCode();
@@ -429,25 +431,25 @@ public class MotherLocationActivity extends FragmentActivity
 
                 strmAdd = String.valueOf(maddress + mcity + mstate);
 
-                Log.d("Mother Address-->",strmAdd);
+                Log.d("Mother Address-->", strmAdd);
             }
 
-            if(addresses !=null){
+            if (addresses != null) {
                 String vaddress = addresses1.get(0).getAddressLine(0);
-                String vcity =  addresses1.get(0).getLocality();
+                String vcity = addresses1.get(0).getLocality();
                 String vstate = addresses1.get(0).getAdminArea();
                 String vcountry = addresses1.get(0).getCountryName();
                 String vpostalcode = addresses1.get(0).getPostalCode();
                 String vknownname = addresses1.get(0).getFeatureName();
 
-                strvAdd = String.valueOf(vaddress+vcity+vstate);
+                strvAdd = String.valueOf(vaddress + vcity + vstate);
 
-                Log.d("Mother Address-->",strvAdd);
+                Log.d("Mother Address-->", strvAdd);
 
             }
 
-            if (strmAdd.equals(strvAdd)){
-                Toast.makeText(getApplicationContext(),"You are Nearer to Mother...", Toast.LENGTH_SHORT).show();
+            if (strmAdd.equals(strvAdd)) {
+                Toast.makeText(getApplicationContext(), "You are Nearer to Mother...", Toast.LENGTH_SHORT).show();
             }
 //            if (addresses != null) {
 //                Address returnedAddress = addresses.get(0);
@@ -467,12 +469,10 @@ public class MotherLocationActivity extends FragmentActivity
 //                }
 //                strvAdd = String.valueOf(stringBuilder);
 //            }
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return;
-
 
 
     }
@@ -523,18 +523,18 @@ public class MotherLocationActivity extends FragmentActivity
                     .departureTime(now)
                     .await();
         } catch (ApiException e) {
-            Log.e("DirectionsResult1",e.toString());
+            Log.e("DirectionsResult1", e.toString());
             e.printStackTrace();
             showMessage(e.getMessage());
             return null;
         } catch (InterruptedException e) {
-            Log.e("DirectionsResult2",e.toString());
+            Log.e("DirectionsResult2", e.toString());
 
             e.printStackTrace();
             showMessage(e.getMessage());
             return null;
         } catch (IOException e) {
-            Log.e("DirectionsResult",e.toString());
+            Log.e("DirectionsResult", e.toString());
 
             e.printStackTrace();
             showMessage(e.getMessage());
@@ -557,7 +557,7 @@ public class MotherLocationActivity extends FragmentActivity
         } catch (GooglePlayServicesRepairableException e) {
             showMessage(e.getMessage());
             // TODO: Handle the error.
-            } catch (GooglePlayServicesNotAvailableException e) {
+        } catch (GooglePlayServicesNotAvailableException e) {
             // TODO: Handle the error.
             showMessage(e.getMessage());
         }
@@ -617,44 +617,44 @@ public class MotherLocationActivity extends FragmentActivity
             String message = mJsnobject.getString("message");
             mMap.clear();
             if (status.equalsIgnoreCase("1")) {
-                Toast.makeText(getApplicationContext(),message, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                 JSONObject mJsnobject_tracking = mJsnobject.getJSONObject("tracking");
                 txt_username.setText(mJsnobject_tracking.getString("mName"));
                 txt_picme_id.setText(mJsnobject_tracking.getString("mPicmeId"));
-                motherName =mJsnobject_tracking.getString("mName");
-                motherID =mJsnobject_tracking.getString("mPicmeId");
-                strMotherNo =mJsnobject_tracking.getString("mMotherMobile");
+                motherName = mJsnobject_tracking.getString("mName");
+                motherID = mJsnobject_tracking.getString("mPicmeId");
+                strMotherNo = mJsnobject_tracking.getString("mMotherMobile");
 
                 str_mPhoto = mJsnobject_tracking.getString("mPhoto");
                 Picasso.with(context)
-                        .load(Apiconstants.MOTHER_PHOTO_URL+str_mPhoto)
+                        .load(Apiconstants.MOTHER_PHOTO_URL + str_mPhoto)
                         .placeholder(R.drawable.girl)
                         .fit()
                         .centerCrop()
                         .memoryPolicy(MemoryPolicy.NO_CACHE)
                         .networkPolicy(NetworkPolicy.NO_CACHE)
-                        .transform(new RoundedTransformation(90,4))
+                        .transform(new RoundedTransformation(90, 4))
                         .error(R.drawable.girl)
                         .into(cardview_image);
 
                 motherLocation = mJsnobject_tracking.getString("mLocation");
                 VhnLocation = mJsnobject_tracking.getString("vLocation");
 
-                if(motherLocation.equalsIgnoreCase("0")){
-                    Toast.makeText(getApplicationContext(),"Mother Location Not Found...!",Toast.LENGTH_SHORT).show();
+                if (motherLocation.equalsIgnoreCase("0")) {
+                    Toast.makeText(getApplicationContext(), "Mother Location Not Found...!", Toast.LENGTH_SHORT).show();
                     finish();
                 }
-                if(motherLocation.equalsIgnoreCase("1")) {
+                if (motherLocation.equalsIgnoreCase("1")) {
                     motherLatitude = mJsnobject_tracking.getString("mLatitude");
                     motherLongitude = mJsnobject_tracking.getString("mLongitude");
-                    addMotherLocation(motherLatitude,motherLongitude);
+                    addMotherLocation(motherLatitude, motherLongitude);
                 }
-                if(VhnLocation.equalsIgnoreCase("1")) {
+                if (VhnLocation.equalsIgnoreCase("1")) {
                     vhnLatitude = mJsnobject_tracking.getString("vLatitude");
                     vhnLongitude = mJsnobject_tracking.getString("vLongitude");
 //                    addMarkersToMaplatlng(motherLatitude,motherLongitude,vhnLatitude,vhnLongitude);
-                }else{
-                    Toast.makeText(getApplicationContext(),VhnLocation,Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), VhnLocation, Toast.LENGTH_SHORT).show();
                     finish();
                 }
 
@@ -686,33 +686,33 @@ public class MotherLocationActivity extends FragmentActivity
                 }*/
 
 
-            }else{
-                Toast.makeText(getApplicationContext(),message, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 
             }
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
     @Override
     public void showLocationError(String string) {
-        AppConstants.SELECTED_MID="0";
+        AppConstants.SELECTED_MID = "0";
 
         Log.e(MotherLocationActivity.class.getSimpleName(), "Response success" + string);
 
     }
 
     private void makeCall(String strMotherNo) {
-        Toast.makeText(getApplicationContext(),strMotherNo,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), strMotherNo, Toast.LENGTH_SHORT).show();
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestCallPermission();
         } else {
-            Log.i(MothersDetailsActivity.class.getSimpleName(),"CALL permission has already been granted. Displaying camera preview.");
+            Log.i(MothersDetailsActivity.class.getSimpleName(), "CALL permission has already been granted. Displaying camera preview.");
 
-                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+91" + strMotherNo)));
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+91" + strMotherNo)));
 
         }
     }
@@ -722,8 +722,8 @@ public class MotherLocationActivity extends FragmentActivity
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CALL_PHONE)) {
-            Log.i(MothersDetailsActivity.class.getSimpleName(),            "Displaying camera permission rationale to provide additional context.");
-            Toast.makeText(this,"Displaying camera permission rationale to provide additional context.",Toast.LENGTH_SHORT).show();
+            Log.i(MothersDetailsActivity.class.getSimpleName(), "Displaying camera permission rationale to provide additional context.");
+            Toast.makeText(this, "Displaying camera permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();
 
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
@@ -731,6 +731,7 @@ public class MotherLocationActivity extends FragmentActivity
         }
 
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 //        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -744,10 +745,11 @@ public class MotherLocationActivity extends FragmentActivity
                 return;
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
-        locationPresenter.getMotherLocatin(preferenceData.getVhnCode(),preferenceData.getVhnId(), AppConstants.SELECTED_MID);
+        locationPresenter.getMotherLocatin(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
 
     }
 
@@ -761,13 +763,13 @@ public class MotherLocationActivity extends FragmentActivity
 
     private String getCompleteAddressString(String latitude, String longitude) {
         String strAdd = "";
-        double dlatitude= Double.parseDouble(latitude);
-        double dlongitude= Double.parseDouble(longitude);
-        Log.w("dlatitude",dlatitude+"");
-        Log.w("dlongitude",dlongitude+"");
+        double dlatitude = Double.parseDouble(latitude);
+        double dlongitude = Double.parseDouble(longitude);
+        Log.w("dlatitude", dlatitude + "");
+        Log.w("dlongitude", dlongitude + "");
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         try {
-            if(checkNetwork.isNetworkAvailable()) {
+            if (checkNetwork.isNetworkAvailable()) {
                 List<Address> addresses = geocoder.getFromLocation(dlatitude, dlongitude, 1);
 
                 if (addresses != null) {
@@ -783,13 +785,13 @@ public class MotherLocationActivity extends FragmentActivity
 //                Log.w(TAG, "My Current loction address"+strReturnedAddress.toString());
 //                Log.w(TAG, "My Current loction address--->"+returnedAddress.getSubAdminArea().toString());
                 } else {
-                    Log.w(TAG,"My Current loction address--->"+"No Address returned!");
+                    Log.w(TAG, "My Current loction address--->" + "No Address returned!");
                 }
-            }else{
+            } else {
                 strAdd = String.valueOf("null");
 
 
-                }
+            }
 
 
         } catch (Exception e) {

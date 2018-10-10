@@ -26,9 +26,9 @@ public class LocationPresenter implements LocationInteractor {
     Activity activity;
     LocationViews locationViews;
 
-    public LocationPresenter(Activity activity, LocationViews locationViews){
-        this.activity=activity;
-        this.locationViews=locationViews;
+    public LocationPresenter(Activity activity, LocationViews locationViews) {
+        this.activity = activity;
+        this.locationViews = locationViews;
     }
 
     @Override
@@ -36,15 +36,15 @@ public class LocationPresenter implements LocationInteractor {
         locationViews.showProgress();
 
         String url = Apiconstants.BASE_URL + Apiconstants.DIRECTION_URL;
-        Log.d("Log in check Url--->",url);
-        Log.d("vhnCode--->",vhnCode);
-        Log.d("vhnId--->",vhnId);
-        Log.d("mid--->",mid);
+        Log.d("Log in check Url--->", url);
+        Log.d("vhnCode--->", vhnCode);
+        Log.d("vhnId--->", vhnId);
+        Log.d("mid--->", mid);
 //        Log.d("mLongitude--->",mLongitude);
 //        Log.d("vLatitude--->",vLatitude);
 //        Log.d("vLongitude--->",vLongitude);
 
-        StringRequest stringRequest =new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 locationViews.hideProgress();
@@ -56,22 +56,22 @@ public class LocationPresenter implements LocationInteractor {
                 locationViews.hideProgress();
                 locationViews.showLocationError(error.toString());
             }
-        }){
-
+        }) {
 
 
             @Override
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("vhnCode",vhnCode);
-                params.put("vhnId",vhnId);
-                params.put("mid",mid);
+                params.put("vhnCode", vhnCode);
+                params.put("vhnId", vhnId);
+                params.put("mid", mid);
 
-                Log.d("params--->",params.toString());
+                Log.d("params--->", params.toString());
 
                 return params;
             }
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 String credentials = "admin" + ":" + "1234";
@@ -79,7 +79,7 @@ public class LocationPresenter implements LocationInteractor {
                 HashMap<String, String> header = new HashMap<>();
 //                header.put("Content-Type", "application/x-www-from-urlencoded; charset=utf-8");
                 header.put("Authorization", "Basic " + base64EncodedCredentials);
-                Log.d("Credentials ","Basic " +base64EncodedCredentials.toString());
+                Log.d("Credentials ", "Basic " + base64EncodedCredentials.toString());
 
                 return header;
             }

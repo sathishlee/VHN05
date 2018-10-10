@@ -54,7 +54,7 @@ public class ANTT1MothersList extends AppCompatActivity implements MotherListsVi
     ANTT1ResponseModel.TT1_List tt1List;
     boolean isDataUpdate = true;
     private RecyclerView recyclerView;
-    private TextView textView,txt_no_internet,txt_an_tt;
+    private TextView textView, txt_no_internet, txt_an_tt;
     private ANTT1Adapter antt1Adapter;
 
     final Context context = this;
@@ -148,7 +148,7 @@ public class ANTT1MothersList extends AppCompatActivity implements MotherListsVi
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        if(pDialog.isShowing()){
+        if (pDialog.isShowing()) {
             pDialog.dismiss();
         }
     }
@@ -219,9 +219,8 @@ public class ANTT1MothersList extends AppCompatActivity implements MotherListsVi
             tt1List.setMMotherMobile(model.getMMotherMobile());
             tt1_lists.add(tt1List);
             antt1Adapter.notifyDataSetChanged();
-            txt_an_tt.setText(getResources().getString(R.string.an_tt_1_due_s_list)+"("+tt1_lists.size()+")");
+            txt_an_tt.setText(getResources().getString(R.string.an_tt_1_due_s_list) + "(" + tt1_lists.size() + ")");
         }
-
         realm.commitTransaction();
     }
 
@@ -256,7 +255,7 @@ public class ANTT1MothersList extends AppCompatActivity implements MotherListsVi
         Log.i(TAG, "CALL permission has NOT been granted. Requesting permission.");
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CALL_PHONE)) {
-            Toast.makeText(getApplicationContext(), "Displaying Call permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "Displaying Call permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
                     MAKE_CALL_PERMISSION_REQUEST_CODE);
@@ -269,7 +268,7 @@ public class ANTT1MothersList extends AppCompatActivity implements MotherListsVi
         switch (requestCode) {
             case MAKE_CALL_PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0 && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    Toast.makeText(this, "You can call the number by clicking on the button", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "You can call the number by clicking on the button", Toast.LENGTH_SHORT).show();
                 }
                 return;
         }

@@ -35,6 +35,7 @@ import com.unicef.vhn.view.MotherListsViews;
 import io.realm.Realm;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 /*PN Mother Details  have api call working well is not use this project,
 use for PNMotherDetailviewActivity */
 public class PNMotherDetailsActivity extends AppCompatActivity implements View.OnClickListener, MotherListsViews {
@@ -42,23 +43,23 @@ public class PNMotherDetailsActivity extends AppCompatActivity implements View.O
     TextView txt_username, txt_picme_id, txt_mage, txt_risk,
             txt_date_of_delivery, txt_weight, txt_type_of_delivery, txt_maturity, txt_next_visit,
             txt_husb_name, txt_aww_name, txt_relationship, txt_aww_relationship, txt_mother_name_call,
-            txt_gest_week, txt_lmp_date, txt_edd_date, txt_delivery_date, txt_birth_weight, txt_type_delivery
-            , txt_pn_next_visit;
+            txt_gest_week, txt_lmp_date, txt_edd_date, txt_delivery_date, txt_birth_weight, txt_type_delivery, txt_pn_next_visit;
     ImageView img_call_1, img_call_2, cardview_image;
     Button btn_view_location, btn_view_report;
     Context context;
-    String strMobileNo,strAltMobileNo;
-    String strLatitude,strLongitude, str_mPhoto;
+    String strMobileNo, strAltMobileNo;
+    String strLatitude, strLongitude, str_mPhoto;
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
 
-Realm realm;
+    Realm realm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        realm= RealmController.with(this).getRealm();
+        realm = RealmController.with(this).getRealm();
         setContentView(R.layout.activity_pn_mother_details);
         showActionBar();
         intUI();
@@ -72,11 +73,13 @@ Realm realm;
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();
         return super.onOptionsItemSelected(item);
     }
+
     private void onClickListner() {
         img_call_1.setOnClickListener(this);
         img_call_2.setOnClickListener(this);
@@ -91,8 +94,8 @@ Realm realm;
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
-        preferenceData =new PreferenceData(this);
-        pnMotherListPresenter = new MotherListPresenter(PNMotherDetailsActivity.this,this, realm);
+        preferenceData = new PreferenceData(this);
+        pnMotherListPresenter = new MotherListPresenter(PNMotherDetailsActivity.this, this, realm);
         pnMotherListPresenter.getSelectedPNMother(AppConstants.SELECTED_MID);
 
         txt_username = (TextView) findViewById(R.id.txt_username);
@@ -124,16 +127,16 @@ Realm realm;
         txt_pn_next_visit = (TextView) findViewById(R.id.txt_pn_next_visit);
 
 
-
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_view_location:
-                startActivity(new Intent(getApplicationContext(),MotherLocationActivity.class));
+                startActivity(new Intent(getApplicationContext(), MotherLocationActivity.class));
                 break;
-            case R.id.btn_view_report: startActivity(new Intent(getApplicationContext(),PNViewReportsActivity.class));
+            case R.id.btn_view_report:
+                startActivity(new Intent(getApplicationContext(), PNViewReportsActivity.class));
                 break;
             case R.id.img_call_1:
                 makeCall(strMobileNo);
@@ -146,9 +149,9 @@ Realm realm;
 
     private void makeCall(String str_mobile_number) {
 
-        Toast.makeText(getApplicationContext(),str_mobile_number,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), str_mobile_number, Toast.LENGTH_SHORT).show();
 
-        if (ActivityCompat.checkSelfPermission(this,Manifest.permission.CALL_PHONE)
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
                 != PackageManager.PERMISSION_GRANTED) {
             // Camera permission has not been granted.
 
@@ -157,15 +160,15 @@ Realm realm;
         } else {
 
             // Camera permissions is already available, show the camera preview.
-            Log.i(MothersDetailsActivity.class.getSimpleName(),"CALL permission has already been granted. Displaying camera preview.");
+            Log.i(MothersDetailsActivity.class.getSimpleName(), "CALL permission has already been granted. Displaying camera preview.");
 //            showCameraPreview();
-            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+"+str_mobile_number)));
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+" + str_mobile_number)));
 
         }
 
     }
-    private void requestCallPermission() {
 
+    private void requestCallPermission() {
 
 
         Log.i(MothersDetailsActivity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
@@ -176,8 +179,8 @@ Realm realm;
             // Provide an additional rationale to the user if the permission was not granted
             // and the user would benefit from additional context for the use of the permission.
             // For example if the user has previously denied the permission.
-            Log.i(MothersDetailsActivity.class.getSimpleName(),            "Displaying camera permission rationale to provide additional context.");
-            Toast.makeText(this,"Displaying camera permission rationale to provide additional context.",Toast.LENGTH_SHORT).show();
+            Log.i(MothersDetailsActivity.class.getSimpleName(), "Displaying camera permission rationale to provide additional context.");
+            Toast.makeText(this, "Displaying camera permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();
 
         } else {
 
@@ -215,15 +218,15 @@ Realm realm;
 
     @Override
     public void showLoginSuccess(String response) {
-        Log.d(PNMotherDetailsActivity.class.getSimpleName(),"Response success"+response);
+        Log.d(PNMotherDetailsActivity.class.getSimpleName(), "Response success" + response);
 //        AppConstants.SELECTED_MID="0";
         try {
             JSONObject mJsnobject = new JSONObject(response);
             String status = mJsnobject.getString("status");
             String message = mJsnobject.getString("message");
-            if (status.equalsIgnoreCase("1")){
+            if (status.equalsIgnoreCase("1")) {
                 ll_pn_mother_details.setVisibility(View.VISIBLE);
-                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                 JSONObject mJsnobject_tracking = mJsnobject.getJSONObject("delveryInfo");
                 txt_username.setText(mJsnobject_tracking.getString("mName"));
                 txt_picme_id.setText(mJsnobject_tracking.getString("dpicmeId"));
@@ -235,9 +238,9 @@ Realm realm;
                 txt_delivery_date.setText(mJsnobject_tracking.getString("ddatetime"));
                 txt_birth_weight.setText(mJsnobject_tracking.getString("dBirthWeight"));
                 txt_type_delivery.setText(mJsnobject_tracking.getString("dBirthDetails"));
-                if(mJsnobject_tracking.getString("NextVisit").equalsIgnoreCase("Visits Closed")){
-                    txt_pn_next_visit.setText(mJsnobject_tracking.getString("PN"+"NextVisit"));
-                }else {
+                if (mJsnobject_tracking.getString("NextVisit").equalsIgnoreCase("Visits Closed")) {
+                    txt_pn_next_visit.setText(mJsnobject_tracking.getString("PN" + "NextVisit"));
+                } else {
                     txt_pn_next_visit.setText(mJsnobject_tracking.getString("NextVisit"));
                 }
 
@@ -245,35 +248,34 @@ Realm realm;
                 txt_date_of_delivery.setText(mJsnobject_tracking.getString("ddatetime"));
                 txt_type_of_delivery.setText(mJsnobject_tracking.getString("dtime"));
                 txt_weight.setText(mJsnobject_tracking.getString("mWeight"));
-                txt_maturity.setText(mJsnobject_tracking.getString("meaturityDate")+"Weeks");
-                if(mJsnobject_tracking.getString("NextVisit").equalsIgnoreCase("Visits Closed")){
-                    txt_next_visit.setText(mJsnobject_tracking.getString("AN"+"NextVisit"));
+                txt_maturity.setText(mJsnobject_tracking.getString("meaturityDate") + "Weeks");
+                if (mJsnobject_tracking.getString("NextVisit").equalsIgnoreCase("Visits Closed")) {
+                    txt_next_visit.setText(mJsnobject_tracking.getString("AN" + "NextVisit"));
                 }
                 strLatitude = mJsnobject_tracking.getString("mLatitude");
-                strLongitude =mJsnobject_tracking.getString("mLongitude");
+                strLongitude = mJsnobject_tracking.getString("mLongitude");
                 txt_mother_name_call.setText(mJsnobject_tracking.getString("mName"));
 
                 str_mPhoto = mJsnobject_tracking.getString("mPhoto");
-                Log.d("mphoto-->", Apiconstants.MOTHER_PHOTO_URL+str_mPhoto);
+                Log.d("mphoto-->", Apiconstants.MOTHER_PHOTO_URL + str_mPhoto);
 
                 Picasso.with(context)
-                        .load(Apiconstants.MOTHER_PHOTO_URL+str_mPhoto)
+                        .load(Apiconstants.MOTHER_PHOTO_URL + str_mPhoto)
                         .placeholder(R.drawable.girl)
                         .fit()
                         .centerCrop()
                         .memoryPolicy(MemoryPolicy.NO_CACHE)
                         .networkPolicy(NetworkPolicy.NO_CACHE)
-                        .transform(new RoundedTransformation(90,4))
+                        .transform(new RoundedTransformation(90, 4))
                         .error(R.drawable.girl)
                         .into(cardview_image);
-            }
-            else{
+            } else {
                 ll_pn_mother_details.setVisibility(View.GONE);
 
-                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
-finish();
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                finish();
             }
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
@@ -282,7 +284,7 @@ finish();
     public void showLoginError(String response) {
         ll_pn_mother_details.setVisibility(View.GONE);
 
-        Log.d(PNMotherDetailsActivity.class.getSimpleName(),"Response Error"+response);
+        Log.d(PNMotherDetailsActivity.class.getSimpleName(), "Response Error" + response);
     }
 
     @Override

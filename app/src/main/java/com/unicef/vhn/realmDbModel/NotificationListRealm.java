@@ -2,7 +2,7 @@ package com.unicef.vhn.realmDbModel;
 
 import io.realm.RealmObject;
 
-public class NotificationListRealm extends RealmObject{
+public class NotificationListRealm extends RealmObject {
 
     private String mtype;
     private String noteStartDateTime;
@@ -48,8 +48,6 @@ public class NotificationListRealm extends RealmObject{
     public void setMessage(String message) {
         this.message = message;
     }
-
-
 
 
     public String getMtype() {

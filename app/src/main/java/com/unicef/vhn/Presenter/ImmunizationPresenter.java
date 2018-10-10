@@ -18,7 +18,7 @@ import com.unicef.vhn.volleyservice.VolleySingleton;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ImmunizationPresenter  implements ImmunizationInteractor{
+public class ImmunizationPresenter implements ImmunizationInteractor {
     Activity activity;
     ImmunizationViews motherListsViews;
 

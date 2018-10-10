@@ -17,8 +17,7 @@ public class DashBoardRealmModel extends RealmObject {
     private int mothersCount;
 
 
-
-//    private PhcDetails phcDetails;
+    //    private PhcDetails phcDetails;
     private String message;
     private String status;
 

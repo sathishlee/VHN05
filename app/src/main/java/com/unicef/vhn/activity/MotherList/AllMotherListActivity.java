@@ -63,7 +63,7 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
 
     private RecyclerView mother_recycler_view;
     private MotherListAdapter mAdapter;
-    private TextView txt_no_records_found, txt_no_internet,txt_total_of_list;
+    private TextView txt_no_records_found, txt_no_internet,txt_total_of_list,txt_import_mother_list;
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
     boolean isDataUpdate = true;
     final Context context = this;
@@ -145,8 +145,10 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
         cardview_image = (ImageView) findViewById(R.id.cardview_image);
         mother_recycler_view = (RecyclerView) findViewById(R.id.mother_recycler_view);
         txt_no_records_found = (TextView) findViewById(R.id.txt_no_records_found);
+        txt_no_records_found.setVisibility(View.GONE);
         txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
         txt_total_of_list = (TextView) findViewById(R.id.txt_total_of_list);
+        txt_import_mother_list = (TextView) findViewById(R.id.txt_import_mother_list);
         txt_no_internet.setVisibility(View.GONE);
         cus_progress = (ProgressBar) findViewById(R.id.cus_progress);
         mResult = new ArrayList<>();
@@ -339,6 +341,7 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
                 dialog.show();
             }
         });
+//        txt_import_mother_list.
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -406,6 +409,7 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
     @Override
     public void showLoginSuccess(String response) {
         swipeRefreshLayout.setRefreshing(false);
+        cus_progress.setVisibility(View.GONE);
 
         try {
             JSONObject mJsnobject = new JSONObject(response);
@@ -423,10 +427,7 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
                             getVisitANMotherPresenter.getVisitANMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), jsonObject.getString("mid"));*/
 
                         } else if (jsonObject.getString("motherType").equalsIgnoreCase("PN")) {
-
-
-                            /*
-                            don't delete below code, is called mother an visit report
+                            /*don't delete below code, is called mother an visit report
                            getVisitANMotherPresenter.getVisitPNMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), jsonObject.getString("mid"));*/
                         }
                     }
@@ -441,14 +442,20 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
         setValuetoUI();
     }
 
+
     private void setValuetoUI() {
         mResult.clear();
         if (realm.isInTransaction()) {
-            pDialog.show();
+//            pDialog.show();
             realm.cancelTransaction();
         }
         realm.beginTransaction();
+
         RealmResults<PNMMotherListRealmModel> motherListAdapterRealmModel = null;
+
+
+//        Log.e("AllMotherList","setValuetoUI Realmsize"+motherListAdapterRealmModel.size());
+
 
         if (AppConstants.MOTHER_LIST_TITLE.equalsIgnoreCase("AN Mother List")) {
             Log.w(AllMotherListActivity.class.getSimpleName(), AppConstants.MOTHER_LIST_TITLE);
@@ -466,6 +473,7 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
             motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class)
                     .equalTo("motherType", "PN").findAll();
         } else if (AppConstants.MOTHER_LIST_TITLE.equalsIgnoreCase("All Mother List")) {
+
             if (preferenceData.getHighRiskStatus()) {
                 Log.w(AllMotherListActivity.class.getSimpleName(), "strHighRisk --> T strDescending -->T");
 
@@ -512,20 +520,26 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
 
                 }
             }
-
-
+        }else{
+            Log.w(AllMotherListActivity.class.getSimpleName(),
+                    "else strHighRisk --> T strDescending -->T    Termister -->Null");
+            motherListAdapterRealmModel = setTermister(motherListAdapterRealmModel,
+                    "HIGH", 0, 0, preferenceData.getDescendingStatus());
         }
 
-        if (motherListAdapterRealmModel.size() == 0) {
+
+         if (motherListAdapterRealmModel.size() == 0) {
             mother_recycler_view.setVisibility(View.GONE);
             txt_no_records_found.setVisibility(View.VISIBLE);
+            txt_no_records_found.setText("please Swipe Down you will get mothers list");
             cus_progress.setVisibility(View.VISIBLE);
-
         } else {
-            mother_recycler_view.setVisibility(View.VISIBLE);
-            txt_no_records_found.setVisibility(View.GONE);
-            cus_progress.setVisibility(View.GONE);
-        }
+             mother_recycler_view.setVisibility(View.VISIBLE);
+             txt_no_records_found.setVisibility(View.GONE);
+             cus_progress.setVisibility(View.GONE);
+         }
+
+         Log.e("motherList size",motherListAdapterRealmModel.size()+"");
         for (int i = 0; i < motherListAdapterRealmModel.size(); i++) {
             mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
             PNMMotherListRealmModel model = motherListAdapterRealmModel.get(i);
@@ -545,6 +559,8 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
         }
         mAdapter.notifyDataSetChanged();
         txt_total_of_list.setText(getResources().getString(R.string.mother_s_list)+"("+mResult.size()+")");
+
+
 
         realm.commitTransaction();
         if (pDialog.isShowing()) {
@@ -596,6 +612,7 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
     @Override
     public void showLoginError(String string) {
         swipeRefreshLayout.setRefreshing(false);
+        cus_progress.setVisibility(View.GONE);
     }
 
     @Override
@@ -653,8 +670,6 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
 //        RadioButton radioButton = (RadioButton)findViewById(checkedId);
 //        Toast.makeText(getApplicationContext(),radioButton.getText().toString(),Toast.LENGTH_SHORT).show();
 
-
-
         if (checkedId == R.id.rb_user_all) {
             AppConstants.selectedUserType ="All";
             mResult.clear();
@@ -685,7 +700,7 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
             if (motherListAdapterRealmModel.size() == 0) {
                 mother_recycler_view.setVisibility(View.GONE);
                 txt_no_records_found.setVisibility(View.VISIBLE);
-                cus_progress.setVisibility(View.VISIBLE);
+                cus_progress.setVisibility(View.GONE);
 
             } else {
                 mother_recycler_view.setVisibility(View.VISIBLE);
@@ -722,7 +737,7 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
             AppConstants.selectedUserType ="Android";
             mResult.clear();
             if (realm.isInTransaction()) {
-                pDialog.show();
+//                pDialog.show();
                 realm.cancelTransaction();
             }
             realm.beginTransaction();
@@ -749,7 +764,7 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
             if (motherListAdapterRealmModel.size() == 0) {
                 mother_recycler_view.setVisibility(View.GONE);
                 txt_no_records_found.setVisibility(View.VISIBLE);
-                cus_progress.setVisibility(View.VISIBLE);
+                cus_progress.setVisibility(View.GONE);
 
             } else {
                 mother_recycler_view.setVisibility(View.VISIBLE);
@@ -804,7 +819,7 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
             }else if (AppConstants.MOTHER_LIST_TITLE.equalsIgnoreCase("PN/HBNC Mother List")) {
                 motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("motherType", "PN").equalTo("userType","0").findAll();
             }else if (AppConstants.MOTHER_LIST_TITLE.equalsIgnoreCase("All Mother List")) {
-                motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("userType","0").findAll();
+                motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("userType","0").findAll();        //.equalTo("userType","0")
             }else if (AppConstants.MOTHER_LIST_TITLE.equalsIgnoreCase("AN High Risk Mother List")) {
                 motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).equalTo("motherType", "AN")
                         .equalTo("mRiskStatus", "HIGH").equalTo("userType","0").findAll();
@@ -818,7 +833,7 @@ public class AllMotherListActivity extends AppCompatActivity implements MotherLi
             if (motherListAdapterRealmModel.size() == 0) {
                 mother_recycler_view.setVisibility(View.GONE);
                 txt_no_records_found.setVisibility(View.VISIBLE);
-                cus_progress.setVisibility(View.VISIBLE);
+                cus_progress.setVisibility(View.GONE);
 
             } else {
                 mother_recycler_view.setVisibility(View.VISIBLE);

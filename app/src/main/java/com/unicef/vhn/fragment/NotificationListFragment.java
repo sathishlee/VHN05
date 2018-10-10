@@ -68,7 +68,7 @@ public class NotificationListFragment extends Fragment implements NotificationVi
 
     CheckNetwork checkNetwork;
     boolean isoffline = false;
-    TextView txt_no_internet,txt_no_records_found;
+    TextView txt_no_internet, txt_no_records_found;
     Realm realm;
     NotificationListRealm notificationListRealm;
 
@@ -103,9 +103,9 @@ public class NotificationListFragment extends Fragment implements NotificationVi
         preferenceData = new PreferenceData(getActivity());
         checkNetwork = new CheckNetwork(getActivity());
         notificationPresenter = new NotificationPresenter(getActivity(), this);
-        if (checkNetwork.isNetworkAvailable()){
+        if (checkNetwork.isNetworkAvailable()) {
             notificationPresenter.getNotificationList(preferenceData.getVhnCode(), preferenceData.getVhnId());
-        }else{
+        } else {
             isoffline = true;
         }
         notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(), preferenceData.getVhnId());
@@ -138,7 +138,7 @@ public class NotificationListFragment extends Fragment implements NotificationVi
         mRecyclerView.setLayoutManager(mLayoutManager);
         moviesList = new ArrayList<>();
         // specify an adapter (see also next example)
-        mAdapter = new NotificationAdapter(moviesList, getActivity(),this);
+        mAdapter = new NotificationAdapter(moviesList, getActivity(), this);
         mRecyclerView.setAdapter(mAdapter);
         if (isoffline) {
             txt_no_internet.setVisibility(View.VISIBLE);
@@ -158,8 +158,8 @@ public class NotificationListFragment extends Fragment implements NotificationVi
 
 //        motherListAdapterRealmModel = motherListAdapterRealmModel.sort("mPicmeId", Sort.DESCENDING);
 
-        userInfoRealmResult = userInfoRealmResult.sort("noteId",Sort.DESCENDING);
-        if (userInfoRealmResult.size()!=0) {
+        userInfoRealmResult = userInfoRealmResult.sort("noteId", Sort.DESCENDING);
+        if (userInfoRealmResult.size() != 0) {
             for (int i = 0; i < userInfoRealmResult.size(); i++) {
                 mresponseResult = new NotificationListResponseModel.Vhn_migrated_mothers();
 
@@ -185,9 +185,8 @@ public class NotificationListFragment extends Fragment implements NotificationVi
                 moviesList.add(mresponseResult);
 
 
-
             }
-        }else{
+        } else {
             txt_no_records_found.setVisibility(View.VISIBLE);
             mRecyclerView.setVisibility(View.GONE);
         }
@@ -242,7 +241,7 @@ public class NotificationListFragment extends Fragment implements NotificationVi
             if (status.equalsIgnoreCase("1")) {
                 RealmResults<NotificationListRealm> motherListAdapterRealmModel = realm.where(NotificationListRealm.class).findAll();
                 Log.e("Realm size ---->", motherListAdapterRealmModel.size() + "");
-                if (realm.isInTransaction()){
+                if (realm.isInTransaction()) {
                     realm.cancelTransaction();
                 }
                 realm.executeTransaction(new Realm.Transaction() {
@@ -314,12 +313,12 @@ public class NotificationListFragment extends Fragment implements NotificationVi
 
     private void setValueToUI() {
 
-        Log.e("ON LINE ->",  "on line");
+        Log.e("ON LINE ->", "on line");
 
         realm.beginTransaction();
         RealmResults<NotificationListRealm> userInfoRealmResult = realm.where(NotificationListRealm.class).findAll();
 
-        userInfoRealmResult = userInfoRealmResult.sort("noteId",Sort.DESCENDING);
+        userInfoRealmResult = userInfoRealmResult.sort("noteId", Sort.DESCENDING);
 
         Log.e("Mother list size ->", userInfoRealmResult.size() + "");
         for (int i = 0; i < userInfoRealmResult.size(); i++) {

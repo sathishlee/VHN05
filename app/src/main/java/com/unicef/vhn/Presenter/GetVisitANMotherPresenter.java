@@ -15,6 +15,7 @@ import com.unicef.vhn.interactor.VisitANMotherInteractor;
 import com.unicef.vhn.view.VisitANMotherViews;
 import com.unicef.vhn.volleyservice.VolleySingleton;
 import io.realm.Realm;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public class GetVisitANMotherPresenter implements VisitANMotherInteractor {
     Realm realm;
 
     public GetVisitANMotherPresenter(Context activity, VisitANMotherViews visitANMotherViews, Realm realm) {
-        Log.e(TAG,"Api name  --> GetVisitANMotherPresenter cons");
+        Log.e(TAG, "Api name  --> GetVisitANMotherPresenter cons");
 
         this.activity = activity;
         this.visitANMotherViews = visitANMotherViews;
@@ -41,7 +42,7 @@ public class GetVisitANMotherPresenter implements VisitANMotherInteractor {
         visitANMotherViews.showProgress();
 
         String url = Apiconstants.BASE_URL + Apiconstants.DASH_BOARD_MOTHERS_AN_RECORDS;
-        Log.e(TAG, "AN Report -----> "+url+"\n vhnCode"+ vhnCode +"\n vhnId"+vhnId+ "\n mid"+mid);
+        Log.e(TAG, "AN Report -----> " + url + "\n vhnCode" + vhnCode + "\n vhnId" + vhnId + "\n mid" + mid);
 
         StringRequest strReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -198,7 +199,7 @@ public class GetVisitANMotherPresenter implements VisitANMotherInteractor {
     public void getVisitPNMotherRecords(final String vhnCode, final String vhnId, final String mid) {
         visitANMotherViews.showProgress();
         String url = Apiconstants.BASE_URL + Apiconstants.DASH_BOARD_MOTHERS_PN_VISIT_RECORDS;
-        Log.e(TAG,"PN Report ----->"+ url+"\n vhnCode"+ vhnCode +"\n vhnId"+vhnId+ "\n mid"+mid);
+        Log.e(TAG, "PN Report ----->" + url + "\n vhnCode" + vhnCode + "\n vhnId" + vhnId + "\n mid" + mid);
 
 
         StringRequest strReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {

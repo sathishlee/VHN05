@@ -1,7 +1,9 @@
 package com.unicef.vhn.adapter;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -22,6 +24,7 @@ import com.unicef.vhn.activity.MothersDetailsActivity;
 import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
 import com.unicef.vhn.model.PNMotherListResponse;
+import com.unicef.vhn.utiltiy.CheckNetwork;
 import com.unicef.vhn.utiltiy.RoundedTransformation;
 
 import java.util.ArrayList;
@@ -32,12 +35,12 @@ import java.util.List;
  * Created by sathish on 3/20/2018.
  */
 
-public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.ViewHolder>  implements Filterable{
+public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.ViewHolder> implements Filterable {
     private List<PNMotherListResponse.VhnAN_Mothers_List> mResult;
     private List<PNMotherListResponse.VhnAN_Mothers_List> mResultfilter;
     Activity applicationContext;
     MakeCallInterface makeCallInterface;
-    String strMid, str_mPhoto, type,userType;
+    String strMid, str_mPhoto, type, userType;
     ContactsAdapterListener listener;
 
     public MotherListAdapter(List<PNMotherListResponse.VhnAN_Mothers_List> mResult, Activity applicationContext,
@@ -60,22 +63,22 @@ public class MotherListAdapter extends RecyclerView.Adapter<MotherListAdapter.Vi
     /*new*/
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        PNMotherListResponse.VhnAN_Mothers_List pNMotherResponseModel =null;
-        if (AppConstants.ISQUERYFILTER){
-            pNMotherResponseModel = mResultfilter.get(position);}
-            else {
-         pNMotherResponseModel = mResult.get(position);
+        PNMotherListResponse.VhnAN_Mothers_List pNMotherResponseModel = null;
+        if (AppConstants.ISQUERYFILTER) {
+            pNMotherResponseModel = mResultfilter.get(position);
+        } else {
+            pNMotherResponseModel = mResult.get(position);
         }
         holder.txt_username.setText(pNMotherResponseModel.getMName());
         holder.txt_picme_id.setText(pNMotherResponseModel.getMPicmeId());
         holder.txt_list_type.setText(pNMotherResponseModel.getMotherType());
-userType = pNMotherResponseModel.getUserType();
-if (userType.equalsIgnoreCase("0")){
-    holder.iv_android_user.setVisibility(View.GONE);
-}else{
-    holder.iv_android_user.setVisibility(View.VISIBLE);
+        userType = pNMotherResponseModel.getUserType();
+        if (userType.equalsIgnoreCase("0")) {
+            holder.iv_android_user.setVisibility(View.GONE);
+        } else {
+            holder.iv_android_user.setVisibility(View.VISIBLE);
 
-}
+        }
         str_mPhoto = pNMotherResponseModel.getmPhoto();
         Log.d("mphoto-->", Apiconstants.MOTHER_PHOTO_URL + str_mPhoto);
 
@@ -108,9 +111,9 @@ if (userType.equalsIgnoreCase("0")){
 
 
         final PNMotherListResponse.VhnAN_Mothers_List finalPNMotherResponseModel = pNMotherResponseModel;
-        if (finalPNMotherResponseModel.getmMotherMobile().equalsIgnoreCase("null")||finalPNMotherResponseModel.getmMotherMobile().length()<10){
+        if (finalPNMotherResponseModel.getmMotherMobile().equalsIgnoreCase("null") || finalPNMotherResponseModel.getmMotherMobile().length() < 10) {
             holder.ll_call.setVisibility(View.GONE);
-        }else{
+        } else {
             holder.ll_call.setVisibility(View.VISIBLE);
         }
         holder.ll_call.setOnClickListener(new View.OnClickListener() {
@@ -123,8 +126,31 @@ if (userType.equalsIgnoreCase("0")){
         holder.ll_track_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppConstants.SELECTED_MID = finalPNMotherResponseModel.getMid();
-                applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MotherLocationActivity.class));
+                CheckNetwork checkNetwork =new CheckNetwork(applicationContext);
+                if (checkNetwork.isNetworkAvailable()) {
+                    AppConstants.SELECTED_MID = finalPNMotherResponseModel.getMid();
+                    applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), MotherLocationActivity.class));
+                }
+                else{
+                    AlertDialog.Builder builder = new AlertDialog.Builder(applicationContext);
+                    builder.setTitle("You can't see this mother location!");
+                    builder.setCancelable(false);
+                    builder.setMessage("Please check internet connection");
+                    // Add the buttons
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User clicked OK button
+                    dialog.dismiss();
+//                            finish();
+                        }
+                    });
+
+
+// Create the AlertDialog
+                    AlertDialog dialog = builder.create();
+
+                    dialog.show();
+                }
             }
         });
 
@@ -168,7 +194,7 @@ if (userType.equalsIgnoreCase("0")){
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txt_username, txt_picme_id, txt_list_type;
-        LinearLayout ll_ll_mother_type, ll_track_location, ll_call,iv_android_user;
+        LinearLayout ll_ll_mother_type, ll_track_location, ll_call, iv_android_user;
         ImageView cardview_image;
 
 
@@ -195,12 +221,12 @@ if (userType.equalsIgnoreCase("0")){
 
     @Override
     public int getItemCount() {
-        if (AppConstants.ISQUERYFILTER){
-            AppConstants.ISQUERYFILTER=true;
-                    return mResultfilter.size();
+        if (AppConstants.ISQUERYFILTER) {
+            AppConstants.ISQUERYFILTER = true;
+            return mResultfilter.size();
 
-        }else{
-            return  mResult.size();
+        } else {
+            return mResult.size();
 
         }
 
@@ -223,8 +249,8 @@ if (userType.equalsIgnoreCase("0")){
                         // here we are looking for name or phone number match
 
                         if (row.getMName().toLowerCase().contains(charString.toLowerCase()) || row.getMPicmeId().contains(charSequence)) {
-                          Log.e("filter mother name",row.getMName());
-                          Log.e("filter mother picme id",row.getMPicmeId());
+                            Log.e("filter mother name", row.getMName());
+                            Log.e("filter mother picme id", row.getMPicmeId());
                             filteredList.add(row);
                         }
                     }
@@ -244,6 +270,7 @@ if (userType.equalsIgnoreCase("0")){
             }
         };
     }
+
     public interface ContactsAdapterListener {
         void onContactSelected(PNMotherListResponse.VhnAN_Mothers_List contact);
     }

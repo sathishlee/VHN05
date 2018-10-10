@@ -50,14 +50,14 @@ public class MotherHighRiskListActivity extends AppCompatActivity implements Mot
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
-    private List<PNMotherListResponse.VhnAN_Mothers_List> mResult ;
+    private List<PNMotherListResponse.VhnAN_Mothers_List> mResult;
     PNMotherListResponse.VhnAN_Mothers_List mresponseResult;
-//    private RecyclerView recyclerView;
+    //    private RecyclerView recyclerView;
     private RecyclerView mother_recycler_view;
     private MotherListAdapter mAdapter;
     private TextView txt_no_records_found;
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
-    boolean isDataUpdate=true;
+    boolean isDataUpdate = true;
 
     LinearLayout ll_filter;
     final Context context = this;
@@ -68,6 +68,7 @@ public class MotherHighRiskListActivity extends AppCompatActivity implements Mot
     boolean isOffline;
     Realm realm;
     PNMMotherListRealmModel pnmMotherListRealmModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +79,7 @@ public class MotherHighRiskListActivity extends AppCompatActivity implements Mot
     }
 
     private void initUI() {
-        checkNetwork= new CheckNetwork(this);
+        checkNetwork = new CheckNetwork(this);
         txt_filter = (TextView) findViewById(R.id.txt_filter);
         cardview_image = (ImageView) findViewById(R.id.cardview_image);
         mother_recycler_view = (RecyclerView) findViewById(R.id.mother_recycler_view);
@@ -86,56 +87,56 @@ public class MotherHighRiskListActivity extends AppCompatActivity implements Mot
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
-        preferenceData =new PreferenceData(this);
-        pnMotherListPresenter = new MotherListPresenter(MotherHighRiskListActivity.this,this, realm);
+        preferenceData = new PreferenceData(this);
+        pnMotherListPresenter = new MotherListPresenter(MotherHighRiskListActivity.this, this, realm);
 
-if (checkNetwork.isNetworkAvailable()) {
-    if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("mother_count")) {
-        pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_LIST, preferenceData.getVhnCode(), preferenceData.getVhnId());
-    } else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("risk_count")) {
-        pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_MOTHERS_RISK, preferenceData.getVhnCode(), preferenceData.getVhnId());
+        if (checkNetwork.isNetworkAvailable()) {
+            if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("mother_count")) {
+                pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_LIST, preferenceData.getVhnCode(), preferenceData.getVhnId());
+            } else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("risk_count")) {
+                pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_MOTHERS_RISK, preferenceData.getVhnCode(), preferenceData.getVhnId());
 
-    } else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("sos_count")) {
-        pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_SOS_MOTHER_LIST, preferenceData.getVhnCode(), preferenceData.getVhnId());
+            } else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("sos_count")) {
+                pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_SOS_MOTHER_LIST, preferenceData.getVhnCode(), preferenceData.getVhnId());
 
-    } else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("an_mother_total_count")) {
-        pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_AN_MOTHERS_DETAILS, preferenceData.getVhnCode(), preferenceData.getVhnId());
+            } else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("an_mother_total_count")) {
+                pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_AN_MOTHERS_DETAILS, preferenceData.getVhnCode(), preferenceData.getVhnId());
 
-    } else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("high_risk_count")) {
-        pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_AN_RISK_MOTHERS_DETAILS, preferenceData.getVhnCode(), preferenceData.getVhnId());
-    }
+            } else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("high_risk_count")) {
+                pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_AN_RISK_MOTHERS_DETAILS, preferenceData.getVhnCode(), preferenceData.getVhnId());
+            }
         /*else if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("today_visit")) {
             pnMotherListPresenter.getPNMotherList(Apiconstants.CURRENT_VISIT_LIST,preferenceData.getVhnCode(),preferenceData.getVhnId());
 
         }*/
-    else {
-        Log.e(MotherHighRiskListActivity.class.getSimpleName(), "no url");
-    }
-}
-else{
-    isOffline =true;
-}
+            else {
+                Log.e(MotherHighRiskListActivity.class.getSimpleName(), "no url");
+            }
+        } else {
+            isOffline = true;
+        }
 
         mResult = new ArrayList<>();
 //        mother_recycler_view.setVisibility(View.GONE);
 //        txt_no_records_found.setVisibility(View.GONE);
 
         if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("an_mother_total_count")) {
-            mAdapter = new MotherListAdapter(mResult, MotherHighRiskListActivity.this, "AN",this,this);
-        }if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("high_risk_count")) {
-            mAdapter = new MotherListAdapter(mResult, MotherHighRiskListActivity.this, "Risk",this,this);
-        }else{
-            mAdapter = new MotherListAdapter(mResult, MotherHighRiskListActivity.this, "",this,this);
+            mAdapter = new MotherListAdapter(mResult, MotherHighRiskListActivity.this, "AN", this, this);
+        }
+        if (AppConstants.GET_MOTHER_LIST_TYPE.equalsIgnoreCase("high_risk_count")) {
+            mAdapter = new MotherListAdapter(mResult, MotherHighRiskListActivity.this, "Risk", this, this);
+        } else {
+            mAdapter = new MotherListAdapter(mResult, MotherHighRiskListActivity.this, "", this, this);
         }
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MotherHighRiskListActivity.this);
         mother_recycler_view.setLayoutManager(mLayoutManager);
         mother_recycler_view.setItemAnimator(new DefaultItemAnimator());
         mother_recycler_view.setAdapter(mAdapter);
-        if (isOffline){
+        if (isOffline) {
 //            showOffLineData();
             setValuetoUI();
-        }else{
+        } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Record Not Found");
             builder.create();
@@ -157,7 +158,6 @@ else{
             }
         });
     }
-
 
 
     private void showActionBar() {
@@ -191,7 +191,7 @@ else{
             JSONObject mJsnobject = new JSONObject(response);
             String status = mJsnobject.getString("status");
             String message = mJsnobject.getString("message");
-            if(status.equalsIgnoreCase("1")) {
+            if (status.equalsIgnoreCase("1")) {
                 JSONArray jsonArray = mJsnobject.getJSONArray("vhnAN_Mothers_List");
                 RealmResults<PNMMotherListRealmModel> motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).findAll();
                 Log.e("Realm size ---->", motherListAdapterRealmModel.size() + "");
@@ -226,15 +226,15 @@ else{
 
                     }
                     realm.commitTransaction();
-                }else{
+                } else {
                     mother_recycler_view.setVisibility(View.GONE);
                     txt_no_records_found.setVisibility(View.VISIBLE);
-                    }
-            }else{
-                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 
             }
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         setValuetoUI();
@@ -243,28 +243,28 @@ else{
     }
 
     private void setValuetoUI() {
-        Log.e(MotherHighRiskListActivity.class.getSimpleName(),"on line");
+        Log.e(MotherHighRiskListActivity.class.getSimpleName(), "on line");
         realm.beginTransaction();
         RealmResults<PNMMotherListRealmModel> motherListAdapterRealmModel = realm.where(PNMMotherListRealmModel.class).findAll();
 
-        for (int i=0;i<motherListAdapterRealmModel.size();i++){
+        for (int i = 0; i < motherListAdapterRealmModel.size(); i++) {
             mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
 
             PNMMotherListRealmModel model = motherListAdapterRealmModel.get(i);
             mresponseResult.setMid(model.getMid());
-                        mresponseResult.setMName(model.getmName());
-                        mresponseResult.setMPicmeId(model.getmPicmeId());
-                        mresponseResult.setmAge(model.getmAge());
-                        mresponseResult.setVhnId(model.getVhnId());
-                        mresponseResult.setmMotherMobile(model.getmMotherMobile());
-                        mresponseResult.setMotherType(model.getMotherType());
-                        mresponseResult.setMLatitude(model.getmLatitude());
-                        mresponseResult.setMLongitude(model.getmLongitude());
-                        mresponseResult.setmPhoto(model.getmPhoto());
-                        mresponseResult.setUserType(model.getUserType());
+            mresponseResult.setMName(model.getmName());
+            mresponseResult.setMPicmeId(model.getmPicmeId());
+            mresponseResult.setmAge(model.getmAge());
+            mresponseResult.setVhnId(model.getVhnId());
+            mresponseResult.setmMotherMobile(model.getmMotherMobile());
+            mresponseResult.setMotherType(model.getMotherType());
+            mresponseResult.setMLatitude(model.getmLatitude());
+            mresponseResult.setMLongitude(model.getmLongitude());
+            mresponseResult.setmPhoto(model.getmPhoto());
+            mresponseResult.setUserType(model.getUserType());
 
 
-                        mResult.add(mresponseResult);
+            mResult.add(mresponseResult);
 
         }
         mAdapter.notifyDataSetChanged();
@@ -289,18 +289,19 @@ else{
 
     @Override
     public void makeCall(String mMotherMobile) {
-        isDataUpdate=false;
+        isDataUpdate = false;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestCallPermission();
         } else {
-            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+91"+mMotherMobile)));
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+91" + mMotherMobile)));
         }
     }
+
     private void requestCallPermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CALL_PHONE)) {
-            Toast.makeText(getApplicationContext(),"Displaying Call permission rationale to provide additional context.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Displaying Call permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
                     MAKE_CALL_PERMISSION_REQUEST_CODE);
@@ -318,7 +319,6 @@ else{
                 return;
         }
     }
-
 
 
     @Override

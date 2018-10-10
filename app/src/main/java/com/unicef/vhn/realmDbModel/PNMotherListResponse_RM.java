@@ -9,7 +9,7 @@ import io.realm.RealmObject;
  * Created by sathish on 3/20/2018.
  */
 
-public class PNMotherListResponse_RM extends RealmObject{
+public class PNMotherListResponse_RM extends RealmObject {
 
     private String message;
 
@@ -24,8 +24,6 @@ public class PNMotherListResponse_RM extends RealmObject{
         vhnAN_Mothers_List_RM = vhnAN_Mothers_List_RM;
     }
 */
-
-
 
 
     public String getMessage() {

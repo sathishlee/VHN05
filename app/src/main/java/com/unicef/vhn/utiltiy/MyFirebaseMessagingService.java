@@ -2,12 +2,14 @@ package com.unicef.vhn.utiltiy;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -15,21 +17,12 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.unicef.vhn.R;
 import com.unicef.vhn.activity.MainActivity;
-import com.unicef.vhn.activity.MotherList.PushNotificationListActivity;
-import com.unicef.vhn.application.RealmController;
-import com.unicef.vhn.constant.Apiconstants;
-import com.unicef.vhn.realmDbModel.PushNotificationListRealmModel;
-
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-import io.realm.Realm;
-
-import static com.google.android.gms.wearable.DataMap.TAG;
+import com.unicef.vhn.activity.PushNotifylistActivity;
+import com.unicef.vhn.activity.SosAlertListActivity;
+import com.unicef.vhn.constant.AppConstants;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-//    Realm realm;
+    //    Realm realm;
     private static final String TAG = "FirebaseMessageService";
     Bitmap bitmap;
 
@@ -63,13 +56,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //
 //        sendNotification(message, bitmap, TrueOrFlase);
 
-       /* realm = RealmController.with(this).getRealm();
-        realm.beginTransaction();
-        PushNotificationListRealmModel model = realm.createObject(PushNotificationListRealmModel.class);
-        model.setTitle(remoteMessage.getNotification().getTitle().toUpperCase());
-        model.setTitle(remoteMessage.getNotification().getBody().toUpperCase());
-        model.setIntime(String.valueOf(System.currentTimeMillis()));
-        realm.commitTransaction();*/
 
         sendNotification(remoteMessage.getNotification().getBody());
 
@@ -77,13 +63,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void sendNotification(String message) {
-        Log.e("FirebaseMessaging", "recived push notofication message >>>>>>>>>" + message);
-        Intent i = new Intent(this, PushNotificationListActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//            i.putExtra("AnotherActivity", TrueOrFalse);
+        /*Log.e("FirebaseMessaging", "recived push notofication message >>>>>>>>>" + message);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_ONE_SHOT);
+        Intent resultIntent = new Intent(this, PushNotifylistActivity.class);
 
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addNextIntentWithParentStack(resultIntent);
+        PendingIntent resultPendingIntent =
+               stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         Uri u = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
@@ -91,36 +78,45 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
         builder.setSmallIcon(R.drawable.ic_launcher);
 
-//            builder.setStyle(new NotificationCompat.BigPictureStyle()
-//                    .bigPicture(image))/*Notification with Image*/
-//                    .setAutoCancel(true);
+
 
         builder.setContentTitle("VHN");
 //            builder.setLargeIcon(R.drawable.mother);
         builder.setContentText(message);
         builder.setAutoCancel(true);
         builder.setSound(u);
-        builder.setContentIntent(pendingIntent);
+//        builder.setContentIntent(pendingIntent);
+        builder.setContentIntent(resultPendingIntent);
 
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(0, builder.build());
+        manager.notify(0, builder.build());*/
+        // Creates an explicit intent for an Activity
+//        Intent resultIntent = new Intent(this, PushNotifylistActivity.class);
+        Intent resultIntent = new Intent(this, MainActivity.class);
+        AppConstants.OPENFRAGMENT ="00";
+//        Intent resultIntent = new Intent(this, SosAlertListActivity.class);
+        Bundle bundle =new Bundle();
+        bundle.putString("fcm",message);
+        resultIntent.putExtras(bundle);
+        // Creating a artifical activity stack for the notification activity
+        android.support.v4.app.TaskStackBuilder stackBuilder = android.support.v4.app.TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(PushNotifylistActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
+
+        // Pending intent to the notification manager
+        PendingIntent resultPending = stackBuilder
+                .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Building the notification
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.mother) // notification icon
+                .setContentTitle("VHN") // main title of the notification
+                .setContentText(message) // notification text
+                .setContentIntent(resultPending); // notification intent
+        NotificationManager mNotificationManager =    (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        // mId allows you to update the notification later on.
+        mNotificationManager.notify(10, mBuilder.build());
     }
 
-//    public Bitmap getBitmapfromUrl(String imageUrl) {
-//        try {
-//            URL url = new URL(imageUrl);
-//            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//            connection.setDoInput(true);
-//            connection.connect();
-//            InputStream input = connection.getInputStream();
-//            Bitmap bitmap = BitmapFactory.decodeStream(input);
-//            return bitmap;
-//
-//        } catch (Exception e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//            return null;
-//
-//        }
-//    }
+
 }

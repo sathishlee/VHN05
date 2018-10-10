@@ -26,7 +26,7 @@ public class ImmunizationAdapter extends RecyclerView.Adapter<ImmunizationAdapte
         this.activity = activity;
         this.immunization_lists = immunization_lists;
 
-        Log.e(ImmunizationListAdapter.class.getSimpleName(),"immunization_lists size"+immunization_lists.size()+"");
+        Log.e(ImmunizationListAdapter.class.getSimpleName(), "immunization_lists size" + immunization_lists.size() + "");
     }
 
     @Override
@@ -38,38 +38,38 @@ public class ImmunizationAdapter extends RecyclerView.Adapter<ImmunizationAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final ImmunizationListResponseModel.Immunization_list immunization_list = immunization_lists.get(position);
-        Log.e(ImmunizationAdapter.class.getSimpleName(),position+" "+immunization_list.getImmDueDate());
-        Log.e(ImmunizationAdapter.class.getSimpleName(),position+" "+immunization_list.getImmCarePovidedDate());
-        Log.e(ImmunizationAdapter.class.getSimpleName(),position+" "+immunization_list.getImmOpvStatus());
+        Log.e(ImmunizationAdapter.class.getSimpleName(), position + " " + immunization_list.getImmDueDate());
+        Log.e(ImmunizationAdapter.class.getSimpleName(), position + " " + immunization_list.getImmCarePovidedDate());
+        Log.e(ImmunizationAdapter.class.getSimpleName(), position + " " + immunization_list.getImmOpvStatus());
 
-        if(immunization_list.getImmDueDate().equalsIgnoreCase("null")){
+        if (immunization_list.getImmDueDate().equalsIgnoreCase("null")) {
             holder.txt_due_date.setText("-");
-        }else {
+        } else {
             holder.txt_due_date.setText(immunization_list.getImmDueDate());
         }
-        if(immunization_list.getImmCarePovidedDate().equalsIgnoreCase("null")){
+        if (immunization_list.getImmCarePovidedDate().equalsIgnoreCase("null")) {
             holder.txt_provided_date.setText("-");
-        }else {
+        } else {
             holder.txt_provided_date.setText(immunization_list.getImmCarePovidedDate());
         }
-        if(immunization_list.getImmOpvStatus().equalsIgnoreCase("null")){
+        if (immunization_list.getImmOpvStatus().equalsIgnoreCase("null")) {
             holder.txt_opv_given.setText("-");
-        }else {
+        } else {
             holder.txt_opv_given.setText(immunization_list.getImmOpvStatus());
         }
-        if(immunization_list.getImmPentanvalentStatus().equalsIgnoreCase("null")){
+        if (immunization_list.getImmPentanvalentStatus().equalsIgnoreCase("null")) {
             holder.txt_prentavalent_given.setText("-");
-        }else {
+        } else {
             holder.txt_prentavalent_given.setText(immunization_list.getImmPentanvalentStatus());
         }
-        if(immunization_list.getImmRotaStatus().equalsIgnoreCase("null")){
+        if (immunization_list.getImmRotaStatus().equalsIgnoreCase("null")) {
             holder.txt_rota_given.setText("-");
-        }else {
+        } else {
             holder.txt_rota_given.setText(immunization_list.getImmRotaStatus());
         }
-        if(immunization_list.getImmDoseNumber().equalsIgnoreCase("null")){
+        if (immunization_list.getImmDoseNumber().equalsIgnoreCase("null")) {
             holder.txt_imm_dose_number.setText("-");
-        }else {
+        } else {
             holder.txt_imm_dose_number.setText(immunization_list.getImmDoseNumber());
         }
 
@@ -82,7 +82,7 @@ public class ImmunizationAdapter extends RecyclerView.Adapter<ImmunizationAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_due_date, txt_provided_date, txt_opv_given, txt_prentavalent_given, txt_rota_given, txt_ipv_given,txt_imm_dose_number;
+        TextView txt_due_date, txt_provided_date, txt_opv_given, txt_prentavalent_given, txt_rota_given, txt_ipv_given, txt_imm_dose_number;
 
         public ViewHolder(View itemView) {
             super(itemView);

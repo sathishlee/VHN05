@@ -47,22 +47,19 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
-    private List<SOSListResponse.VhnAN_Mothers_List> mResult ;
+    private List<SOSListResponse.VhnAN_Mothers_List> mResult;
     SOSListResponse.VhnAN_Mothers_List mresponseResult;
     //    private RecyclerView recyclerView;
     private RecyclerView mother_recycler_view;
     private TextView txt_no_records_found;
     private SOSListAdapter mAdapter;
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
-    boolean isDataUpdate=true;
+    boolean isDataUpdate = true;
 
     CheckNetwork checkNetwork;
     boolean isoffline = false;
     Realm realm;
     SosListRealmModel sosListRealmModel;
-
-
-
 
 
     @Override
@@ -89,7 +86,6 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
     }
 
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();
@@ -97,24 +93,23 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
     }
 
     private void initUI() {
-        checkNetwork =   new CheckNetwork(this);
+        checkNetwork = new CheckNetwork(this);
 
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
-        preferenceData =new PreferenceData(this);
-        pnMotherListPresenter = new MotherListPresenter(SosAlertListActivity.this,this, realm);
+        preferenceData = new PreferenceData(this);
+        pnMotherListPresenter = new MotherListPresenter(SosAlertListActivity.this, this, realm);
         if (checkNetwork.isNetworkAvailable()) {
             pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_SOS_MOTHER_LIST, preferenceData.getVhnCode(), preferenceData.getVhnId());
 
-        }
-        else{
-            isoffline=true;
+        } else {
+            isoffline = true;
         }
         mResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView) findViewById(R.id.mother_recycler_view);
-        txt_no_records_found  =(TextView)findViewById(R.id.txt_no_records_found);
-        mAdapter = new SOSListAdapter(mResult, SosAlertListActivity.this,this);
+        txt_no_records_found = (TextView) findViewById(R.id.txt_no_records_found);
+        mAdapter = new SOSListAdapter(mResult, SosAlertListActivity.this, this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(SosAlertListActivity.this);
         mother_recycler_view.setLayoutManager(mLayoutManager);
@@ -131,15 +126,14 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
     }
 
 
-
     @Override
     public void showProgress() {
-    pDialog.show();
+        pDialog.show();
     }
 
     @Override
     public void hideProgress() {
-    pDialog.dismiss();
+        pDialog.dismiss();
     }
 
     @Override
@@ -150,31 +144,31 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
             JSONObject mJsnobject = new JSONObject(response);
             String status = mJsnobject.getString("status");
             if (status.equalsIgnoreCase("1")) {
-            JSONArray jsonArray = mJsnobject.getJSONArray("vhnAN_Mothers_List");
+                JSONArray jsonArray = mJsnobject.getJSONArray("vhnAN_Mothers_List");
 
 
-    RealmResults<SosListRealmModel> motherListAdapterRealmModel = realm.where(SosListRealmModel.class).findAll();
-    Log.e("Realm size ---->", motherListAdapterRealmModel.size() + "");
-    if (realm.isInTransaction()){
-        realm.cancelTransaction();
-    }
-    realm.executeTransaction(new Realm.Transaction() {
-        @Override
-        public void execute(Realm realm) {
-            realm.delete(SosListRealmModel.class);
-        }
-    });
+                RealmResults<SosListRealmModel> motherListAdapterRealmModel = realm.where(SosListRealmModel.class).findAll();
+                Log.e("Realm size ---->", motherListAdapterRealmModel.size() + "");
+                if (realm.isInTransaction()) {
+                    realm.cancelTransaction();
+                }
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.delete(SosListRealmModel.class);
+                    }
+                });
 
-    if (jsonArray.length() != 0) {
-        mother_recycler_view.setVisibility(View.VISIBLE);
-        txt_no_records_found.setVisibility(View.GONE);
-        realm.beginTransaction();
-        for (int i = 0; i < jsonArray.length(); i++) {
-            sosListRealmModel = realm.createObject(SosListRealmModel.class);  //this will create a UserInfoRealmModel object which will be inserted in database
+                if (jsonArray.length() != 0) {
+                    mother_recycler_view.setVisibility(View.VISIBLE);
+                    txt_no_records_found.setVisibility(View.GONE);
+                    realm.beginTransaction();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        sosListRealmModel = realm.createObject(SosListRealmModel.class);  //this will create a UserInfoRealmModel object which will be inserted in database
 
-            mresponseResult = new SOSListResponse.VhnAN_Mothers_List();
+                        mresponseResult = new SOSListResponse.VhnAN_Mothers_List();
 
-            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                     /*mresponseResult.setMid(jsonObject.getString("mid"));
                     mresponseResult.setMName(jsonObject.getString("mName"));
@@ -193,38 +187,38 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
                     mResult.add(mresponseResult);
                     mAdapter.notifyDataSetChanged();*/
 
-            sosListRealmModel.setMid(jsonObject.getString("mid"));
-            sosListRealmModel.setMName(jsonObject.getString("mName"));
-            sosListRealmModel.setMPicmeId(jsonObject.getString("mPicmeId"));
-            sosListRealmModel.setSosId(jsonObject.getString("sosId"));
-            sosListRealmModel.setMRiskStatus(jsonObject.getString("mRiskStatus"));
-            sosListRealmModel.setSosStatus(jsonObject.getString("sosStatus"));
-            sosListRealmModel.setVhnId(jsonObject.getString("vhnId"));
-            sosListRealmModel.setMotherType(jsonObject.getString("motherType"));
+                        sosListRealmModel.setMid(jsonObject.getString("mid"));
+                        sosListRealmModel.setMName(jsonObject.getString("mName"));
+                        sosListRealmModel.setMPicmeId(jsonObject.getString("mPicmeId"));
+                        sosListRealmModel.setSosId(jsonObject.getString("sosId"));
+                        sosListRealmModel.setMRiskStatus(jsonObject.getString("mRiskStatus"));
+                        sosListRealmModel.setSosStatus(jsonObject.getString("sosStatus"));
+                        sosListRealmModel.setVhnId(jsonObject.getString("vhnId"));
+                        sosListRealmModel.setMotherType(jsonObject.getString("motherType"));
 
-            sosListRealmModel.setmMotherMobile(jsonObject.getString("mMotherMobile"));
-            sosListRealmModel.setMotherType(jsonObject.getString("motherType"));
-            sosListRealmModel.setMLatitude(jsonObject.getString("mLatitude"));
-            sosListRealmModel.setMLongitude(jsonObject.getString("mLongitude"));
-            sosListRealmModel.setmPhoto(jsonObject.getString("mPhoto"));
+                        sosListRealmModel.setmMotherMobile(jsonObject.getString("mMotherMobile"));
+                        sosListRealmModel.setMotherType(jsonObject.getString("motherType"));
+                        sosListRealmModel.setMLatitude(jsonObject.getString("mLatitude"));
+                        sosListRealmModel.setMLongitude(jsonObject.getString("mLongitude"));
+                        sosListRealmModel.setmPhoto(jsonObject.getString("mPhoto"));
 
-        }
-        realm.commitTransaction();
-    } else {
-        mother_recycler_view.setVisibility(View.GONE);
-        txt_no_records_found.setVisibility(View.VISIBLE);
-        }
-}else{
+                    }
+                    realm.commitTransaction();
+                } else {
+                    mother_recycler_view.setVisibility(View.GONE);
+                    txt_no_records_found.setVisibility(View.VISIBLE);
+                }
+            } else {
    /* realm.executeTransaction(new Realm.Transaction() {
         @Override
         public void execute(Realm realm) {
             realm.delete(SosListRealmModel.class);
         }
     });*/
-    mother_recycler_view.setVisibility(View.GONE);
-    txt_no_records_found.setVisibility(View.VISIBLE);
-}
-        }catch (JSONException e) {
+                mother_recycler_view.setVisibility(View.GONE);
+                txt_no_records_found.setVisibility(View.VISIBLE);
+            }
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         setValueToUI();
@@ -235,9 +229,9 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
 
         realm.beginTransaction();
         RealmResults<SosListRealmModel> antt1listRealmResult = realm.where(SosListRealmModel.class).findAll();
-        if (antt1listRealmResult.size()==0){
-            mother_recycler_view .setVisibility(View.GONE);
-            txt_no_records_found  .setVisibility(View.VISIBLE);
+        if (antt1listRealmResult.size() == 0) {
+            mother_recycler_view.setVisibility(View.GONE);
+            txt_no_records_found.setVisibility(View.VISIBLE);
         }
         Log.e("ANTT1 list size ->", antt1listRealmResult.size() + "");
         for (int i = 0; i < antt1listRealmResult.size(); i++) {
@@ -247,7 +241,7 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
 
             SosListRealmModel model = antt1listRealmResult.get(i);
 
-            Log.e("Sos Alert list ->", i+ model.getSosStatus());
+            Log.e("Sos Alert list ->", i + model.getSosStatus());
 
 
             mresponseResult.setMid(model.getMid());
@@ -273,6 +267,7 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
 //                preferenceData.getVhnCode(), preferenceData.getVhnId());
 
     }
+
     private void showOfflineData() {
 
         Log.e(SosAlertListActivity.class.getSimpleName(), "OFF LINE ");
@@ -280,9 +275,9 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
         realm.beginTransaction();
         RealmResults<SosListRealmModel> antt1listRealmResult = realm.where(SosListRealmModel.class).findAll();
         Log.e("ANTT1 list size ->", antt1listRealmResult.size() + "");
-        if (antt1listRealmResult.size()==0){
-            mother_recycler_view .setVisibility(View.GONE);
-            txt_no_records_found  .setVisibility(View.VISIBLE);
+        if (antt1listRealmResult.size() == 0) {
+            mother_recycler_view.setVisibility(View.GONE);
+            txt_no_records_found.setVisibility(View.VISIBLE);
         }
         for (int i = 0; i < antt1listRealmResult.size(); i++) {
             mresponseResult = new SOSListResponse.VhnAN_Mothers_List();
@@ -310,6 +305,7 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
         realm.commitTransaction();
 
     }
+
     @Override
     public void showLoginError(String response) {
         Log.e(SosAlertListActivity.class.getSimpleName(), "Response Error" + response);
@@ -328,18 +324,19 @@ public class SosAlertListActivity extends AppCompatActivity implements MotherLis
 
     @Override
     public void makeCall(String mMotherMobile) {
-        isDataUpdate=false;
+        isDataUpdate = false;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestCallPermission();
         } else {
-            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+91"+mMotherMobile)));
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+91" + mMotherMobile)));
         }
     }
+
     private void requestCallPermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CALL_PHONE)) {
-            Toast.makeText(getApplicationContext(),"Displaying Call permission rationale to provide additional context.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Displaying Call permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
                     MAKE_CALL_PERMISSION_REQUEST_CODE);

@@ -153,7 +153,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
             input_conform_password.setError(null);
             changePasswordPresenter.changePassword(preferenceData.getVhnCode(), strOldPassword, strNewPassword, strConformPassword);
         }
-   }
+    }
 
     private void textValues() {
         strOldPassword = edt_old_password.getText().toString();

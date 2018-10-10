@@ -1,4 +1,5 @@
 package com.unicef.vhn.activity.MotherVisitReport;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -35,7 +36,7 @@ import java.util.ArrayList;
  */
 
 public class PNViewReportsActivity extends AppCompatActivity implements GetAllReportsViews {
-String TAG =PNViewReportsActivity.class.getSimpleName();
+    String TAG = PNViewReportsActivity.class.getSimpleName();
     ProgressDialog progressDialog;
     PreferenceData preferenceData;
 
@@ -43,14 +44,15 @@ String TAG =PNViewReportsActivity.class.getSimpleName();
     RecyclerView rec_mother_reports;
     PNVisitRecordsAdapter visitRecordsAdapter;
     GetVisitReportsPresenter getVisitReportsPresenter;
-    TextView txt_no_records_found,txt_no_internet;
+    TextView txt_no_records_found, txt_no_internet;
     String visitImage;
     Context context;
     ImageView itemImage;
     boolean isImageFitToScreen;
 
     ArrayList<PNVisitRecordsSingleResponseModel> singleResponseModelsList;
-CheckNetwork checkNetwork;
+    CheckNetwork checkNetwork;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,11 +74,11 @@ CheckNetwork checkNetwork;
         txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
         txt_no_internet.setVisibility(View.GONE);
 
-        checkNetwork =new CheckNetwork(this);
+        checkNetwork = new CheckNetwork(this);
         getVisitReportsPresenter = new GetVisitReportsPresenter(PNViewReportsActivity.this, this);
         if (checkNetwork.isNetworkAvailable()) {
             getVisitReportsPresenter.getallPNVisitReports(AppConstants.MOTHER_PICME_ID, AppConstants.SELECTED_MID);
-        }else{
+        } else {
             txt_no_internet.setVisibility(View.VISIBLE);
         }
         txt_no_records_found = (TextView) findViewById(R.id.txt_no_records);
@@ -85,9 +87,9 @@ CheckNetwork checkNetwork;
 
         txt_no_records_found.setVisibility(View.GONE);
 //        displayRecords();
-        rec_mother_reports  = (RecyclerView) findViewById(R.id.rec_mother_reports);
+        rec_mother_reports = (RecyclerView) findViewById(R.id.rec_mother_reports);
         rec_mother_reports.setHasFixedSize(true);
-        visitRecordsAdapter = new PNVisitRecordsAdapter(visitRecordsFullResponseModels,this);
+        visitRecordsAdapter = new PNVisitRecordsAdapter(visitRecordsFullResponseModels, this);
         rec_mother_reports.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rec_mother_reports.setAdapter(visitRecordsAdapter);
     }
@@ -121,36 +123,36 @@ CheckNetwork checkNetwork;
             JSONObject jsonObject = new JSONObject(response);
             String status = jsonObject.getString("status");
             String message = jsonObject.getString("message");
-            Log.w(TAG, "status"+status);
-            Log.w(TAG, "message -->"+ message);
+            Log.w(TAG, "status" + status);
+            Log.w(TAG, "message -->" + message);
 
 //            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-            if (status.equalsIgnoreCase("1")){
+            if (status.equalsIgnoreCase("1")) {
                 txt_no_records_found.setVisibility(View.GONE);
                 JSONArray jsonArray = jsonObject.getJSONArray("reportList");
 
-                Log.w(TAG, "jsonArray -->"+ jsonArray);
+                Log.w(TAG, "jsonArray -->" + jsonArray);
 
-                for (int i = 0; i <jsonArray.length(); i++) {
+                for (int i = 0; i < jsonArray.length(); i++) {
 
                     PNVisitRecordsFullResponseModel model = new PNVisitRecordsFullResponseModel();
 
                     JSONObject mjsonObject = jsonArray.getJSONObject(i);
                     model.setTitle(mjsonObject.getString("title"));
 
-                    Log.w(TAG, "title -->"+ mjsonObject.getString("title"));
+                    Log.w(TAG, "title -->" + mjsonObject.getString("title"));
 
                     JSONArray mjsonArray = mjsonObject.getJSONArray("section");
                     singleResponseModelsList = new ArrayList<>();
-                    for(int j = 0; j < mjsonArray.length(); j++){
+                    for (int j = 0; j < mjsonArray.length(); j++) {
                         JSONObject sjsonObject = mjsonArray.getJSONObject(j);
 
-                        PNVisitRecordsSingleResponseModel singleResponseModels =new PNVisitRecordsSingleResponseModel();
+                        PNVisitRecordsSingleResponseModel singleResponseModels = new PNVisitRecordsSingleResponseModel();
 
-                        Log.e(TAG, "image -->"+ sjsonObject.getString("image"));
+                        Log.e(TAG, "image -->" + sjsonObject.getString("image"));
                         visitImage = sjsonObject.getString("image");
                         singleResponseModels.setImage(visitImage);
-                        Log.e(TAG, Apiconstants.PN_VISIT_REPORTS_URL+AppConstants.MOTHER_PICME_ID+"/"+visitImage);
+                        Log.e(TAG, Apiconstants.PN_VISIT_REPORTS_URL + AppConstants.MOTHER_PICME_ID + "/" + visitImage);
 
                         /*Log.d("Visit Reports", Apiconstants.VISIT_REPORTS_URL+visitImage);
 
@@ -169,26 +171,25 @@ CheckNetwork checkNetwork;
                     visitRecordsFullResponseModels.add(model);
                 }
                 visitRecordsAdapter.notifyDataSetChanged();
-                Log.w("tRecordsFullResp",visitRecordsFullResponseModels.size()+"");
+                Log.w("tRecordsFullResp", visitRecordsFullResponseModels.size() + "");
 
-            }else{
+            } else {
                 txt_no_records_found.setVisibility(View.VISIBLE);
             }
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
     @Override
     public void getVisitReportsFailure(String errorMsg) {
-        Log.e(TAG,"Response error"+errorMsg);
+        Log.e(TAG, "Response error" + errorMsg);
     }
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
-        if (progressDialog!=null && progressDialog.isShowing() ){
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.cancel();
         }
     }

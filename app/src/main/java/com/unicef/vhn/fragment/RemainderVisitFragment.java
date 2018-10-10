@@ -52,7 +52,7 @@ public class RemainderVisitFragment extends Fragment implements MotherListsViews
     PreferenceData preferenceData;
     private List<RemainderVisitResponseModel.Remaindermothers> mResult;
     RemainderVisitResponseModel.Remaindermothers mresponseResult;
-     private RecyclerView mother_recycler_view;
+    private RecyclerView mother_recycler_view;
     private TextView txt_no_records_found;
     private RemainderVisitListAdapter mAdapter;
 
@@ -64,9 +64,10 @@ public class RemainderVisitFragment extends Fragment implements MotherListsViews
     Realm realm;
 
 
-TextView visit_list;
-boolean isoffline=false;
-private SwipeRefreshLayout swipeRefreshLayout;
+    TextView visit_list;
+    boolean isoffline = false;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,10 +77,10 @@ private SwipeRefreshLayout swipeRefreshLayout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =null;
+        View view = null;
         view = inflater.inflate(R.layout.fragment_remainder_visit, container, false);
         initUI(view);
-        return  view;
+        return view;
     }
 
     private void initUI(View view) {
@@ -97,34 +98,34 @@ private SwipeRefreshLayout swipeRefreshLayout;
             isoffline = true;
         }
         mResult = new ArrayList<>();
-        mother_recycler_view = (RecyclerView)view. findViewById(R.id.mother_recycler_view);
+        mother_recycler_view = (RecyclerView) view.findViewById(R.id.mother_recycler_view);
         txt_no_records_found = (TextView) view.findViewById(R.id.txt_no_records_found);
-        swipeRefreshLayout =(SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh_layout);
-        visit_list =(TextView)view.findViewById(R.id.visit_list);
-        mAdapter = new RemainderVisitListAdapter(mResult,getActivity(), this);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
+        visit_list = (TextView) view.findViewById(R.id.visit_list);
+        mAdapter = new RemainderVisitListAdapter(mResult, getActivity(), this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mother_recycler_view.setLayoutManager(mLayoutManager);
         mother_recycler_view.setItemAnimator(new DefaultItemAnimator());
         mother_recycler_view.setAdapter(mAdapter);
-if (isoffline){
-    setValuetoUI();
-}else{
-    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-    builder.setMessage("Record Not Found");
-    builder.create();
-}
-swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-    @Override
-    public void onRefresh() {
-        if (checkNetwork.isNetworkAvailable()) {
-            pnMotherListPresenter.getPNMotherList(Apiconstants.REMAINDER_VISIT_LIST, preferenceData.getVhnCode(), preferenceData.getVhnId());
+        if (isoffline) {
+            setValuetoUI();
         } else {
-            swipeRefreshLayout.setRefreshing(false);
-            isoffline = true;
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("Record Not Found");
+            builder.create();
         }
-    }
-});
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (checkNetwork.isNetworkAvailable()) {
+                    pnMotherListPresenter.getPNMotherList(Apiconstants.REMAINDER_VISIT_LIST, preferenceData.getVhnCode(), preferenceData.getVhnId());
+                } else {
+                    swipeRefreshLayout.setRefreshing(false);
+                    isoffline = true;
+                }
+            }
+        });
     }
 
 
@@ -142,13 +143,13 @@ swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener
     public void showLoginSuccess(String response) {
         swipeRefreshLayout.setRefreshing(false);
         mResult.clear();
-        Log.e(TAG, Apiconstants.CURRENT_VISIT_LIST +" api response"+response);
+        Log.e(TAG, Apiconstants.CURRENT_VISIT_LIST + " api response" + response);
 
         try {
             JSONObject mJsnobject = new JSONObject(response);
             String status = mJsnobject.getString("status");
             String message = mJsnobject.getString("message");
-              JSONArray jsonArray = mJsnobject.getJSONArray("remaindermothers");
+            JSONArray jsonArray = mJsnobject.getJSONArray("remaindermothers");
 //            RemainderListRealModel
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
@@ -162,18 +163,18 @@ swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener
                     txt_no_records_found.setVisibility(View.GONE);
 
                     realm.beginTransaction();       //create or open
-                    RemainderListRealModel   remainderListRealModel=null;
+                    RemainderListRealModel remainderListRealModel = null;
                     for (int i = 0; i < jsonArray.length(); i++) {
                         mresponseResult = new RemainderVisitResponseModel.Remaindermothers();
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        Log.e(TAG,"remaindermothers position -->"+i);
-                            remainderListRealModel  = realm.createObject(RemainderListRealModel.class);  //this will create a UserInfoRealmModel object which will be inserted in database
+                        Log.e(TAG, "remaindermothers position -->" + i);
+                        remainderListRealModel = realm.createObject(RemainderListRealModel.class);  //this will create a UserInfoRealmModel object which will be inserted in database
 
 
-                        Log.e(TAG,"noteId   -->"+i+"-->"+jsonObject.getString("noteId"));
-                        Log.e(TAG,"  mid -->"+i+"-->"+jsonObject.getString("masterId"));
-                        Log.e(TAG,"  mName -->"+i+"-->"+jsonObject.getString("mName"));
-                        Log.e(TAG,"  picmeId -->"+i+"-->"+jsonObject.getString("picmeId"));
+                        Log.e(TAG, "noteId   -->" + i + "-->" + jsonObject.getString("noteId"));
+                        Log.e(TAG, "  mid -->" + i + "-->" + jsonObject.getString("masterId"));
+                        Log.e(TAG, "  mName -->" + i + "-->" + jsonObject.getString("mName"));
+                        Log.e(TAG, "  picmeId -->" + i + "-->" + jsonObject.getString("picmeId"));
 
                         mresponseResult.setNoteId(jsonObject.getString("noteId"));
                         remainderListRealModel.setNoteId(jsonObject.getString("noteId"));
@@ -201,18 +202,18 @@ swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener
 
                         mresponseResult.setNextVisit(jsonObject.getString("nextVisit"));
                         remainderListRealModel.setNextVisit(jsonObject.getString("nextVisit"));
- mresponseResult.setMonth(jsonObject.getString("month"));
+                        mresponseResult.setMonth(jsonObject.getString("month"));
                         remainderListRealModel.setMonth(jsonObject.getString("month"));
 
 //                       mResult.add(mresponseResult);
 //                       mAdapter.notifyDataSetChanged();
                     }
                     realm.commitTransaction();
-                }else{
+                } else {
                     mother_recycler_view.setVisibility(View.GONE);
                     txt_no_records_found.setVisibility(View.VISIBLE);
                 }
-            }else {
+            } else {
                 mother_recycler_view.setVisibility(View.GONE);
                 txt_no_records_found.setVisibility(View.VISIBLE);
                 txt_no_records_found.setText(message);
@@ -269,11 +270,9 @@ swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener
                 mresponseResult.setMonth(model.getMonth());
 
 
-
-
                 mResult.add(mresponseResult);
                 mAdapter.notifyDataSetChanged();
-                visit_list.setText(getResources().getString(R.string.remainder_visit_list)+"("+mResult.size()+")");
+                visit_list.setText(getResources().getString(R.string.remainder_visit_list) + "(" + mResult.size() + ")");
 
 //                mresponseResult = new VisitListResponseModel.Vhn_current_visits();
 
@@ -337,6 +336,7 @@ swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener
         }
 
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

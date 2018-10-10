@@ -11,5 +11,6 @@ public interface ProfileInteractor {
     void uploadUserProfilePhoto(String vhnCode, String vhnId, Bitmap bitmap);
 
     void getVHNProfile(String vhnId, String vhnCode);
-    void postVHNProfile(String vhnId, String vhnCode,String vhnAddress,String vhnMobile);
+
+    void postVHNProfile(String vhnId, String vhnCode, String vhnAddress, String vhnMobile);
 }

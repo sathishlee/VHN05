@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -53,7 +54,7 @@ public class ChangeLanguageActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 setLanguage("ta");
                                 preferenceData.setSharePrefrenceLocale("ta");
-                                LocaleHelper.setLocale(ChangeLanguageActivity.this,"ta");
+                                LocaleHelper.setLocale(getApplicationContext(), "ta");
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -77,7 +78,7 @@ public class ChangeLanguageActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 setLanguage("en");
                                 preferenceData.setSharePrefrenceLocale("en");
-                                LocaleHelper.setLocale(ChangeLanguageActivity.this,"en");
+                                LocaleHelper.setLocale(ChangeLanguageActivity.this, "en");
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -106,18 +107,21 @@ public class ChangeLanguageActivity extends AppCompatActivity {
         DisplayMetrics dm = resources.getDisplayMetrics();
         Configuration conf = resources.getConfiguration();
         conf.locale = mylocale;
+        getBaseContext().getResources().updateConfiguration(conf, getBaseContext().getResources().getDisplayMetrics());
+        getApplicationContext().getResources().updateConfiguration(conf, getBaseContext().getResources().getDisplayMetrics());
+        ChangeLanguageActivity.this.getResources().updateConfiguration(conf, getBaseContext().getResources().getDisplayMetrics());
         resources.updateConfiguration(conf, dm);
         Intent refreshIntent = new Intent(ChangeLanguageActivity.this, MainActivity.class);
         finish();
         startActivity(refreshIntent);
+        Log.d("Language--->", language);
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        Intent intent = new Intent(ChangeLanguageActivity.this, MainActivity.class);
         finish();
-        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 }

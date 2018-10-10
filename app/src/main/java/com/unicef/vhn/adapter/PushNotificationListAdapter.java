@@ -20,22 +20,24 @@ import java.util.List;
 
 import io.realm.internal.Context;
 
-public class PushNotificationListAdapter extends  RecyclerView.Adapter<PushNotificationListAdapter.ViewHolder> implements Filterable {
+public class PushNotificationListAdapter extends RecyclerView.Adapter<PushNotificationListAdapter.ViewHolder> implements Filterable {
 
     List<PushNotificationListRealmModel> notifyList;
     Activity activity;
-    public PushNotificationListAdapter(List<PushNotificationListRealmModel> notifyList, Activity activity ) {
-        this.activity=activity;
-        this.notifyList=notifyList;
+
+    public PushNotificationListAdapter(List<PushNotificationListRealmModel> notifyList, Activity activity) {
+        this.activity = activity;
+        this.notifyList = notifyList;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title,message,intime;
+        TextView title, message, intime;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            title=itemView.findViewById(R.id.txt_title);
-            message=itemView.findViewById(R.id.txt_body);
-            intime=itemView.findViewById(R.id.txt_intime);
+            title = itemView.findViewById(R.id.txt_title);
+            message = itemView.findViewById(R.id.txt_body);
+            intime = itemView.findViewById(R.id.txt_intime);
         }
     }
 
@@ -50,9 +52,9 @@ public class PushNotificationListAdapter extends  RecyclerView.Adapter<PushNotif
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         final PushNotificationListRealmModel pNMotherResponseModel = notifyList.get(position);
-        Log.e("Notify Adapter","Tilte--->"+position+"-->"+pNMotherResponseModel.getTitle());
-        Log.e("Notify Adapter","Body--->"+position+"-->"+pNMotherResponseModel.getBody());
-        Log.e("Notify Adapter","Intime--->"+position+"-->"+pNMotherResponseModel.getIntime());
+        Log.e("Notify Adapter", "Tilte--->" + position + "-->" + pNMotherResponseModel.getTitle());
+        Log.e("Notify Adapter", "Body--->" + position + "-->" + pNMotherResponseModel.getBody());
+        Log.e("Notify Adapter", "Intime--->" + position + "-->" + pNMotherResponseModel.getIntime());
 
         holder.title.setText(pNMotherResponseModel.getTitle());
         holder.message.setText(pNMotherResponseModel.getBody());

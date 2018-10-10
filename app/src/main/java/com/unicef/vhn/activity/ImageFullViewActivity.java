@@ -9,13 +9,15 @@ import android.view.MenuItem;
 
 import com.unicef.vhn.R;
 import com.unicef.vhn.adapter.SlidingImage_Adapter;
+import com.unicef.vhn.constant.AppConstants;
 
 import java.util.ArrayList;
 
-public class ImageFullViewActivity  extends AppCompatActivity {
-String TAG=ImageFullViewActivity.class.getSimpleName();
+public class ImageFullViewActivity extends AppCompatActivity {
+    String TAG = ImageFullViewActivity.class.getSimpleName();
     private static ViewPager mPager;
     private ArrayList<String> ImagesArray = new ArrayList<String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,15 +37,20 @@ String TAG=ImageFullViewActivity.class.getSimpleName();
 
     private void init() {
 //        ImagesArray= (ArrayList<VisitRecordsSingleResponseModel>) getIntent().getSerializableExtra("mylist");
-        String [] imagelist= getIntent().getExtras().getStringArray("mylist");
-        for(int i = 0; i< imagelist.length; i++)
-        {
+        String[] imagelist = getIntent().getExtras().getStringArray("mylist");
+
+
+//        if (AppConstants.SELECTED_IMAGE_POSITION==0) {
+        ImagesArray.add(imagelist[AppConstants.SELECTED_IMAGE_POSITION]);
+
+        for (int i = 0; i < imagelist.length; i++) {
             ImagesArray.add(imagelist[i]);
         }
-        Log.e(TAG,imagelist.length+"");
+
+        Log.e(TAG, imagelist.length + "");
 
         mPager = (ViewPager) findViewById(R.id.pager);
-        mPager.setAdapter(new SlidingImage_Adapter(ImageFullViewActivity.this,ImagesArray));
+        mPager.setAdapter(new SlidingImage_Adapter(ImageFullViewActivity.this, ImagesArray));
 
     }
 

@@ -28,30 +28,31 @@ public class VerifyVisitOtpPresenter implements TodayVisitcloseInteractor {
         this.context = context;
         this.views = views;
     }
+
     @Override
     public void getverifyOTP(final String noteId, final String visitOTP, final String mid) {
         String url = Apiconstants.BASE_URL + Apiconstants.TODAY_VISIT_CLOSED;
-        Log.e(VerifyVisitOtpPresenter.class.getSimpleName(),"verify otp url"+url);
-        Log.e(VerifyVisitOtpPresenter.class.getSimpleName(),"noteId"+noteId);
-        Log.e(VerifyVisitOtpPresenter.class.getSimpleName(),"mid"+mid);
-        Log.e(VerifyVisitOtpPresenter.class.getSimpleName(),"mid"+visitOTP);
-views.showProgress();
-        StringRequest stringRequest =new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        Log.e(VerifyVisitOtpPresenter.class.getSimpleName(), "verify otp url" + url);
+        Log.e(VerifyVisitOtpPresenter.class.getSimpleName(), "noteId" + noteId);
+        Log.e(VerifyVisitOtpPresenter.class.getSimpleName(), "mid" + mid);
+        Log.e(VerifyVisitOtpPresenter.class.getSimpleName(), "mid" + visitOTP);
+        views.showProgress();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e(VerifyVisitOtpPresenter.class.getSimpleName(),"success response"+response);
+                Log.e(VerifyVisitOtpPresenter.class.getSimpleName(), "success response" + response);
                 views.hideProgress();
                 views.todayVisitCloseSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(VerifyVisitOtpPresenter.class.getSimpleName(),"error response"+error.toString());
-views.hideProgress();
-views.todayVisitCloseFailiur(error.toString());
+                Log.e(VerifyVisitOtpPresenter.class.getSimpleName(), "error response" + error.toString());
+                views.hideProgress();
+                views.todayVisitCloseFailiur(error.toString());
 
             }
-        }){
+        }) {
 
 
             @Override

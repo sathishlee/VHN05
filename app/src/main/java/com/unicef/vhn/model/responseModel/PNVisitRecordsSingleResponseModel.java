@@ -8,7 +8,7 @@ public class PNVisitRecordsSingleResponseModel {
 
     private String image;
 
-    public PNVisitRecordsSingleResponseModel(){
+    public PNVisitRecordsSingleResponseModel() {
 
     }
 

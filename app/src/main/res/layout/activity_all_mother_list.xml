@@ -173,6 +173,16 @@
             <ProgressBar android:layout_width="wrap_content" android:layout_height="wrap_content"
                          android:layout_gravity="center" android:id="@+id/cus_progress"/>
 
+
+
+            <TextView
+                    android:id="@+id/txt_import_mother_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="please Swipe Down you will get mothers list"
+            android:visibility="gone"/>
             <!--  </LinearLayout>-->
 
             <!-- <include layout="@layout/item_mothers_an"/>

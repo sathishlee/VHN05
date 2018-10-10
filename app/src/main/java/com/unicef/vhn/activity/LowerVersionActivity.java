@@ -16,6 +16,7 @@ import com.unicef.vhn.R;
 
 public class LowerVersionActivity extends AppCompatActivity implements View.OnClickListener {
     Button btn_close;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

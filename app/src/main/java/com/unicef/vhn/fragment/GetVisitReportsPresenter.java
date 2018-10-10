@@ -27,7 +27,7 @@ public class GetVisitReportsPresenter implements GetVisitReportsInteractor {
     Activity activity;
     GetAllReportsViews getAllReportsViews;
 
-    public GetVisitReportsPresenter(Activity activity, GetAllReportsViews getAllReportsViews){
+    public GetVisitReportsPresenter(Activity activity, GetAllReportsViews getAllReportsViews) {
         this.activity = activity;
         this.getAllReportsViews = getAllReportsViews;
     }
@@ -38,37 +38,38 @@ public class GetVisitReportsPresenter implements GetVisitReportsInteractor {
         getAllReportsViews.showProgress();
         String url = Apiconstants.MOTHER_BASE_URL + Apiconstants.GET_ALL_VISIT_REPORTS;
 
-        Log.e("Url--->",url);
-        Log.e("Picme--->",picmeId);
-        Log.e("Mid--->",mid);
+        Log.e("Url--->", url);
+        Log.e("Picme--->", picmeId);
+        Log.e("Mid--->", mid);
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e(GetVisitReportsPresenter.class.getSimpleName()+"success --->",response);
+                Log.e(GetVisitReportsPresenter.class.getSimpleName() + "success --->", response);
                 getAllReportsViews.hideProgress();
                 getAllReportsViews.getVisitReportsSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(GetVisitReportsPresenter.class.getSimpleName()+"error --->",error.toString());
+                Log.e(GetVisitReportsPresenter.class.getSimpleName() + "error --->", error.toString());
                 getAllReportsViews.hideProgress();
                 getAllReportsViews.getVisitReportsFailure(error.toString());
             }
-        }){
+        }) {
 
 
             @Override
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("picmeId",picmeId);
-                params.put("mid",mid);
+                params.put("picmeId", picmeId);
+                params.put("mid", mid);
 
-                Log.d("params--->",params.toString());
+                Log.d("params--->", params.toString());
 
                 return params;
             }
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 String credentials = "admin" + ":" + "1234";
@@ -76,7 +77,7 @@ public class GetVisitReportsPresenter implements GetVisitReportsInteractor {
                 HashMap<String, String> header = new HashMap<>();
 //                header.put("Content-Type", "application/x-www-from-urlencoded; charset=utf-8");
                 header.put("Authorization", "Basic " + base64EncodedCredentials);
-                Log.d("Credentials ","Basic " +base64EncodedCredentials.toString());
+                Log.d("Credentials ", "Basic " + base64EncodedCredentials.toString());
 
                 return header;
             }
@@ -98,37 +99,38 @@ public class GetVisitReportsPresenter implements GetVisitReportsInteractor {
         getAllReportsViews.showProgress();
         String url = Apiconstants.MOTHER_BASE_URL + Apiconstants.GET_ALL_PN_VISIT_REPORTS;
 
-        Log.e("Url--->",url);
-        Log.e("Picme--->",picmeId);
-        Log.e("Mid--->",mid);
+        Log.e("Url--->", url);
+        Log.e("Picme--->", picmeId);
+        Log.e("Mid--->", mid);
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e(GetVisitReportsPresenter.class.getSimpleName()+"success --->",response);
+                Log.e(GetVisitReportsPresenter.class.getSimpleName() + "success --->", response);
                 getAllReportsViews.hideProgress();
                 getAllReportsViews.getVisitReportsSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(GetVisitReportsPresenter.class.getSimpleName()+"error --->",error.toString());
+                Log.e(GetVisitReportsPresenter.class.getSimpleName() + "error --->", error.toString());
                 getAllReportsViews.hideProgress();
                 getAllReportsViews.getVisitReportsFailure(error.toString());
             }
-        }){
+        }) {
 
 
             @Override
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("picmeId",picmeId);
-                params.put("mid",mid);
+                params.put("picmeId", picmeId);
+                params.put("mid", mid);
 
-                Log.d("params--->",params.toString());
+                Log.d("params--->", params.toString());
 
                 return params;
             }
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 String credentials = "admin" + ":" + "1234";
@@ -136,7 +138,7 @@ public class GetVisitReportsPresenter implements GetVisitReportsInteractor {
                 HashMap<String, String> header = new HashMap<>();
 //                header.put("Content-Type", "application/x-www-from-urlencoded; charset=utf-8");
                 header.put("Authorization", "Basic " + base64EncodedCredentials);
-                Log.d("Credentials ","Basic " +base64EncodedCredentials.toString());
+                Log.d("Credentials ", "Basic " + base64EncodedCredentials.toString());
 
                 return header;
             }

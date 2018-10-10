@@ -26,9 +26,9 @@ public class SharedPrefManager {
     }
 
     //this method will save the device token to shared preferences
-    public boolean saveDeviceToken(String token){
+    public boolean saveDeviceToken(String token) {
 
-        Log.d("Token--->",token);
+        Log.d("Token--->", token);
 
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -38,9 +38,9 @@ public class SharedPrefManager {
     }
 
     //this method will fetch the device token from shared preferences
-    public String getDeviceToken(){
+    public String getDeviceToken() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return  sharedPreferences.getString(TAG_TOKEN, null);
+        return sharedPreferences.getString(TAG_TOKEN, null);
     }
 
 }

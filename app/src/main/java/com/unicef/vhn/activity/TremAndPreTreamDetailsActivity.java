@@ -29,11 +29,12 @@ public class TremAndPreTreamDetailsActivity extends AppCompatActivity implements
             txt_delivery_new_born, txt_infant_height, txt_infant_weight, txt_infant_id, txt_infant_birth_type,
             txt_breast_feeding_given, txt_admitted_in_sncu, new_born_sncu_date, txt_new_born_outcome, txt_bcg_given_date,
             txt_opv_given_date, txt_hepb_given_date;
-Realm realm;
+    Realm realm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        realm=RealmController.with(this).getRealm();
+        realm = RealmController.with(this).getRealm();
         setContentView(R.layout.activity_trem_and_pre_tream_details);
         showActionBar();
 

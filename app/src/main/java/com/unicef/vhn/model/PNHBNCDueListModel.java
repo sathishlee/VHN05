@@ -130,7 +130,12 @@ public class PNHBNCDueListModel {
             this.visit1 = visit1;
         }
 
-        public String getmPhoto(){return mPhoto;}
-        public void setmPhoto(String mPhoto){this.mPhoto = mPhoto;}
+        public String getmPhoto() {
+            return mPhoto;
+        }
+
+        public void setmPhoto(String mPhoto) {
+            this.mPhoto = mPhoto;
+        }
     }
 }

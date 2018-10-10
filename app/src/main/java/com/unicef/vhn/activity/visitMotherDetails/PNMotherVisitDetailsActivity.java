@@ -41,18 +41,17 @@ public class PNMotherVisitDetailsActivity extends AppCompatActivity implements V
     TextView txt_username, txt_picme_id, txt_mage, txt_risk,
             txt_date_of_delivery, txt_weight, txt_type_of_delivery, txt_maturity, txt_next_visit,
             txt_husb_name, txt_aww_name, txt_relationship, txt_aww_relationship, txt_mother_name_call,
-            txt_gest_week, txt_lmp_date, txt_edd_date, txt_delivery_date, txt_birth_weight, txt_type_delivery
-            , txt_pn_next_visit;
+            txt_gest_week, txt_lmp_date, txt_edd_date, txt_delivery_date, txt_birth_weight, txt_type_delivery, txt_pn_next_visit;
     ImageView img_call_1, img_call_2, cardview_image;
     Button btn_view_location, btn_view_report;
     Context context;
-    String strMobileNo,strAltMobileNo;
-    String strLatitude,strLongitude, str_mPhoto;
+    String strMobileNo, strAltMobileNo;
+    String strLatitude, strLongitude, str_mPhoto;
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
-Realm realm;
+    Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,11 +70,13 @@ Realm realm;
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();
         return super.onOptionsItemSelected(item);
     }
+
     private void onClickListner() {
         img_call_1.setOnClickListener(this);
         img_call_2.setOnClickListener(this);
@@ -90,9 +91,9 @@ Realm realm;
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
-        preferenceData =new PreferenceData(this);
-        pnMotherListPresenter = new MotherListPresenter(PNMotherVisitDetailsActivity.this,this, realm);
-        pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(),preferenceData.getVhnId(),AppConstants.SELECTED_MID);
+        preferenceData = new PreferenceData(this);
+        pnMotherListPresenter = new MotherListPresenter(PNMotherVisitDetailsActivity.this, this, realm);
+        pnMotherListPresenter.getSelectedMother(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
 
 
         txt_username = (TextView) findViewById(R.id.txt_username);
@@ -129,9 +130,10 @@ Realm realm;
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_view_location:
-                startActivity(new Intent(getApplicationContext(),MotherLocationActivity.class));
+                startActivity(new Intent(getApplicationContext(), MotherLocationActivity.class));
                 break;
-            case R.id.btn_view_report: startActivity(new Intent(getApplicationContext(),PNViewReportsActivity.class));
+            case R.id.btn_view_report:
+                startActivity(new Intent(getApplicationContext(), PNViewReportsActivity.class));
                 break;
             case R.id.img_call_1:
                 makeCall(strMobileNo);
@@ -144,9 +146,9 @@ Realm realm;
 
     private void makeCall(String str_mobile_number) {
 
-        Toast.makeText(getApplicationContext(),str_mobile_number,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), str_mobile_number, Toast.LENGTH_SHORT).show();
 
-        if (ActivityCompat.checkSelfPermission(this,Manifest.permission.CALL_PHONE)
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
                 != PackageManager.PERMISSION_GRANTED) {
             // Camera permission has not been granted.
 
@@ -155,15 +157,15 @@ Realm realm;
         } else {
 
             // Camera permissions is already available, show the camera preview.
-            Log.i(MothersDetailsActivity.class.getSimpleName(),"CALL permission has already been granted. Displaying camera preview.");
+            Log.i(MothersDetailsActivity.class.getSimpleName(), "CALL permission has already been granted. Displaying camera preview.");
 //            showCameraPreview();
-            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+"+str_mobile_number)));
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:+" + str_mobile_number)));
 
         }
 
     }
-    private void requestCallPermission() {
 
+    private void requestCallPermission() {
 
 
         Log.i(MothersDetailsActivity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
@@ -174,8 +176,8 @@ Realm realm;
             // Provide an additional rationale to the user if the permission was not granted
             // and the user would benefit from additional context for the use of the permission.
             // For example if the user has previously denied the permission.
-            Log.i(MothersDetailsActivity.class.getSimpleName(),            "Displaying camera permission rationale to provide additional context.");
-            Toast.makeText(this,"Displaying camera permission rationale to provide additional context.",Toast.LENGTH_SHORT).show();
+            Log.i(MothersDetailsActivity.class.getSimpleName(), "Displaying camera permission rationale to provide additional context.");
+            Toast.makeText(this, "Displaying camera permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();
 
         } else {
 
@@ -213,14 +215,14 @@ Realm realm;
 
     @Override
     public void showLoginSuccess(String response) {
-        Log.e(PNMotherVisitDetailsActivity.class.getSimpleName(),"Response success"+response);
+        Log.e(PNMotherVisitDetailsActivity.class.getSimpleName(), "Response success" + response);
 
         try {
             JSONObject mJsnobject = new JSONObject(response);
             String status = mJsnobject.getString("status");
             String message = mJsnobject.getString("message");
-            if (status.equalsIgnoreCase("1")){
-                JSONObject jsnobject =mJsnobject.getJSONObject("tracking");
+            if (status.equalsIgnoreCase("1")) {
+                JSONObject jsnobject = mJsnobject.getJSONObject("tracking");
 
                /* txt_username, txt_picme_id, txt_mage, txt_risk,
                         txt_date_of_delivery, txt_weight, txt_type_of_delivery, txt_maturity, txt_next_visit,
@@ -228,7 +230,7 @@ Realm realm;
                         txt_gest_week, txt_lmp_date, txt_edd_date, txt_delivery_date, txt_birth_weight, txt_type_delivery
                         , txt_pn_next_visit;*/
             }
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
@@ -237,7 +239,7 @@ Realm realm;
     public void showLoginError(String response) {
         ll_pn_mother_details.setVisibility(View.GONE);
 
-        Log.d(PNMotherVisitDetailsActivity.class.getSimpleName(),"Response Error"+response);
+        Log.d(PNMotherVisitDetailsActivity.class.getSimpleName(), "Response Error" + response);
     }
 
     @Override

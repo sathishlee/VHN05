@@ -1,48 +1,48 @@
 package com.unicef.vhn.fragment;
 
-        import android.Manifest;
-        import android.app.ProgressDialog;
-        import android.content.Intent;
-        import android.content.pm.PackageManager;
-        import android.net.Uri;
-        import android.os.Bundle;
-        import android.support.annotation.NonNull;
-        import android.support.v4.app.ActivityCompat;
-        import android.support.v4.app.Fragment;
-        import android.support.v4.widget.SwipeRefreshLayout;
-        import android.support.v7.app.AlertDialog;
-        import android.support.v7.widget.DefaultItemAnimator;
-        import android.support.v7.widget.LinearLayoutManager;
-        import android.support.v7.widget.RecyclerView;
-        import android.util.Log;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import android.Manifest;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import com.unicef.vhn.Interface.MakeCallInterface;
-        import com.unicef.vhn.Preference.PreferenceData;
-        import com.unicef.vhn.Presenter.MotherListPresenter;
-        import com.unicef.vhn.R;
+import com.unicef.vhn.Interface.MakeCallInterface;
+import com.unicef.vhn.Preference.PreferenceData;
+import com.unicef.vhn.Presenter.MotherListPresenter;
+import com.unicef.vhn.R;
 
-        import com.unicef.vhn.adapter.MotherListAdapter;
-        import com.unicef.vhn.application.RealmController;
-        import com.unicef.vhn.constant.Apiconstants;
-        import com.unicef.vhn.model.PNMotherListResponse;
-        import com.unicef.vhn.realmDbModel.MotherRiskListRealm;
-        import com.unicef.vhn.utiltiy.CheckNetwork;
-        import com.unicef.vhn.view.MotherListsViews;
+import com.unicef.vhn.adapter.MotherListAdapter;
+import com.unicef.vhn.application.RealmController;
+import com.unicef.vhn.constant.Apiconstants;
+import com.unicef.vhn.model.PNMotherListResponse;
+import com.unicef.vhn.realmDbModel.MotherRiskListRealm;
+import com.unicef.vhn.utiltiy.CheckNetwork;
+import com.unicef.vhn.view.MotherListsViews;
 
-        import org.json.JSONArray;
-        import org.json.JSONException;
-        import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-        import java.util.ArrayList;
-        import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
-        import io.realm.Realm;
-        import io.realm.RealmResults;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Created by priyan on 2/3/2018.
@@ -69,7 +69,8 @@ public class risk extends Fragment implements MotherListsViews, MakeCallInterfac
     TextView txt_risk_list_count;
     Realm realm;
     MotherRiskListRealm motherRiskListRealm;
-SwipeRefreshLayout swipeRefreshLayout;
+    SwipeRefreshLayout swipeRefreshLayout;
+
     public static risk newInstance() {
         risk fragment = new risk();
         return fragment;
@@ -104,7 +105,7 @@ SwipeRefreshLayout swipeRefreshLayout;
         txt_risk_list_count = view.findViewById(R.id.txt_risk_list_count);
         txt_no_internet.setVisibility(View.GONE);
         txt_no_records_found.setVisibility(View.GONE);
-        swipeRefreshLayout =(SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         if (checkNetwork.isNetworkAvailable()) {
 
             pnMotherListPresenter.getPNMotherList(Apiconstants.DASH_BOARD_MOTHERS_RISK, preferenceData.getVhnCode(), preferenceData.getVhnId());
@@ -166,7 +167,7 @@ SwipeRefreshLayout swipeRefreshLayout;
             mother_recycler_view.setVisibility(View.GONE);
         }
         mAdapter.notifyDataSetChanged();
-        txt_risk_list_count.setText(getResources().getString(R.string.risk_status_list)+"("+mResult.size()+")");
+        txt_risk_list_count.setText(getResources().getString(R.string.risk_status_list) + "(" + mResult.size() + ")");
 
         realm.commitTransaction();
 
@@ -194,12 +195,12 @@ SwipeRefreshLayout swipeRefreshLayout;
             String message = jsonObject.getString("message");
             if (status.equalsIgnoreCase("1")) {
                 JSONArray jsonArray = jsonObject.getJSONArray("vhnAN_Mothers_List");
-                if (realm.isInTransaction()){
+                if (realm.isInTransaction()) {
                     realm.cancelTransaction();
-                    }
+                }
                 RealmResults<MotherRiskListRealm> motherListAdapterRealmModel = realm.where(MotherRiskListRealm.class).findAll();
                 Log.e("risk Realm size ---->", motherListAdapterRealmModel.size() + "");
-                if (motherListAdapterRealmModel.size() !=0) {
+                if (motherListAdapterRealmModel.size() != 0) {
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {
@@ -264,7 +265,7 @@ SwipeRefreshLayout swipeRefreshLayout;
             mother_recycler_view.setVisibility(View.GONE);
         }
         mAdapter.notifyDataSetChanged();
-        txt_risk_list_count.setText(getResources().getString(R.string.risk_status_list)+"("+mResult.size()+")");
+        txt_risk_list_count.setText(getResources().getString(R.string.risk_status_list) + "(" + mResult.size() + ")");
         realm.commitTransaction();
 
     }

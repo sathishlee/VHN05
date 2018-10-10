@@ -69,7 +69,6 @@ public class MotherMigration extends AppCompatActivity implements MotherListsVie
     MotherMigrationRealmModel motherMigrationRealmModel;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,8 +89,8 @@ public class MotherMigration extends AppCompatActivity implements MotherListsVie
         pnMotherListPresenter = new MotherListPresenter(MotherMigration.this, this, realm);
         if (checkNetwork.isNetworkAvailable()) {
             pnMotherListPresenter.getMigratedMothersList(preferenceData.getVhnCode(), preferenceData.getVhnId());
-        }else{
-            isoffline=true;
+        } else {
+            isoffline = true;
         }
 
         vhn_migrated_mothers = new ArrayList<>();
@@ -105,9 +104,9 @@ public class MotherMigration extends AppCompatActivity implements MotherListsVie
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(motherMigrationAdapter);
-        if (isoffline){
+        if (isoffline) {
             showOfflineData();
-        }else{
+        } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Record Not Found");
             builder.create();
@@ -145,11 +144,11 @@ public class MotherMigration extends AppCompatActivity implements MotherListsVie
 
         try {
             JSONObject mJsnobject = new JSONObject(response);
-            String status =mJsnobject.getString("status");
-            String message =mJsnobject.getString("message");
+            String status = mJsnobject.getString("status");
+            String message = mJsnobject.getString("message");
             if (status.equalsIgnoreCase("1")) {
 
-            JSONArray jsonArray = mJsnobject.getJSONArray("vhn_migrated_mothers");
+                JSONArray jsonArray = mJsnobject.getJSONArray("vhn_migrated_mothers");
 
                 RealmResults<MotherMigrationRealmModel> motherListAdapterRealmModel = realm.where(MotherMigrationRealmModel.class).findAll();
                 Log.e("Realm size ---->", motherListAdapterRealmModel.size() + "");
@@ -160,19 +159,19 @@ public class MotherMigration extends AppCompatActivity implements MotherListsVie
                     }
                 });
 
-            if (jsonArray.length() != 0) {
-                recyclerView.setVisibility(View.VISIBLE);
-                textView.setVisibility(View.GONE);
+                if (jsonArray.length() != 0) {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    textView.setVisibility(View.GONE);
 
-                realm.beginTransaction();       //create or open
+                    realm.beginTransaction();       //create or open
 
-                for (int i = 0; i < jsonArray.length(); i++) {
+                    for (int i = 0; i < jsonArray.length(); i++) {
 
-                    motherMigrationRealmModel = realm.createObject(MotherMigrationRealmModel.class);
+                        motherMigrationRealmModel = realm.createObject(MotherMigrationRealmModel.class);
 
-                    getVhn_migrated_mothers = new MotherMigrationResponseModel.Vhn_migrated_mothers();
+                        getVhn_migrated_mothers = new MotherMigrationResponseModel.Vhn_migrated_mothers();
 
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                  /*   getVhn_migrated_mothers.setMid(jsonObject.getString("mid"));
                     getVhn_migrated_mothers.setMName(jsonObject.getString("mName"));
@@ -185,25 +184,25 @@ public class MotherMigration extends AppCompatActivity implements MotherListsVie
                     vhn_migrated_mothers.add(getVhn_migrated_mothers);
                     motherMigrationAdapter.notifyDataSetChanged();*/
 
-                    motherMigrationRealmModel.setMid(jsonObject.getString("mid"));
-                    motherMigrationRealmModel.setMName(jsonObject.getString("mName"));
-                    motherMigrationRealmModel.setMPicmeId(jsonObject.getString("mPicmeId"));
-                    motherMigrationRealmModel.setMtype(jsonObject.getString("mtype"));
-                    motherMigrationRealmModel.setSubject(jsonObject.getString("subject"));
-                    motherMigrationRealmModel.setMMotherMobile(jsonObject.getString("mMotherMobile"));
+                        motherMigrationRealmModel.setMid(jsonObject.getString("mid"));
+                        motherMigrationRealmModel.setMName(jsonObject.getString("mName"));
+                        motherMigrationRealmModel.setMPicmeId(jsonObject.getString("mPicmeId"));
+                        motherMigrationRealmModel.setMtype(jsonObject.getString("mtype"));
+                        motherMigrationRealmModel.setSubject(jsonObject.getString("subject"));
+                        motherMigrationRealmModel.setMMotherMobile(jsonObject.getString("mMotherMobile"));
 
 //                    mresponseResult.setMotherType(jsonObject.getString("motherType"));
 //                mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
 //                mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
+                    }
+
+                    realm.commitTransaction();       //create or open
+
+                } else {
+                    recyclerView.setVisibility(View.GONE);
+                    textView.setVisibility(View.VISIBLE);
                 }
-
-                realm.commitTransaction();       //create or open
-
             } else {
-                recyclerView.setVisibility(View.GONE);
-                textView.setVisibility(View.VISIBLE);
-            }
-            }else{
                 recyclerView.setVisibility(View.GONE);
                 textView.setVisibility(View.VISIBLE);
             }
@@ -216,27 +215,27 @@ public class MotherMigration extends AppCompatActivity implements MotherListsVie
     }
 
     private void setValueToUI() {
-        Log.d(MotherMigration.class.getSimpleName(),  "oneline");
+        Log.d(MotherMigration.class.getSimpleName(), "oneline");
 
         realm.beginTransaction();
 
         RealmResults<MotherMigrationRealmModel> motherMigrationrealmResults = realm.where(MotherMigrationRealmModel.class).findAll();
-        for (int i=0;i<motherMigrationrealmResults.size();i++){
-            getVhn_migrated_mothers =new  MotherMigrationResponseModel.Vhn_migrated_mothers();
+        for (int i = 0; i < motherMigrationrealmResults.size(); i++) {
+            getVhn_migrated_mothers = new MotherMigrationResponseModel.Vhn_migrated_mothers();
 
             MotherMigrationRealmModel model = motherMigrationrealmResults.get(i);
 
-               getVhn_migrated_mothers.setMid(model.getMid());
-                    getVhn_migrated_mothers.setMName(model.getMName());
-                    getVhn_migrated_mothers.setMPicmeId(model.getMPicmeId());
-                    getVhn_migrated_mothers.setMtype(model.getMtype());
-                    getVhn_migrated_mothers.setSubject(model.getSubject());
-                    getVhn_migrated_mothers.setMMotherMobile(model.getMMotherMobile());
+            getVhn_migrated_mothers.setMid(model.getMid());
+            getVhn_migrated_mothers.setMName(model.getMName());
+            getVhn_migrated_mothers.setMPicmeId(model.getMPicmeId());
+            getVhn_migrated_mothers.setMtype(model.getMtype());
+            getVhn_migrated_mothers.setSubject(model.getSubject());
+            getVhn_migrated_mothers.setMMotherMobile(model.getMMotherMobile());
 //                    mresponseResult.setMotherType(jsonObject.getString("motherType"));
 //                mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
 //                mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
-                    vhn_migrated_mothers.add(getVhn_migrated_mothers);
-                    motherMigrationAdapter.notifyDataSetChanged();
+            vhn_migrated_mothers.add(getVhn_migrated_mothers);
+            motherMigrationAdapter.notifyDataSetChanged();
 
 
         }
@@ -246,13 +245,13 @@ public class MotherMigration extends AppCompatActivity implements MotherListsVie
 
     private void showOfflineData() {
 
-        Log.d(MotherMigration.class.getSimpleName(),  "off line");
+        Log.d(MotherMigration.class.getSimpleName(), "off line");
 
         realm.beginTransaction();
 
         RealmResults<MotherMigrationRealmModel> motherMigrationrealmResults = realm.where(MotherMigrationRealmModel.class).findAll();
-        for (int i=0;i<motherMigrationrealmResults.size();i++){
-            getVhn_migrated_mothers =new  MotherMigrationResponseModel.Vhn_migrated_mothers();
+        for (int i = 0; i < motherMigrationrealmResults.size(); i++) {
+            getVhn_migrated_mothers = new MotherMigrationResponseModel.Vhn_migrated_mothers();
 
             MotherMigrationRealmModel model = motherMigrationrealmResults.get(i);
 

@@ -49,7 +49,7 @@ public class ImmunizationListAdapter extends RecyclerView.Adapter<ImmunizationLi
             @Override
             public void onClick(View v) {
                 AppConstants.SELECTED_MID = immunization_list.getMid();
-                Log.e(ImmunizationListAdapter.class.getSimpleName(),"  AppConstants.SELECTED_MID "+  AppConstants.SELECTED_MID );
+                Log.e(ImmunizationListAdapter.class.getSimpleName(), "  AppConstants.SELECTED_MID " + AppConstants.SELECTED_MID);
                 activity.startActivity(new Intent(activity.getApplicationContext(), ImmunizationActivity.class));
             }
         });

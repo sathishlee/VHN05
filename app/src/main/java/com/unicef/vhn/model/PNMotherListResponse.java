@@ -35,7 +35,8 @@ public class PNMotherListResponse {
     public void setStatus(String status) {
         this.status = status;
     }
-/*new*/
+
+    /*new*/
     public static class VhnAN_Mothers_List {
         private String mLongitude;
         private String mLatitude;
@@ -51,61 +52,79 @@ public class PNMotherListResponse {
         private String mLMP;
         private String mAge;
 
-    public String getUserType() {
-        return userType;
-    }
+        public String getUserType() {
+            return userType;
+        }
 
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
+        public void setUserType(String userType) {
+            this.userType = userType;
+        }
 
-    private String userType;
-
-
+        private String userType;
 
 
+        public VhnAN_Mothers_List(String mLongitude, String mLatitude, String vhnId, String mid, String mPicmeId, String mName, String motherType, String vLatitude, String vLongitude, String mMotherMobile, String mPhoto, String mLMP, String pnId, String mAge, String userType) {
+            this.mLongitude = mLongitude;
+            this.mLatitude = mLatitude;
+            this.vhnId = vhnId;
+            this.mid = mid;
+            this.mPicmeId = mPicmeId;
+            this.mName = mName;
+            this.motherType = motherType;
+            this.vLatitude = vLatitude;
+            this.vLongitude = vLongitude;
+            this.mMotherMobile = mMotherMobile;
+            this.mPhoto = mPhoto;
+            this.mLMP = mLMP;
+            this.pnId = pnId;
+            this.mAge = mAge;
+            this.userType = userType;
+        }
 
-    public VhnAN_Mothers_List(String mLongitude, String mLatitude, String vhnId, String mid, String mPicmeId, String mName, String motherType, String vLatitude, String vLongitude, String mMotherMobile, String mPhoto, String mLMP, String pnId, String mAge, String userType) {
-        this.mLongitude = mLongitude;
-        this.mLatitude = mLatitude;
-        this.vhnId = vhnId;
-        this.mid = mid;
-        this.mPicmeId = mPicmeId;
-        this.mName = mName;
-        this.motherType = motherType;
-        this.vLatitude = vLatitude;
-        this.vLongitude = vLongitude;
-        this.mMotherMobile = mMotherMobile;
-        this.mPhoto = mPhoto;
-        this.mLMP = mLMP;
-        this.pnId = pnId;
-        this.mAge = mAge;
-        this.userType = userType;
-    }
+        public VhnAN_Mothers_List() {
 
-    public VhnAN_Mothers_List() {
+        }
 
-    }
-    public String getmAge() {
-        return mAge;
-    }
+        public String getmAge() {
+            return mAge;
+        }
 
-    public void setmAge(String mAge) {
-        this.mAge = mAge;
-    }
+        public void setmAge(String mAge) {
+            this.mAge = mAge;
+        }
 
-    public String getmPhoto(){return mPhoto;}
-        public void setmPhoto(String mPhoto){this.mPhoto = mPhoto;}
+        public String getmPhoto() {
+            return mPhoto;
+        }
+
+        public void setmPhoto(String mPhoto) {
+            this.mPhoto = mPhoto;
+        }
 
 
-        public String getvLatitude(){return vLatitude;}
-        public void setvLatitude(String vLatitude){this.vLatitude = vLatitude;}
+        public String getvLatitude() {
+            return vLatitude;
+        }
 
-        public String getmMotherMobile(){return mMotherMobile;}
-        public void setmMotherMobile(String mMotherMobile){this.mMotherMobile = mMotherMobile;}
+        public void setvLatitude(String vLatitude) {
+            this.vLatitude = vLatitude;
+        }
 
-        public String getvLongitude(){return vLongitude;}
-        public void setvLongitude(String vLongitude){this.vLongitude = vLongitude;}
+        public String getmMotherMobile() {
+            return mMotherMobile;
+        }
+
+        public void setmMotherMobile(String mMotherMobile) {
+            this.mMotherMobile = mMotherMobile;
+        }
+
+        public String getvLongitude() {
+            return vLongitude;
+        }
+
+        public void setvLongitude(String vLongitude) {
+            this.vLongitude = vLongitude;
+        }
 
         public String getMotherType() {
             return motherType;
@@ -174,10 +193,11 @@ public class PNMotherListResponse {
             this.mName = mName;
         }
 
-        public String getMlmp(){
+        public String getMlmp() {
             return mLMP;
         }
-        public void setMlmp(String mLMP){
+
+        public void setMlmp(String mLMP) {
             this.mLMP = mLMP;
         }
     }

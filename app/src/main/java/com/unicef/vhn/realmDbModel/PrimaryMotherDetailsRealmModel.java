@@ -5,7 +5,6 @@ import io.realm.RealmObject;
 public class PrimaryMotherDetailsRealmModel extends RealmObject {
 
 
-
     private String status;
     private String mobileCheck;
     private String vhnStatus;
@@ -138,7 +137,6 @@ public class PrimaryMotherDetailsRealmModel extends RealmObject {
     public void setTrasVhnId(String trasVhnId) {
         this.trasVhnId = trasVhnId;
     }
-
 
 
     public String getMessage() {

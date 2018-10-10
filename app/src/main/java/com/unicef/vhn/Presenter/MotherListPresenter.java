@@ -37,6 +37,7 @@ public class MotherListPresenter implements MotherListInteractor {
     Context context;
     MotherListsViews motherListsViews;
     Realm realm;
+
     public MotherListPresenter(Context context, MotherListsViews motherListsViews, Realm realm) {
         this.context = context;
         this.motherListsViews = motherListsViews;
@@ -53,7 +54,7 @@ public class MotherListPresenter implements MotherListInteractor {
             public void onResponse(String response) {
                 motherListsViews.hideProgress();
                 motherListsViews.showLoginSuccess(response);
-                try{
+                try {
                     JSONObject mJsnobject = new JSONObject(response);
                     String status = mJsnobject.getString("status");
                     String message = mJsnobject.getString("message");
@@ -71,7 +72,7 @@ public class MotherListPresenter implements MotherListInteractor {
                         PNMMotherListRealmModel pnmMotherListRealmModel;
 
                         if (jsonArray.length() != 0) {
-                             realm.beginTransaction();
+                            realm.beginTransaction();
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 pnmMotherListRealmModel = realm.createObject(PNMMotherListRealmModel.class);
 
@@ -113,7 +114,7 @@ public class MotherListPresenter implements MotherListInteractor {
                     }
 //                                    motherListsViews.hideProgress();
 
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

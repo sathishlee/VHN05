@@ -5,6 +5,6 @@ package com.unicef.vhn.Interface;
  */
 
 public interface MakeCallInterface {
-    public  void makeCall(String response);
+    public void makeCall(String response);
 
 }

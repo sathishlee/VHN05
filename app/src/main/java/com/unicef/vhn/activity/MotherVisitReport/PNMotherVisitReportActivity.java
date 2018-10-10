@@ -73,7 +73,7 @@ public class PNMotherVisitReportActivity extends AppCompatActivity implements Vi
         txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
         txt_no_internet.setVisibility(View.GONE);
 
-        getVisitANMotherPresenter = new GetVisitANMotherPresenter(PNMotherVisitReportActivity.this, this,realm);
+        getVisitANMotherPresenter = new GetVisitANMotherPresenter(PNMotherVisitReportActivity.this, this, realm);
 
         if (checkNetwork.isNetworkAvailable()) {
 
@@ -104,36 +104,36 @@ public class PNMotherVisitReportActivity extends AppCompatActivity implements Vi
                 PNMVisitRealmModel model = userInfoRealmResult.get(i);
                 mPnHbncVisitRecordsModel = new PnHbncVisitRecordsModel.PnMothersVisit();
 
-    mPnHbncVisitRecordsModel.setPnId(model.getPnId());
-    mPnHbncVisitRecordsModel.setMid(model.getMid());
-    mPnHbncVisitRecordsModel.setPicmeId(model.getPicmeId());
-    mPnHbncVisitRecordsModel.setPnVisitNo(model.getPnVisitNo());
-    mPnHbncVisitRecordsModel.setPnDueDate(model.getPnDueDate());
-    mPnHbncVisitRecordsModel.setPnCareProvidedDate(model.getPnCareProvidedDate());
-    mPnHbncVisitRecordsModel.setPnPlace(model.getPnPlace());
-    mPnHbncVisitRecordsModel.setPnAnyComplaints(model.getPnAnyComplaints());
-    mPnHbncVisitRecordsModel.setPnBPSystolic(model.getPnBPSystolic());
-    mPnHbncVisitRecordsModel.setPnBPDiastolic(model.getPnBPDiastolic());
-    mPnHbncVisitRecordsModel.setPnPulseRate(model.getPnPulseRate());
-    mPnHbncVisitRecordsModel.setPnTemp(model.getPnTemp());
-    mPnHbncVisitRecordsModel.setPnEpistomyTear(model.getPnEpistomyTear());
-    mPnHbncVisitRecordsModel.setPnPVDischarge(model.getPnPVDischarge());
-    mPnHbncVisitRecordsModel.setPnBreastFeeding(model.getPnBreastFeeding());
-    mPnHbncVisitRecordsModel.setPnBreastFeedingReason(model.getPnBreastFeedingReason());
-    mPnHbncVisitRecordsModel.setPnBreastExamination(model.getPnBreastExamination());
-    mPnHbncVisitRecordsModel.setPnOutCome(model.getPnOutCome());
-    mPnHbncVisitRecordsModel.setCWeight(model.getCWeight());
-    mPnHbncVisitRecordsModel.setCTemp(model.getCTemp());
-    mPnHbncVisitRecordsModel.setCUmbilicalStump(model.getCUmbilicalStump());
-    mPnHbncVisitRecordsModel.setCCry(model.getCCry());
-    mPnHbncVisitRecordsModel.setCEyes(model.getCEyes());
-    mPnHbncVisitRecordsModel.setCSkin(model.getCSkin());
-    mPnHbncVisitRecordsModel.setCBreastFeeding(model.getCBreastFeeding());
-    mPnHbncVisitRecordsModel.setCBreastFeedingReason(model.getCBreastFeedingReason());
-    mPnHbncVisitRecordsModel.setCOutCome(model.getCOutCome());
-    mPnHbncVisitRecordsList.add(mPnHbncVisitRecordsModel);
+                mPnHbncVisitRecordsModel.setPnId(model.getPnId());
+                mPnHbncVisitRecordsModel.setMid(model.getMid());
+                mPnHbncVisitRecordsModel.setPicmeId(model.getPicmeId());
+                mPnHbncVisitRecordsModel.setPnVisitNo(model.getPnVisitNo());
+                mPnHbncVisitRecordsModel.setPnDueDate(model.getPnDueDate());
+                mPnHbncVisitRecordsModel.setPnCareProvidedDate(model.getPnCareProvidedDate());
+                mPnHbncVisitRecordsModel.setPnPlace(model.getPnPlace());
+                mPnHbncVisitRecordsModel.setPnAnyComplaints(model.getPnAnyComplaints());
+                mPnHbncVisitRecordsModel.setPnBPSystolic(model.getPnBPSystolic());
+                mPnHbncVisitRecordsModel.setPnBPDiastolic(model.getPnBPDiastolic());
+                mPnHbncVisitRecordsModel.setPnPulseRate(model.getPnPulseRate());
+                mPnHbncVisitRecordsModel.setPnTemp(model.getPnTemp());
+                mPnHbncVisitRecordsModel.setPnEpistomyTear(model.getPnEpistomyTear());
+                mPnHbncVisitRecordsModel.setPnPVDischarge(model.getPnPVDischarge());
+                mPnHbncVisitRecordsModel.setPnBreastFeeding(model.getPnBreastFeeding());
+                mPnHbncVisitRecordsModel.setPnBreastFeedingReason(model.getPnBreastFeedingReason());
+                mPnHbncVisitRecordsModel.setPnBreastExamination(model.getPnBreastExamination());
+                mPnHbncVisitRecordsModel.setPnOutCome(model.getPnOutCome());
+                mPnHbncVisitRecordsModel.setCWeight(model.getCWeight());
+                mPnHbncVisitRecordsModel.setCTemp(model.getCTemp());
+                mPnHbncVisitRecordsModel.setCUmbilicalStump(model.getCUmbilicalStump());
+                mPnHbncVisitRecordsModel.setCCry(model.getCCry());
+                mPnHbncVisitRecordsModel.setCEyes(model.getCEyes());
+                mPnHbncVisitRecordsModel.setCSkin(model.getCSkin());
+                mPnHbncVisitRecordsModel.setCBreastFeeding(model.getCBreastFeeding());
+                mPnHbncVisitRecordsModel.setCBreastFeedingReason(model.getCBreastFeedingReason());
+                mPnHbncVisitRecordsModel.setCOutCome(model.getCOutCome());
+                mPnHbncVisitRecordsList.add(mPnHbncVisitRecordsModel);
 
-                    pnhbncVisitRecordsAdapter.notifyDataSetChanged();
+                pnhbncVisitRecordsAdapter.notifyDataSetChanged();
 
             }
 
@@ -163,7 +163,7 @@ public class PNMotherVisitReportActivity extends AppCompatActivity implements Vi
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(getApplicationContext(),PNViewReportsActivity.class));
+                startActivity(new Intent(getApplicationContext(), PNViewReportsActivity.class));
             }
         });
     }
@@ -209,7 +209,7 @@ public class PNMotherVisitReportActivity extends AppCompatActivity implements Vi
 
     @Override
     public void hideProgress() {
-pDialog.dismiss();
+        pDialog.dismiss();
     }
 
     @Override

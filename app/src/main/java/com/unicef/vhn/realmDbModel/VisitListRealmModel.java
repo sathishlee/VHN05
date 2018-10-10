@@ -48,7 +48,6 @@ public class VisitListRealmModel extends RealmObject {
     }
 
 
-
     public String getMtype() {
         return mtype;
     }
@@ -153,7 +152,6 @@ public class VisitListRealmModel extends RealmObject {
     public void setNextVisit(String nextVisit) {
         this.nextVisit = nextVisit;
     }
-
 
 
 }

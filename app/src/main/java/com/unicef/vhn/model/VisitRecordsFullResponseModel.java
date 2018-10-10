@@ -9,16 +9,15 @@ import java.util.ArrayList;
 public class VisitRecordsFullResponseModel {
 
 
-
-
     private String status;
     private String message;
     private String title;
     private ArrayList<VisitRecordsSingleResponseModel> visitRecordsSingleResponseModels;
 
-    public VisitRecordsFullResponseModel(){
+    public VisitRecordsFullResponseModel() {
 
     }
+
     public String getStatus() {
         return status;
     }
@@ -27,28 +26,30 @@ public class VisitRecordsFullResponseModel {
         this.status = status;
     }
 
-    public String getMessage(){
+    public String getMessage() {
         return message;
     }
-    public void setMessage(String message){
+
+    public void setMessage(String message) {
         this.message = message;
     }
 
 
-
-    public ArrayList<VisitRecordsSingleResponseModel> getVisitRecordsSingleResponseModels(){
+    public ArrayList<VisitRecordsSingleResponseModel> getVisitRecordsSingleResponseModels() {
         return visitRecordsSingleResponseModels;
     }
-    public void setVisitRecordsSingleResponseModels(ArrayList<VisitRecordsSingleResponseModel> visitRecordsSingleResponseModels){
+
+    public void setVisitRecordsSingleResponseModels(ArrayList<VisitRecordsSingleResponseModel> visitRecordsSingleResponseModels) {
         this.visitRecordsSingleResponseModels = visitRecordsSingleResponseModels;
     }
 
 
-        public String getTitle(){
-            return title;
-        }
-        public void setTitle (String title){
-            this.title = title;
-        }
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
 }

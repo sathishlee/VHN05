@@ -204,7 +204,12 @@ public class NotificationListResponseModel {
             this.mName = mName;
         }
 
-        public String getmPhoto(){return mPhoto;}
-        public void setmPhoto(String mPhoto){this.mPhoto = mPhoto;}
+        public String getmPhoto() {
+            return mPhoto;
+        }
+
+        public void setmPhoto(String mPhoto) {
+            this.mPhoto = mPhoto;
+        }
     }
 }

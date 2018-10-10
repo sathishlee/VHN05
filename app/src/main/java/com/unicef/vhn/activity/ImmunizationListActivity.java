@@ -61,7 +61,7 @@ import io.realm.RealmResults;
  */
 
 public class ImmunizationListActivity extends AppCompatActivity implements ImmunizationViews {
-String TAG =ImmunizationListActivity.class.getSimpleName();
+    String TAG = ImmunizationListActivity.class.getSimpleName();
     ProgressDialog pDialog;
     ImmunizationPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
@@ -69,7 +69,7 @@ String TAG =ImmunizationListActivity.class.getSimpleName();
     ImmunizationListResponseModel.Immunization_list immunizationList;
 
     private RecyclerView recyclerView;
-    private TextView textView,txt_no_internet,txt_immu_list_count;
+    private TextView textView, txt_no_internet, txt_immu_list_count;
     private ImmunizationListAdapter immunizationListAdapter;
     private LinearLayout llFilter;
 
@@ -80,7 +80,8 @@ String TAG =ImmunizationListActivity.class.getSimpleName();
 
     ArrayList<String> vhnVillageList;
     ArrayList<String> doseList;
-private SwipeRefreshLayout swipeRefreshLayout;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,8 +125,8 @@ private SwipeRefreshLayout swipeRefreshLayout;
         textView = (TextView) findViewById(R.id.txt_no_records_found);
         txt_no_internet = (TextView) findViewById(R.id.txt_no_internet);
         txt_immu_list_count = (TextView) findViewById(R.id.txt_immu_list_count);
-        llFilter =(LinearLayout) findViewById(R.id.ll_filter);
-        swipeRefreshLayout =(SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        llFilter = (LinearLayout) findViewById(R.id.ll_filter);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         immunizationListAdapter = new ImmunizationListAdapter(immunization_lists, ImmunizationListActivity.this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(ImmunizationListActivity.this);
@@ -142,17 +143,17 @@ private SwipeRefreshLayout swipeRefreshLayout;
             builder.setMessage("Record Not Found");
             builder.create();
         }
-swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-    @Override
-    public void onRefresh() {
-        if (checkNetwork.isNetworkAvailable()) {
-            pnMotherListPresenter.getImmunizationList(preferenceData.getVhnCode(), preferenceData.getVhnId(), "1");
-        } else {
-            swipeRefreshLayout.setRefreshing(false);
-            isoffline = true;
-        }
-    }
-});
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (checkNetwork.isNetworkAvailable()) {
+                    pnMotherListPresenter.getImmunizationList(preferenceData.getVhnCode(), preferenceData.getVhnId(), "1");
+                } else {
+                    swipeRefreshLayout.setRefreshing(false);
+                    isoffline = true;
+                }
+            }
+        });
         llFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,7 +168,7 @@ swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener
                 vhnVillageList = new ArrayList<>();
 
                 realm.beginTransaction();
-                RealmResults<ImmuniationListRealmModel> getDoseList=null;
+                RealmResults<ImmuniationListRealmModel> getDoseList = null;
                 getDoseList = realm.where(ImmuniationListRealmModel.class).findAll();
                 vhnVillageList.add("All");
                 for (int i = 0; i < getDoseList.size(); i++) {
@@ -181,7 +182,7 @@ swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener
                         android.R.layout.simple_dropdown_item_1line,
                         vhnVillageList
                 );
-/* android.R.layout.simple_spinner_item,*/
+                /* android.R.layout.simple_spinner_item,*/
                 sp_village_wise.setAdapter(adapter);
 
 
@@ -190,7 +191,7 @@ swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 //                        preferenceData.setVillageName(vhnVillageList.get(position));
 //                        preferenceData.setVillageNamePosition(position);
-                        AppConstants.DOSE_NO_IMMUNIZATION=sp_dose_wise.getSelectedItem().toString();
+                        AppConstants.DOSE_NO_IMMUNIZATION = sp_dose_wise.getSelectedItem().toString();
 //                        Toast.makeText(getApplicationContext(),sp_dose_wise.getSelectedItem().toString(),Toast.LENGTH_LONG).show();
                     }
 
@@ -205,14 +206,14 @@ swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                         AppConstants.VILLAGENAME_IMMUNIZATION = sp_village_wise.getSelectedItem().toString();
-                        }
+                    }
 
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
 
                     }
                 });
-                 btn_cancel.setOnClickListener(new View.OnClickListener() {
+                btn_cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
@@ -245,7 +246,7 @@ swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener
 
     @Override
     public void getImmunizationListSuccess(String response) {
-       Log.e(TAG, "Response Success" + response);
+        Log.e(TAG, "Response Success" + response);
 
         try {
             JSONObject mJsnobject = new JSONObject(response);
@@ -345,9 +346,9 @@ swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener
                 if (jsonArray.length() != 0) {
                     recyclerView.setVisibility(View.VISIBLE);
                     textView.setVisibility(View.GONE);
-                    RealmResults<ImmunizationDeatilsListRealmModel> immunizationDeatilsListRealmModelRealmResults=null;
+                    RealmResults<ImmunizationDeatilsListRealmModel> immunizationDeatilsListRealmModelRealmResults = null;
                     immunizationDeatilsListRealmModelRealmResults = realm.where(ImmunizationDeatilsListRealmModel.class).findAll();
-                    if (immunizationDeatilsListRealmModelRealmResults.size()!=0) {
+                    if (immunizationDeatilsListRealmModelRealmResults.size() != 0) {
                         realm.executeTransaction(new Realm.Transaction() {
                             @Override
                             public void execute(Realm realm) {
@@ -381,8 +382,8 @@ swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener
                     }
                     realm.commitTransaction();
                 }
-            }else{
-                Log.e(TAG,"No Record found");
+            } else {
+                Log.e(TAG, "No Record found");
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -398,20 +399,19 @@ swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener
 
     private void setValueToUI() {
         realm.beginTransaction();
-        RealmResults<ImmuniationListRealmModel> immuniationListRealmModels=null;
-        if (AppConstants.DOSE_NO_IMMUNIZATION.equalsIgnoreCase("All")  && AppConstants.VILLAGENAME_IMMUNIZATION.equalsIgnoreCase("All")){
-      immuniationListRealmModels = realm.where(ImmuniationListRealmModel.class).findAll();
-        }
-        else if  (AppConstants.DOSE_NO_IMMUNIZATION.equalsIgnoreCase("All")  && !AppConstants.VILLAGENAME_IMMUNIZATION.equalsIgnoreCase("All")){
-            immuniationListRealmModels = realm.where(ImmuniationListRealmModel.class).equalTo("mVillage",AppConstants.VILLAGENAME_IMMUNIZATION).findAll();
-        }else if  (!AppConstants.DOSE_NO_IMMUNIZATION.equalsIgnoreCase("All")  && AppConstants.VILLAGENAME_IMMUNIZATION.equalsIgnoreCase("All")){
-            immuniationListRealmModels = realm.where(ImmuniationListRealmModel.class).equalTo("immDoseNumber",AppConstants.DOSE_NO_IMMUNIZATION).findAll();
-        }else{
-            immuniationListRealmModels = realm.where(ImmuniationListRealmModel.class).equalTo("mVillage",AppConstants.VILLAGENAME_IMMUNIZATION).equalTo("immDoseNumber",AppConstants.DOSE_NO_IMMUNIZATION).findAll();
+        RealmResults<ImmuniationListRealmModel> immuniationListRealmModels = null;
+        if (AppConstants.DOSE_NO_IMMUNIZATION.equalsIgnoreCase("All") && AppConstants.VILLAGENAME_IMMUNIZATION.equalsIgnoreCase("All")) {
+            immuniationListRealmModels = realm.where(ImmuniationListRealmModel.class).findAll();
+        } else if (AppConstants.DOSE_NO_IMMUNIZATION.equalsIgnoreCase("All") && !AppConstants.VILLAGENAME_IMMUNIZATION.equalsIgnoreCase("All")) {
+            immuniationListRealmModels = realm.where(ImmuniationListRealmModel.class).equalTo("mVillage", AppConstants.VILLAGENAME_IMMUNIZATION).findAll();
+        } else if (!AppConstants.DOSE_NO_IMMUNIZATION.equalsIgnoreCase("All") && AppConstants.VILLAGENAME_IMMUNIZATION.equalsIgnoreCase("All")) {
+            immuniationListRealmModels = realm.where(ImmuniationListRealmModel.class).equalTo("immDoseNumber", AppConstants.DOSE_NO_IMMUNIZATION).findAll();
+        } else {
+            immuniationListRealmModels = realm.where(ImmuniationListRealmModel.class).equalTo("mVillage", AppConstants.VILLAGENAME_IMMUNIZATION).equalTo("immDoseNumber", AppConstants.DOSE_NO_IMMUNIZATION).findAll();
         }
 
         Log.e("ANTT1 list size ->", immuniationListRealmModels.size() + "");
-        if (immuniationListRealmModels.size()!=0) {
+        if (immuniationListRealmModels.size() != 0) {
             for (int i = 0; i < immuniationListRealmModels.size(); i++) {
                 immunizationList = new ImmunizationListResponseModel.Immunization_list();
                 ImmuniationListRealmModel model = immuniationListRealmModels.get(i);
@@ -420,10 +420,10 @@ swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener
                 immunizationList.setImmDoseNumber(model.getImmDoseNumber());
                 immunizationList.setMid(model.getMid());
                 immunization_lists.add(immunizationList);
-                txt_immu_list_count.setText(getResources().getString(R.string.immunization_lists)+"("+immunization_lists.size()+")");
+                txt_immu_list_count.setText(getResources().getString(R.string.immunization_lists) + "(" + immunization_lists.size() + ")");
                 immunizationListAdapter.notifyDataSetChanged();
             }
-        }else{
+        } else {
             recyclerView.setVisibility(View.GONE);
             textView.setVisibility(View.VISIBLE);
         }

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
 
-public class MotherListAdapterRealmModel extends RealmObject{
+public class MotherListAdapterRealmModel extends RealmObject {
 
     @SerializedName("id")
     private String id;
@@ -49,18 +49,38 @@ public class MotherListAdapterRealmModel extends RealmObject{
         this.pnId = pnId;
     }*/
 
-    public String getmPhoto(){return mPhoto;}
-    public void setmPhoto(String mPhoto){this.mPhoto = mPhoto;}
+    public String getmPhoto() {
+        return mPhoto;
+    }
+
+    public void setmPhoto(String mPhoto) {
+        this.mPhoto = mPhoto;
+    }
 
 
-    public String getvLatitude(){return vLatitude;}
-    public void setvLatitude(String vLatitude){this.vLatitude = vLatitude;}
+    public String getvLatitude() {
+        return vLatitude;
+    }
 
-    public String getmMotherMobile(){return mMotherMobile;}
-    public void setmMotherMobile(String mMotherMobile){this.mMotherMobile = mMotherMobile;}
+    public void setvLatitude(String vLatitude) {
+        this.vLatitude = vLatitude;
+    }
 
-    public String getvLongitude(){return vLongitude;}
-    public void setvLongitude(String vLongitude){this.vLongitude = vLongitude;}
+    public String getmMotherMobile() {
+        return mMotherMobile;
+    }
+
+    public void setmMotherMobile(String mMotherMobile) {
+        this.mMotherMobile = mMotherMobile;
+    }
+
+    public String getvLongitude() {
+        return vLongitude;
+    }
+
+    public void setvLongitude(String vLongitude) {
+        this.vLongitude = vLongitude;
+    }
 
     public String getMotherType() {
         return motherType;

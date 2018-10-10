@@ -45,13 +45,13 @@ public class ImmunizationActivity extends AppCompatActivity implements Immunizat
 //implements MotherListsViews
 
     ProgressDialog pDialog;
-//    MotherListPresenter pnMotherListPresenter;
+    //    MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
     private List<ImmunizationListResponseModel.Immunization_list> immunization_lists;
     ImmunizationListResponseModel.Immunization_list immunizationList;
 
     private RecyclerView recyclerView;
-    private TextView textView,txt_no_internet;
+    private TextView textView, txt_no_internet;
     private ImmunizationAdapter immunizationAdapter;
 
     CheckNetwork checkNetwork;
@@ -59,7 +59,8 @@ public class ImmunizationActivity extends AppCompatActivity implements Immunizat
     ImmunizationPresenter pnMotherListPresenter;
 
 
-Realm realm;
+    Realm realm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,16 +82,16 @@ Realm realm;
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
-        checkNetwork =new CheckNetwork(this);
+        checkNetwork = new CheckNetwork(this);
 //        pnMotherListPresenter = new MotherListPresenter(ImmunizationActivity.this, this);
 //        pnMotherListPresenter.getSelectedImmuMother(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
 
 
         pnMotherListPresenter = new ImmunizationPresenter(ImmunizationActivity.this, this);
-        if (checkNetwork.isNetworkAvailable()){
+        if (checkNetwork.isNetworkAvailable()) {
             pnMotherListPresenter.getSelectedImmuMother(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
-        }else{
-            isoffline=true;
+        } else {
+            isoffline = true;
         }
 
         immunization_lists = new ArrayList<>();
@@ -104,22 +105,22 @@ Realm realm;
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(immunizationAdapter);
 
-if (isoffline) {
+        if (isoffline) {
 //        getRealmData();
-    txt_no_internet.setVisibility(View.VISIBLE);
-}else{
-    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    builder.setMessage("Record Not Found");
-    builder.create();
-}
+            txt_no_internet.setVisibility(View.VISIBLE);
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Record Not Found");
+            builder.create();
+        }
     }
 
     private void getRealmData() {
-        Log.e(ImmunizationActivity.class.getSimpleName(),"  AppConstants.SELECTED_MID "+  AppConstants.SELECTED_MID );
+        Log.e(ImmunizationActivity.class.getSimpleName(), "  AppConstants.SELECTED_MID " + AppConstants.SELECTED_MID);
 
         realm.beginTransaction();
-        RealmResults<ImmunizationDeatilsListRealmModel> immuniationListRealmModels = realm.where(ImmunizationDeatilsListRealmModel.class).equalTo("mid",AppConstants.SELECTED_MID).findAll();
-        Log.e(ImmunizationActivity.class.getSimpleName(),"Immunization realm size ->"+ immuniationListRealmModels.size() + "");
+        RealmResults<ImmunizationDeatilsListRealmModel> immuniationListRealmModels = realm.where(ImmunizationDeatilsListRealmModel.class).equalTo("mid", AppConstants.SELECTED_MID).findAll();
+        Log.e(ImmunizationActivity.class.getSimpleName(), "Immunization realm size ->" + immuniationListRealmModels.size() + "");
         for (int i = 0; i < immuniationListRealmModels.size(); i++) {
             immunizationList = new ImmunizationListResponseModel.Immunization_list();
 
@@ -144,7 +145,7 @@ if (isoffline) {
 //            immunization_lists.add(immunizationList);
 //            immunizationAdapter.notifyDataSetChanged();
         }
-        Log.e(ImmunizationActivity.class.getSimpleName(),"immunization_lists  size ->"+ immunization_lists.size() + "");
+        Log.e(ImmunizationActivity.class.getSimpleName(), "immunization_lists  size ->" + immunization_lists.size() + "");
 
         realm.commitTransaction();
 
@@ -158,12 +159,12 @@ if (isoffline) {
 
     @Override
     public void showProgress() {
-       pDialog.show();
+        pDialog.show();
     }
 
     @Override
     public void hideProgress() {
-pDialog.dismiss();
+        pDialog.dismiss();
     }
 
     @Override
@@ -191,7 +192,7 @@ pDialog.dismiss();
             String message = mJsnobject.getString("message");
             if (status.equalsIgnoreCase("1")) {
                 JSONArray jsonArray = mJsnobject.getJSONArray("immunization_list");
-                Log.e(ImmunizationActivity.class.getSimpleName(),"immunization_list size success "+jsonArray.length());
+                Log.e(ImmunizationActivity.class.getSimpleName(), "immunization_list size success " + jsonArray.length());
                 if (jsonArray.length() != 0) {
                     /*
                     recyclerView.setVisibility(View.VISIBLE);
@@ -258,9 +259,9 @@ pDialog.dismiss();
                         immunization_lists.add(immunizationList);
                         immunizationAdapter.notifyDataSetChanged();
                     }
-                    Log.e(ImmunizationActivity.class.getSimpleName(),"immunization_lists size"+immunization_lists.size());
+                    Log.e(ImmunizationActivity.class.getSimpleName(), "immunization_lists size" + immunization_lists.size());
                 }
-            }else{
+            } else {
 
             }
         } catch (JSONException e) {

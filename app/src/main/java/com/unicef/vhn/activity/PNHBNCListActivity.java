@@ -103,7 +103,7 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
 
         textView = (TextView) findViewById(R.id.txt_no_records_found);
 
-        mAdapter = new MotherListAdapter(mResult, PNHBNCListActivity.this, "PN", this,this);
+        mAdapter = new MotherListAdapter(mResult, PNHBNCListActivity.this, "PN", this, this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(PNHBNCListActivity.this);
         mother_recycler_view.setLayoutManager(mLayoutManager);
@@ -296,7 +296,6 @@ public class PNHBNCListActivity extends AppCompatActivity implements MotherLists
                 return;
         }
     }
-
 
 
     @Override

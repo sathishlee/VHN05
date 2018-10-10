@@ -19,12 +19,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.HomePresenter;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 import com.unicef.vhn.application.RealmController;
+import com.unicef.vhn.constant.Apiconstants;
 import com.unicef.vhn.constant.AppConstants;
+import com.unicef.vhn.utiltiy.RoundedTransformation;
 import com.unicef.vhn.view.MotherListsViews;
 
 import io.realm.Realm;
@@ -34,7 +39,7 @@ import org.json.JSONObject;
 public class SosMotherDetailsActivity extends AppCompatActivity implements MotherListsViews, View.OnClickListener {
     TextView txt_username, txt_picme_id, txt_age, txt_risk, txt_message, txt_husb_name, txt_mother_name_call;
     String strMotherName, strPicmeId, strAge, strRisk, strMessage, strMobileNo, strAltMobileNo, strLatitude, strLongitude, strMotherType;
-    ImageView img_call_1, img_call_2;
+    ImageView img_call_1, img_call_2,cardview_image;
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
@@ -99,7 +104,7 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
 
 
         pnMotherListPresenter = new MotherListPresenter(SosMotherDetailsActivity.this, this, realm);
-
+        cardview_image = (ImageView) findViewById(R.id.cardview_image);
         viewHighRisk = (LinearLayout) findViewById(R.id.ll_high_an_risk_status);
         viewLowRisk = (LinearLayout) findViewById(R.id.ll_low_an_risk_status);
         txt_username = (TextView) findViewById(R.id.txt_username);
@@ -216,6 +221,20 @@ public class SosMotherDetailsActivity extends AppCompatActivity implements Mothe
                 } else {
                     strMotherType = mJsnobject_vhnSOSDetails.getString("motherType");
                 }
+
+              String  str_mPhoto = mJsnobject_vhnSOSDetails.getString("mPhoto");
+
+                Picasso.with(this)
+                        .load(Apiconstants.MOTHER_PHOTO_URL + str_mPhoto)
+                        .placeholder(R.drawable.girl)
+                        .fit()
+                        .centerCrop()
+                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+                        .networkPolicy(NetworkPolicy.NO_CACHE)
+                        .transform(new RoundedTransformation(90, 4))
+                        .error(R.drawable.girl)
+                        .into(cardview_image);
+
                 Log.d(SosMotherDetailsActivity.class.getSimpleName(), "strLatitude" + strLatitude);
                 Log.d(SosMotherDetailsActivity.class.getSimpleName(), "strLongitude" + strLongitude);
             } else {

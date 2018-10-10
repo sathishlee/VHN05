@@ -30,16 +30,16 @@ public class SlidingImage_Adapter extends PagerAdapter {
 
     public SlidingImage_Adapter(Context context, ArrayList<String> IMAGES) {
         this.context = context;
-        preferenceData =new PreferenceData(context);
-        this.IMAGES=IMAGES;
+        preferenceData = new PreferenceData(context);
+        this.IMAGES = IMAGES;
         inflater = LayoutInflater.from(context);
-        Log.e(SlidingImage_Adapter.class.getSimpleName(),IMAGES.size()+"");
-
+        Log.e(SlidingImage_Adapter.class.getSimpleName(), IMAGES.size() + "");
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
+
     }
 
     @Override
@@ -57,23 +57,22 @@ public class SlidingImage_Adapter extends PagerAdapter {
 
 
 //        imageView.setImageResource(Integer.parseInt());
-        String imgageUrl="";
-if (AppConstants.ISPNVISIT){
-    imgageUrl=Apiconstants.PN_VISIT_REPORTS_URL+ AppConstants.MOTHER_PICME_ID+"/"+IMAGES.get(position);
-}else{
-    imgageUrl=Apiconstants.VISIT_REPORTS_URL+ AppConstants.MOTHER_PICME_ID+"/"+IMAGES.get(position);
-}
+        String imgageUrl = "";
+        if (AppConstants.ISPNVISIT) {
+            imgageUrl = Apiconstants.PN_VISIT_REPORTS_URL + AppConstants.MOTHER_PICME_ID + "/" + IMAGES.get(position);
+        } else {
+            imgageUrl = Apiconstants.VISIT_REPORTS_URL + AppConstants.MOTHER_PICME_ID + "/" + IMAGES.get(position);
+        }
 
-            Picasso.with(this.context)
-                    .load(imgageUrl)
-                    .placeholder(R.drawable.no_image)
-                    .fit()
-                    .centerCrop()
-                    .memoryPolicy(MemoryPolicy.NO_CACHE)
-                    .networkPolicy(NetworkPolicy.NO_CACHE)
-                    .error(R.drawable.no_image)
-                    .into(imageView);
-
+        Picasso.with(this.context)
+                .load(imgageUrl)
+                .placeholder(R.drawable.no_image)
+                .fit()
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
+                .error(R.drawable.no_image)
+                .into(imageView);
+//   .centerCrop().
         view.addView(imageLayout, 0);
 
         return imageLayout;

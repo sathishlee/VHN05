@@ -52,7 +52,8 @@ public class MothersPrimaryRecordsActivity extends AppCompatActivity implements 
     Realm realm;
     PrimaryMotherDetailsRealmModel primaryMotherDetailsRealmModel;
     TextView txt_no_internet, txt_no_records_found;
-LinearLayout ll_primary_view;
+    LinearLayout ll_primary_view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +82,7 @@ LinearLayout ll_primary_view;
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
-        ll_primary_view =(LinearLayout)findViewById(R.id.ll_primary_view);
+        ll_primary_view = (LinearLayout) findViewById(R.id.ll_primary_view);
         motherPrimaryRegisterPresenter = new MotherPrimaryRegisterPresenter(MothersPrimaryRecordsActivity.this, this);
 //        motherPrimaryRegisterPresenter.getAllMotherPrimaryRegistration(preferenceData.getPicmeId());
         if (checkNetwork.isNetworkAvailable()) {
@@ -511,7 +512,7 @@ LinearLayout ll_primary_view;
                 if (jObj.getString("mHeight").equalsIgnoreCase("null")) {
                     txt_height.setText("-");
                 } else {
-                    txt_height.setText(jObj.getString("mHeight"));
+                    txt_height.setText(jObj.getString("mHeight")+"cms");
                 }
                 if (jObj.getString("mBloodGroup").equalsIgnoreCase("null")) {
                     txt_blood_group.setText("-");
@@ -538,15 +539,15 @@ LinearLayout ll_primary_view;
                 } else {
                     txt_hus_blood_group.setText(jObj.getString("hBloodGroup"));
                 }
-                if (jObj.getString("hVDRL").equalsIgnoreCase("-")) {
+                if (jObj.getString("hHIV").equalsIgnoreCase("null")) {
                     txt_hus_hiv.setText("-");
                 } else {
-                    txt_hus_hiv.setText(jObj.getString("hVDRL"));
+                    txt_hus_hiv.setText(jObj.getString("hHIV"));
                 }
-                if (jObj.getString("hHIV").equalsIgnoreCase("null")) {
+                if (jObj.getString("hVDRL").equalsIgnoreCase("null")) {
                     txt_hus_vdrl.setText("-");
                 } else {
-                    txt_hus_vdrl.setText(jObj.getString("hHIV"));
+                    txt_hus_vdrl.setText(jObj.getString("hVDRL"));
                 }
                 if (jObj.getString("hHepatitis").equalsIgnoreCase("null")) {
                     txt_hus_Hepatitis.setText("-");
@@ -562,6 +563,9 @@ LinearLayout ll_primary_view;
                             realm.delete(PrimaryMotherDetailsRealmModel.class);
                         }
                     });
+                }
+                if (realm.isInTransaction()) {
+                    realm.cancelTransaction();
                 }
                 realm.beginTransaction();
 

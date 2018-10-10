@@ -54,7 +54,7 @@ public class TodayVisitFragment extends Fragment implements MotherListsViews, Ma
     VisitListResponseModel.Vhn_current_visits mresponseResult;
 
     private RecyclerView mother_recycler_view;
-    private TextView txt_no_records_found,txt_today_visit_size;
+    private TextView txt_no_records_found, txt_today_visit_size;
     private VisitListAdapter mAdapter;
 
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
@@ -167,9 +167,9 @@ public class TodayVisitFragment extends Fragment implements MotherListsViews, Ma
 
                     mResult.clear();
                     realm.beginTransaction();       //create or open
-                    VisitListRealmModel visitListRealmModels=null;
+                    VisitListRealmModel visitListRealmModels = null;
                     for (int i = 0; i < jsonArray.length(); i++) {
-                          visitListRealmModels  = realm.createObject(VisitListRealmModel.class);  //this will create a UserInfoRealmModel object which will be inserted in database
+                        visitListRealmModels = realm.createObject(VisitListRealmModel.class);  //this will create a UserInfoRealmModel object which will be inserted in database
 
                         mresponseResult = new VisitListResponseModel.Vhn_current_visits();
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -208,7 +208,7 @@ public class TodayVisitFragment extends Fragment implements MotherListsViews, Ma
 //                        mAdapter.notifyDataSetChanged();
 
                     }
-realm.commitTransaction();
+                    realm.commitTransaction();
                 } else {
                     mother_recycler_view.setVisibility(View.GONE);
                     txt_no_records_found.setVisibility(View.VISIBLE);
@@ -226,7 +226,7 @@ realm.commitTransaction();
 
     private void setValuetoUI() {
         mResult.clear();
-        if (realm.isInTransaction()){
+        if (realm.isInTransaction()) {
             realm.cancelTransaction();
         }
         realm.beginTransaction();
@@ -251,21 +251,21 @@ realm.commitTransaction();
 
                 mresponseResult = new VisitListResponseModel.Vhn_current_visits();
 
-                mresponseResult.setNoteId( model.getNoteId());
+                mresponseResult.setNoteId(model.getNoteId());
                 mresponseResult.setMid(model.getMid());
                 mresponseResult.setMasterId(model.getMasterId());
                 mresponseResult.setMName(model.getMName());
                 mresponseResult.setPicmeId(model.getPicmeId());
                 mresponseResult.setVhnId(model.getVhnId());
                 mresponseResult.setMMotherMobile(model.getMMotherMobile());
-                mresponseResult.setNextVisit( model.getNextVisit());
-                mresponseResult.setMtype( model.getMtype());
-                mresponseResult.setMonth( model.getMonth());
+                mresponseResult.setNextVisit(model.getNextVisit());
+                mresponseResult.setMtype(model.getMtype());
+                mresponseResult.setMonth(model.getMonth());
 
 
                 mResult.add(mresponseResult);
                 mAdapter.notifyDataSetChanged();
-                txt_today_visit_size.setText(getResources().getString(R.string.today_visit_list)+"("+mResult.size()+")");
+                txt_today_visit_size.setText(getResources().getString(R.string.today_visit_list) + "(" + mResult.size() + ")");
 
 //                mresponseResult = new VisitListResponseModel.Vhn_current_visits();
 

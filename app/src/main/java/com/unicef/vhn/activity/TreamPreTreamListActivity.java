@@ -59,7 +59,7 @@ public class TreamPreTreamListActivity extends AppCompatActivity implements Moth
     }
 
     private void initUI() {
-checkNetwork =new CheckNetwork(this);
+        checkNetwork = new CheckNetwork(this);
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
@@ -68,8 +68,8 @@ checkNetwork =new CheckNetwork(this);
 //        pnMotherListPresenter.getPNMotherList("V10001","1");
         if (checkNetwork.isNetworkAvailable()) {
             pnMotherListPresenter.getTremAndPreTremMothersList(preferenceData.getVhnCode(), preferenceData.getVhnId());
-        }else{
-            isoffline=true;
+        } else {
+            isoffline = true;
         }
         mResult = new ArrayList<>();
         mother_recycler_view = (RecyclerView) findViewById(R.id.mother_recycler_view);
@@ -89,7 +89,6 @@ checkNetwork =new CheckNetwork(this);
             builder.create();
         }
     }
-
 
 
     private void showActionBar() {
@@ -193,15 +192,15 @@ checkNetwork =new CheckNetwork(this);
             TreamPreTreamListRealmModel model = antt1listRealmResult.get(i);
 
 
-      mresponseResult.setMid(model.getMid());
-                        mresponseResult.setDInfantId(model.getDInfantId());
-                        mresponseResult.setDdatetime(model.getDdatetime());
-                        mresponseResult.setDtime(model.getDtime());
-                        mresponseResult.setmName(model.getmName());
-                        mresponseResult.setDBirthDetails(model.getDBirthDetails());
+            mresponseResult.setMid(model.getMid());
+            mresponseResult.setDInfantId(model.getDInfantId());
+            mresponseResult.setDdatetime(model.getDdatetime());
+            mresponseResult.setDtime(model.getDtime());
+            mresponseResult.setmName(model.getmName());
+            mresponseResult.setDBirthDetails(model.getDBirthDetails());
 
-                        mResult.add(mresponseResult);
-                        mAdapter.notifyDataSetChanged();
+            mResult.add(mresponseResult);
+            mAdapter.notifyDataSetChanged();
         }
         realm.commitTransaction();
     }

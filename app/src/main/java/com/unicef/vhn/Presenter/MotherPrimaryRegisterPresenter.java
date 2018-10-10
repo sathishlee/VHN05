@@ -36,8 +36,6 @@ public class MotherPrimaryRegisterPresenter implements MotherPrimaryRegisterInte
     }
 
 
-
-
     @Override
     public void getAllMotherPrimaryRegistration(final String picmeId) {
 

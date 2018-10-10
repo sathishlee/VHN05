@@ -176,7 +176,7 @@ public class ProfilePresenter implements ProfileInteractor {
     }
 
     @Override
-    public void postVHNProfile(final  String vhnId, final  String vhnCode, final String vhnAddress, final String vhnMobile) {
+    public void postVHNProfile(final String vhnId, final String vhnCode, final String vhnAddress, final String vhnMobile) {
 
         profileViews.showProgress();
 

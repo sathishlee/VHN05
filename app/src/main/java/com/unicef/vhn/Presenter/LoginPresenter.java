@@ -21,7 +21,7 @@ import java.util.Map;
  * Created by sathish on 3/20/2018.
  */
 
-public class LoginPresenter implements LoginInteractor{
+public class LoginPresenter implements LoginInteractor {
     private LoginViews view;
     private Activity activity;
 
@@ -36,48 +36,49 @@ public class LoginPresenter implements LoginInteractor{
                       final String versionCode) {
         view.showProgress();
         String url = Apiconstants.BASE_URL + Apiconstants.LOG_IN_CHECK;
-        Log.e("Log in check Url--->",url);
-        Log.e("strVhnId--->",strVhnId);
-        Log.e("strPassword--->",strPassword);
-        Log.e("Device Id-->",strdeviceId);
-        Log.e("mobileCheck-->",mobileCheck);
-        Log.e("vLatitude-->",vLatitude);
-        Log.e("vLongitude-->",vLongitude);
-        Log.e("versionCode-->",versionCode);
+        Log.e("Log in check Url--->", url);
+        Log.e("strVhnId--->", strVhnId);
+        Log.e("strPassword--->", strPassword);
+        Log.e("Device Id-->", strdeviceId);
+        Log.e("mobileCheck-->", mobileCheck);
+        Log.e("vLatitude-->", vLatitude);
+        Log.e("vLongitude-->", vLongitude);
+        Log.e("versionCode-->", versionCode);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-view.hideProgress();
-                Log.d("Log in success",response);
+                view.hideProgress();
+                Log.d("Log in success", response);
                 view.showLoginSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-view.hideProgress();
-                Log.d("Log in Error",error.toString());
+                view.hideProgress();
+                Log.d("Log in Error", error.toString());
                 view.showLoginError(error.toString());
             }
-        }){
+        }) {
 
 
             @Override
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("vhnCode",strVhnId);
-                params.put("vhnPassword",strPassword);
-                params.put("deviceId",strdeviceId);
-                params.put("mobileCheck",mobileCheck);
-                params.put("vLatitude",vLatitude);
-                params.put("vLongitude",vLongitude);
-                params.put("appversion",versionCode);
+                params.put("vhnCode", strVhnId);
+                params.put("vhnPassword", strPassword);
+                params.put("deviceId", strdeviceId);
+                params.put("mobileCheck", mobileCheck);
+                params.put("vLatitude", vLatitude);
+                params.put("vLongitude", vLongitude);
+                params.put("appversion", versionCode);
 
-                Log.e("params--->",params.toString());
+                Log.e("params--->", params.toString());
 
                 return params;
             }
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 String credentials = "admin" + ":" + "1234";
@@ -85,7 +86,7 @@ view.hideProgress();
                 HashMap<String, String> header = new HashMap<>();
 //                header.put("Content-Type", "application/x-www-from-urlencoded; charset=utf-8");
                 header.put("Authorization", "Basic " + base64EncodedCredentials);
-                Log.d("Credentials ","Basic " +base64EncodedCredentials.toString());
+                Log.d("Credentials ", "Basic " + base64EncodedCredentials.toString());
 
                 return header;
             }

@@ -10,14 +10,14 @@ public class AppConstants {
     public static boolean ISHOMEALREDYCLICKED = false;
     public static String NEAR_LATITUDE = "";
     public static String NEAR_LONGITUDE = "";
-    public static   int isfromhome=0;
-    public static String PNMotherDetails="";
-    public static String GET_MOTHER_LIST_TYPE="";
-    public static String MOTHER_LIST_TITLE="";
-    public static String ANTT_1_LIST="";
-    public static String ANTT_1_TITLE="";
-    public static String ANTT_2_LIST="";
-    public static String ANTT_2_TITLE="";
+    public static int isfromhome = 0;
+    public static String PNMotherDetails = "";
+    public static String GET_MOTHER_LIST_TYPE = "";
+    public static String MOTHER_LIST_TITLE = "";
+    public static String ANTT_1_LIST = "";
+    public static String ANTT_1_TITLE = "";
+    public static String ANTT_2_LIST = "";
+    public static String ANTT_2_TITLE = "";
 
 
     public static final String PICME_ID = "mPicmeId";
@@ -51,28 +51,30 @@ public class AppConstants {
     public static final String NOTIFICATION_COUNT = "0";
 
 
+    public static String ISHIGHRISK = "isHighRisk";
+    public static String ISDECENDING = "isDecending";
+    public static String VILLAGENAME = "villageName";
+    public static String TERMISTER = "termister";
+    public static String TERMISTER_POSITION = "0";
+    public static String VILLAGENAME_POSITION = "0";
 
-    public static String ISHIGHRISK="isHighRisk";
-    public static String ISDECENDING="isDecending";
-    public static String VILLAGENAME="villageName";
-    public static String TERMISTER="termister";
-    public static String TERMISTER_POSITION="0";
-    public static String VILLAGENAME_POSITION="0";
-
-    public static String VILLAGENAME_IMMUNIZATION="All";
-    public static String DOSE_NO_IMMUNIZATION="All";
-
+    public static String VILLAGENAME_IMMUNIZATION = "All";
+    public static String DOSE_NO_IMMUNIZATION = "All";
 
 
-    public static boolean IS_MOTHER_LIST=false;
-    public static boolean IS_TODAY_VIST_LIST=false;
-    public static String SELECTED_VISIT_NOTE_ID="";
+    public static boolean IS_MOTHER_LIST = false;
+    public static boolean IS_TODAY_VIST_LIST = false;
+    public static String SELECTED_VISIT_NOTE_ID = "";
 
-    public static final String LANGUAGE="ta";
-
-
-
-    public static String selectedUserType="All";
+    public static final String LANGUAGE = "ta";
 
 
+    public static String selectedUserType = "All";
+
+    public static int SELECTED_IMAGE_POSITION = 0;
+
+
+    public static String selectedFullViewImageUri = "All";
+
+    public static String OPENFRAGMENT="";
 }

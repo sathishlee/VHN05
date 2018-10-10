@@ -27,8 +27,6 @@ public interface MotherListInteractor {
     void getANTT2MotherList(String vhnCode, String vhnId);
 
 
-
-
     void getPNHBNCDUEMotherList(String vhnCode, String vhnId, String tempCount);
 
     void getMigratedMothersList(String vhnCode, String vhnId);

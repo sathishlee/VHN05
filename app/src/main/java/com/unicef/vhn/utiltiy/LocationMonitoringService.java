@@ -99,15 +99,15 @@ public class LocationMonitoringService extends Service implements
 
             return;
         }
-      LocationServices.FusedLocationApi.requestLocationUpdates(mLocationClient, mLocationRequest, this);
+        LocationServices.FusedLocationApi.requestLocationUpdates(mLocationClient, mLocationRequest, this);
 
         Log.d(TAG, "Connected to Google API");
     }
 
     /*
-         * LOCATION CALLBACKS
-         */
-/* LOCATION CALLBACKS*//*
+     * LOCATION CALLBACKS
+     */
+    /* LOCATION CALLBACKS*//*
 
 
 

@@ -35,6 +35,7 @@ import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.unicef.vhn.Preference.PreferenceData;
 import com.unicef.vhn.Presenter.HomePresenter;
+import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.R;
 //import com.unicef.vhn.activity.HighRiskListActivity;
 import com.unicef.vhn.activity.*;
@@ -79,9 +80,14 @@ public class home extends Fragment implements MotherListsViews {
 
     SwipeRefreshLayout swipeRefreshLayout;
 
-    TextView txt_no_internet,txt_no_records_found;
+    TextView txt_no_internet, txt_no_records_found;
 
     LinearLayout ll_view_block;
+
+
+
+    MotherListPresenter pnMotherListPresenter;
+
     public static home newInstance() {
         home fragment = new home();
         return fragment;
@@ -95,7 +101,7 @@ public class home extends Fragment implements MotherListsViews {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_new, container, false);
-        ll_view_block =view.findViewById(R.id.ll_view_block);
+        ll_view_block = view.findViewById(R.id.ll_view_block);
         ll_view_block.setVisibility(View.GONE);
         realm = RealmController.with(getActivity()).getRealm(); // opens "myrealm.realm"
 
@@ -251,7 +257,12 @@ public class home extends Fragment implements MotherListsViews {
             }
         });
 
+        pnMotherListPresenter = new MotherListPresenter(getActivity(), this, realm);
 
+        if (checkNetwork.isNetworkAvailable()) {
+            pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_LIST,
+                    preferenceData.getVhnCode(), preferenceData.getVhnId());
+        }
         return view;
 
     }
@@ -264,20 +275,20 @@ public class home extends Fragment implements MotherListsViews {
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(getActivity());
-        homePresenter = new HomePresenter(getActivity(), this,realm);
+        homePresenter = new HomePresenter(getActivity(), this, realm);
         context = getActivity();
 
 
-        txt_no_internet =(TextView) view.findViewById(R.id.txt_no_internet);
+        txt_no_internet = (TextView) view.findViewById(R.id.txt_no_internet);
         txt_no_internet.setVisibility(View.GONE);
 
-        txt_no_records_found =(TextView) view.findViewById(R.id.txt_no_records_found);
+        txt_no_records_found = (TextView) view.findViewById(R.id.txt_no_records_found);
         txt_no_records_found.setVisibility(View.GONE);
 
         userImageProfile = (ImageView) view.findViewById(R.id.userImageProfile);
 
         img_mother_count = (ImageView) view.findViewById(R.id.img_mother_count);
-swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
 //        txt_no_internet = view.findViewById(R.id.txt_no_internet);
 //        txt_no_internet.setVisibility(View.GONE);
 
@@ -567,13 +578,13 @@ swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_l
 
     private void setValueToUI() {
 
-if (realm.isInTransaction()){
-    realm.cancelTransaction();
-}
+        if (realm.isInTransaction()) {
+            realm.cancelTransaction();
+        }
         realm.beginTransaction();
         RealmResults<DashBoardRealmModel> userInfoRealmResult = realm.where(DashBoardRealmModel.class).findAll();
 
-        if (userInfoRealmResult.size()==0){
+        if (userInfoRealmResult.size() == 0) {
             txt_no_records_found.setVisibility(View.VISIBLE);
         }
         for (int i = 0; i < userInfoRealmResult.size(); i++) {
@@ -610,10 +621,10 @@ if (realm.isInTransaction()){
             txt_antt_2_due.setText(model.getANTT2() + "");
             txt_pnhbnc_due.setText(model.getPnhbncCount() + "");
 
-            but_an_mother_total_count.setText(getResources().getString(R.string.total) +" "+ model.getANMothersCount() + "");
-            but_an_mother_high_risk_count.setText(getResources().getString(R.string.high_risk_home) +" "+ model.getANMotherRiskCount() + "");
-            but_an_mother_pn_hbnc_totlal_count.setText(getResources().getString(R.string.total)+" " + model.getPNMotherCount() + "");
-            but_an_mother_pn_hbnc_term_preterm_count.setText(getResources().getString(R.string.preterm)+" " + model.getTermsCount() + "");
+            but_an_mother_total_count.setText(getResources().getString(R.string.total) + " " + model.getANMothersCount() + "");
+            but_an_mother_high_risk_count.setText(getResources().getString(R.string.high_risk_home) + " " + model.getANMotherRiskCount() + "");
+            but_an_mother_pn_hbnc_totlal_count.setText(getResources().getString(R.string.total) + " " + model.getPNMotherCount() + "");
+            but_an_mother_pn_hbnc_term_preterm_count.setText(getResources().getString(R.string.preterm) + " " + model.getTermsCount() + "");
 
 
             /*

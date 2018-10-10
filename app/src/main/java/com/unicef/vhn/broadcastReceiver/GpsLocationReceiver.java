@@ -18,11 +18,11 @@ public class GpsLocationReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().matches("android.location.PROVIDERS_CHANGED")) {
 
-            Toast.makeText(context, "in android.location.PROVIDERS_CHANGED",
-                    Toast.LENGTH_SHORT).show();
-            Intent pushIntent = new Intent(context, SplashScreenActivity.class);
-            pushIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(pushIntent);
+//            Toast.makeText(context, "in android.location.PROVIDERS_CHANGED", Toast.LENGTH_SHORT).show();
+//            Intent pushIntent = new Intent(context, SplashScreenActivity.class);
+//            pushIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            context.startActivity(pushIntent);
+
 //            mGpsStatusDetector = new GpsStatusDetector((Activity) context.getApplicationContext());
 //            mGpsStatusDetector.checkGpsStatus();
         }

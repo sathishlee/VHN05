@@ -220,7 +220,7 @@ if (realm.isInTransaction()){
                 if (model.getGestAge().equalsIgnoreCase("null")) {
                     txt_gest_week.setText("-");
                 } else {
-                    txt_gest_week.setText(model.getGestAge());
+                    txt_gest_week.setText(model.getGestAge()+" Wks");
 
                 }
                 if (model.getmWeight().equalsIgnoreCase("null")){
@@ -271,7 +271,7 @@ if (realm.isInTransaction()){
 
                 str_mPhoto = model.getmPhoto();
 
-      /*  Picasso.with(context)
+        Picasso.with(context)
                 .load(Apiconstants.MOTHER_PHOTO_URL + str_mPhoto)
                 .placeholder(R.drawable.girl)
                 .fit()
@@ -280,7 +280,7 @@ if (realm.isInTransaction()){
                 .networkPolicy(NetworkPolicy.NO_CACHE)
                 .transform(new RoundedTransformation(90, 4))
                 .error(R.drawable.girl)
-                .into(cardview_image);*/
+                .into(cardview_image);
 
             }
         } else {

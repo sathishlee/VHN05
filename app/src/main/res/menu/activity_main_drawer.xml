@@ -16,7 +16,10 @@
             android:id="@+id/pn_hbnc_mothers"
             android:icon="@drawable/ic_newborn"
             android:title="@string/nav_pn_mother" />
-
+        <item
+                android:id="@+id/child_development"
+                android:icon="@drawable/ic_newborn"
+                android:title="@string/child_development" />
 
         <!--<item-->
             <!--android:id="@+id/hbnc"-->
@@ -49,6 +52,10 @@
             android:id="@+id/migration_mother"
             android:icon="@drawable/migration"
             android:title="@string/nav_mother_migrationt" />
+  <item
+            android:id="@+id/new_mother"
+            android:icon="@drawable/ic_pregnant_woman"
+            android:title="@string/nav_mother_new" />
 
 
         <item
@@ -60,6 +67,7 @@
             android:id="@+id/change_password"
             android:icon="@drawable/key"
             android:title="@string/nav_change_password" />
+
         <!--<item-->
             <!--android:id="@+id/message"-->
             <!--android:icon="@drawable/ic_close_envelope"-->

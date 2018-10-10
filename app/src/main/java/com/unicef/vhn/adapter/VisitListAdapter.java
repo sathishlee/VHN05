@@ -24,7 +24,7 @@ import java.util.List;
 
 public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.ViewHolder> {
 
-    String TAG= VisitListAdapter.class.getSimpleName();
+    String TAG = VisitListAdapter.class.getSimpleName();
     private List<VisitListResponseModel.Vhn_current_visits> mResult;
     Activity applicationContext;
     String type;
@@ -50,13 +50,13 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.View
         holder.txt_username.setText(current_visits.getMName());
         holder.txt_picme_id.setText(current_visits.getPicmeId());
         holder.txt_list_type.setText(current_visits.getMtype());
-        holder.txt_visit_month.setText("V.No : "+current_visits.getMonth());
+        holder.txt_visit_month.setText("V.No : " + current_visits.getMonth());
 
         holder.txt_current_visit.setText(current_visits.getNextVisit());
 
-        if (current_visits.getMMotherMobile().equalsIgnoreCase("null")||current_visits.getMMotherMobile().length()<10){
+        if (current_visits.getMMotherMobile().equalsIgnoreCase("null") || current_visits.getMMotherMobile().length() < 10) {
             holder.txt_call.setVisibility(View.GONE);
-        }else{
+        } else {
             holder.txt_call.setVisibility(View.VISIBLE);
         }
         holder.txt_call.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +79,7 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.View
             public void onClick(View v) {
                 AppConstants.SELECTED_MID = current_visits.getMid();
                 AppConstants.SELECTED_VISIT_NOTE_ID = current_visits.getNoteId();
-                AppConstants.IS_TODAY_VIST_LIST=true;
+                AppConstants.IS_TODAY_VIST_LIST = true;
                 if (current_visits.getMtype().equalsIgnoreCase("PN")) {
                     applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherDetailsViewActivity.class));
 
@@ -98,7 +98,7 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_username, txt_picme_id, txt_list_type, txt_track, txt_call, txt_current_visit,txt_visit_month;
+        TextView txt_username, txt_picme_id, txt_list_type, txt_track, txt_call, txt_current_visit, txt_visit_month;
 
         public ViewHolder(View itemView) {
             super(itemView);

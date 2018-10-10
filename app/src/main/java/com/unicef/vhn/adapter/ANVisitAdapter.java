@@ -29,7 +29,7 @@ public class ANVisitAdapter extends PagerAdapter {
     private LayoutInflater inflater;
 
     TextView txtVisitedDate, txtVisitedType, txtFacility, txtAnyComplient, txtBPValue,
-            txtPluseRate, txtWeight, txtFunbalHeight, txtFhs, txtPep, txtHp, txtFbs, txtPpbs, txtGtt, txtSugar,txtUrinAlubin, txtFetus, txtGestationSac, txtLiquor, txtPlacenta,txtTsh;
+            txtPluseRate, txtWeight, txtFunbalHeight, txtFhs, txtPep, txtHp, txtFbs, txtPpbs, txtGtt, txtSugar, txtUrinAlubin, txtFetus, txtGestationSac, txtLiquor, txtPlacenta, txtTsh;
 
 
     public ANVisitAdapter(Context mContext, ArrayList<ANMotherVisitResponseModel.VhnAN_Mothers_List> mhealthRecordList) {
@@ -56,109 +56,114 @@ public class ANVisitAdapter extends PagerAdapter {
     }
 
     private void setValuetoUI(ANMotherVisitResponseModel.VhnAN_Mothers_List mhealthRecordResponseModel) {
-        if(mhealthRecordResponseModel.getVDate().equalsIgnoreCase("null")){
+        if (mhealthRecordResponseModel.getVDate().equalsIgnoreCase("null")) {
             txtVisitedDate.setText("-");
-        }else {
+        } else {
             txtVisitedDate.setText(mhealthRecordResponseModel.getVDate());
         }
-        if(mhealthRecordResponseModel.getVtypeOfVisit().equalsIgnoreCase("null")){
+        if (mhealthRecordResponseModel.getVtypeOfVisit().equalsIgnoreCase("null")) {
             txtVisitedType.setText("-");
-        }else {
+        } else {
             txtVisitedType.setText(mhealthRecordResponseModel.getVtypeOfVisit());
         }
-        if(mhealthRecordResponseModel.getVFacility().equalsIgnoreCase("null")){
+        if (mhealthRecordResponseModel.getVFacility().equalsIgnoreCase("null")) {
             txtFacility.setText("-");
-        }else {
+        } else {
             txtFacility.setText(mhealthRecordResponseModel.getVFacility());
-        }   if(mhealthRecordResponseModel.getVAnyComplaints().equalsIgnoreCase("null")){
+        }
+        if (mhealthRecordResponseModel.getVAnyComplaints().equalsIgnoreCase("null")) {
             txtAnyComplient.setText("-");
-        }else {
+        } else {
             txtAnyComplient.setText(mhealthRecordResponseModel.getVAnyComplaints());
-        } if(mhealthRecordResponseModel.getVClinicalBPDiastolic().equalsIgnoreCase("null")&& mhealthRecordResponseModel.getVClinicalBPSystolic().equalsIgnoreCase("null")){
+        }
+        if (mhealthRecordResponseModel.getVClinicalBPDiastolic().equalsIgnoreCase("null") && mhealthRecordResponseModel.getVClinicalBPSystolic().equalsIgnoreCase("null")) {
             txtBPValue.setText("-");
-        }else {
-            txtBPValue.setText( mhealthRecordResponseModel.getVClinicalBPSystolic()+ " mm Hg"+ "/" + mhealthRecordResponseModel.getVClinicalBPDiastolic()+ " mm Hg");
+        } else {
+            txtBPValue.setText(mhealthRecordResponseModel.getVClinicalBPSystolic() + " mm Hg" + "/" + mhealthRecordResponseModel.getVClinicalBPDiastolic() + " mm Hg");
         }
-        if(mhealthRecordResponseModel.getVEnterPulseRate().equalsIgnoreCase("null")){
+        if (mhealthRecordResponseModel.getVEnterPulseRate().equalsIgnoreCase("null")) {
             txtPluseRate.setText("-");
-        }else {
-            txtPluseRate.setText(mhealthRecordResponseModel.getVEnterPulseRate()+ " Per Min");
+        } else {
+            txtPluseRate.setText(mhealthRecordResponseModel.getVEnterPulseRate() + " Per Min");
         }
-        if(mhealthRecordResponseModel.getVEnterWeight().equalsIgnoreCase("null")){
+        if (mhealthRecordResponseModel.getVEnterWeight().equalsIgnoreCase("null")) {
             txtWeight.setText("-");
-        }else {
-            txtWeight.setText(mhealthRecordResponseModel.getVEnterWeight()+" Kg");
+        } else {
+            txtWeight.setText(mhealthRecordResponseModel.getVEnterWeight() + " Kg");
         }
-        if(mhealthRecordResponseModel.getVFundalHeight().equalsIgnoreCase("null")){
+        if (mhealthRecordResponseModel.getVFundalHeight().equalsIgnoreCase("null")) {
             txtFunbalHeight.setText("-");
-        }else {
-            txtFunbalHeight.setText(mhealthRecordResponseModel.getVFundalHeight()+" Wks");
+        } else {
+            txtFunbalHeight.setText(mhealthRecordResponseModel.getVFundalHeight() + " Wks");
         }
-        if(mhealthRecordResponseModel.getVFHS().equalsIgnoreCase("null")){
+        if (mhealthRecordResponseModel.getVFHS().equalsIgnoreCase("null")) {
             txtFhs.setText("-");
-        }else {
-            txtFhs.setText(mhealthRecordResponseModel.getVFHS()+ " Per Min");
+        } else {
+            txtFhs.setText(mhealthRecordResponseModel.getVFHS() + " Per Min");
         }
 
-        if(mhealthRecordResponseModel.getVPedalEdemaPresent().equalsIgnoreCase("null")){
+        if (mhealthRecordResponseModel.getVPedalEdemaPresent().equalsIgnoreCase("null")) {
             txtPep.setText("-");
-        }else {
+        } else {
             txtPep.setText(mhealthRecordResponseModel.getVPedalEdemaPresent());
         }
-        if(mhealthRecordResponseModel.getVHemoglobin().equalsIgnoreCase("null")){
+        if (mhealthRecordResponseModel.getVHemoglobin().equalsIgnoreCase("null")) {
             txtHp.setText("-");
-        }else {
-            txtHp.setText(mhealthRecordResponseModel.getVHemoglobin()+ " g %");
+        } else {
+            txtHp.setText(mhealthRecordResponseModel.getVHemoglobin() + " g %");
         }
 
-        if(mhealthRecordResponseModel.getVFBS().equalsIgnoreCase("null")){
+        if (mhealthRecordResponseModel.getVFBS().equalsIgnoreCase("null")) {
             txtFbs.setText("-");
-        }else {
-            txtFbs.setText(mhealthRecordResponseModel.getVFBS()+ "mg/dl");
+        } else {
+            txtFbs.setText(mhealthRecordResponseModel.getVFBS() + "mg/dl");
         }
-        if(mhealthRecordResponseModel.getVPPBS().equalsIgnoreCase("null")){
+        if (mhealthRecordResponseModel.getVPPBS().equalsIgnoreCase("null")) {
             txtPpbs.setText("-");
-        }else {
-            txtPpbs.setText(mhealthRecordResponseModel.getVPPBS()+ " mg/dl");
+        } else {
+            txtPpbs.setText(mhealthRecordResponseModel.getVPPBS() + " mg/dl");
         }
 
-        if(mhealthRecordResponseModel.getVGTT().equalsIgnoreCase("null")){
+        if (mhealthRecordResponseModel.getVGTT().equalsIgnoreCase("null")) {
             txtGtt.setText("-");
-        }else {
-            txtGtt.setText(mhealthRecordResponseModel.getVGTT()+ " mg/dl");
+        } else {
+            txtGtt.setText(mhealthRecordResponseModel.getVGTT() + " mg/dl");
         }
-        if(mhealthRecordResponseModel.getUsgFetus().equalsIgnoreCase("null")){
+        if (mhealthRecordResponseModel.getUsgFetus().equalsIgnoreCase("null")) {
             txtFetus.setText("-");
-        }else {
+        } else {
             txtFetus.setText(mhealthRecordResponseModel.getUsgFetus());
-        } if(mhealthRecordResponseModel.getVUrinSugar().equalsIgnoreCase("null")){
+        }
+        if (mhealthRecordResponseModel.getVUrinSugar().equalsIgnoreCase("null")) {
             txtSugar.setText("-");
-        }else {
+        } else {
             txtSugar.setText(mhealthRecordResponseModel.getVUrinSugar());
-        }if(mhealthRecordResponseModel.getVAlbumin().equalsIgnoreCase("null")){
+        }
+        if (mhealthRecordResponseModel.getVAlbumin().equalsIgnoreCase("null")) {
             txtUrinAlubin.setText("-");
-        }else {
+        } else {
             txtUrinAlubin.setText(mhealthRecordResponseModel.getVAlbumin());
         }
-        if(mhealthRecordResponseModel.getUsgGestationSac().equalsIgnoreCase("null")){
+        if (mhealthRecordResponseModel.getUsgGestationSac().equalsIgnoreCase("null")) {
             txtGestationSac.setText("-");
-        }else {
+        } else {
             txtGestationSac.setText(mhealthRecordResponseModel.getUsgGestationSac());
         }
-        if(mhealthRecordResponseModel.getUsgLiquor().equalsIgnoreCase("null")){
+        if (mhealthRecordResponseModel.getUsgLiquor().equalsIgnoreCase("null")) {
             txtLiquor.setText("-");
-        }else {
+        } else {
             txtLiquor.setText(mhealthRecordResponseModel.getUsgLiquor());
-        }if(mhealthRecordResponseModel.getUsgPlacenta().equalsIgnoreCase("null")){
-            txtPlacenta.setText("-");
-        }else {
-            txtPlacenta.setText(mhealthRecordResponseModel.getUsgPlacenta());
-        }if(mhealthRecordResponseModel.getVTSH().equalsIgnoreCase("null")){
-            txtTsh.setText("-");
-        }else {
-            txtTsh.setText(mhealthRecordResponseModel.getVTSH()+" MU/L");
         }
-
+        if (mhealthRecordResponseModel.getUsgPlacenta().equalsIgnoreCase("null")) {
+            txtPlacenta.setText("-");
+        } else {
+            txtPlacenta.setText(mhealthRecordResponseModel.getUsgPlacenta());
+        }
+        if (mhealthRecordResponseModel.getVTSH().equalsIgnoreCase("null")) {
+            txtTsh.setText("-");
+        } else {
+            txtTsh.setText(mhealthRecordResponseModel.getVTSH() + " MU/L");
+        }
 
 
 //        txtVisitedDate.setText(mhealthRecordResponseModel.getVDate());

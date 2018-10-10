@@ -39,32 +39,28 @@ public class TremAndPreTremAdapter extends RecyclerView.Adapter<TremAndPreTremAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         TremAndPreTremResponseModel.DelveryInfo tremAndPreTremModel = mResult.get(position);
-        if (tremAndPreTremModel.getDInfantId().equalsIgnoreCase("null")){
+        if (tremAndPreTremModel.getDInfantId().equalsIgnoreCase("null")) {
             holder.txt_infant_id.setText("-");
-        }else {
+        } else {
             holder.txt_infant_id.setText(tremAndPreTremModel.getDInfantId());
         }
-        if (tremAndPreTremModel.getDBirthDetails().equalsIgnoreCase("null")){
+        if (tremAndPreTremModel.getDBirthDetails().equalsIgnoreCase("null")) {
             holder.txt_birth_type.setText("-");
-        }
-        else {
+        } else {
             holder.txt_birth_type.setText(tremAndPreTremModel.getDBirthDetails());
         }
-        if (tremAndPreTremModel.getDdatetime().equalsIgnoreCase("null")){
+        if (tremAndPreTremModel.getDdatetime().equalsIgnoreCase("null")) {
             holder.txt_delivery_date.setText("-");
-        }
-        else {
+        } else {
             holder.txt_delivery_date.setText(tremAndPreTremModel.getDdatetime());
         }
         if (tremAndPreTremModel.getDtime().equalsIgnoreCase("null")) {
-        }
-        else{
+        } else {
             holder.txt_delivery_time.setText(tremAndPreTremModel.getDtime());
         }
-        if (tremAndPreTremModel.getmName().equalsIgnoreCase("null")){
+        if (tremAndPreTremModel.getmName().equalsIgnoreCase("null")) {
             holder.txt_username.setText("Mother Name: -");
-        }
-        else{
+        } else {
             holder.txt_username.setText("Mother Name :" + tremAndPreTremModel.getmName());
         }
         strMid = tremAndPreTremModel.getMid();

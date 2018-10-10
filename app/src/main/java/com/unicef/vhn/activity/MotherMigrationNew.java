@@ -33,7 +33,7 @@ public class MotherMigrationNew extends AppCompatActivity implements MotherLists
     private ViewPager viewPager;
     ViewPagerAdapter adapter;
     ProgressDialog pDialog;
-PreferenceData preferenceData;
+    PreferenceData preferenceData;
 
     private int[] tabIcons = {
             R.drawable.native_mother,
@@ -67,7 +67,7 @@ PreferenceData preferenceData;
         preferenceData = new PreferenceData(this);
         checkNetwork = new CheckNetwork(this);
 
-        pnMotherListPresenter = new MotherListPresenter(getApplicationContext(), this,realm);
+        pnMotherListPresenter = new MotherListPresenter(getApplicationContext(), this, realm);
 
 
         if (checkNetwork.isNetworkAvailable()) {
@@ -85,9 +85,9 @@ PreferenceData preferenceData;
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        adapter = new ViewPagerAdapter(getSupportFragmentManager(),this);
-        adapter.addFragment(new NativeMotherFragment(), "Native Mother",tabIcons[0]);
-        adapter.addFragment(new MigratedMotherFragment(), "Non Native Mother",tabIcons[1]);
+        adapter = new ViewPagerAdapter(getSupportFragmentManager(), this);
+        adapter.addFragment(new NativeMotherFragment(), "Native Mother", tabIcons[0]);
+        adapter.addFragment(new MigratedMotherFragment(), "Non Native Mother", tabIcons[1]);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -127,7 +127,6 @@ PreferenceData preferenceData;
     }
 
 
-
     private void setupTabIcons() {
 //        tabLayout.addTab(tabLayout.newTab().setText("Non Native Mother"),true);
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
@@ -150,12 +149,12 @@ PreferenceData preferenceData;
 
     @Override
     public void showProgress() {
-pDialog.show();
+        pDialog.show();
     }
 
     @Override
     public void hideProgress() {
-pDialog.dismiss();
+        pDialog.dismiss();
     }
 
     @Override

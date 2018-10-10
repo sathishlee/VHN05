@@ -141,6 +141,7 @@ public class GPSTracker extends Service implements LocationListener {
     public IBinder onBind(Intent arg0) {
         return null;
     }
+
     public double getLatitude() {
         if (location != null) {
             latitude = location.getLatitude();
@@ -152,7 +153,7 @@ public class GPSTracker extends Service implements LocationListener {
 
     /**
      * Function to get longitude
-     * */
+     */
     public double getLongitude() {
         if (location != null) {
             longitude = location.getLongitude();
@@ -169,7 +170,7 @@ public class GPSTracker extends Service implements LocationListener {
 
     /**
      * Function to show settings alert dialog
-     * */
+     */
     public void showSettingsAlert() {
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);

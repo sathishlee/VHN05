@@ -24,10 +24,11 @@ public class SosListRealmModel extends RealmObject {
         return vhnId;
     }
 
-    public String getMotherType(){
+    public String getMotherType() {
         return motherType;
     }
-    public void setMotherType(String motherType){
+
+    public void setMotherType(String motherType) {
         this.motherType = motherType;
     }
 
@@ -83,18 +84,38 @@ public class SosListRealmModel extends RealmObject {
         this.mName = mName;
     }
 
-    public String getmPhoto(){return mPhoto;}
-    public void setmPhoto(String mPhoto){this.mPhoto = mPhoto;}
+    public String getmPhoto() {
+        return mPhoto;
+    }
+
+    public void setmPhoto(String mPhoto) {
+        this.mPhoto = mPhoto;
+    }
 
 
-    public String getvLatitude(){return vLatitude;}
-    public void setvLatitude(String vLatitude){this.vLatitude = vLatitude;}
+    public String getvLatitude() {
+        return vLatitude;
+    }
 
-    public String getmMotherMobile(){return mMotherMobile;}
-    public void setmMotherMobile(String mMotherMobile){this.mMotherMobile = mMotherMobile;}
+    public void setvLatitude(String vLatitude) {
+        this.vLatitude = vLatitude;
+    }
 
-    public String getvLongitude(){return vLongitude;}
-    public void setvLongitude(String vLongitude){this.vLongitude = vLongitude;}
+    public String getmMotherMobile() {
+        return mMotherMobile;
+    }
+
+    public void setmMotherMobile(String mMotherMobile) {
+        this.mMotherMobile = mMotherMobile;
+    }
+
+    public String getvLongitude() {
+        return vLongitude;
+    }
+
+    public void setvLongitude(String vLongitude) {
+        this.vLongitude = vLongitude;
+    }
 
     public String getMLongitude() {
         return mLongitude;

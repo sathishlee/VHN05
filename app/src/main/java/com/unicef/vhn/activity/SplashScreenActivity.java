@@ -54,17 +54,17 @@ public class SplashScreenActivity extends AppCompatActivity implements LocationU
     GoogleApiClient googleApiClient = null;
 
     int deviceApi = Build.VERSION.SDK_INT;
-CheckNetwork checkNetwork;
+    CheckNetwork checkNetwork;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        checkNetwork =new CheckNetwork(this);
-        if (checkNetwork.isNetworkAvailable()){
-            Toast.makeText(getApplicationContext(),"Internet connection is available",Toast.LENGTH_LONG).show();
-        }else{
-            Toast.makeText(getApplicationContext(),"Internet connection is not available",Toast.LENGTH_LONG).show();
+        checkNetwork = new CheckNetwork(this);
+        if (checkNetwork.isNetworkAvailable()) {
+            Toast.makeText(getApplicationContext(), "Internet connection is available", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Internet connection is not available", Toast.LENGTH_LONG).show();
 
         }
         rel_splash_screen = (RelativeLayout) findViewById(R.id.rel_splash_screen);
@@ -73,10 +73,12 @@ CheckNetwork checkNetwork;
         preferenceData = new PreferenceData(this);
 //        checkAPiVersion();
 
-        if(preferenceData.getSharePrefrenceLocale().equalsIgnoreCase("ta")){
-            LocaleHelper.setLocale(SplashScreenActivity.this,"ta");
-        }else{
-            LocaleHelper.setLocale(SplashScreenActivity.this,"en");
+        if (preferenceData.getSharePrefrenceLocale().equalsIgnoreCase("ta")) {
+            Log.e(SplashScreenActivity.class.getSimpleName(), "ta");
+            LocaleHelper.setLocale(getApplicationContext(), "ta");
+        } else {
+            Log.e(SplashScreenActivity.class.getSimpleName(), "en");
+            LocaleHelper.setLocale(getApplicationContext(), "en");
         }
 
         startStep1();
@@ -141,9 +143,16 @@ CheckNetwork checkNetwork;
      * Step 2: Check & Prompt Internet connection
      */
     private Boolean startStep2(DialogInterface dialog) {
-        Log.e(SplashScreenActivity.class.getSimpleName(),"startStep2");
+        Log.e(SplashScreenActivity.class.getSimpleName(), "startStep2");
+        if (preferenceData.getSharePrefrenceLocale().equalsIgnoreCase("ta")) {
+            Log.e(SplashScreenActivity.class.getSimpleName(), "ta");
+            LocaleHelper.setLocale(getApplicationContext(), "ta");
+        } else {
+            Log.e(SplashScreenActivity.class.getSimpleName(), "en");
+            LocaleHelper.setLocale(getApplicationContext(), "en");
+        }
         if (preferenceData.getLogin()) {
-            Log.e(SplashScreenActivity.class.getSimpleName(),"Log in status "+preferenceData.getLogin());
+            Log.e(SplashScreenActivity.class.getSimpleName(), "Log in status " + preferenceData.getLogin());
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         } else {
             ConnectivityManager connectivityManager
@@ -176,7 +185,7 @@ CheckNetwork checkNetwork;
             return true;
 
         }
-        Log.e(SplashScreenActivity.class.getSimpleName(),"startStep"+ true);
+        Log.e(SplashScreenActivity.class.getSimpleName(), "startStep" + true);
 
         return true;
     }
@@ -186,7 +195,7 @@ CheckNetwork checkNetwork;
      * Show A Dialog with button to refresh the internet state.
      */
     private void promptInternetConnect() {
-Log.e(SplashScreenActivity.class.getSimpleName(),"promptInternetConnect show dailog");
+        Log.e(SplashScreenActivity.class.getSimpleName(), "promptInternetConnect show dailog");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.title_alert_no_intenet);
         builder.setMessage(R.string.msg_alert_no_internet);
@@ -194,30 +203,30 @@ Log.e(SplashScreenActivity.class.getSimpleName(),"promptInternetConnect show dai
         String positiveText = getString(R.string.btn_label_refresh);
         builder.setPositiveButton(positiveText,
                 new DialogInterface.OnClickListener() {
-//                    @Override
+                    //                    @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.e(SplashScreenActivity.class.getSimpleName(),"refresh on click");
+                        Log.e(SplashScreenActivity.class.getSimpleName(), "refresh on click");
 
 
-        //Block the Application Execution until user grants the permissions
+                        //Block the Application Execution until user grants the permissions
                         if (startStep2(dialog)) {
-                            Log.e(SplashScreenActivity.class.getSimpleName(),"startStep2(dialog) " +startStep2(dialog));
+                            Log.e(SplashScreenActivity.class.getSimpleName(), "startStep2(dialog) " + startStep2(dialog));
 
 
 //        if (startStep2(null)) {
 
-            //Now make sure about location permission.
-            if (checkPermissions()) {
-                Log.e(SplashScreenActivity.class.getSimpleName(),"checkPermissions "+ checkPermissions());
+                            //Now make sure about location permission.
+                            if (checkPermissions()) {
+                                Log.e(SplashScreenActivity.class.getSimpleName(), "checkPermissions " + checkPermissions());
 
-                //Step 2: Start the Location Monitor Service
-                //Everything is there to start the service.
-                startStep3();
-            } else if (!checkPermissions()) {
-                Log.e(SplashScreenActivity.class.getSimpleName(),"checkPermissions "+ checkPermissions());
-                requestPermissions();
-            }
-        }
+                                //Step 2: Start the Location Monitor Service
+                                //Everything is there to start the service.
+                                startStep3();
+                            } else if (!checkPermissions()) {
+                                Log.e(SplashScreenActivity.class.getSimpleName(), "checkPermissions " + checkPermissions());
+                                requestPermissions();
+                            }
+                        }
 //        }
                     }
                 });
@@ -230,7 +239,7 @@ Log.e(SplashScreenActivity.class.getSimpleName(),"promptInternetConnect show dai
      * Step 3: Start the Location Monitor Service
      */
     private void startStep3() {
-        Log.e(SplashScreenActivity.class.getSimpleName(),"startStep3 called");
+        Log.e(SplashScreenActivity.class.getSimpleName(), "startStep3 called");
 //        rel_splash_screen.setVisibility(View.VISIBLE);
         //And it will be keep running until you close the entire application from task manager.
         //This method will executed only once.
@@ -319,7 +328,7 @@ Log.e(SplashScreenActivity.class.getSimpleName(),"promptInternetConnect show dai
      * Start permissions requests.
      */
     private void requestPermissions() {
-        Log.e(SplashScreenActivity.class.getSimpleName(),"requestPermissions ");
+        Log.e(SplashScreenActivity.class.getSimpleName(), "requestPermissions ");
 
         boolean shouldProvideRationale =
                 ActivityCompat.shouldShowRequestPermissionRationale(this,

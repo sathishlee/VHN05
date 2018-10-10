@@ -4,16 +4,16 @@ import io.realm.RealmObject;
 
 public class VhnProfileRealmModel extends RealmObject {
 
-        private String vhnMobile;
-        private String hscName;
-        private String vhnBlock;
-        private String vhnDistrict;
-        private String distCode;
-        private String vhnAddress;
-        private String vphoto;
-        private String vhnCode;
-        private String vhnName;
-        private String vhnId;
+    private String vhnMobile;
+    private String hscName;
+    private String vhnBlock;
+    private String vhnDistrict;
+    private String distCode;
+    private String vhnAddress;
+    private String vphoto;
+    private String vhnCode;
+    private String vhnName;
+    private String vhnId;
 
     public String getVhnMobile() {
         return vhnMobile;

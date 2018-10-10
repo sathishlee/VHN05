@@ -50,7 +50,6 @@ public class PNMMotherListRealmModel extends RealmObject {
     }
 
 
-
     public String getmHusbandMobile() {
         return mHusbandMobile;
     }

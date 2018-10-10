@@ -105,14 +105,14 @@ public class ChangePasswordPresenter implements ChangePasswordInteractor {
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("forgot response--->", "success"+response);
+                Log.e("forgot response--->", "success" + response);
                 changePasswordViews.hideProgress();
                 changePasswordViews.changePasswordSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("forgot error--->", error+"");
+                Log.e("forgot error--->", error + "");
 
                 changePasswordViews.hideProgress();
                 changePasswordViews.changePasswordFailure(error.toString());

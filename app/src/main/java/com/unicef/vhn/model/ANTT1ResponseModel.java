@@ -95,7 +95,12 @@ public class ANTT1ResponseModel {
             this.vhnId = vhnId;
         }
 
-        public String getmPhoto(){return mPhoto;}
-        public void setmPhoto(String mPhoto){this.mPhoto = mPhoto;}
+        public String getmPhoto() {
+            return mPhoto;
+        }
+
+        public void setmPhoto(String mPhoto) {
+            this.mPhoto = mPhoto;
+        }
     }
 }

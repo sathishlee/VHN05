@@ -2,6 +2,7 @@ package com.unicef.vhn.activity;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,6 +38,8 @@ import com.unicef.vhn.Presenter.GetVisitANMotherPresenter;
 import com.unicef.vhn.Presenter.MotherListPresenter;
 import com.unicef.vhn.Presenter.NotificationPresenter;
 import com.unicef.vhn.R;
+import com.unicef.vhn.activity.ChildDevelopment.ChildDevTracMotherList;
+import com.unicef.vhn.activity.ChildDevelopment.ChildTrackingViewReportActivity;
 import com.unicef.vhn.activity.MotherList.AllMotherListActivity;
 import com.unicef.vhn.application.MyApplication;
 import com.unicef.vhn.application.RealmController;
@@ -49,6 +52,7 @@ import com.unicef.vhn.fragment.mothers;
 import com.unicef.vhn.fragment.risk;
 import com.unicef.vhn.model.PNMotherListResponse;
 import com.unicef.vhn.utiltiy.CheckNetwork;
+import com.unicef.vhn.utiltiy.LocaleHelper;
 import com.unicef.vhn.utiltiy.RoundedTransformation;
 import com.unicef.vhn.view.MotherListsViews;
 import com.unicef.vhn.view.NotificationViews;
@@ -68,7 +72,7 @@ public class MainActivity extends AppCompatActivity
     ProgressDialog pDialog;
     PreferenceData preferenceData;
     NotificationPresenter notificationPresenter;
-    public static TextView notification_count,notification_count_new;
+    public static TextView notification_count, notification_count_new;
     View view;
     //   public static TextView txt_no_internet;
     String strTodayVisitCount = "0";
@@ -83,6 +87,7 @@ public class MainActivity extends AppCompatActivity
 
     BottomNavigationView bottomNavigationView;
     ImageView img_notify;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +97,7 @@ public class MainActivity extends AppCompatActivity
 //        notification_count = (TextView)findViewById(R.id.notification_count);
 //        txt_no_internet = (TextView)findViewById(R.id.txt_no_internet);
 //        txt_no_internet.setVisibility(View.GONE);
+
         img_notify = (ImageView) findViewById(R.id.img_notify);
 
         checkNetwork = new CheckNetwork(this);
@@ -107,14 +113,14 @@ public class MainActivity extends AppCompatActivity
         notificationPresenter.getTodayVisitCount(preferenceData.getVhnCode(), preferenceData.getVhnId());
         notificationPresenter.getNotificationCount(preferenceData.getVhnId());
 
-        pnMotherListPresenter = new MotherListPresenter(getApplicationContext(), this,realm);
-        getVisitANMotherPresenter = new GetVisitANMotherPresenter(getApplicationContext(), this,realm);
+        pnMotherListPresenter = new MotherListPresenter(getApplicationContext(), this, realm);
+        getVisitANMotherPresenter = new GetVisitANMotherPresenter(getApplicationContext(), this, realm);
 
 
-        if (checkNetwork.isNetworkAvailable()){
+        if (checkNetwork.isNetworkAvailable()) {
 
 //    pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_LIST,preferenceData.getVhnCode(), preferenceData.getVhnId());
-}
+        }
 
         // every 10 minut notification count api call
         Timer timer = new Timer();
@@ -175,8 +181,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
-
     @Override
     public void onBackPressed() {
         /*DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -198,7 +202,7 @@ public class MainActivity extends AppCompatActivity
             transaction.replace(R.id.content, homeFragment).addToBackStack(null);
             transaction.commit();*/
 
-                //super.onBackPressed();
+            //super.onBackPressed();
             android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(MainActivity.this);
             builder.setTitle(R.string.app_name);
             builder.setIcon(R.mipmap.ic_launcher);
@@ -223,9 +227,7 @@ public class MainActivity extends AppCompatActivity
                     });
             android.app.AlertDialog alert = builder.create();
             alert.show();
-            }
-
-            else if (!doubleBackToExitPressedOnce){
+        } else if (!doubleBackToExitPressedOnce) {
 
 //            bottomNavigationView.setSelectedItemId(R.id.home);
 //            Fragment homeFragment = home.newInstance();
@@ -274,7 +276,7 @@ public class MainActivity extends AppCompatActivity
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
 
             }
         }, 2000);
@@ -310,8 +312,8 @@ public class MainActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.main, menu);
         final MenuItem menuItem = menu.findItem(R.id.action_notification);
         MenuItemCompat.setActionView(menuItem, R.layout.notification_count);
-          view = MenuItemCompat.getActionView(menuItem);
-        notification_count =   view.findViewById(R.id.notification_count);
+        view = MenuItemCompat.getActionView(menuItem);
+        notification_count = view.findViewById(R.id.notification_count);
         notification_count.setText(preferenceData.getNotificationCount());
 //        notification_count.setVisibility(View.GONE);
 //        notification_count.setText(String.valueOf(strTodayVisitCount));
@@ -383,6 +385,14 @@ public class MainActivity extends AppCompatActivity
 //            startActivity(new Intent(getApplicationContext(), PNHBNCListActivity.class));
             startActivity(new Intent(getApplicationContext(), AllMotherListActivity.class));
 
+        }
+        if (id == R.id.child_development) {
+            AppConstants.GET_MOTHER_LIST_TYPE = "pn_hbnc_totlal_coun";
+            AppConstants.MOTHER_LIST_TITLE = "PN/HBNC Mother List";
+
+//            startActivity(new Intent(getApplicationContext(), PNHBNCListActivity.class));
+            startActivity(new Intent(getApplicationContext(), ChildDevTracMotherList.class));
+
         } else if (id == R.id.immunization) {
             Intent i = new Intent(getApplicationContext(), ImmunizationListActivity.class);
             startActivity(i);
@@ -397,6 +407,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.migration_mother) {
             Intent i = new Intent(getApplicationContext(), MotherMigrationNew.class);
 //            Intent i = new Intent(getApplicationContext(),MigrationMotherListActivity.class);
+            startActivity(i);
+        }else if (id == R.id.new_mother) {
+            Intent i = new Intent(getApplicationContext(), NewRegMotherActivity.class);
             startActivity(i);
         } else if (id == R.id.change_language) {
             Intent i = new Intent(getApplicationContext(), ChangeLanguageActivity.class);
@@ -429,15 +442,21 @@ public class MainActivity extends AppCompatActivity
 
 
     private void setupNavigationView() {
-          bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
 
         if (bottomNavigationView != null) {
 
 
             // Select first menu item by default and show Fragment accordingly.
             Menu menu = bottomNavigationView.getMenu();
-            selectFragment(menu.getItem(0));
-
+            if (AppConstants.OPENFRAGMENT.equalsIgnoreCase("00")){
+                notificationPresenter.getNotificationList(preferenceData.getVhnCode(), preferenceData.getVhnId());
+                android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content,
+                        NotificationListFragment.newInstance()).commit();
+            }else {
+                selectFragment(menu.getItem(0));
+            }
             // Set action to perform when any menu-item is selected.
             bottomNavigationView.setOnNavigationItemSelectedListener(
                     new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -468,7 +487,7 @@ public class MainActivity extends AppCompatActivity
 
 
             case R.id.home:
-                AppConstants.ISQUERYFILTER=false;
+                AppConstants.ISQUERYFILTER = false;
                 // Action to perform when Home Menu item is selected.
                 selectedFragment = home.newInstance();
                 break;
@@ -482,13 +501,14 @@ public class MainActivity extends AppCompatActivity
             case R.id.risk:
                 // Action to perform when Bag Menu item is selected.
 //                AppConstants.isfromhome=0;
-                AppConstants.ISQUERYFILTER=false;
+                AppConstants.ISQUERYFILTER = false;
                 selectedFragment = risk.newInstance();
                 break;
 
-                default:   AppConstants.ISQUERYFILTER=false;
-                    // Action to perform when Home Menu item is selected.
-                    selectedFragment = home.newInstance();
+            default:
+                AppConstants.ISQUERYFILTER = false;
+                // Action to perform when Home Menu item is selected.
+                selectedFragment = home.newInstance();
         }
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content, selectedFragment).addToBackStack(null);
@@ -563,9 +583,7 @@ public class MainActivity extends AppCompatActivity
 //                            getVisitANMotherPresenter.getVisitPNMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), jsonObject.getString("mid"));
                         }
                     }
-                 }
-
-                else {
+                } else {
                 }
             } else {
 
@@ -647,6 +665,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void NotificationCountError(String respons) {
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase));
     }
 
 

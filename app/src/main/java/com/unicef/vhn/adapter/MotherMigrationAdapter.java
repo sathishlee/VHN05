@@ -87,10 +87,10 @@ public class MotherMigrationAdapter extends RecyclerView.Adapter<MotherMigration
 
         strMid = vhn_migrated_mother.getMid();
 
-        if (vhn_migrated_mother.getMMotherMobile().equalsIgnoreCase("null")||
-             vhn_migrated_mother.getMMotherMobile().length()<10){
+        if (vhn_migrated_mother.getMMotherMobile().equalsIgnoreCase("null") ||
+                vhn_migrated_mother.getMMotherMobile().length() < 10) {
             holder.ll_call.setVisibility(View.GONE);
-        }else{
+        } else {
             holder.ll_call.setVisibility(View.VISIBLE);
         }
         holder.ll_call.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +146,6 @@ public class MotherMigrationAdapter extends RecyclerView.Adapter<MotherMigration
         TextView txt_username, txt_picme_id, txt_list_type, txt_migrated_from;
         LinearLayout ll_ll_mother_type, ll_track_location, ll_call;
         ImageView cardview_image;
-
 
 
         public ViewHolder(View itemView) {

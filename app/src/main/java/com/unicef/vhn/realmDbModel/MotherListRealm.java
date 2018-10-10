@@ -18,20 +18,38 @@ public class MotherListRealm extends RealmObject {
     private String mLMP;
 
 
+    public String getmPhoto() {
+        return mPhoto;
+    }
+
+    public void setmPhoto(String mPhoto) {
+        this.mPhoto = mPhoto;
+    }
 
 
-    public String getmPhoto(){return mPhoto;}
-    public void setmPhoto(String mPhoto){this.mPhoto = mPhoto;}
+    public String getvLatitude() {
+        return vLatitude;
+    }
 
+    public void setvLatitude(String vLatitude) {
+        this.vLatitude = vLatitude;
+    }
 
-    public String getvLatitude(){return vLatitude;}
-    public void setvLatitude(String vLatitude){this.vLatitude = vLatitude;}
+    public String getmMotherMobile() {
+        return mMotherMobile;
+    }
 
-    public String getmMotherMobile(){return mMotherMobile;}
-    public void setmMotherMobile(String mMotherMobile){this.mMotherMobile = mMotherMobile;}
+    public void setmMotherMobile(String mMotherMobile) {
+        this.mMotherMobile = mMotherMobile;
+    }
 
-    public String getvLongitude(){return vLongitude;}
-    public void setvLongitude(String vLongitude){this.vLongitude = vLongitude;}
+    public String getvLongitude() {
+        return vLongitude;
+    }
+
+    public void setvLongitude(String vLongitude) {
+        this.vLongitude = vLongitude;
+    }
 
     public String getMotherType() {
         return motherType;
@@ -100,10 +118,11 @@ public class MotherListRealm extends RealmObject {
         this.mName = mName;
     }
 
-    public String getMlmp(){
+    public String getMlmp() {
         return mLMP;
     }
-    public void setMlmp(String mLMP){
+
+    public void setMlmp(String mLMP) {
         this.mLMP = mLMP;
     }
 }

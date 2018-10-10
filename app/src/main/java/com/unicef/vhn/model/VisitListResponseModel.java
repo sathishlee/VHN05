@@ -92,7 +92,6 @@ public class VisitListResponseModel {
         }
 
 
-
         public String getMid() {
             return mid;
         }

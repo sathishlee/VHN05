@@ -59,7 +59,7 @@ import io.realm.RealmResults;
  */
 
 public class mothers extends Fragment implements MotherListsViews, MakeCallInterface,
-        VisitANMotherViews, MotherListAdapter.ContactsAdapterListener  {
+        VisitANMotherViews, MotherListAdapter.ContactsAdapterListener {
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
@@ -69,7 +69,7 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
     private MotherListAdapter mAdapter;
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 1;
     boolean isDataUpdate = true;
-    TextView txt_no_internet,txt_no_records_found,txt_total_of_list;
+    TextView txt_no_internet, txt_no_records_found, txt_total_of_list;
     ;
     CheckNetwork checkNetwork;
     boolean isoffline = false;
@@ -115,7 +115,7 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(getActivity());
 
-        pullToRefresh = (SwipeRefreshLayout)view.findViewById(R.id.pullToRefresh);
+        pullToRefresh = (SwipeRefreshLayout) view.findViewById(R.id.pullToRefresh);
 
         searchView = (SearchView) view.findViewById(R.id.search_mother);
         txt_no_internet = view.findViewById(R.id.txt_no_internet);
@@ -126,7 +126,7 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
         Log.d(mothers.class.getSimpleName(), "mother fragment initUI view");
 
         pnMotherListPresenter = new MotherListPresenter(getActivity(), this, realm);
-        getVisitANMotherPresenter = new GetVisitANMotherPresenter(getActivity(), this,realm);
+        getVisitANMotherPresenter = new GetVisitANMotherPresenter(getActivity(), this, realm);
 
         if (checkNetwork.isNetworkAvailable()) {
             pnMotherListPresenter.getPNMotherList(Apiconstants.MOTHER_DETAILS_LIST,
@@ -183,13 +183,13 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
         });
 
         if (isoffline) {
-                    txt_no_internet.setVisibility(View.VISIBLE);
-                    setValueToUI();
-                } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setMessage("Record Not Found");
-                    builder.create();
-                }
+            txt_no_internet.setVisibility(View.VISIBLE);
+            setValueToUI();
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("Record Not Found");
+            builder.create();
+        }
     }
 
 
@@ -205,14 +205,16 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
 
 
     @Override
-    public void showANVisitRecordsSuccess(String response) {    }
+    public void showANVisitRecordsSuccess(String response) {
+    }
 
     @Override
     public void showANVisitRecordsFailiur(String response) {
     }
 
     @Override
-    public void showPNVisitRecordsSuccess(String response) {    }
+    public void showPNVisitRecordsSuccess(String response) {
+    }
 
     @Override
     public void showPNVisitRecordsFailiur(String response) {
@@ -231,8 +233,7 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
 
             if (status.equalsIgnoreCase("1")) {
 
-           JSONArray jsonArray = res_mJsnobject.getJSONArray("vhnAN_Mothers_List");
-
+                JSONArray jsonArray = res_mJsnobject.getJSONArray("vhnAN_Mothers_List");
 
 
                 //create new realm Table
@@ -242,7 +243,6 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
 
                     mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-
 
 
                     if (jsonObject.getString("motherType").equalsIgnoreCase("AN")) {
@@ -262,42 +262,41 @@ public class mothers extends Fragment implements MotherListsViews, MakeCallInter
     }
 
     private void setValueToUI() {
-        if (realm.isInTransaction()){
+        if (realm.isInTransaction()) {
             realm.cancelTransaction();
         }
         realm.beginTransaction();
         RealmResults<PNMMotherListRealmModel> userInfoRealmResult = realm.where(PNMMotherListRealmModel.class).findAll();
-        if (userInfoRealmResult.size()!=0){
+        if (userInfoRealmResult.size() != 0) {
 
-        for (int i = 0; i < userInfoRealmResult.size(); i++) {
+            for (int i = 0; i < userInfoRealmResult.size(); i++) {
 
-            mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
-            PNMMotherListRealmModel model = userInfoRealmResult.get(i);
-            mresponseResult.setMid(model.getMid());
-            mresponseResult.setMName(model.getmName());
-            mresponseResult.setmAge(model.getmAge());
-            mresponseResult.setMPicmeId(model.getmPicmeId());
-            mresponseResult.setmMotherMobile(model.getmMotherMobile());
-            mresponseResult.setVhnId(model.getVhnId());
-            mresponseResult.setMLatitude(model.getvLongitude());
-            mresponseResult.setMLongitude(model.getvLongitude());
-            mresponseResult.setMotherType(model.getMotherType());
-            mresponseResult.setmPhoto(model.getmPhoto());
-            mresponseResult.setUserType(model.getUserType());
+                mresponseResult = new PNMotherListResponse.VhnAN_Mothers_List();
+                PNMMotherListRealmModel model = userInfoRealmResult.get(i);
+                mresponseResult.setMid(model.getMid());
+                mresponseResult.setMName(model.getmName());
+                mresponseResult.setmAge(model.getmAge());
+                mresponseResult.setMPicmeId(model.getmPicmeId());
+                mresponseResult.setmMotherMobile(model.getmMotherMobile());
+                mresponseResult.setVhnId(model.getVhnId());
+                mresponseResult.setMLatitude(model.getvLongitude());
+                mresponseResult.setMLongitude(model.getvLongitude());
+                mresponseResult.setMotherType(model.getMotherType());
+                mresponseResult.setmPhoto(model.getmPhoto());
+                mresponseResult.setUserType(model.getUserType());
 
-            mResult.add(mresponseResult);
-        }
-        }else{
+                mResult.add(mresponseResult);
+            }
+        } else {
             txt_no_records_found.setVisibility(View.VISIBLE);
             mother_recycler_view.setVisibility(View.GONE);
         }
 
         mAdapter.notifyDataSetChanged();
-        txt_total_of_list.setText(getResources().getString(R.string.mother_s_list)+"("+mResult.size()+")");
+        txt_total_of_list.setText(getResources().getString(R.string.mother_s_list) + "(" + mResult.size() + ")");
 
         realm.commitTransaction();
     }
-
 
 
     @Override

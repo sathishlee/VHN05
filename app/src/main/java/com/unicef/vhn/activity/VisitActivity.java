@@ -48,7 +48,7 @@ import io.realm.RealmResults;
 
 public class VisitActivity extends AppCompatActivity implements MotherListsViews, MakeCallInterface {
 
-    String TAG =VisitActivity.class.getSimpleName();
+    String TAG = VisitActivity.class.getSimpleName();
     ProgressDialog pDialog;
     MotherListPresenter pnMotherListPresenter;
     PreferenceData preferenceData;
@@ -70,7 +70,7 @@ public class VisitActivity extends AppCompatActivity implements MotherListsViews
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e(TAG,"VisitActivity created");
+        Log.e(TAG, "VisitActivity created");
         realm = RealmController.with(this).getRealm();
         setContentView(R.layout.activity_layout_visit);
         showActionBar();
@@ -79,7 +79,7 @@ public class VisitActivity extends AppCompatActivity implements MotherListsViews
     }
 
     public void initUI() {
-        Log.e(TAG,"VisitActivity INIT");
+        Log.e(TAG, "VisitActivity INIT");
 
         checkNetwork = new CheckNetwork(this);
         pDialog = new ProgressDialog(this);
@@ -88,7 +88,7 @@ public class VisitActivity extends AppCompatActivity implements MotherListsViews
         preferenceData = new PreferenceData(this);
         pnMotherListPresenter = new MotherListPresenter(VisitActivity.this, this, realm);
         if (checkNetwork.isNetworkAvailable()) {
-            Log.e(TAG,Apiconstants.CURRENT_VISIT_LIST+" api called");
+            Log.e(TAG, Apiconstants.CURRENT_VISIT_LIST + " api called");
             pnMotherListPresenter.getPNMotherList(Apiconstants.CURRENT_VISIT_LIST, preferenceData.getVhnCode(), preferenceData.getVhnId());
         } else {
             isoffline = true;
@@ -144,7 +144,7 @@ public class VisitActivity extends AppCompatActivity implements MotherListsViews
 
     @Override
     public void showLoginSuccess(String response) {
-        Log.e(TAG,Apiconstants.CURRENT_VISIT_LIST +"api response"+response);
+        Log.e(TAG, Apiconstants.CURRENT_VISIT_LIST + "api response" + response);
 
         try {
             JSONObject mJsnobject = new JSONObject(response);
@@ -164,18 +164,18 @@ public class VisitActivity extends AppCompatActivity implements MotherListsViews
             });
             if (status.equalsIgnoreCase("1")) {
 
-              if (jsonArray.length() != 0) {
-                Log.e(TAG, jsonArray.length() + " of json array not null");
+                if (jsonArray.length() != 0) {
+                    Log.e(TAG, jsonArray.length() + " of json array not null");
 
 //                mother_recycler_view.setVisibility(View.VISIBLE);
 //                txt_no_records_found.setVisibility(View.GONE);
-                realm.beginTransaction();
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    visitListRealmMode = realm.createObject(VisitListRealmModel.class);
+                    realm.beginTransaction();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        visitListRealmMode = realm.createObject(VisitListRealmModel.class);
 
-                    mresponseResult = new VisitListResponseModel.Vhn_current_visits();
+                        mresponseResult = new VisitListResponseModel.Vhn_current_visits();
 
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 
                     /*visitListRealmMode.setMid(jsonObject.getString("mid"));
@@ -188,25 +188,25 @@ public class VisitActivity extends AppCompatActivity implements MotherListsViews
                     visitListRealmMode.setMLatitude(jsonObject.getString("mLatitude"));
                     visitListRealmMode.setMLongitude(jsonObject.getString("mLongitude"));*/
 
-                    mresponseResult.setNoteId(jsonObject.getString("noteId"));
-                    mresponseResult.setMasterId(jsonObject.getString("masterId"));
-                    mresponseResult.setMid(jsonObject.getString("mid"));
-                    mresponseResult.setMName(jsonObject.getString("mName"));
-                    mresponseResult.setPicmeId(jsonObject.getString("picmeId"));
-                    mresponseResult.setVhnId(jsonObject.getString("vhnId"));
-                    mresponseResult.setMMotherMobile(jsonObject.getString("mMotherMobile"));
-                    mresponseResult.setMtype(jsonObject.getString("mtype"));
-                    mresponseResult.setNextVisit(jsonObject.getString("nextvisit"));
+                        mresponseResult.setNoteId(jsonObject.getString("noteId"));
+                        mresponseResult.setMasterId(jsonObject.getString("masterId"));
+                        mresponseResult.setMid(jsonObject.getString("mid"));
+                        mresponseResult.setMName(jsonObject.getString("mName"));
+                        mresponseResult.setPicmeId(jsonObject.getString("picmeId"));
+                        mresponseResult.setVhnId(jsonObject.getString("vhnId"));
+                        mresponseResult.setMMotherMobile(jsonObject.getString("mMotherMobile"));
+                        mresponseResult.setMtype(jsonObject.getString("mtype"));
+                        mresponseResult.setNextVisit(jsonObject.getString("nextvisit"));
 //                    mresponseResult.setMotherType(jsonObject.getString("motherType"));
 //                mresponseResult.setMLatitude(jsonObject.getString("mLatitude"));
 //                mresponseResult.setMLongitude(jsonObject.getString("mLongitude"));
-                    mResult.add(mresponseResult);
-                    mAdapter.notifyDataSetChanged();
+                        mResult.add(mresponseResult);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                    realm.commitTransaction();
                 }
-                realm.commitTransaction();
-            }
-        }else {
-                Log.e(TAG,jsonArray.length()+" of json array  null");
+            } else {
+                Log.e(TAG, jsonArray.length() + " of json array  null");
 
                 mother_recycler_view.setVisibility(View.GONE);
                 txt_no_records_found.setVisibility(View.VISIBLE);
@@ -222,16 +222,16 @@ public class VisitActivity extends AppCompatActivity implements MotherListsViews
 
         realm.beginTransaction();
         RealmResults<VisitListRealmModel> motherListAdapterRealmModel = realm.where(VisitListRealmModel.class).findAll();
-        Log.e(TAG, "setValuetoUI motherList size"+motherListAdapterRealmModel.size());
+        Log.e(TAG, "setValuetoUI motherList size" + motherListAdapterRealmModel.size());
 
         for (int i = 0; i < motherListAdapterRealmModel.size(); i++) {
             mresponseResult = new VisitListResponseModel.Vhn_current_visits();
 
             VisitListRealmModel model = motherListAdapterRealmModel.get(i);
 
-            Log.e(TAG, "setValuetoUI motherList model.getMid()"+model.getMid());
-            Log.e(TAG, "setValuetoUI motherList model.getMName()"+model.getMName());
-            Log.e(TAG, "setValuetoUI motherList model.getPicmeId()"+model.getPicmeId());
+            Log.e(TAG, "setValuetoUI motherList model.getMid()" + model.getMid());
+            Log.e(TAG, "setValuetoUI motherList model.getMName()" + model.getMName());
+            Log.e(TAG, "setValuetoUI motherList model.getPicmeId()" + model.getPicmeId());
 
             mresponseResult.setNoteId(model.getNoteId());
             mresponseResult.setMasterId(model.getMasterId());
@@ -308,7 +308,7 @@ public class VisitActivity extends AppCompatActivity implements MotherListsViews
     }
 
     private void requestCallPermission() {
-        Log.i( VisitActivity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
+        Log.i(VisitActivity.class.getSimpleName(), "CALL permission has NOT been granted. Requesting permission.");
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CALL_PHONE)) {
             Toast.makeText(getApplicationContext(), "Displaying Call permission rationale to provide additional context.", Toast.LENGTH_SHORT).show();

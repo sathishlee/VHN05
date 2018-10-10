@@ -29,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
 /*pN Mother visit Report have api call working well is not use this project,
 use for PNMothervistReportActivity */
 public class PNViewReportsActivity extends AppCompatActivity implements VisitANMotherViews, View.OnClickListener {
@@ -46,30 +47,32 @@ public class PNViewReportsActivity extends AppCompatActivity implements VisitANM
     PNHBNCVisitRecordsAdapter pnhbncVisitRecordsAdapter;
     TextView txt_no_records_found;
     Realm realm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         realm = RealmController.with(this).getRealm();
         setContentView(R.layout.activity_pnview_reports);
-        Log.e(TAG,"");
+        Log.e(TAG, "");
         initUI();
         showActionBar();
         onClickListner();
     }
+
     private void initUI() {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Please Wait ...");
         preferenceData = new PreferenceData(this);
-        getVisitANMotherPresenter = new GetVisitANMotherPresenter(PNViewReportsActivity.this, this,realm);
-        Log.e(TAG,"VHNMothersPNRecord ");
+        getVisitANMotherPresenter = new GetVisitANMotherPresenter(PNViewReportsActivity.this, this, realm);
+        Log.e(TAG, "VHNMothersPNRecord ");
 
-        getVisitANMotherPresenter.getVisitPNMotherRecords(preferenceData.getVhnCode(),preferenceData.getVhnId(), AppConstants.SELECTED_MID);
+        getVisitANMotherPresenter.getVisitPNMotherRecords(preferenceData.getVhnCode(), preferenceData.getVhnId(), AppConstants.SELECTED_MID);
 
         mPnHbncVisitRecordsList = new ArrayList<>();
         txt_no_records_found = (TextView) findViewById(R.id.txt_no_records_found);
-        viewPager = (ViewPager)findViewById(R.id.pn_viewpager);
-        tabLayout = (TabLayout)findViewById(R.id.pn_tabs);
+        viewPager = (ViewPager) findViewById(R.id.pn_viewpager);
+        tabLayout = (TabLayout) findViewById(R.id.pn_tabs);
         txt_no_records_found.setVisibility(View.GONE);
         viewPager.setVisibility(View.GONE);
         tabLayout.setVisibility(View.GONE);
@@ -92,7 +95,7 @@ public class PNViewReportsActivity extends AppCompatActivity implements VisitANM
         btn_delivery_reports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),PNMotherDeliveryReportActivity.class));
+                startActivity(new Intent(getApplicationContext(), PNMotherDeliveryReportActivity.class));
             }
         });
         btn_visit_reports.setOnClickListener(new View.OnClickListener() {
@@ -102,11 +105,13 @@ public class PNViewReportsActivity extends AppCompatActivity implements VisitANM
             }
         });
     }
+
     private void setupViewPager(ViewPager viewPager) {
-        pnhbncVisitRecordsAdapter =new PNHBNCVisitRecordsAdapter(this,mPnHbncVisitRecordsList);
+        pnhbncVisitRecordsAdapter = new PNHBNCVisitRecordsAdapter(this, mPnHbncVisitRecordsList);
         viewPager.setOffscreenPageLimit(mPnHbncVisitRecordsList.size());
         viewPager.setAdapter(pnhbncVisitRecordsAdapter);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();
@@ -120,7 +125,7 @@ public class PNViewReportsActivity extends AppCompatActivity implements VisitANM
 
     @Override
     public void hideProgress() {
-pDialog.dismiss();
+        pDialog.dismiss();
     }
 
     @Override
@@ -135,7 +140,7 @@ pDialog.dismiss();
 
     @Override
     public void showPNVisitRecordsSuccess(String response) {
-        Log.e(PNViewReportsActivity.class.getSimpleName(),"Response success"+response);
+        Log.e(PNViewReportsActivity.class.getSimpleName(), "Response success" + response);
         try {
             JSONObject mJsnobject = new JSONObject(response);
             String status = mJsnobject.getString("status");
@@ -145,7 +150,7 @@ pDialog.dismiss();
                 viewPager.setVisibility(View.VISIBLE);
                 tabLayout.setVisibility(View.VISIBLE);
                 JSONArray jsonArray = mJsnobject.getJSONArray("pnMothersVisit");
-                if (jsonArray.length()!=0) {
+                if (jsonArray.length() != 0) {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         mPnHbncVisitRecordsModel = new PnHbncVisitRecordsModel.PnMothersVisit();
 
@@ -197,38 +202,38 @@ pDialog.dismiss();
                             AppConstants.SELECTED_MID = mPnHbncVisitRecordsModel.getMid();
                         }
                     }
-                }else{
+                } else {
                     txt_no_records_found.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.GONE);
                     tabLayout.setVisibility(View.GONE);
                 }
-                }else{
+            } else {
                 txt_no_records_found.setVisibility(View.VISIBLE);
                 viewPager.setVisibility(View.GONE);
                 tabLayout.setVisibility(View.GONE);
             }
-            } catch(JSONException e){
-                e.printStackTrace();
-            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @Override
     public void showPNVisitRecordsFailiur(String response) {
-        Log.e(PNViewReportsActivity.class.getSimpleName(),"Response Error"+response);
+        Log.e(PNViewReportsActivity.class.getSimpleName(), "Response Error" + response);
 
     }
 
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_delivery_reports:
-                 startActivity(new Intent(getApplicationContext(),PNMotherDeliveryReportActivity.class));
-                 break;
-            case  R.id.btn_view_report:
-                  startActivity(new Intent(getApplicationContext(),ANViewReportsActivity.class));
-                  break;
+                startActivity(new Intent(getApplicationContext(), PNMotherDeliveryReportActivity.class));
+                break;
+            case R.id.btn_view_report:
+                startActivity(new Intent(getApplicationContext(), ANViewReportsActivity.class));
+                break;
         }
     }
 }

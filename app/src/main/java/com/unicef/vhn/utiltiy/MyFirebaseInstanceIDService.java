@@ -10,6 +10,7 @@ import com.unicef.vhn.Preference.PreferenceData;
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
     PreferenceData preferenceData;
+
     public MyFirebaseInstanceIDService() {
     }
 
@@ -35,6 +36,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
         storeToken(refreshedToken);
     }
+
     private void storeToken(String token) {
         //saving the token on shared preferences
         preferenceData = new PreferenceData(this);

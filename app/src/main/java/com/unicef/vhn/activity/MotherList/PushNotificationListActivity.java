@@ -9,11 +9,8 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.unicef.vhn.R;
-import com.unicef.vhn.adapter.MotherListAdapter;
 import com.unicef.vhn.adapter.PushNotificationListAdapter;
 import com.unicef.vhn.application.RealmController;
-import com.unicef.vhn.model.PNMotherListResponse;
-import com.unicef.vhn.realmDbModel.ANMotherListRiskRealmModel;
 import com.unicef.vhn.realmDbModel.PushNotificationListRealmModel;
 
 import java.util.ArrayList;

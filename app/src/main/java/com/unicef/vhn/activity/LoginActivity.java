@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
     };
 
     private EditText edtVhnId, edtPassword;
-    String strVhnId, strPassword,mobileCheck, ipAddress;
+    String strVhnId, strPassword, mobileCheck, ipAddress;
     Button btnlogin;
 
     ProgressDialog pDialog;
@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity implements LoginViews {
 
     LoginPresenter loginPresenter;
     ConnectivityManager conMgr;
-private TextView txtForgotPassword;
+    private TextView txtForgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +82,7 @@ private TextView txtForgotPassword;
         txtForgotPassword.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),ForgetPasswordActivity.class));
+                startActivity(new Intent(getApplicationContext(), ForgetPasswordActivity.class));
             }
         });
     }
@@ -100,8 +100,8 @@ private TextView txtForgotPassword;
             ipAddress = Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());
 
 
-            mobileCheck = "Mobile:"+ Build.MANUFACTURER +","+ "Model:" +Build.MODEL + "," + "Api Version:"
-                    + Build.VERSION.RELEASE + "," + "SDK Version:" + Build.VERSION.SDK_INT + "," + "IP Address:"+ ipAddress;
+            mobileCheck = "Mobile:" + Build.MANUFACTURER + "," + "Model:" + Build.MODEL + "," + "Api Version:"
+                    + Build.VERSION.RELEASE + "," + "SDK Version:" + Build.VERSION.SDK_INT + "," + "IP Address:" + ipAddress;
 
             Log.d("Mobile Check Version-->", mobileCheck);
 
@@ -117,7 +117,7 @@ private TextView txtForgotPassword;
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
-            loginPresenter.login(strVhnId, strPassword, preferenceData.getDeviceId(),mobileCheck, AppConstants.EXTRA_LATITUDE, AppConstants.EXTRA_LONGITUDE, appversion);
+            loginPresenter.login(strVhnId, strPassword, preferenceData.getDeviceId(), mobileCheck, AppConstants.EXTRA_LATITUDE, AppConstants.EXTRA_LONGITUDE, appversion);
 
         }
 
@@ -156,7 +156,7 @@ private TextView txtForgotPassword;
             jObj = new JSONObject(response);
             String status = jObj.getString("status");
             String message = jObj.getString("message");
-            if(message.equalsIgnoreCase("Please update the latest version app.")){
+            if (message.equalsIgnoreCase("Please update the latest version app.")) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                 builder.setTitle(R.string.app_name);
@@ -170,11 +170,11 @@ private TextView txtForgotPassword;
                         });
                 AlertDialog alert = builder.create();
                 alert.show();
-            }else if(status.equalsIgnoreCase("1")) {
+            } else if (status.equalsIgnoreCase("1")) {
                 JSONObject strVhnDetails = jObj.getJSONObject("VhnDetails");
                 Log.d("message---->", message);
                 preferenceData.storeUserInfo(strVhnDetails.getString("vhnName"), strVhnDetails.getString("vhnCode"),
-                        strVhnDetails.getString("vhnId"),strVhnDetails.getString("vphoto"));
+                        strVhnDetails.getString("vhnId"), strVhnDetails.getString("vphoto"));
                 preferenceData.setLogin(true);
                 if (message.equalsIgnoreCase("Successfully Logined..!")) {
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -182,7 +182,7 @@ private TextView txtForgotPassword;
                 } else {
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                 }
-            }else {
+            } else {
                 Log.d("message---->", message);
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
             }
@@ -194,7 +194,7 @@ private TextView txtForgotPassword;
 
     @Override
     public void showLoginError(String message) {
-        Log.e(LoginActivity.class.getSimpleName(),"error "+message);
+        Log.e(LoginActivity.class.getSimpleName(), "error " + message);
         android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
         builder.setMessage(message);
         builder.create();
@@ -203,8 +203,8 @@ private TextView txtForgotPassword;
 
     private void openUrl() {
         DownloadManager downloadManager;
-        downloadManager = (DownloadManager)getSystemService(Context.DOWNLOAD_SERVICE);
-        Uri uri = Uri.parse(Apiconstants.APK_URL+Apiconstants.DOWNLOAD_APK);
+        downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+        Uri uri = Uri.parse(Apiconstants.APK_URL + Apiconstants.DOWNLOAD_APK);
         DownloadManager.Request request = new DownloadManager.Request(uri);
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         Long reference = downloadManager.enqueue(request);

@@ -32,22 +32,22 @@ public class LocationUpdatePresenter implements LocationUpdateIntractor {
     }
 
     @Override
-    public void uploadLocationToServer( final String vhnId,  final String latitude, final String longitude) {
+    public void uploadLocationToServer(final String vhnId, final String latitude, final String longitude) {
 
         view.showProgress();
         String url = Apiconstants.BASE_URL + Apiconstants.LOCATION_UPDATE;
 
-        Log.d("Log in check Url--->",url);
-        Log.d("Url--->",url);
-        Log.d("vhnId--->",vhnId);
-        Log.d("latitude--->",latitude);
-        Log.d("longitude--->",longitude);
+        Log.d("Log in check Url--->", url);
+        Log.d("Url--->", url);
+        Log.d("vhnId--->", vhnId);
+        Log.d("latitude--->", latitude);
+        Log.d("longitude--->", longitude);
 
         StringRequest strReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 //                view.hideProgress();
-                Log.d("success",response);
+                Log.d("success", response);
 
                 view.locationUpdateSuccess(response.toString());
             }
@@ -55,7 +55,7 @@ public class LocationUpdatePresenter implements LocationUpdateIntractor {
             @Override
             public void onErrorResponse(VolleyError error) {
 //                view.hideProgress();
-                Log.d(" error",error.toString());
+                Log.d(" error", error.toString());
 
                 view.locationUpdateFailiure(error.toString());
 
@@ -66,14 +66,15 @@ public class LocationUpdatePresenter implements LocationUpdateIntractor {
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("vhnId",vhnId);
-                params.put("vLatitude",latitude);
-                params.put("vLongitude",longitude);
+                params.put("vhnId", vhnId);
+                params.put("vLatitude", latitude);
+                params.put("vLongitude", longitude);
 
-                Log.d("params--->",params.toString());
+                Log.d("params--->", params.toString());
 
                 return params;
             }
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 String credentials = "admin" + ":" + "1234";
@@ -81,7 +82,7 @@ public class LocationUpdatePresenter implements LocationUpdateIntractor {
                 HashMap<String, String> header = new HashMap<>();
 //                header.put("Content-Type", "application/x-www-from-urlencoded; charset=utf-8");
                 header.put("Authorization", "Basic " + base64EncodedCredentials);
-                Log.d("Credentials ","Basic " +base64EncodedCredentials.toString());
+                Log.d("Credentials ", "Basic " + base64EncodedCredentials.toString());
 
                 return header;
             }

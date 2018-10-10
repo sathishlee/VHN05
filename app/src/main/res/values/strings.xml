@@ -344,7 +344,7 @@
     <string name="address_home">Address :</string>
     <string name="sos">SOS</string>
     <string name="mothers">Mothers</string>
-    <string name="high_risk_home_count">High Risk </string>
+    <string name="high_risk_home_count">High Risk</string>
     <string name="high_risk_home">High Risk :</string>
     <string name="infants">Infants</string>
     <string name="an_mothers">Antenatal Mothers</string>
@@ -358,9 +358,11 @@
 
     <string name="nav_an_mother">AN Mothers</string>
     <string name="nav_pn_mother">PN Mothers/HBNC</string>
+    <string name="child_development">Child Development</string>
     <string name="nav_immunization">Immunization</string>
     <string name="nav_visit">Visit</string>
     <string name="nav_mother_migrationt">Mother Migration</string>
+    <string name="nav_mother_new">New Arival Mothers</string>
     <string name="nav_change_password">Change Password</string>
     <string name="nav_change_language">Change Language</string>
 

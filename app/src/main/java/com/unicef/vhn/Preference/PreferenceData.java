@@ -34,10 +34,10 @@ public class PreferenceData {
 
     public void storeUserInfo(String vhnName, String vhnCode, String vhnId, String vphoto) {
 
-        sharedPreferences.edit().putString(AppConstants.VHN_ID,vhnId).commit();
-        sharedPreferences.edit().putString(AppConstants.VHN_NAME,vhnName).commit();
-        sharedPreferences.edit().putString(AppConstants.VHN_CODE,vhnCode).commit();
-        sharedPreferences.edit().putString(AppConstants.VHN_PHOTO,vphoto).commit();
+        sharedPreferences.edit().putString(AppConstants.VHN_ID, vhnId).commit();
+        sharedPreferences.edit().putString(AppConstants.VHN_NAME, vhnName).commit();
+        sharedPreferences.edit().putString(AppConstants.VHN_CODE, vhnCode).commit();
+        sharedPreferences.edit().putString(AppConstants.VHN_PHOTO, vphoto).commit();
 
 
         Log.e("VHN_ID", sharedPreferences.getString(AppConstants.VHN_ID, ""));
@@ -70,10 +70,11 @@ public class PreferenceData {
         return sharedPreferences.getString(AppConstants.DEVICE_ID, "");
     }
 
-    public String getVhnPhoto(){
-        return sharedPreferences.getString(AppConstants.VHN_PHOTO,"");
+    public String getVhnPhoto() {
+        return sharedPreferences.getString(AppConstants.VHN_PHOTO, "");
     }
-    public void setVhnPhoto(String vPhoto){
+
+    public void setVhnPhoto(String vPhoto) {
         sharedPreferences.edit().putString(AppConstants.VHN_PHOTO, vPhoto).commit();
     }
 
@@ -98,7 +99,6 @@ public class PreferenceData {
     }
 
 
-
     public String getTodayVisitCount() {
         return sharedPreferences.getString(AppConstants.TODAY_VISIT_COUNT, "");
     }
@@ -113,21 +113,31 @@ public class PreferenceData {
 
 
     public void setHighRiskStatus(boolean highRiskStatus) {
-        sharedPreferences.edit().putBoolean( AppConstants.ISHIGHRISK, highRiskStatus).commit();
+        sharedPreferences.edit().putBoolean(AppConstants.ISHIGHRISK, highRiskStatus).commit();
 
-    } public boolean getHighRiskStatus() {
+    }
+
+    public boolean getHighRiskStatus() {
         return sharedPreferences.getBoolean(AppConstants.ISHIGHRISK, Boolean.parseBoolean(""));
 
-    }public void setAndroidUser(boolean highRiskStatus) {
-        sharedPreferences.edit().putBoolean( AppConstants.ISHIGHRISK, highRiskStatus).commit();
+    }
 
-    } public boolean getAndroidUser() {
+    public void setAndroidUser(boolean highRiskStatus) {
+        sharedPreferences.edit().putBoolean(AppConstants.ISHIGHRISK, highRiskStatus).commit();
+
+    }
+
+    public boolean getAndroidUser() {
         return sharedPreferences.getBoolean(AppConstants.ISHIGHRISK, Boolean.parseBoolean(""));
 
-    }public void setNonAndroidUser(boolean highRiskStatus) {
-        sharedPreferences.edit().putBoolean( AppConstants.ISHIGHRISK, highRiskStatus).commit();
+    }
 
-    } public boolean getNonAndroidUser() {
+    public void setNonAndroidUser(boolean highRiskStatus) {
+        sharedPreferences.edit().putBoolean(AppConstants.ISHIGHRISK, highRiskStatus).commit();
+
+    }
+
+    public boolean getNonAndroidUser() {
         return sharedPreferences.getBoolean(AppConstants.ISHIGHRISK, Boolean.parseBoolean(""));
 
     }
@@ -136,29 +146,33 @@ public class PreferenceData {
         sharedPreferences.edit().putBoolean(AppConstants.ISDECENDING, descendingStatus).commit();
 
     }
+
     public boolean getDescendingStatus() {
         return sharedPreferences.getBoolean(AppConstants.ISDECENDING, Boolean.parseBoolean(""));
-     }
+    }
 
-     public void setVillageName(String villageName) {
+    public void setVillageName(String villageName) {
         sharedPreferences.edit().putString(AppConstants.VILLAGENAME, villageName).commit();
 
     }
-    public String getVillageName() {
-        return sharedPreferences.getString(AppConstants.VILLAGENAME,  "");
-     }
 
-     public void setTermister(String villageName) {
+    public String getVillageName() {
+        return sharedPreferences.getString(AppConstants.VILLAGENAME, "");
+    }
+
+    public void setTermister(String villageName) {
         sharedPreferences.edit().putString(AppConstants.TERMISTER, villageName).commit();
 
     }
+
     public String getTermister() {
         return sharedPreferences.getString(AppConstants.TERMISTER, "");
-     }
+    }
 
     public void setTermisterPosition(int termisterPosition) {
         sharedPreferences.edit().putString(AppConstants.TERMISTER_POSITION, String.valueOf(termisterPosition)).commit();
     }
+
     public int getTermisterPosition() {
         return Integer.parseInt(sharedPreferences.getString(AppConstants.TERMISTER_POSITION, ""));
     }
@@ -168,8 +182,9 @@ public class PreferenceData {
 
 
     }
+
     public int getVillageNamePosition() {
-        return Integer.parseInt(sharedPreferences.getString(AppConstants.VILLAGENAME_POSITION,""));
+        return Integer.parseInt(sharedPreferences.getString(AppConstants.VILLAGENAME_POSITION, ""));
 
     }
 
@@ -186,28 +201,29 @@ public class PreferenceData {
         sharedPreferences.edit().putBoolean("isfillter", isfillter).commit();
 
     }
+
     public boolean getFilterStatus() {
-                return sharedPreferences.getBoolean("isfillter", Boolean.parseBoolean(""));
+        return sharedPreferences.getBoolean("isfillter", Boolean.parseBoolean(""));
 
     }
 
 
     public void setSharePrefrenceLocale(String locale) {
-        sharedPreferences.edit().putString(AppConstants.LANGUAGE,locale).commit();
+        sharedPreferences.edit().putString(AppConstants.LANGUAGE, locale).commit();
     }
 
     public String getSharePrefrenceLocale() {
-        return sharedPreferences.getString(AppConstants.LANGUAGE,"");
+        return sharedPreferences.getString(AppConstants.LANGUAGE, "");
 
     }
 
     public void setAppUserType(String s) {
-        sharedPreferences.edit().putString(AppConstants.selectedUserType,s).commit();
+        sharedPreferences.edit().putString(AppConstants.selectedUserType, s).commit();
 
     }
 
     public String getAppUserType() {
-        return sharedPreferences.getString(AppConstants.selectedUserType,"");
+        return sharedPreferences.getString(AppConstants.selectedUserType, "");
 
     }
 }

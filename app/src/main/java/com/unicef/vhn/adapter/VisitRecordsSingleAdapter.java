@@ -24,7 +24,6 @@ import com.unicef.vhn.model.VisitRecordsSingleResponseModel;
 import java.util.ArrayList;
 
 
-
 public class VisitRecordsSingleAdapter extends RecyclerView.Adapter<VisitRecordsSingleAdapter.SingleImageHolder> {
 
     private ArrayList<VisitRecordsSingleResponseModel> visitRecordsSingleResponseModels;
@@ -35,9 +34,7 @@ public class VisitRecordsSingleAdapter extends RecyclerView.Adapter<VisitRecords
     boolean isImageFitToScreen;
 
 
-
-
-    public VisitRecordsSingleAdapter(ArrayList<VisitRecordsSingleResponseModel> visitRecordsSingleResponseModels, Context context){
+    public VisitRecordsSingleAdapter(ArrayList<VisitRecordsSingleResponseModel> visitRecordsSingleResponseModels, Context context) {
         this.context = context;
         this.visitRecordsSingleResponseModels = visitRecordsSingleResponseModels;
 //        AppConstants.mylist.addAll(visitRecordsSingleResponseModels);
@@ -50,22 +47,22 @@ public class VisitRecordsSingleAdapter extends RecyclerView.Adapter<VisitRecords
 
     @Override
     public SingleImageHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_reports_list_single, parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_reports_list_single, parent, false);
 //        SingleImageHolder singleImageHolder = new SingleImageHolder(v);
         return new SingleImageHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(final SingleImageHolder imageHolder, int position){
+    public void onBindViewHolder(final SingleImageHolder imageHolder, int position) {
         preferenceData = new PreferenceData(context);
-       final VisitRecordsSingleResponseModel visitRecordsSingleResponseModel = visitRecordsSingleResponseModels.get(position);
+        final VisitRecordsSingleResponseModel visitRecordsSingleResponseModel = visitRecordsSingleResponseModels.get(position);
 
         visitImage = visitRecordsSingleResponseModel.getImage();
-        Log.w("Visit Reports", Apiconstants.VISIT_REPORTS_URL+ AppConstants.MOTHER_PICME_ID+visitImage);
+        Log.w("Visit Reports", Apiconstants.VISIT_REPORTS_URL + AppConstants.MOTHER_PICME_ID + visitImage);
 
-        if(!TextUtils.isEmpty(visitRecordsSingleResponseModel.getImage())) {
+        if (!TextUtils.isEmpty(visitRecordsSingleResponseModel.getImage())) {
             Picasso.with(this.context)
-                    .load(!TextUtils.isEmpty(visitRecordsSingleResponseModel.getImage())? Apiconstants.VISIT_REPORTS_URL+AppConstants.MOTHER_PICME_ID+"/"+visitRecordsSingleResponseModel.getImage():"")
+                    .load(!TextUtils.isEmpty(visitRecordsSingleResponseModel.getImage()) ? Apiconstants.VISIT_REPORTS_URL + AppConstants.MOTHER_PICME_ID + "/" + visitRecordsSingleResponseModel.getImage() : "")
                     .placeholder(R.drawable.no_image)
                     .fit()
                     .centerCrop()
@@ -73,8 +70,7 @@ public class VisitRecordsSingleAdapter extends RecyclerView.Adapter<VisitRecords
                     .networkPolicy(NetworkPolicy.NO_CACHE)
                     .error(R.drawable.no_image)
                     .into(imageHolder.itemImage);
-        }
-        else{
+        } else {
             imageHolder.itemImage.setImageResource(R.drawable.no_image);
         }
         imageHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -99,14 +95,14 @@ public class VisitRecordsSingleAdapter extends RecyclerView.Adapter<VisitRecords
                 context.startActivity(intent);*/
 
 
-                Intent intent= new Intent(context,ImageFullViewActivity.class);
-                AppConstants.ISPNVISIT=false;
+                Intent intent = new Intent(context, ImageFullViewActivity.class);
+                AppConstants.ISPNVISIT = false;
 //                intent.putExtra("mylist", visitRecordsSingleResponseModels);
-                String[] imgList=new String[visitRecordsSingleResponseModels.size()];
-                for (int i=0;i<visitRecordsSingleResponseModels.size();i++){
-                    imgList[i]=visitRecordsSingleResponseModels.get(i).getImage();
+                String[] imgList = new String[visitRecordsSingleResponseModels.size()];
+                for (int i = 0; i < visitRecordsSingleResponseModels.size(); i++) {
+                    imgList[i] = visitRecordsSingleResponseModels.get(i).getImage();
                 }
-                intent.putExtra("mylist",imgList);
+                intent.putExtra("mylist", imgList);
                 context.startActivity(intent);
             }
         });

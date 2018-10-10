@@ -52,7 +52,6 @@ public class DelevaryDetailsPnMotherRealmModel extends RealmObject {
     }
 
 
-
     public String getDid() {
         return did;
     }

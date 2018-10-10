@@ -15,7 +15,7 @@ public class NotificationModel {
         this.img_id = img_id;
     }
 
-    private  int img_id;
+    private int img_id;
 
     public String getTitle() {
         return title;

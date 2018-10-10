@@ -8,7 +8,7 @@ public class VisitRecordsSingleResponseModel {
 
     private String image;
 
-    public VisitRecordsSingleResponseModel(){
+    public VisitRecordsSingleResponseModel() {
 
     }
 

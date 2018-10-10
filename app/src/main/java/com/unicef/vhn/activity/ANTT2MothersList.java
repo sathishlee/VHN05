@@ -58,7 +58,7 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
 
     boolean isDataUpdate = true;
     private RecyclerView recyclerView;
-    private TextView textView,txt_no_internet,txt_antt2;
+    private TextView textView, txt_no_internet, txt_antt2;
     private ANTT2Adapter antt2Adapter;
 
     PreferenceData preferenceData;
@@ -70,7 +70,8 @@ public class ANTT2MothersList extends AppCompatActivity implements MotherListsVi
     boolean isoffline = false;
     Realm realm;
     ANTT2RealmModel antt2RealmModel;
-SwipeRefreshLayout swipeRefreshLayout;
+    SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,7 +100,7 @@ SwipeRefreshLayout swipeRefreshLayout;
     protected void onPostResume() {
         super.onPostResume();
 
-        if(pDialog.isShowing()){
+        if (pDialog.isShowing()) {
             pDialog.dismiss();
         }
     }
@@ -115,8 +116,8 @@ SwipeRefreshLayout swipeRefreshLayout;
         pnMotherListPresenter = new MotherListPresenter(ANTT2MothersList.this, this, realm);
         if (checkNetwork.isNetworkAvailable()) {
             pnMotherListPresenter.getANTT2MotherList(preferenceData.getVhnCode(), preferenceData.getVhnId());
-        }else{
-            isoffline=true;
+        } else {
+            isoffline = true;
         }
         tt2_lists = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.antt2_mother_recycler_view);
@@ -125,7 +126,7 @@ SwipeRefreshLayout swipeRefreshLayout;
         txt_antt2 = (TextView) findViewById(R.id.txt_antt2);
         txt_no_internet.setVisibility(View.GONE);
 
-        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         antt2Adapter = new ANTT2Adapter(tt2_lists, ANTT2MothersList.this, this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(ANTT2MothersList.this);
@@ -146,8 +147,8 @@ SwipeRefreshLayout swipeRefreshLayout;
             public void onRefresh() {
                 if (checkNetwork.isNetworkAvailable()) {
                     pnMotherListPresenter.getANTT2MotherList(preferenceData.getVhnCode(), preferenceData.getVhnId());
-                }else{
-                    isoffline=true;
+                } else {
+                    isoffline = true;
                     swipeRefreshLayout.setRefreshing(false);
                     txt_no_internet.setVisibility(View.VISIBLE);
 
@@ -197,7 +198,8 @@ SwipeRefreshLayout swipeRefreshLayout;
                         tt2list = new ANTT2ResponseModel.TT2_List();
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         antt2RealmModel.setMName(jsonObject.getString("mName"));
-                        antt2RealmModel.setMPicmeId(jsonObject.getString("mPicmeId"));;
+                        antt2RealmModel.setMPicmeId(jsonObject.getString("mPicmeId"));
+                        ;
                         antt2RealmModel.setMMotherMobile(jsonObject.getString("mMotherMobile"));
                     }
                     realm.commitTransaction();
@@ -205,11 +207,11 @@ SwipeRefreshLayout swipeRefreshLayout;
                     recyclerView.setVisibility(View.GONE);
                     textView.setVisibility(View.VISIBLE);
                 }
-            }else{
+            } else {
                 recyclerView.setVisibility(View.GONE);
                 textView.setVisibility(View.VISIBLE);
                 textView.setText(message);
-                }
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -267,10 +269,9 @@ SwipeRefreshLayout swipeRefreshLayout;
     }
 
 
-
     private void setValueToUI() {
         tt2_lists.clear();
-         realm.beginTransaction();
+        realm.beginTransaction();
         RealmResults<ANTT2RealmModel> antt1listRealmResult = realm.where(ANTT2RealmModel.class).findAll();
 
         for (int i = 0; i < antt1listRealmResult.size(); i++) {
@@ -281,8 +282,8 @@ SwipeRefreshLayout swipeRefreshLayout;
             tt2list.setMMotherMobile(model.getMMotherMobile());
             tt2_lists.add(tt2list);
             antt2Adapter.notifyDataSetChanged();
-                    }
-        txt_antt2.setText(getResources().getString(R.string.an_tt_1_due_s_list)+"("+tt2_lists.size()+")");
+        }
+        txt_antt2.setText(getResources().getString(R.string.an_tt_1_due_s_list) + "(" + tt2_lists.size() + ")");
 
         realm.commitTransaction();
     }

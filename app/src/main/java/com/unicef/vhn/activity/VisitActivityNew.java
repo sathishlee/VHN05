@@ -68,7 +68,7 @@ public class VisitActivityNew extends AppCompatActivity implements MotherListsVi
         checkNetwork = new CheckNetwork(this);
         preferenceData = new PreferenceData(this);
 
-        pnMotherListPresenter = new MotherListPresenter(getApplicationContext(), this,realm);
+        pnMotherListPresenter = new MotherListPresenter(getApplicationContext(), this, realm);
 
 
         if (checkNetwork.isNetworkAvailable()) {
@@ -85,9 +85,9 @@ public class VisitActivityNew extends AppCompatActivity implements MotherListsVi
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        adapter = new ViewPagerAdapter(getSupportFragmentManager(),this);
-        adapter.addFragment(new TodayVisitFragment(), "Today Visits",tabIcons[0]);
-        adapter.addFragment(new RemainderVisitFragment(), "Remainder Visits",tabIcons[1]);
+        adapter = new ViewPagerAdapter(getSupportFragmentManager(), this);
+        adapter.addFragment(new TodayVisitFragment(), "Today Visits", tabIcons[0]);
+        adapter.addFragment(new RemainderVisitFragment(), "Remainder Visits", tabIcons[1]);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -125,7 +125,6 @@ public class VisitActivityNew extends AppCompatActivity implements MotherListsVi
 
 
     }
-
 
 
     private void setupTabIcons() {

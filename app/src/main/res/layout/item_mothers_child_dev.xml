@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:id="@+id/mother_card"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="6.0dip"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardElevation="2.0dip"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:baselineAligned="false"
+        android:weightSum="2"
+        android:padding="3dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            android:orientation="vertical"
+        android:visibility="visible">
+            <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start">
+            <ImageView
+                android:id="@+id/cardview_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:elevation="5dp"
+                android:padding="5dp"
+                android:contentDescription="profile_image"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/girl" />
+
+                <LinearLayout
+                        android:id="@+id/iv_android_user"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:layout_margin="4dp"
+                        android:elevation="10dp"
+                        android:background="@drawable/icon_back_location"
+                android:visibility="visible">
+
+                    <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_gravity="top|end"
+                            android:background="@drawable/ic_android_user"/>
+
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:gravity="start"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:text="-"
+                android:textColor="#333333"
+                android:textSize="@dimen/text_lable" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:layout_margin="3dp"
+                android:weightSum="20">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_weight="11"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:padding="1dp"
+                        android:text="@string/picme_id"
+                        android:textColor="@color/secondary"
+                        android:textSize="@dimen/text_primary" />
+
+                    <TextView
+                        android:id="@+id/txt_picme_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textStart"
+                        android:padding="1dp"
+                        android:text="-"
+                        android:textColor="#333333"
+                        android:textSize="@dimen/text_secondary" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_ll_mother_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="9"
+                    android:gravity="start"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:padding="5dp"
+                        android:background="@drawable/mother_type"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_list_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:padding="1dp"
+                            android:text="@string/an"
+                            android:textColor="@color/secondary"
+                            android:textSize="@dimen/text_label" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_track_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:padding="5dp"
+                        android:background="@drawable/background_icon"
+                        android:layout_marginStart="5dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_track"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:padding="1dp"
+                            android:drawableStart="@drawable/ic_show_location"
+                            android:textColor="@color/secondary"
+                            android:textSize="@dimen/text_primary" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_call"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:padding="5dp"
+                        android:background="@drawable/background_icon"
+                        android:layout_marginStart="5dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_call"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:padding="1dp"
+                            android:drawableStart="@drawable/phone_call"
+                            android:textColor="@color/secondary"
+                            android:textSize="@dimen/text_primary" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_android_user"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:padding="5dp"
+                        android:background="@drawable/background_icon"
+                        android:layout_marginStart="5dp"
+                        android:orientation="vertical"
+                    android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/txt_android_user"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:padding="1dp"
+                            android:drawableStart="@drawable/ic_android_user"
+                            android:textColor="@color/secondary"
+                            android:textSize="@dimen/text_primary"
+                        android:visibility="gone"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

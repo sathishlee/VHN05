@@ -64,7 +64,7 @@ public class MigratedMotherFragment extends Fragment implements MotherListsViews
     boolean isDataUpdate = true;
 
     private RecyclerView recyclerView;
-    private TextView textView,txt_mig_mother_list;
+    private TextView textView, txt_mig_mother_list;
     private MotherMigrationAdapter motherMigrationAdapter;
 
 
@@ -160,7 +160,7 @@ public class MigratedMotherFragment extends Fragment implements MotherListsViews
 
 
         }
-        txt_mig_mother_list.setText(getResources().getString(R.string.migrated_mothers)+"("+vhn_migrated_mothers.size()+")");
+        txt_mig_mother_list.setText(getResources().getString(R.string.migrated_mothers) + "(" + vhn_migrated_mothers.size() + ")");
 
         realm.commitTransaction();
 
@@ -256,7 +256,7 @@ public class MigratedMotherFragment extends Fragment implements MotherListsViews
             motherMigrationAdapter.notifyDataSetChanged();
 
         }
-        txt_mig_mother_list.setText(getResources().getString(R.string.migrated_mothers)+"("+vhn_migrated_mothers.size()+")");
+        txt_mig_mother_list.setText(getResources().getString(R.string.migrated_mothers) + "(" + vhn_migrated_mothers.size() + ")");
         realm.commitTransaction();
     }
 

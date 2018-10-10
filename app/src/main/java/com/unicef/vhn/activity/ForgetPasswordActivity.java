@@ -27,8 +27,8 @@ import org.json.JSONObject;
 
 public class ForgetPasswordActivity extends AppCompatActivity implements ChangePasswordViews, View.OnClickListener {
 
-    TextInputLayout  input_new_password, input_conform_password;
-    EditText  edt_new_password, edt_conform_password;
+    TextInputLayout input_new_password, input_conform_password;
+    EditText edt_new_password, edt_conform_password;
     Button btn_submit;
     ProgressDialog progressDialog;
     PreferenceData preferenceData;
@@ -43,6 +43,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ChangeP
         showActionBar();
         onClickListner();
     }
+
     private void initUI() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
@@ -86,7 +87,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ChangeP
 
     @Override
     public void hideProgress() {
-progressDialog.dismiss();
+        progressDialog.dismiss();
     }
 
     @Override
@@ -105,7 +106,7 @@ progressDialog.dismiss();
                 AlertDialog.Builder builder = new AlertDialog.Builder(ForgetPasswordActivity.this);
                 builder.setTitle(msg);
 //                builder.setIcon(R.mipmap.ic_launcher);
-                builder.setMessage("Your Password is :- "+password)
+                builder.setMessage("Your Password is :- " + password)
                         .setCancelable(false)
                         .setPositiveButton("Back To Login", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -152,6 +153,7 @@ progressDialog.dismiss();
             changePasswordPresenter.forgetPassword(strNewPassword, strConformPassword);
         }
     }
+
     private void textValues() {
 
         strNewPassword = edt_new_password.getText().toString();

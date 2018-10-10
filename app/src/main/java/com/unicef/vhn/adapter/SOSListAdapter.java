@@ -44,10 +44,10 @@ public class SOSListAdapter extends RecyclerView.Adapter<SOSListAdapter.ViewHold
     CheckNetwork checkNetwork;
     MakeCallInterface makeCallInterface;
 
-    public SOSListAdapter(List<SOSListResponse.VhnAN_Mothers_List> mResult, Activity applicationContext,MakeCallInterface makeCallInterface) {
+    public SOSListAdapter(List<SOSListResponse.VhnAN_Mothers_List> mResult, Activity applicationContext, MakeCallInterface makeCallInterface) {
         this.mResult = mResult;
         this.applicationContext = applicationContext;
-        checkNetwork =new CheckNetwork(applicationContext);
+        checkNetwork = new CheckNetwork(applicationContext);
         this.makeCallInterface = makeCallInterface;
 
     }
@@ -91,14 +91,14 @@ public class SOSListAdapter extends RecyclerView.Adapter<SOSListAdapter.ViewHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              final String  type = SosMotherResponseModel.getMotherType();
+                final String type = SosMotherResponseModel.getMotherType();
                 if (checkNetwork.isNetworkAvailable()) {
 //                AppConstants.SOS_ID = strSosId;
                     AppConstants.SOS_ID = SosMotherResponseModel.getSosId();
                     AppConstants.SELECTED_MID = SosMotherResponseModel.getMid();
+                    AppConstants.MOTHER_PICME_ID = SosMotherResponseModel.getMPicmeId();
                     applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), SosMotherDetailsActivity.class));
-                }
-                else{
+                } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(applicationContext);
                     builder.setTitle("You can't close this alert!");
                     builder.setMessage("You are in offline, please connect internet.");
@@ -135,7 +135,6 @@ public class SOSListAdapter extends RecyclerView.Adapter<SOSListAdapter.ViewHold
         });
 
 
-
         holder.ll_call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,9 +160,8 @@ public class SOSListAdapter extends RecyclerView.Adapter<SOSListAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txt_username, txt_picme_id, txt_mother_type;
-        LinearLayout ll_ll_mother_type,ll_call,ll_track_location;
+        LinearLayout ll_ll_mother_type, ll_call, ll_track_location;
         ImageView cardview_image;
-
 
 
         public ViewHolder(View itemView) {

@@ -27,8 +27,8 @@ import java.util.List;
  */
 
 public class RemainderVisitListAdapter extends RecyclerView.Adapter<RemainderVisitListAdapter.ViewHolder> {
-    String TAG= RemainderVisitListAdapter.class.getSimpleName();
-    private List< RemainderVisitResponseModel.Remaindermothers> mResult;
+    String TAG = RemainderVisitListAdapter.class.getSimpleName();
+    private List<RemainderVisitResponseModel.Remaindermothers> mResult;
     Activity applicationContext;
     String type;
     MakeCallInterface makeCallInterface;
@@ -38,7 +38,7 @@ public class RemainderVisitListAdapter extends RecyclerView.Adapter<RemainderVis
     public RemainderVisitListAdapter(List<RemainderVisitResponseModel.Remaindermothers> mResult, Activity alertActivity, MakeCallInterface makeCallInterface) {
         this.applicationContext = alertActivity;
         this.mResult = mResult;
-        Log.e(RemainderVisitListAdapter.class.getSimpleName(),"mResult size"+mResult);
+        Log.e(RemainderVisitListAdapter.class.getSimpleName(), "mResult size" + mResult);
         this.makeCallInterface = makeCallInterface;
     }
 
@@ -69,28 +69,25 @@ public class RemainderVisitListAdapter extends RecyclerView.Adapter<RemainderVis
         } else {
             holder.txt_picme_id.setText(current_visits.getPicmeId());
         }
-        if (current_visits.getMtype().equalsIgnoreCase("null")){
+        if (current_visits.getMtype().equalsIgnoreCase("null")) {
             holder.txt_list_type.setText("-");
+        } else {
+            holder.txt_list_type.setText(current_visits.getMtype());
         }
-        else {
-        holder.txt_list_type.setText(current_visits.getMtype());
-    }
-        if (current_visits.getNextVisit().equalsIgnoreCase("null")){
+        if (current_visits.getNextVisit().equalsIgnoreCase("null")) {
             holder.txt_current_visit.setText("-");
-        }
-        else {
+        } else {
             holder.txt_current_visit.setText(current_visits.getNextVisit());
         }
 
-        if (current_visits.getMonth().equalsIgnoreCase("null")){
+        if (current_visits.getMonth().equalsIgnoreCase("null")) {
             holder.txt_visit_month.setText("-");
+        } else {
+            holder.txt_visit_month.setText("V.No : " + current_visits.getMonth());
         }
-        else {
-            holder.txt_visit_month.setText("V.No : "+current_visits.getMonth());
-        }
-        if (current_visits.getMMotherMobile().equalsIgnoreCase("null")||current_visits.getMMotherMobile().length()<10){
+        if (current_visits.getMMotherMobile().equalsIgnoreCase("null") || current_visits.getMMotherMobile().length() < 10) {
             holder.txt_call.setVisibility(View.GONE);
-        }else{
+        } else {
             holder.txt_call.setVisibility(View.VISIBLE);
         }
         holder.txt_call.setOnClickListener(new View.OnClickListener() {
@@ -113,7 +110,7 @@ public class RemainderVisitListAdapter extends RecyclerView.Adapter<RemainderVis
             public void onClick(View v) {
                 AppConstants.SELECTED_MID = current_visits.getMid();
                 AppConstants.SELECTED_VISIT_NOTE_ID = current_visits.getNoteId();
-                AppConstants.IS_TODAY_VIST_LIST=true;
+                AppConstants.IS_TODAY_VIST_LIST = true;
                 if (current_visits.getMtype().equalsIgnoreCase("PN")) {
                     applicationContext.startActivity(new Intent(applicationContext.getApplicationContext(), PNMotherDetailsViewActivity.class));
 
@@ -132,7 +129,7 @@ public class RemainderVisitListAdapter extends RecyclerView.Adapter<RemainderVis
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_username, txt_picme_id, txt_list_type, txt_track, txt_call, txt_current_visit,txt_visit_month;
+        TextView txt_username, txt_picme_id, txt_list_type, txt_track, txt_call, txt_current_visit, txt_visit_month;
 
         public ViewHolder(View itemView) {
             super(itemView);

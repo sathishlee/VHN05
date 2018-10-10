@@ -94,7 +94,7 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
     PreferenceData preferenceData;
     TextView user_name, txt_vhn_id, address, phc_name, tvNumber5, district_name, tvNumber1;
     EditText edt_user_name, edt_vhn_id, edt_address, edt_phc_name, edt_Number5, edt_district_name, edt_Number1;
-    Button butSubmit,butCancel;
+    Button butSubmit, butCancel;
     ImageView img_camera, img_gallery;
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
     public static final int RequestPermissionCode = 7;
@@ -108,7 +108,7 @@ public class VhnProfile extends AppCompatActivity implements ProfileViews, View.
     VhnProfileRealmModel vhnProfileRealmModel;
     FloatingActionButton fab;
     //LinearLayout viewProfile,viewProfileEdit;
-boolean isEditProfile=false;
+    boolean isEditProfile = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,8 +144,8 @@ boolean isEditProfile=false;
                     butSubmit.setVisibility(View.VISIBLE);
                     butCancel.setVisibility(View.VISIBLE);
                     fab.setVisibility(View.GONE);
-                }else{
-                    Toast.makeText(getApplicationContext(),"You can't edit your profile,\n No Internert connection",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "You can't edit your profile,\n No Internert connection", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -229,28 +229,28 @@ boolean isEditProfile=false;
         butSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e(VhnProfile.class.getSimpleName(),"you clicked submit");
-                if (!edt_address.getText().toString().equalsIgnoreCase("") ) {
-                    Log.e(VhnProfile.class.getSimpleName(), "you clicked submit condition true address"+edt_address.getText().toString());
+                Log.e(VhnProfile.class.getSimpleName(), "you clicked submit");
+                if (!edt_address.getText().toString().equalsIgnoreCase("")) {
+                    Log.e(VhnProfile.class.getSimpleName(), "you clicked submit condition true address" + edt_address.getText().toString());
 
-                    if (!edt_Number1.getText().toString().equalsIgnoreCase("")){
-                        Log.e(VhnProfile.class.getSimpleName(), "you clicked submit condition true mobile number"+edt_Number1.getText().toString());
+                    if (!edt_Number1.getText().toString().equalsIgnoreCase("")) {
+                        Log.e(VhnProfile.class.getSimpleName(), "you clicked submit condition true mobile number" + edt_Number1.getText().toString());
 
-                        if ( edt_Number1.getText().toString().length()==10) {
-                    Log.e(VhnProfile.class.getSimpleName(), "you clicked submit condition true mobile number lenth "+edt_Number1.length());
+                        if (edt_Number1.getText().toString().length() == 10) {
+                            Log.e(VhnProfile.class.getSimpleName(), "you clicked submit condition true mobile number lenth " + edt_Number1.length());
 
-                    profilePresenter.postVHNProfile(preferenceData.getVhnId(), preferenceData.getVhnCode(),
-                            edt_address.getText().toString(), edt_Number1.getText().toString());
-                }
-                }
-                }else{
-                    Log.e(VhnProfile.class.getSimpleName(),"you clicked submit condition false");
+                            profilePresenter.postVHNProfile(preferenceData.getVhnId(), preferenceData.getVhnCode(),
+                                    edt_address.getText().toString(), edt_Number1.getText().toString());
+                        }
+                    }
+                } else {
+                    Log.e(VhnProfile.class.getSimpleName(), "you clicked submit condition false");
 
-                    if (edt_address.getText().toString().isEmpty()){
+                    if (edt_address.getText().toString().isEmpty()) {
                         edt_address.setError("enter address");
-                    }  else if (edt_Number1.getText().toString().isEmpty()){
+                    } else if (edt_Number1.getText().toString().isEmpty()) {
                         edt_Number1.setError("enter mobile number");
-                    }else if (edt_Number1.getText().toString().length()!=10){
+                    } else if (edt_Number1.getText().toString().length() != 10) {
                         edt_Number1.setError("enter valid mobile number");
                     }
                 }
@@ -296,8 +296,8 @@ boolean isEditProfile=false;
         district_name = (TextView) findViewById(R.id.district_name);
         tvNumber1 = (TextView) findViewById(R.id.tvNumber1);
 
-        edt_address= (EditText) findViewById(R.id.edaddress);
-        edt_Number1= (EditText) findViewById(R.id.edNumber1);
+        edt_address = (EditText) findViewById(R.id.edaddress);
+        edt_Number1 = (EditText) findViewById(R.id.edNumber1);
 
         if (isOffline) {
             setValuesToUI();
@@ -471,12 +471,12 @@ boolean isEditProfile=false;
 
     @Override
     public void successUploadProfile(String response) {
-                startActivity(new Intent(getApplicationContext(),VhnProfile.class));
+        startActivity(new Intent(getApplicationContext(), VhnProfile.class));
     }
 
     @Override
     public void errorUploadProfile(String response) {
-        Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
     }
 
     @Override
